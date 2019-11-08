@@ -1,4 +1,20 @@
 # -*- coding: utf-8 -*-
+#
+# Copyright 2019 Ricequant, Inc
+#
+# * Commercial Usage: please contact public@ricequant.com
+# * Non-Commercial Usage:
+#     Licensed under the Apache License, Version 2.0 (the "License");
+#     you may not use this file except in compliance with the License.
+#     You may obtain a copy of the License at
+#
+#         http://www.apache.org/licenses/LICENSE-2.0
+#
+#     Unless required by applicable law or agreed to in writing, software
+#     distributed under the License is distributed on an "AS IS" BASIS,
+#     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+#     See the License for the specific language governing permissions and
+#     limitations under the License.
 
 import os
 import re
@@ -8,6 +24,25 @@ from collections import OrderedDict, namedtuple, ChainMap
 SPACE_4 = " " * 4
 SPACE_8 = " " * 8
 SPACE_12 = " " * 12
+
+LICENSE = """# -*- coding: utf-8 -*-
+#
+# Copyright 2019 Ricequant, Inc
+#
+# * Commercial Usage: please contact public@ricequant.com
+# * Non-Commercial Usage:
+#     Licensed under the Apache License, Version 2.0 (the "License");
+#     you may not use this file except in compliance with the License.
+#     You may obtain a copy of the License at
+#
+#         http://www.apache.org/licenses/LICENSE-2.0
+#
+#     Unless required by applicable law or agreed to in writing, software
+#     distributed under the License is distributed on an "AS IS" BASIS,
+#     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+#     See the License for the specific language governing permissions and
+#     limitations under the License.
+"""
 
 
 class Constant(NamedTuple):
@@ -322,7 +357,7 @@ class PyCodeGenerator(object):
             os.makedirs(py_path)
 
         with open(os.path.join(py_path, "ThostFtdcUserApiDataType.pxd"), "w+", encoding="utf-8") as f:
-            lines = ["# -*- coding: utf-8 -*-", "", "cdef extern from \"ThostFtdcUserApiDataType.h\":"]
+            lines = [LICENSE, "", "cdef extern from \"ThostFtdcUserApiDataType.h\":"]
             for t in self._types.values():
                 if isinstance(t, CustomType):
                     lines.append(SPACE_4 + t.to_pxd_line())
@@ -333,14 +368,14 @@ class PyCodeGenerator(object):
             f.writelines([l + "\n" for l in lines])
 
         with open(os.path.join(py_path, "ThostFtdcUserApiStruct.pxd"), "w+", encoding="utf-8") as f:
-            lines = ["from .ThostFtdcUserApiDataType cimport *", "", "cdef extern from \"ThostFtdcUserApiStruct.h\":"]
+            lines = [LICENSE, "from .ThostFtdcUserApiDataType cimport *", "", "cdef extern from \"ThostFtdcUserApiStruct.h\":"]
             for s in self._structs.values():
                 for line in s.to_pxd_lines():
                     lines.append(SPACE_4 + line)
             f.writelines([l + "\n" for l in lines])
 
         with open(os.path.join(py_path, "structs.py"), "w+", encoding="utf-8") as f:
-            lines = []
+            lines = [LICENSE]
             base_py_types = set()
             array_py_types = set()
             for s in self._structs.values():
@@ -363,7 +398,7 @@ class PyCodeGenerator(object):
             f.writelines([l + "\n" for l in lines])
 
         with open(os.path.join(py_path, "consts.py"), "w+", encoding="utf-8") as f:
-            lines = []
+            lines = [LICENSE]
             for s in self._types.values():
                 lines.extend(list(s.to_consts_py_lines()))
             f.writelines([l + "\n" for l in lines])
