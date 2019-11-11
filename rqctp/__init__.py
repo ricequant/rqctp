@@ -15,3 +15,11 @@
 #     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #     See the License for the specific language governing permissions and
 #     limitations under the License.
+
+from .trader_api import PyTraderApi as TraderApi
+
+
+__all__ = [
+    "TraderApi"
+]
+

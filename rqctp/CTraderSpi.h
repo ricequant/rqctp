@@ -20,10 +20,10 @@
 #include "pythread.h"
 #include "ThostFtdcTraderApi.h"
 
-
 static inline int TraderSpi__OnFrontConnected(PyObject *);
 static inline int TraderSpi__OnFrontDisconnected(PyObject *, int);
 static inline int TraderSpi__OnRspUserLogin(PyObject *, CThostFtdcRspUserLoginField *, CThostFtdcRspInfoField *, int, bool);
+static inline int TraderSpi__OnRtnTrade(PyObject *, CThostFtdcTradeField *);
 
 
 #define PyGIL(func) \
@@ -49,6 +49,10 @@ class CTraderSpi: public CThostFtdcTraderSpi {
 
         virtual void OnRspUserLogin(CThostFtdcRspUserLoginField *pRspUserLogin, CThostFtdcRspInfoField *pRspInfo, int nRequestID, bool bIsLast) {
             PyGIL(TraderSpi__OnRspUserLogin(api, pRspUserLogin, pRspInfo, nRequestID, bIsLast));
+        };
+
+        virtual void OnRtnTrade(CThostFtdcTradeField *pTrade) {
+            PyGIL(TraderSpi__OnRtnTrade(api, pTrade));
         };
 
     private:

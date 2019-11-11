@@ -28,6 +28,8 @@ cdef extern from "ThostFtdcTraderApi.h":
         int Join() nogil
         void RegisterFront(char *pszFrontAddress) nogil except +
         void RegisterSpi(CTraderSpi *pSpi) nogil except +
+        void SubscribePrivateTopic(THOST_TE_RESUME_TYPE nResumeType) nogil except +
+        void SubscribePublicTopic(THOST_TE_RESUME_TYPE nResumeType) nogil except +
         int ReqUserLogin(CThostFtdcReqUserLoginField *pReqUserLoginField, int nRequestID) nogil except +
 
 

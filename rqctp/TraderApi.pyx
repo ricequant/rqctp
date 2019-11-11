@@ -21,11 +21,11 @@ from libc.string cimport const_char
 from libcpp cimport bool as cbool
 
 from .ThostFtdcTraderApi cimport CTraderApi, CTraderSpi, CreateFtdcTraderApi
-from .ThostFtdcUserApiStruct cimport CThostFtdcReqUserLoginField, CThostFtdcRspUserLoginField, CThostFtdcRspInfoField
+from .ThostFtdcUserApiStruct cimport *
 
 import ctypes
 
-from .structs import RspUserLogin, RspInfo
+from .structs import RspUserLogin, RspInfo, Trade
 
 
 cdef class TraderApi:
@@ -81,6 +81,14 @@ cdef class TraderApi:
         self._ensure_api_not_null()
         self._api.RegisterFront(pszFrontAddress)
 
+    def SubscribePrivateTopic(self, THOST_TE_RESUME_TYPE nResumeType):
+        self._ensure_api_not_null()
+        self._api.SubscribePrivateTopic(nResumeType)
+
+    def SubscribePublicTopic(self, THOST_TE_RESUME_TYPE nResumeType):
+        self._ensure_api_not_null()
+        self._api.SubscribePublicTopic(nResumeType)
+
     def ReqUserLogin(self, reqUserLoginField, int nRequestID):
         cdef int result
         cdef size_t address
@@ -104,3 +112,9 @@ cdef extern int TraderSpi__OnFrontDisconnected(api, int nReason) except -1:
 cdef extern int TraderSpi__OnRspUserLogin(api, CThostFtdcRspUserLoginField *pRspUserLogin, CThostFtdcRspInfoField *pRspInfo, int nRequestID, cbool bIsLast) except -1:
     api.OnRspUserLogin(None if pRspUserLogin is NULL else RspUserLogin.from_address(<size_t> pRspUserLogin).to_tuple(), None if pRspInfo is NULL else RspInfo.from_address(<size_t> pRspInfo).to_tuple(), nRequestID, bIsLast)
     return 0
+
+
+cdef extern int TraderSpi__OnRtnTrade(api, CThostFtdcTradeField *pTrade) except -1:
+    api.OnRtnTrade(None if pTrade is NULL else Trade.from_address(<size_t> pTrade).to_tuple())
+    return 0
+

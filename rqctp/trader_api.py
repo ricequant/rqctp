@@ -43,3 +43,6 @@ class PyTraderApi(TraderApi):
 
     def OnRspUserLogin(self, pRspUserLogin, pRspInfo, nRequestID, bIsLast):
         pass
+
+    def OnRtnTrade(self, pTrade):
+        pass
