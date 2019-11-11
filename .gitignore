@@ -103,4 +103,5 @@ venv.bak/
 *.cpp
 rqctp/*.so
 rqctp/ThostFtdc*.h
-
+rqctp/*.lib
+rqctp/*.dll

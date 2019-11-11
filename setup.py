@@ -17,8 +17,8 @@
 #     limitations under the License.
 
 import os
-import shutil
-from distutils.util import get_platform
+import sys
+import shutil 
 from setuptools import setup, Extension, find_packages
 from Cython.Build import cythonize
 
@@ -33,20 +33,30 @@ def do_setup(ext_modules, package_data):
     )
 
 
-if get_platform() == "linux-x86_64":
-    project_dir = os.path.dirname(os.path.abspath(__file__))
-    ctp_dir = os.path.join(project_dir, "rqctp")
-    lib_dir = os.path.join(project_dir, "ctp")
+project_dir = os.path.dirname(os.path.abspath(__file__))
+proj_dir = os.path.join(project_dir, "rqctp")
+lib_dir = os.path.join(project_dir, "ctp")
+platform = sys.platform
 
-    for name in os.listdir(ctp_dir):
-        if name.endswith(".so") or name.endswith(".cpp"):
-            os.remove(os.path.join(ctp_dir, name))
+if platform == "linux":
+    lib_extensions = (".so", ".h")
+    extra_compile_args = None
+    extra_link_args = ['-Wl,-rpath,$ORIGIN']
+elif platform == 'win32':
+    lib_extensions = (".dll", ".lib", ".h")
+    extra_compile_args = ["/GR", "/EHsc"]
+    extra_link_args = None
+else:
+    raise RuntimeError("dose not support current plaform {}".format(platform))
 
-    for name in os.listdir(lib_dir):
-        if name.endswith(".so") or name.endswith(".h"):
-            shutil.copy(os.path.join(lib_dir, name), os.path.join(ctp_dir, name))
 
-    do_setup(
+for name in os.listdir(lib_dir):
+    if any([name.endswith(e) for e in lib_extensions]):
+        shutil.copy(os.path.join(lib_dir, name), os.path.join(proj_dir, name))
+    
+    setup(
+        name="rqctp",
+        version="0.0.1",
         ext_modules=cythonize(module_list=[
             Extension(
                 name="rqctp.TraderApi",
@@ -54,13 +64,17 @@ if get_platform() == "linux-x86_64":
                 libraries=["thosttraderapi_se"],
                 language="c++",
                 library_dirs=["rqctp/"],
-                extra_link_args=['-Wl,-rpath,$ORIGIN'],
+                extra_compile_args=extra_compile_args,
+                extra_link_args=extra_link_args,
             )
         ], compiler_directives={
             "language_level": 3,
             "binding": True
         }),
+        packages=find_packages(exclude=[]),
         package_data={".": ["libthosttraderapi_se.so"]}
     )
+
+
 else:
     do_setup(ext_modules=[], package_data={})
