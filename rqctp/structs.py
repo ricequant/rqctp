@@ -16,7 +16,7 @@
 #     See the License for the specific language governing permissions and
 #     limitations under the License.
 
-from ctypes import c_short, c_int, c_char, c_double
+from ctypes import c_char, c_int, c_short, c_double
 
 from .utils import Struct
 
@@ -59,17 +59,8 @@ class Dissemination(Struct):
         ("SequenceNo", c_int),
     ]
 
-    def __init__(
-        self,
-        SequenceSeries: int = None,
-        SequenceNo: int = None,
-    ):
-        """
-        信息分发
-        :param SequenceSeries: 序列系列号
-        :param SequenceNo: 序列号
-        """
-        super(Dissemination, self).__init__()
+    def __init__(self, SequenceSeries=None, SequenceNo=None):
+        super().__init__()
         if SequenceSeries:
             self.SequenceSeries = SequenceSeries
         if SequenceNo:
@@ -92,37 +83,8 @@ class ReqUserLogin(Struct):
         ("ClientIPPort", c_int),
     ]
 
-    def __init__(
-        self,
-        TradingDay: str = None,
-        BrokerID: str = None,
-        UserID: str = None,
-        Password: str = None,
-        UserProductInfo: str = None,
-        InterfaceProductInfo: str = None,
-        ProtocolInfo: str = None,
-        MacAddress: str = None,
-        OneTimePassword: str = None,
-        ClientIPAddress: str = None,
-        LoginRemark: str = None,
-        ClientIPPort: int = None,
-    ):
-        """
-        用户登录请求
-        :param TradingDay: 交易日
-        :param BrokerID: 经纪公司代码
-        :param UserID: 用户代码
-        :param Password: 密码
-        :param UserProductInfo: 用户端产品信息
-        :param InterfaceProductInfo: 接口端产品信息
-        :param ProtocolInfo: 协议信息
-        :param MacAddress: Mac地址
-        :param OneTimePassword: 动态密码
-        :param ClientIPAddress: 终端IP地址
-        :param LoginRemark: 登录备注
-        :param ClientIPPort: 终端IP端口
-        """
-        super(ReqUserLogin, self).__init__()
+    def __init__(self, TradingDay=None, BrokerID=None, UserID=None, Password=None, UserProductInfo=None, InterfaceProductInfo=None, ProtocolInfo=None, MacAddress=None, OneTimePassword=None, ClientIPAddress=None, LoginRemark=None, ClientIPPort=None):
+        super().__init__()
         if TradingDay:
             self.TradingDay = TradingDay.encode("GBK")
         if BrokerID:
@@ -166,39 +128,8 @@ class RspUserLogin(Struct):
         ("INETime", c_char_Array_9),
     ]
 
-    def __init__(
-        self,
-        TradingDay: str = None,
-        LoginTime: str = None,
-        BrokerID: str = None,
-        UserID: str = None,
-        SystemName: str = None,
-        FrontID: int = None,
-        SessionID: int = None,
-        MaxOrderRef: str = None,
-        SHFETime: str = None,
-        DCETime: str = None,
-        CZCETime: str = None,
-        FFEXTime: str = None,
-        INETime: str = None,
-    ):
-        """
-        用户登录应答
-        :param TradingDay: 交易日
-        :param LoginTime: 登录成功时间
-        :param BrokerID: 经纪公司代码
-        :param UserID: 用户代码
-        :param SystemName: 交易系统名称
-        :param FrontID: 前置编号
-        :param SessionID: 会话编号
-        :param MaxOrderRef: 最大报单引用
-        :param SHFETime: 上期所时间
-        :param DCETime: 大商所时间
-        :param CZCETime: 郑商所时间
-        :param FFEXTime: 中金所时间
-        :param INETime: 能源中心时间
-        """
-        super(RspUserLogin, self).__init__()
+    def __init__(self, TradingDay=None, LoginTime=None, BrokerID=None, UserID=None, SystemName=None, FrontID=None, SessionID=None, MaxOrderRef=None, SHFETime=None, DCETime=None, CZCETime=None, FFEXTime=None, INETime=None):
+        super().__init__()
         if TradingDay:
             self.TradingDay = TradingDay.encode("GBK")
         if LoginTime:
@@ -233,17 +164,8 @@ class UserLogout(Struct):
         ("UserID", c_char_Array_16),
     ]
 
-    def __init__(
-        self,
-        BrokerID: str = None,
-        UserID: str = None,
-    ):
-        """
-        用户登出请求
-        :param BrokerID: 经纪公司代码
-        :param UserID: 用户代码
-        """
-        super(UserLogout, self).__init__()
+    def __init__(self, BrokerID=None, UserID=None):
+        super().__init__()
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
         if UserID:
@@ -256,17 +178,8 @@ class ForceUserLogout(Struct):
         ("UserID", c_char_Array_16),
     ]
 
-    def __init__(
-        self,
-        BrokerID: str = None,
-        UserID: str = None,
-    ):
-        """
-        强制交易员退出
-        :param BrokerID: 经纪公司代码
-        :param UserID: 用户代码
-        """
-        super(ForceUserLogout, self).__init__()
+    def __init__(self, BrokerID=None, UserID=None):
+        super().__init__()
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
         if UserID:
@@ -282,23 +195,8 @@ class ReqAuthenticate(Struct):
         ("AppID", c_char_Array_33),
     ]
 
-    def __init__(
-        self,
-        BrokerID: str = None,
-        UserID: str = None,
-        UserProductInfo: str = None,
-        AuthCode: str = None,
-        AppID: str = None,
-    ):
-        """
-        客户端认证请求
-        :param BrokerID: 经纪公司代码
-        :param UserID: 用户代码
-        :param UserProductInfo: 用户端产品信息
-        :param AuthCode: 认证码
-        :param AppID: App代码
-        """
-        super(ReqAuthenticate, self).__init__()
+    def __init__(self, BrokerID=None, UserID=None, UserProductInfo=None, AuthCode=None, AppID=None):
+        super().__init__()
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
         if UserID:
@@ -320,23 +218,8 @@ class RspAuthenticate(Struct):
         ("AppType", c_char),
     ]
 
-    def __init__(
-        self,
-        BrokerID: str = None,
-        UserID: str = None,
-        UserProductInfo: str = None,
-        AppID: str = None,
-        AppType: bytes = None,
-    ):
-        """
-        客户端认证响应
-        :param BrokerID: 经纪公司代码
-        :param UserID: 用户代码
-        :param UserProductInfo: 用户端产品信息
-        :param AppID: App代码
-        :param AppType: App类型
-        """
-        super(RspAuthenticate, self).__init__()
+    def __init__(self, BrokerID=None, UserID=None, UserProductInfo=None, AppID=None, AppType=None):
+        super().__init__()
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
         if UserID:
@@ -360,27 +243,8 @@ class AuthenticationInfo(Struct):
         ("AppType", c_char),
     ]
 
-    def __init__(
-        self,
-        BrokerID: str = None,
-        UserID: str = None,
-        UserProductInfo: str = None,
-        AuthInfo: str = None,
-        IsResult: int = None,
-        AppID: str = None,
-        AppType: bytes = None,
-    ):
-        """
-        客户端认证信息
-        :param BrokerID: 经纪公司代码
-        :param UserID: 用户代码
-        :param UserProductInfo: 用户端产品信息
-        :param AuthInfo: 认证信息
-        :param IsResult: 是否为认证结果
-        :param AppID: App代码
-        :param AppType: App类型
-        """
-        super(AuthenticationInfo, self).__init__()
+    def __init__(self, BrokerID=None, UserID=None, UserProductInfo=None, AuthInfo=None, IsResult=None, AppID=None, AppType=None):
+        super().__init__()
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
         if UserID:
@@ -415,41 +279,8 @@ class RspUserLogin2(Struct):
         ("RandomString", c_char_Array_17),
     ]
 
-    def __init__(
-        self,
-        TradingDay: str = None,
-        LoginTime: str = None,
-        BrokerID: str = None,
-        UserID: str = None,
-        SystemName: str = None,
-        FrontID: int = None,
-        SessionID: int = None,
-        MaxOrderRef: str = None,
-        SHFETime: str = None,
-        DCETime: str = None,
-        CZCETime: str = None,
-        FFEXTime: str = None,
-        INETime: str = None,
-        RandomString: str = None,
-    ):
-        """
-        用户登录应答2
-        :param TradingDay: 交易日
-        :param LoginTime: 登录成功时间
-        :param BrokerID: 经纪公司代码
-        :param UserID: 用户代码
-        :param SystemName: 交易系统名称
-        :param FrontID: 前置编号
-        :param SessionID: 会话编号
-        :param MaxOrderRef: 最大报单引用
-        :param SHFETime: 上期所时间
-        :param DCETime: 大商所时间
-        :param CZCETime: 郑商所时间
-        :param FFEXTime: 中金所时间
-        :param INETime: 能源中心时间
-        :param RandomString: 随机串
-        """
-        super(RspUserLogin2, self).__init__()
+    def __init__(self, TradingDay=None, LoginTime=None, BrokerID=None, UserID=None, SystemName=None, FrontID=None, SessionID=None, MaxOrderRef=None, SHFETime=None, DCETime=None, CZCETime=None, FFEXTime=None, INETime=None, RandomString=None):
+        super().__init__()
         if TradingDay:
             self.TradingDay = TradingDay.encode("GBK")
         if LoginTime:
@@ -497,39 +328,8 @@ class TransferHeader(Struct):
         ("RequestID", c_int),
     ]
 
-    def __init__(
-        self,
-        Version: str = None,
-        TradeCode: str = None,
-        TradeDate: str = None,
-        TradeTime: str = None,
-        TradeSerial: str = None,
-        FutureID: str = None,
-        BankID: str = None,
-        BankBrchID: str = None,
-        OperNo: str = None,
-        DeviceID: str = None,
-        RecordNum: str = None,
-        SessionID: int = None,
-        RequestID: int = None,
-    ):
-        """
-        银期转帐报文头
-        :param Version: 版本号，常量，1.0
-        :param TradeCode: 交易代码，必填
-        :param TradeDate: 交易日期，必填，格式：yyyymmdd
-        :param TradeTime: 交易时间，必填，格式：hhmmss
-        :param TradeSerial: 发起方流水号，NA
-        :param FutureID: 期货公司代码，必填
-        :param BankID: 银行代码，根据查询银行得到，必填
-        :param BankBrchID: 银行分中心代码，根据查询银行得到，必填
-        :param OperNo: 操作员，NA
-        :param DeviceID: 交易设备类型，NA
-        :param RecordNum: 记录数，NA
-        :param SessionID: 会话编号，NA
-        :param RequestID: 请求编号，NA
-        """
-        super(TransferHeader, self).__init__()
+    def __init__(self, Version=None, TradeCode=None, TradeDate=None, TradeTime=None, TradeSerial=None, FutureID=None, BankID=None, BankBrchID=None, OperNo=None, DeviceID=None, RecordNum=None, SessionID=None, RequestID=None):
+        super().__init__()
         if Version:
             self.Version = Version.encode("GBK")
         if TradeCode:
@@ -568,25 +368,8 @@ class TransferBankToFutureReq(Struct):
         ("CurrencyCode", c_char_Array_4),
     ]
 
-    def __init__(
-        self,
-        FutureAccount: str = None,
-        FuturePwdFlag: bytes = None,
-        FutureAccPwd: str = None,
-        TradeAmt: float = None,
-        CustFee: float = None,
-        CurrencyCode: str = None,
-    ):
-        """
-        银行资金转期货请求，TradeCode=202001
-        :param FutureAccount: 期货资金账户
-        :param FuturePwdFlag: 密码标志
-        :param FutureAccPwd: 密码
-        :param TradeAmt: 转账金额
-        :param CustFee: 客户手续费
-        :param CurrencyCode: 币种：RMB-人民币 USD-美圆 HKD-港元
-        """
-        super(TransferBankToFutureReq, self).__init__()
+    def __init__(self, FutureAccount=None, FuturePwdFlag=None, FutureAccPwd=None, TradeAmt=None, CustFee=None, CurrencyCode=None):
+        super().__init__()
         if FutureAccount:
             self.FutureAccount = FutureAccount.encode("GBK")
         if FuturePwdFlag:
@@ -611,25 +394,8 @@ class TransferBankToFutureRsp(Struct):
         ("CurrencyCode", c_char_Array_4),
     ]
 
-    def __init__(
-        self,
-        RetCode: str = None,
-        RetInfo: str = None,
-        FutureAccount: str = None,
-        TradeAmt: float = None,
-        CustFee: float = None,
-        CurrencyCode: str = None,
-    ):
-        """
-        银行资金转期货请求响应
-        :param RetCode: 响应代码
-        :param RetInfo: 响应信息
-        :param FutureAccount: 资金账户
-        :param TradeAmt: 转帐金额
-        :param CustFee: 应收客户手续费
-        :param CurrencyCode: 币种
-        """
-        super(TransferBankToFutureRsp, self).__init__()
+    def __init__(self, RetCode=None, RetInfo=None, FutureAccount=None, TradeAmt=None, CustFee=None, CurrencyCode=None):
+        super().__init__()
         if RetCode:
             self.RetCode = RetCode.encode("GBK")
         if RetInfo:
@@ -654,25 +420,8 @@ class TransferFutureToBankReq(Struct):
         ("CurrencyCode", c_char_Array_4),
     ]
 
-    def __init__(
-        self,
-        FutureAccount: str = None,
-        FuturePwdFlag: bytes = None,
-        FutureAccPwd: str = None,
-        TradeAmt: float = None,
-        CustFee: float = None,
-        CurrencyCode: str = None,
-    ):
-        """
-        期货资金转银行请求，TradeCode=202002
-        :param FutureAccount: 期货资金账户
-        :param FuturePwdFlag: 密码标志
-        :param FutureAccPwd: 密码
-        :param TradeAmt: 转账金额
-        :param CustFee: 客户手续费
-        :param CurrencyCode: 币种：RMB-人民币 USD-美圆 HKD-港元
-        """
-        super(TransferFutureToBankReq, self).__init__()
+    def __init__(self, FutureAccount=None, FuturePwdFlag=None, FutureAccPwd=None, TradeAmt=None, CustFee=None, CurrencyCode=None):
+        super().__init__()
         if FutureAccount:
             self.FutureAccount = FutureAccount.encode("GBK")
         if FuturePwdFlag:
@@ -697,25 +446,8 @@ class TransferFutureToBankRsp(Struct):
         ("CurrencyCode", c_char_Array_4),
     ]
 
-    def __init__(
-        self,
-        RetCode: str = None,
-        RetInfo: str = None,
-        FutureAccount: str = None,
-        TradeAmt: float = None,
-        CustFee: float = None,
-        CurrencyCode: str = None,
-    ):
-        """
-        期货资金转银行请求响应
-        :param RetCode: 响应代码
-        :param RetInfo: 响应信息
-        :param FutureAccount: 资金账户
-        :param TradeAmt: 转帐金额
-        :param CustFee: 应收客户手续费
-        :param CurrencyCode: 币种
-        """
-        super(TransferFutureToBankRsp, self).__init__()
+    def __init__(self, RetCode=None, RetInfo=None, FutureAccount=None, TradeAmt=None, CustFee=None, CurrencyCode=None):
+        super().__init__()
         if RetCode:
             self.RetCode = RetCode.encode("GBK")
         if RetInfo:
@@ -738,21 +470,8 @@ class TransferQryBankReq(Struct):
         ("CurrencyCode", c_char_Array_4),
     ]
 
-    def __init__(
-        self,
-        FutureAccount: str = None,
-        FuturePwdFlag: bytes = None,
-        FutureAccPwd: str = None,
-        CurrencyCode: str = None,
-    ):
-        """
-        查询银行资金请求，TradeCode=204002
-        :param FutureAccount: 期货资金账户
-        :param FuturePwdFlag: 密码标志
-        :param FutureAccPwd: 密码
-        :param CurrencyCode: 币种：RMB-人民币 USD-美圆 HKD-港元
-        """
-        super(TransferQryBankReq, self).__init__()
+    def __init__(self, FutureAccount=None, FuturePwdFlag=None, FutureAccPwd=None, CurrencyCode=None):
+        super().__init__()
         if FutureAccount:
             self.FutureAccount = FutureAccount.encode("GBK")
         if FuturePwdFlag:
@@ -774,27 +493,8 @@ class TransferQryBankRsp(Struct):
         ("CurrencyCode", c_char_Array_4),
     ]
 
-    def __init__(
-        self,
-        RetCode: str = None,
-        RetInfo: str = None,
-        FutureAccount: str = None,
-        TradeAmt: float = None,
-        UseAmt: float = None,
-        FetchAmt: float = None,
-        CurrencyCode: str = None,
-    ):
-        """
-        查询银行资金请求响应
-        :param RetCode: 响应代码
-        :param RetInfo: 响应信息
-        :param FutureAccount: 资金账户
-        :param TradeAmt: 银行余额
-        :param UseAmt: 银行可用余额
-        :param FetchAmt: 银行可取余额
-        :param CurrencyCode: 币种
-        """
-        super(TransferQryBankRsp, self).__init__()
+    def __init__(self, RetCode=None, RetInfo=None, FutureAccount=None, TradeAmt=None, UseAmt=None, FetchAmt=None, CurrencyCode=None):
+        super().__init__()
         if RetCode:
             self.RetCode = RetCode.encode("GBK")
         if RetInfo:
@@ -816,15 +516,8 @@ class TransferQryDetailReq(Struct):
         ("FutureAccount", c_char_Array_13),
     ]
 
-    def __init__(
-        self,
-        FutureAccount: str = None,
-    ):
-        """
-        查询银行交易明细请求，TradeCode=204999
-        :param FutureAccount: 期货资金账户
-        """
-        super(TransferQryDetailReq, self).__init__()
+    def __init__(self, FutureAccount=None):
+        super().__init__()
         if FutureAccount:
             self.FutureAccount = FutureAccount.encode("GBK")
 
@@ -847,41 +540,8 @@ class TransferQryDetailRsp(Struct):
         ("Flag", c_char),
     ]
 
-    def __init__(
-        self,
-        TradeDate: str = None,
-        TradeTime: str = None,
-        TradeCode: str = None,
-        FutureSerial: int = None,
-        FutureID: str = None,
-        FutureAccount: str = None,
-        BankSerial: int = None,
-        BankID: str = None,
-        BankBrchID: str = None,
-        BankAccount: str = None,
-        CertCode: str = None,
-        CurrencyCode: str = None,
-        TxAmount: float = None,
-        Flag: bytes = None,
-    ):
-        """
-        查询银行交易明细请求响应
-        :param TradeDate: 交易日期
-        :param TradeTime: 交易时间
-        :param TradeCode: 交易代码
-        :param FutureSerial: 期货流水号
-        :param FutureID: 期货公司代码
-        :param FutureAccount: 资金帐号
-        :param BankSerial: 银行流水号
-        :param BankID: 银行代码
-        :param BankBrchID: 银行分中心代码
-        :param BankAccount: 银行账号
-        :param CertCode: 证件号码
-        :param CurrencyCode: 货币代码
-        :param TxAmount: 发生金额
-        :param Flag: 有效标志
-        """
-        super(TransferQryDetailRsp, self).__init__()
+    def __init__(self, TradeDate=None, TradeTime=None, TradeCode=None, FutureSerial=None, FutureID=None, FutureAccount=None, BankSerial=None, BankID=None, BankBrchID=None, BankAccount=None, CertCode=None, CurrencyCode=None, TxAmount=None, Flag=None):
+        super().__init__()
         if TradeDate:
             self.TradeDate = TradeDate.encode("GBK")
         if TradeTime:
@@ -918,17 +578,8 @@ class RspInfo(Struct):
         ("ErrorMsg", c_char_Array_81),
     ]
 
-    def __init__(
-        self,
-        ErrorID: int = None,
-        ErrorMsg: str = None,
-    ):
-        """
-        响应信息
-        :param ErrorID: 错误代码
-        :param ErrorMsg: 错误信息
-        """
-        super(RspInfo, self).__init__()
+    def __init__(self, ErrorID=None, ErrorMsg=None):
+        super().__init__()
         if ErrorID:
             self.ErrorID = ErrorID
         if ErrorMsg:
@@ -942,19 +593,8 @@ class Exchange(Struct):
         ("ExchangeProperty", c_char),
     ]
 
-    def __init__(
-        self,
-        ExchangeID: str = None,
-        ExchangeName: str = None,
-        ExchangeProperty: bytes = None,
-    ):
-        """
-        交易所
-        :param ExchangeID: 交易所代码
-        :param ExchangeName: 交易所名称
-        :param ExchangeProperty: 交易所属性
-        """
-        super(Exchange, self).__init__()
+    def __init__(self, ExchangeID=None, ExchangeName=None, ExchangeProperty=None):
+        super().__init__()
         if ExchangeID:
             self.ExchangeID = ExchangeID.encode("GBK")
         if ExchangeName:
@@ -984,47 +624,8 @@ class Product(Struct):
         ("UnderlyingMultiple", c_double),
     ]
 
-    def __init__(
-        self,
-        ProductID: str = None,
-        ProductName: str = None,
-        ExchangeID: str = None,
-        ProductClass: bytes = None,
-        VolumeMultiple: int = None,
-        PriceTick: float = None,
-        MaxMarketOrderVolume: int = None,
-        MinMarketOrderVolume: int = None,
-        MaxLimitOrderVolume: int = None,
-        MinLimitOrderVolume: int = None,
-        PositionType: bytes = None,
-        PositionDateType: bytes = None,
-        CloseDealType: bytes = None,
-        TradeCurrencyID: str = None,
-        MortgageFundUseRange: bytes = None,
-        ExchangeProductID: str = None,
-        UnderlyingMultiple: float = None,
-    ):
-        """
-        产品
-        :param ProductID: 产品代码
-        :param ProductName: 产品名称
-        :param ExchangeID: 交易所代码
-        :param ProductClass: 产品类型
-        :param VolumeMultiple: 合约数量乘数
-        :param PriceTick: 最小变动价位
-        :param MaxMarketOrderVolume: 市价单最大下单量
-        :param MinMarketOrderVolume: 市价单最小下单量
-        :param MaxLimitOrderVolume: 限价单最大下单量
-        :param MinLimitOrderVolume: 限价单最小下单量
-        :param PositionType: 持仓类型
-        :param PositionDateType: 持仓日期类型
-        :param CloseDealType: 平仓处理类型
-        :param TradeCurrencyID: 交易币种类型
-        :param MortgageFundUseRange: 质押资金可用范围
-        :param ExchangeProductID: 交易所产品代码
-        :param UnderlyingMultiple: 合约基础商品乘数
-        """
-        super(Product, self).__init__()
+    def __init__(self, ProductID=None, ProductName=None, ExchangeID=None, ProductClass=None, VolumeMultiple=None, PriceTick=None, MaxMarketOrderVolume=None, MinMarketOrderVolume=None, MaxLimitOrderVolume=None, MinLimitOrderVolume=None, PositionType=None, PositionDateType=None, CloseDealType=None, TradeCurrencyID=None, MortgageFundUseRange=None, ExchangeProductID=None, UnderlyingMultiple=None):
+        super().__init__()
         if ProductID:
             self.ProductID = ProductID.encode("GBK")
         if ProductName:
@@ -1096,75 +697,8 @@ class Instrument(Struct):
         ("CombinationType", c_char),
     ]
 
-    def __init__(
-        self,
-        InstrumentID: str = None,
-        ExchangeID: str = None,
-        InstrumentName: str = None,
-        ExchangeInstID: str = None,
-        ProductID: str = None,
-        ProductClass: bytes = None,
-        DeliveryYear: int = None,
-        DeliveryMonth: int = None,
-        MaxMarketOrderVolume: int = None,
-        MinMarketOrderVolume: int = None,
-        MaxLimitOrderVolume: int = None,
-        MinLimitOrderVolume: int = None,
-        VolumeMultiple: int = None,
-        PriceTick: float = None,
-        CreateDate: str = None,
-        OpenDate: str = None,
-        ExpireDate: str = None,
-        StartDelivDate: str = None,
-        EndDelivDate: str = None,
-        InstLifePhase: bytes = None,
-        IsTrading: int = None,
-        PositionType: bytes = None,
-        PositionDateType: bytes = None,
-        LongMarginRatio: float = None,
-        ShortMarginRatio: float = None,
-        MaxMarginSideAlgorithm: bytes = None,
-        UnderlyingInstrID: str = None,
-        StrikePrice: float = None,
-        OptionsType: bytes = None,
-        UnderlyingMultiple: float = None,
-        CombinationType: bytes = None,
-    ):
-        """
-        合约
-        :param InstrumentID: 合约代码
-        :param ExchangeID: 交易所代码
-        :param InstrumentName: 合约名称
-        :param ExchangeInstID: 合约在交易所的代码
-        :param ProductID: 产品代码
-        :param ProductClass: 产品类型
-        :param DeliveryYear: 交割年份
-        :param DeliveryMonth: 交割月
-        :param MaxMarketOrderVolume: 市价单最大下单量
-        :param MinMarketOrderVolume: 市价单最小下单量
-        :param MaxLimitOrderVolume: 限价单最大下单量
-        :param MinLimitOrderVolume: 限价单最小下单量
-        :param VolumeMultiple: 合约数量乘数
-        :param PriceTick: 最小变动价位
-        :param CreateDate: 创建日
-        :param OpenDate: 上市日
-        :param ExpireDate: 到期日
-        :param StartDelivDate: 开始交割日
-        :param EndDelivDate: 结束交割日
-        :param InstLifePhase: 合约生命周期状态
-        :param IsTrading: 当前是否交易
-        :param PositionType: 持仓类型
-        :param PositionDateType: 持仓日期类型
-        :param LongMarginRatio: 多头保证金率
-        :param ShortMarginRatio: 空头保证金率
-        :param MaxMarginSideAlgorithm: 是否使用大额单边保证金算法
-        :param UnderlyingInstrID: 基础商品代码
-        :param StrikePrice: 执行价
-        :param OptionsType: 期权类型
-        :param UnderlyingMultiple: 合约基础商品乘数
-        :param CombinationType: 组合类型
-        """
-        super(Instrument, self).__init__()
+    def __init__(self, InstrumentID=None, ExchangeID=None, InstrumentName=None, ExchangeInstID=None, ProductID=None, ProductClass=None, DeliveryYear=None, DeliveryMonth=None, MaxMarketOrderVolume=None, MinMarketOrderVolume=None, MaxLimitOrderVolume=None, MinLimitOrderVolume=None, VolumeMultiple=None, PriceTick=None, CreateDate=None, OpenDate=None, ExpireDate=None, StartDelivDate=None, EndDelivDate=None, InstLifePhase=None, IsTrading=None, PositionType=None, PositionDateType=None, LongMarginRatio=None, ShortMarginRatio=None, MaxMarginSideAlgorithm=None, UnderlyingInstrID=None, StrikePrice=None, OptionsType=None, UnderlyingMultiple=None, CombinationType=None):
+        super().__init__()
         if InstrumentID:
             self.InstrumentID = InstrumentID.encode("GBK")
         if ExchangeID:
@@ -1237,21 +771,8 @@ class Broker(Struct):
         ("IsActive", c_int),
     ]
 
-    def __init__(
-        self,
-        BrokerID: str = None,
-        BrokerAbbr: str = None,
-        BrokerName: str = None,
-        IsActive: int = None,
-    ):
-        """
-        经纪公司
-        :param BrokerID: 经纪公司代码
-        :param BrokerAbbr: 经纪公司简称
-        :param BrokerName: 经纪公司名称
-        :param IsActive: 是否活跃
-        """
-        super(Broker, self).__init__()
+    def __init__(self, BrokerID=None, BrokerAbbr=None, BrokerName=None, IsActive=None):
+        super().__init__()
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
         if BrokerAbbr:
@@ -1272,25 +793,8 @@ class Trader(Struct):
         ("BrokerID", c_char_Array_11),
     ]
 
-    def __init__(
-        self,
-        ExchangeID: str = None,
-        TraderID: str = None,
-        ParticipantID: str = None,
-        Password: str = None,
-        InstallCount: int = None,
-        BrokerID: str = None,
-    ):
-        """
-        交易所交易员
-        :param ExchangeID: 交易所代码
-        :param TraderID: 交易所交易员代码
-        :param ParticipantID: 会员代码
-        :param Password: 密码
-        :param InstallCount: 安装数量
-        :param BrokerID: 经纪公司代码
-        """
-        super(Trader, self).__init__()
+    def __init__(self, ExchangeID=None, TraderID=None, ParticipantID=None, Password=None, InstallCount=None, BrokerID=None):
+        super().__init__()
         if ExchangeID:
             self.ExchangeID = ExchangeID.encode("GBK")
         if TraderID:
@@ -1322,39 +826,8 @@ class Investor(Struct):
         ("MarginModelID", c_char_Array_13),
     ]
 
-    def __init__(
-        self,
-        InvestorID: str = None,
-        BrokerID: str = None,
-        InvestorGroupID: str = None,
-        InvestorName: str = None,
-        IdentifiedCardType: bytes = None,
-        IdentifiedCardNo: str = None,
-        IsActive: int = None,
-        Telephone: str = None,
-        Address: str = None,
-        OpenDate: str = None,
-        Mobile: str = None,
-        CommModelID: str = None,
-        MarginModelID: str = None,
-    ):
-        """
-        投资者
-        :param InvestorID: 投资者代码
-        :param BrokerID: 经纪公司代码
-        :param InvestorGroupID: 投资者分组代码
-        :param InvestorName: 投资者名称
-        :param IdentifiedCardType: 证件类型
-        :param IdentifiedCardNo: 证件号码
-        :param IsActive: 是否活跃
-        :param Telephone: 联系电话
-        :param Address: 通讯地址
-        :param OpenDate: 开户日期
-        :param Mobile: 手机
-        :param CommModelID: 手续费率模板代码
-        :param MarginModelID: 保证金率模板代码
-        """
-        super(Investor, self).__init__()
+    def __init__(self, InvestorID=None, BrokerID=None, InvestorGroupID=None, InvestorName=None, IdentifiedCardType=None, IdentifiedCardNo=None, IsActive=None, Telephone=None, Address=None, OpenDate=None, Mobile=None, CommModelID=None, MarginModelID=None):
+        super().__init__()
         if InvestorID:
             self.InvestorID = InvestorID.encode("GBK")
         if BrokerID:
@@ -1396,31 +869,8 @@ class TradingCode(Struct):
         ("InvestUnitID", c_char_Array_17),
     ]
 
-    def __init__(
-        self,
-        InvestorID: str = None,
-        BrokerID: str = None,
-        ExchangeID: str = None,
-        ClientID: str = None,
-        IsActive: int = None,
-        ClientIDType: bytes = None,
-        BranchID: str = None,
-        BizType: bytes = None,
-        InvestUnitID: str = None,
-    ):
-        """
-        交易编码
-        :param InvestorID: 投资者代码
-        :param BrokerID: 经纪公司代码
-        :param ExchangeID: 交易所代码
-        :param ClientID: 客户代码
-        :param IsActive: 是否活跃
-        :param ClientIDType: 交易编码类型
-        :param BranchID: 营业部编号
-        :param BizType: 业务类型
-        :param InvestUnitID: 投资单元代码
-        """
-        super(TradingCode, self).__init__()
+    def __init__(self, InvestorID=None, BrokerID=None, ExchangeID=None, ClientID=None, IsActive=None, ClientIDType=None, BranchID=None, BizType=None, InvestUnitID=None):
+        super().__init__()
         if InvestorID:
             self.InvestorID = InvestorID.encode("GBK")
         if BrokerID:
@@ -1449,21 +899,8 @@ class PartBroker(Struct):
         ("IsActive", c_int),
     ]
 
-    def __init__(
-        self,
-        BrokerID: str = None,
-        ExchangeID: str = None,
-        ParticipantID: str = None,
-        IsActive: int = None,
-    ):
-        """
-        会员编码和经纪公司编码对照表
-        :param BrokerID: 经纪公司代码
-        :param ExchangeID: 交易所代码
-        :param ParticipantID: 会员代码
-        :param IsActive: 是否活跃
-        """
-        super(PartBroker, self).__init__()
+    def __init__(self, BrokerID=None, ExchangeID=None, ParticipantID=None, IsActive=None):
+        super().__init__()
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
         if ExchangeID:
@@ -1482,21 +919,8 @@ class SuperUser(Struct):
         ("IsActive", c_int),
     ]
 
-    def __init__(
-        self,
-        UserID: str = None,
-        UserName: str = None,
-        Password: str = None,
-        IsActive: int = None,
-    ):
-        """
-        管理用户
-        :param UserID: 用户代码
-        :param UserName: 用户名称
-        :param Password: 密码
-        :param IsActive: 是否活跃
-        """
-        super(SuperUser, self).__init__()
+    def __init__(self, UserID=None, UserName=None, Password=None, IsActive=None):
+        super().__init__()
         if UserID:
             self.UserID = UserID.encode("GBK")
         if UserName:
@@ -1513,17 +937,8 @@ class SuperUserFunction(Struct):
         ("FunctionCode", c_char),
     ]
 
-    def __init__(
-        self,
-        UserID: str = None,
-        FunctionCode: bytes = None,
-    ):
-        """
-        管理用户功能权限
-        :param UserID: 用户代码
-        :param FunctionCode: 功能代码
-        """
-        super(SuperUserFunction, self).__init__()
+    def __init__(self, UserID=None, FunctionCode=None):
+        super().__init__()
         if UserID:
             self.UserID = UserID.encode("GBK")
         if FunctionCode:
@@ -1537,19 +952,8 @@ class InvestorGroup(Struct):
         ("InvestorGroupName", c_char_Array_41),
     ]
 
-    def __init__(
-        self,
-        BrokerID: str = None,
-        InvestorGroupID: str = None,
-        InvestorGroupName: str = None,
-    ):
-        """
-        投资者组
-        :param BrokerID: 经纪公司代码
-        :param InvestorGroupID: 投资者分组代码
-        :param InvestorGroupName: 投资者分组名称
-        """
-        super(InvestorGroup, self).__init__()
+    def __init__(self, BrokerID=None, InvestorGroupID=None, InvestorGroupName=None):
+        super().__init__()
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
         if InvestorGroupID:
@@ -1611,111 +1015,8 @@ class TradingAccount(Struct):
         ("RemainSwap", c_double),
     ]
 
-    def __init__(
-        self,
-        BrokerID: str = None,
-        AccountID: str = None,
-        PreMortgage: float = None,
-        PreCredit: float = None,
-        PreDeposit: float = None,
-        PreBalance: float = None,
-        PreMargin: float = None,
-        InterestBase: float = None,
-        Interest: float = None,
-        Deposit: float = None,
-        Withdraw: float = None,
-        FrozenMargin: float = None,
-        FrozenCash: float = None,
-        FrozenCommission: float = None,
-        CurrMargin: float = None,
-        CashIn: float = None,
-        Commission: float = None,
-        CloseProfit: float = None,
-        PositionProfit: float = None,
-        Balance: float = None,
-        Available: float = None,
-        WithdrawQuota: float = None,
-        Reserve: float = None,
-        TradingDay: str = None,
-        SettlementID: int = None,
-        Credit: float = None,
-        Mortgage: float = None,
-        ExchangeMargin: float = None,
-        DeliveryMargin: float = None,
-        ExchangeDeliveryMargin: float = None,
-        ReserveBalance: float = None,
-        CurrencyID: str = None,
-        PreFundMortgageIn: float = None,
-        PreFundMortgageOut: float = None,
-        FundMortgageIn: float = None,
-        FundMortgageOut: float = None,
-        FundMortgageAvailable: float = None,
-        MortgageableFund: float = None,
-        SpecProductMargin: float = None,
-        SpecProductFrozenMargin: float = None,
-        SpecProductCommission: float = None,
-        SpecProductFrozenCommission: float = None,
-        SpecProductPositionProfit: float = None,
-        SpecProductCloseProfit: float = None,
-        SpecProductPositionProfitByAlg: float = None,
-        SpecProductExchangeMargin: float = None,
-        BizType: bytes = None,
-        FrozenSwap: float = None,
-        RemainSwap: float = None,
-    ):
-        """
-        资金账户
-        :param BrokerID: 经纪公司代码
-        :param AccountID: 投资者帐号
-        :param PreMortgage: 上次质押金额
-        :param PreCredit: 上次信用额度
-        :param PreDeposit: 上次存款额
-        :param PreBalance: 上次结算准备金
-        :param PreMargin: 上次占用的保证金
-        :param InterestBase: 利息基数
-        :param Interest: 利息收入
-        :param Deposit: 入金金额
-        :param Withdraw: 出金金额
-        :param FrozenMargin: 冻结的保证金
-        :param FrozenCash: 冻结的资金
-        :param FrozenCommission: 冻结的手续费
-        :param CurrMargin: 当前保证金总额
-        :param CashIn: 资金差额
-        :param Commission: 手续费
-        :param CloseProfit: 平仓盈亏
-        :param PositionProfit: 持仓盈亏
-        :param Balance: 期货结算准备金
-        :param Available: 可用资金
-        :param WithdrawQuota: 可取资金
-        :param Reserve: 基本准备金
-        :param TradingDay: 交易日
-        :param SettlementID: 结算编号
-        :param Credit: 信用额度
-        :param Mortgage: 质押金额
-        :param ExchangeMargin: 交易所保证金
-        :param DeliveryMargin: 投资者交割保证金
-        :param ExchangeDeliveryMargin: 交易所交割保证金
-        :param ReserveBalance: 保底期货结算准备金
-        :param CurrencyID: 币种代码
-        :param PreFundMortgageIn: 上次货币质入金额
-        :param PreFundMortgageOut: 上次货币质出金额
-        :param FundMortgageIn: 货币质入金额
-        :param FundMortgageOut: 货币质出金额
-        :param FundMortgageAvailable: 货币质押余额
-        :param MortgageableFund: 可质押货币金额
-        :param SpecProductMargin: 特殊产品占用保证金
-        :param SpecProductFrozenMargin: 特殊产品冻结保证金
-        :param SpecProductCommission: 特殊产品手续费
-        :param SpecProductFrozenCommission: 特殊产品冻结手续费
-        :param SpecProductPositionProfit: 特殊产品持仓盈亏
-        :param SpecProductCloseProfit: 特殊产品平仓盈亏
-        :param SpecProductPositionProfitByAlg: 根据持仓盈亏算法计算的特殊产品持仓盈亏
-        :param SpecProductExchangeMargin: 特殊产品交易所保证金
-        :param BizType: 业务类型
-        :param FrozenSwap: 延时换汇冻结金额
-        :param RemainSwap: 剩余换汇额度
-        """
-        super(TradingAccount, self).__init__()
+    def __init__(self, BrokerID=None, AccountID=None, PreMortgage=None, PreCredit=None, PreDeposit=None, PreBalance=None, PreMargin=None, InterestBase=None, Interest=None, Deposit=None, Withdraw=None, FrozenMargin=None, FrozenCash=None, FrozenCommission=None, CurrMargin=None, CashIn=None, Commission=None, CloseProfit=None, PositionProfit=None, Balance=None, Available=None, WithdrawQuota=None, Reserve=None, TradingDay=None, SettlementID=None, Credit=None, Mortgage=None, ExchangeMargin=None, DeliveryMargin=None, ExchangeDeliveryMargin=None, ReserveBalance=None, CurrencyID=None, PreFundMortgageIn=None, PreFundMortgageOut=None, FundMortgageIn=None, FundMortgageOut=None, FundMortgageAvailable=None, MortgageableFund=None, SpecProductMargin=None, SpecProductFrozenMargin=None, SpecProductCommission=None, SpecProductFrozenCommission=None, SpecProductPositionProfit=None, SpecProductCloseProfit=None, SpecProductPositionProfitByAlg=None, SpecProductExchangeMargin=None, BizType=None, FrozenSwap=None, RemainSwap=None):
+        super().__init__()
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
         if AccountID:
@@ -1867,107 +1168,8 @@ class InvestorPosition(Struct):
         ("PositionCostOffset", c_double),
     ]
 
-    def __init__(
-        self,
-        InstrumentID: str = None,
-        BrokerID: str = None,
-        InvestorID: str = None,
-        PosiDirection: bytes = None,
-        HedgeFlag: bytes = None,
-        PositionDate: bytes = None,
-        YdPosition: int = None,
-        Position: int = None,
-        LongFrozen: int = None,
-        ShortFrozen: int = None,
-        LongFrozenAmount: float = None,
-        ShortFrozenAmount: float = None,
-        OpenVolume: int = None,
-        CloseVolume: int = None,
-        OpenAmount: float = None,
-        CloseAmount: float = None,
-        PositionCost: float = None,
-        PreMargin: float = None,
-        UseMargin: float = None,
-        FrozenMargin: float = None,
-        FrozenCash: float = None,
-        FrozenCommission: float = None,
-        CashIn: float = None,
-        Commission: float = None,
-        CloseProfit: float = None,
-        PositionProfit: float = None,
-        PreSettlementPrice: float = None,
-        SettlementPrice: float = None,
-        TradingDay: str = None,
-        SettlementID: int = None,
-        OpenCost: float = None,
-        ExchangeMargin: float = None,
-        CombPosition: int = None,
-        CombLongFrozen: int = None,
-        CombShortFrozen: int = None,
-        CloseProfitByDate: float = None,
-        CloseProfitByTrade: float = None,
-        TodayPosition: int = None,
-        MarginRateByMoney: float = None,
-        MarginRateByVolume: float = None,
-        StrikeFrozen: int = None,
-        StrikeFrozenAmount: float = None,
-        AbandonFrozen: int = None,
-        ExchangeID: str = None,
-        YdStrikeFrozen: int = None,
-        InvestUnitID: str = None,
-        PositionCostOffset: float = None,
-    ):
-        """
-        投资者持仓
-        :param InstrumentID: 合约代码
-        :param BrokerID: 经纪公司代码
-        :param InvestorID: 投资者代码
-        :param PosiDirection: 持仓多空方向
-        :param HedgeFlag: 投机套保标志
-        :param PositionDate: 持仓日期
-        :param YdPosition: 上日持仓
-        :param Position: 今日持仓
-        :param LongFrozen: 多头冻结
-        :param ShortFrozen: 空头冻结
-        :param LongFrozenAmount: 开仓冻结金额
-        :param ShortFrozenAmount: 开仓冻结金额
-        :param OpenVolume: 开仓量
-        :param CloseVolume: 平仓量
-        :param OpenAmount: 开仓金额
-        :param CloseAmount: 平仓金额
-        :param PositionCost: 持仓成本
-        :param PreMargin: 上次占用的保证金
-        :param UseMargin: 占用的保证金
-        :param FrozenMargin: 冻结的保证金
-        :param FrozenCash: 冻结的资金
-        :param FrozenCommission: 冻结的手续费
-        :param CashIn: 资金差额
-        :param Commission: 手续费
-        :param CloseProfit: 平仓盈亏
-        :param PositionProfit: 持仓盈亏
-        :param PreSettlementPrice: 上次结算价
-        :param SettlementPrice: 本次结算价
-        :param TradingDay: 交易日
-        :param SettlementID: 结算编号
-        :param OpenCost: 开仓成本
-        :param ExchangeMargin: 交易所保证金
-        :param CombPosition: 组合成交形成的持仓
-        :param CombLongFrozen: 组合多头冻结
-        :param CombShortFrozen: 组合空头冻结
-        :param CloseProfitByDate: 逐日盯市平仓盈亏
-        :param CloseProfitByTrade: 逐笔对冲平仓盈亏
-        :param TodayPosition: 今日持仓
-        :param MarginRateByMoney: 保证金率
-        :param MarginRateByVolume: 保证金率(按手数)
-        :param StrikeFrozen: 执行冻结
-        :param StrikeFrozenAmount: 执行冻结金额
-        :param AbandonFrozen: 放弃执行冻结
-        :param ExchangeID: 交易所代码
-        :param YdStrikeFrozen: 执行冻结的昨仓
-        :param InvestUnitID: 投资单元代码
-        :param PositionCostOffset: 大商所持仓成本差值，只有大商所使用
-        """
-        super(InvestorPosition, self).__init__()
+    def __init__(self, InstrumentID=None, BrokerID=None, InvestorID=None, PosiDirection=None, HedgeFlag=None, PositionDate=None, YdPosition=None, Position=None, LongFrozen=None, ShortFrozen=None, LongFrozenAmount=None, ShortFrozenAmount=None, OpenVolume=None, CloseVolume=None, OpenAmount=None, CloseAmount=None, PositionCost=None, PreMargin=None, UseMargin=None, FrozenMargin=None, FrozenCash=None, FrozenCommission=None, CashIn=None, Commission=None, CloseProfit=None, PositionProfit=None, PreSettlementPrice=None, SettlementPrice=None, TradingDay=None, SettlementID=None, OpenCost=None, ExchangeMargin=None, CombPosition=None, CombLongFrozen=None, CombShortFrozen=None, CloseProfitByDate=None, CloseProfitByTrade=None, TodayPosition=None, MarginRateByMoney=None, MarginRateByVolume=None, StrikeFrozen=None, StrikeFrozenAmount=None, AbandonFrozen=None, ExchangeID=None, YdStrikeFrozen=None, InvestUnitID=None, PositionCostOffset=None):
+        super().__init__()
         if InstrumentID:
             self.InstrumentID = InstrumentID.encode("GBK")
         if BrokerID:
@@ -2080,37 +1282,8 @@ class InstrumentMarginRate(Struct):
         ("InvestUnitID", c_char_Array_17),
     ]
 
-    def __init__(
-        self,
-        InstrumentID: str = None,
-        InvestorRange: bytes = None,
-        BrokerID: str = None,
-        InvestorID: str = None,
-        HedgeFlag: bytes = None,
-        LongMarginRatioByMoney: float = None,
-        LongMarginRatioByVolume: float = None,
-        ShortMarginRatioByMoney: float = None,
-        ShortMarginRatioByVolume: float = None,
-        IsRelative: int = None,
-        ExchangeID: str = None,
-        InvestUnitID: str = None,
-    ):
-        """
-        合约保证金率
-        :param InstrumentID: 合约代码
-        :param InvestorRange: 投资者范围
-        :param BrokerID: 经纪公司代码
-        :param InvestorID: 投资者代码
-        :param HedgeFlag: 投机套保标志
-        :param LongMarginRatioByMoney: 多头保证金率
-        :param LongMarginRatioByVolume: 多头保证金费
-        :param ShortMarginRatioByMoney: 空头保证金率
-        :param ShortMarginRatioByVolume: 空头保证金费
-        :param IsRelative: 是否相对交易所收取
-        :param ExchangeID: 交易所代码
-        :param InvestUnitID: 投资单元代码
-        """
-        super(InstrumentMarginRate, self).__init__()
+    def __init__(self, InstrumentID=None, InvestorRange=None, BrokerID=None, InvestorID=None, HedgeFlag=None, LongMarginRatioByMoney=None, LongMarginRatioByVolume=None, ShortMarginRatioByMoney=None, ShortMarginRatioByVolume=None, IsRelative=None, ExchangeID=None, InvestUnitID=None):
+        super().__init__()
         if InstrumentID:
             self.InstrumentID = InstrumentID.encode("GBK")
         if InvestorRange:
@@ -2154,39 +1327,8 @@ class InstrumentCommissionRate(Struct):
         ("InvestUnitID", c_char_Array_17),
     ]
 
-    def __init__(
-        self,
-        InstrumentID: str = None,
-        InvestorRange: bytes = None,
-        BrokerID: str = None,
-        InvestorID: str = None,
-        OpenRatioByMoney: float = None,
-        OpenRatioByVolume: float = None,
-        CloseRatioByMoney: float = None,
-        CloseRatioByVolume: float = None,
-        CloseTodayRatioByMoney: float = None,
-        CloseTodayRatioByVolume: float = None,
-        ExchangeID: str = None,
-        BizType: bytes = None,
-        InvestUnitID: str = None,
-    ):
-        """
-        合约手续费率
-        :param InstrumentID: 合约代码
-        :param InvestorRange: 投资者范围
-        :param BrokerID: 经纪公司代码
-        :param InvestorID: 投资者代码
-        :param OpenRatioByMoney: 开仓手续费率
-        :param OpenRatioByVolume: 开仓手续费
-        :param CloseRatioByMoney: 平仓手续费率
-        :param CloseRatioByVolume: 平仓手续费
-        :param CloseTodayRatioByMoney: 平今手续费率
-        :param CloseTodayRatioByVolume: 平今手续费
-        :param ExchangeID: 交易所代码
-        :param BizType: 业务类型
-        :param InvestUnitID: 投资单元代码
-        """
-        super(InstrumentCommissionRate, self).__init__()
+    def __init__(self, InstrumentID=None, InvestorRange=None, BrokerID=None, InvestorID=None, OpenRatioByMoney=None, OpenRatioByVolume=None, CloseRatioByMoney=None, CloseRatioByVolume=None, CloseTodayRatioByMoney=None, CloseTodayRatioByVolume=None, ExchangeID=None, BizType=None, InvestUnitID=None):
+        super().__init__()
         if InstrumentID:
             self.InstrumentID = InstrumentID.encode("GBK")
         if InvestorRange:
@@ -2263,101 +1405,8 @@ class DepthMarketData(Struct):
         ("ActionDay", c_char_Array_9),
     ]
 
-    def __init__(
-        self,
-        TradingDay: str = None,
-        InstrumentID: str = None,
-        ExchangeID: str = None,
-        ExchangeInstID: str = None,
-        LastPrice: float = None,
-        PreSettlementPrice: float = None,
-        PreClosePrice: float = None,
-        PreOpenInterest: float = None,
-        OpenPrice: float = None,
-        HighestPrice: float = None,
-        LowestPrice: float = None,
-        Volume: int = None,
-        Turnover: float = None,
-        OpenInterest: float = None,
-        ClosePrice: float = None,
-        SettlementPrice: float = None,
-        UpperLimitPrice: float = None,
-        LowerLimitPrice: float = None,
-        PreDelta: float = None,
-        CurrDelta: float = None,
-        UpdateTime: str = None,
-        UpdateMillisec: int = None,
-        BidPrice1: float = None,
-        BidVolume1: int = None,
-        AskPrice1: float = None,
-        AskVolume1: int = None,
-        BidPrice2: float = None,
-        BidVolume2: int = None,
-        AskPrice2: float = None,
-        AskVolume2: int = None,
-        BidPrice3: float = None,
-        BidVolume3: int = None,
-        AskPrice3: float = None,
-        AskVolume3: int = None,
-        BidPrice4: float = None,
-        BidVolume4: int = None,
-        AskPrice4: float = None,
-        AskVolume4: int = None,
-        BidPrice5: float = None,
-        BidVolume5: int = None,
-        AskPrice5: float = None,
-        AskVolume5: int = None,
-        AveragePrice: float = None,
-        ActionDay: str = None,
-    ):
-        """
-        深度行情
-        :param TradingDay: 交易日
-        :param InstrumentID: 合约代码
-        :param ExchangeID: 交易所代码
-        :param ExchangeInstID: 合约在交易所的代码
-        :param LastPrice: 最新价
-        :param PreSettlementPrice: 上次结算价
-        :param PreClosePrice: 昨收盘
-        :param PreOpenInterest: 昨持仓量
-        :param OpenPrice: 今开盘
-        :param HighestPrice: 最高价
-        :param LowestPrice: 最低价
-        :param Volume: 数量
-        :param Turnover: 成交金额
-        :param OpenInterest: 持仓量
-        :param ClosePrice: 今收盘
-        :param SettlementPrice: 本次结算价
-        :param UpperLimitPrice: 涨停板价
-        :param LowerLimitPrice: 跌停板价
-        :param PreDelta: 昨虚实度
-        :param CurrDelta: 今虚实度
-        :param UpdateTime: 最后修改时间
-        :param UpdateMillisec: 最后修改毫秒
-        :param BidPrice1: 申买价一
-        :param BidVolume1: 申买量一
-        :param AskPrice1: 申卖价一
-        :param AskVolume1: 申卖量一
-        :param BidPrice2: 申买价二
-        :param BidVolume2: 申买量二
-        :param AskPrice2: 申卖价二
-        :param AskVolume2: 申卖量二
-        :param BidPrice3: 申买价三
-        :param BidVolume3: 申买量三
-        :param AskPrice3: 申卖价三
-        :param AskVolume3: 申卖量三
-        :param BidPrice4: 申买价四
-        :param BidVolume4: 申买量四
-        :param AskPrice4: 申卖价四
-        :param AskVolume4: 申卖量四
-        :param BidPrice5: 申买价五
-        :param BidVolume5: 申买量五
-        :param AskPrice5: 申卖价五
-        :param AskVolume5: 申卖量五
-        :param AveragePrice: 当日均价
-        :param ActionDay: 业务日期
-        """
-        super(DepthMarketData, self).__init__()
+    def __init__(self, TradingDay=None, InstrumentID=None, ExchangeID=None, ExchangeInstID=None, LastPrice=None, PreSettlementPrice=None, PreClosePrice=None, PreOpenInterest=None, OpenPrice=None, HighestPrice=None, LowestPrice=None, Volume=None, Turnover=None, OpenInterest=None, ClosePrice=None, SettlementPrice=None, UpperLimitPrice=None, LowerLimitPrice=None, PreDelta=None, CurrDelta=None, UpdateTime=None, UpdateMillisec=None, BidPrice1=None, BidVolume1=None, AskPrice1=None, AskVolume1=None, BidPrice2=None, BidVolume2=None, AskPrice2=None, AskVolume2=None, BidPrice3=None, BidVolume3=None, AskPrice3=None, AskVolume3=None, BidPrice4=None, BidVolume4=None, AskPrice4=None, AskVolume4=None, BidPrice5=None, BidVolume5=None, AskPrice5=None, AskVolume5=None, AveragePrice=None, ActionDay=None):
+        super().__init__()
         if TradingDay:
             self.TradingDay = TradingDay.encode("GBK")
         if InstrumentID:
@@ -2457,23 +1506,8 @@ class InstrumentTradingRight(Struct):
         ("TradingRight", c_char),
     ]
 
-    def __init__(
-        self,
-        InstrumentID: str = None,
-        InvestorRange: bytes = None,
-        BrokerID: str = None,
-        InvestorID: str = None,
-        TradingRight: bytes = None,
-    ):
-        """
-        投资者合约交易权限
-        :param InstrumentID: 合约代码
-        :param InvestorRange: 投资者范围
-        :param BrokerID: 经纪公司代码
-        :param InvestorID: 投资者代码
-        :param TradingRight: 交易权限
-        """
-        super(InstrumentTradingRight, self).__init__()
+    def __init__(self, InstrumentID=None, InvestorRange=None, BrokerID=None, InvestorID=None, TradingRight=None):
+        super().__init__()
         if InstrumentID:
             self.InstrumentID = InstrumentID.encode("GBK")
         if InvestorRange:
@@ -2497,27 +1531,8 @@ class BrokerUser(Struct):
         ("IsAuthForce", c_int),
     ]
 
-    def __init__(
-        self,
-        BrokerID: str = None,
-        UserID: str = None,
-        UserName: str = None,
-        UserType: bytes = None,
-        IsActive: int = None,
-        IsUsingOTP: int = None,
-        IsAuthForce: int = None,
-    ):
-        """
-        经纪公司用户
-        :param BrokerID: 经纪公司代码
-        :param UserID: 用户代码
-        :param UserName: 用户名称
-        :param UserType: 用户类型
-        :param IsActive: 是否活跃
-        :param IsUsingOTP: 是否使用令牌
-        :param IsAuthForce: 是否强制终端认证
-        """
-        super(BrokerUser, self).__init__()
+    def __init__(self, BrokerID=None, UserID=None, UserName=None, UserType=None, IsActive=None, IsUsingOTP=None, IsAuthForce=None):
+        super().__init__()
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
         if UserID:
@@ -2545,27 +1560,8 @@ class BrokerUserPassword(Struct):
         ("WeakExpireDate", c_char_Array_9),
     ]
 
-    def __init__(
-        self,
-        BrokerID: str = None,
-        UserID: str = None,
-        Password: str = None,
-        LastUpdateTime: str = None,
-        LastLoginTime: str = None,
-        ExpireDate: str = None,
-        WeakExpireDate: str = None,
-    ):
-        """
-        经纪公司用户口令
-        :param BrokerID: 经纪公司代码
-        :param UserID: 用户代码
-        :param Password: 密码
-        :param LastUpdateTime: 上次修改时间
-        :param LastLoginTime: 上次登陆时间
-        :param ExpireDate: 密码过期时间
-        :param WeakExpireDate: 弱密码过期时间
-        """
-        super(BrokerUserPassword, self).__init__()
+    def __init__(self, BrokerID=None, UserID=None, Password=None, LastUpdateTime=None, LastLoginTime=None, ExpireDate=None, WeakExpireDate=None):
+        super().__init__()
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
         if UserID:
@@ -2589,19 +1585,8 @@ class BrokerUserFunction(Struct):
         ("BrokerFunctionCode", c_char),
     ]
 
-    def __init__(
-        self,
-        BrokerID: str = None,
-        UserID: str = None,
-        BrokerFunctionCode: bytes = None,
-    ):
-        """
-        经纪公司用户功能权限
-        :param BrokerID: 经纪公司代码
-        :param UserID: 用户代码
-        :param BrokerFunctionCode: 经纪公司功能代码
-        """
-        super(BrokerUserFunction, self).__init__()
+    def __init__(self, BrokerID=None, UserID=None, BrokerFunctionCode=None):
+        super().__init__()
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
         if UserID:
@@ -2633,51 +1618,8 @@ class TraderOffer(Struct):
         ("MaxOrderMessageReference", c_char_Array_7),
     ]
 
-    def __init__(
-        self,
-        ExchangeID: str = None,
-        TraderID: str = None,
-        ParticipantID: str = None,
-        Password: str = None,
-        InstallID: int = None,
-        OrderLocalID: str = None,
-        TraderConnectStatus: bytes = None,
-        ConnectRequestDate: str = None,
-        ConnectRequestTime: str = None,
-        LastReportDate: str = None,
-        LastReportTime: str = None,
-        ConnectDate: str = None,
-        ConnectTime: str = None,
-        StartDate: str = None,
-        StartTime: str = None,
-        TradingDay: str = None,
-        BrokerID: str = None,
-        MaxTradeID: str = None,
-        MaxOrderMessageReference: str = None,
-    ):
-        """
-        交易所交易员报盘机
-        :param ExchangeID: 交易所代码
-        :param TraderID: 交易所交易员代码
-        :param ParticipantID: 会员代码
-        :param Password: 密码
-        :param InstallID: 安装编号
-        :param OrderLocalID: 本地报单编号
-        :param TraderConnectStatus: 交易所交易员连接状态
-        :param ConnectRequestDate: 发出连接请求的日期
-        :param ConnectRequestTime: 发出连接请求的时间
-        :param LastReportDate: 上次报告日期
-        :param LastReportTime: 上次报告时间
-        :param ConnectDate: 完成连接日期
-        :param ConnectTime: 完成连接时间
-        :param StartDate: 启动日期
-        :param StartTime: 启动时间
-        :param TradingDay: 交易日
-        :param BrokerID: 经纪公司代码
-        :param MaxTradeID: 本席位最大成交编号
-        :param MaxOrderMessageReference: 本席位最大报单备拷
-        """
-        super(TraderOffer, self).__init__()
+    def __init__(self, ExchangeID=None, TraderID=None, ParticipantID=None, Password=None, InstallID=None, OrderLocalID=None, TraderConnectStatus=None, ConnectRequestDate=None, ConnectRequestTime=None, LastReportDate=None, LastReportTime=None, ConnectDate=None, ConnectTime=None, StartDate=None, StartTime=None, TradingDay=None, BrokerID=None, MaxTradeID=None, MaxOrderMessageReference=None):
+        super().__init__()
         if ExchangeID:
             self.ExchangeID = ExchangeID.encode("GBK")
         if TraderID:
@@ -2730,29 +1672,8 @@ class SettlementInfo(Struct):
         ("CurrencyID", c_char_Array_4),
     ]
 
-    def __init__(
-        self,
-        TradingDay: str = None,
-        SettlementID: int = None,
-        BrokerID: str = None,
-        InvestorID: str = None,
-        SequenceNo: int = None,
-        Content: str = None,
-        AccountID: str = None,
-        CurrencyID: str = None,
-    ):
-        """
-        投资者结算结果
-        :param TradingDay: 交易日
-        :param SettlementID: 结算编号
-        :param BrokerID: 经纪公司代码
-        :param InvestorID: 投资者代码
-        :param SequenceNo: 序号
-        :param Content: 消息正文
-        :param AccountID: 投资者帐号
-        :param CurrencyID: 币种代码
-        """
-        super(SettlementInfo, self).__init__()
+    def __init__(self, TradingDay=None, SettlementID=None, BrokerID=None, InvestorID=None, SequenceNo=None, Content=None, AccountID=None, CurrencyID=None):
+        super().__init__()
         if TradingDay:
             self.TradingDay = TradingDay.encode("GBK")
         if SettlementID:
@@ -2785,33 +1706,8 @@ class InstrumentMarginRateAdjust(Struct):
         ("IsRelative", c_int),
     ]
 
-    def __init__(
-        self,
-        InstrumentID: str = None,
-        InvestorRange: bytes = None,
-        BrokerID: str = None,
-        InvestorID: str = None,
-        HedgeFlag: bytes = None,
-        LongMarginRatioByMoney: float = None,
-        LongMarginRatioByVolume: float = None,
-        ShortMarginRatioByMoney: float = None,
-        ShortMarginRatioByVolume: float = None,
-        IsRelative: int = None,
-    ):
-        """
-        合约保证金率调整
-        :param InstrumentID: 合约代码
-        :param InvestorRange: 投资者范围
-        :param BrokerID: 经纪公司代码
-        :param InvestorID: 投资者代码
-        :param HedgeFlag: 投机套保标志
-        :param LongMarginRatioByMoney: 多头保证金率
-        :param LongMarginRatioByVolume: 多头保证金费
-        :param ShortMarginRatioByMoney: 空头保证金率
-        :param ShortMarginRatioByVolume: 空头保证金费
-        :param IsRelative: 是否相对交易所收取
-        """
-        super(InstrumentMarginRateAdjust, self).__init__()
+    def __init__(self, InstrumentID=None, InvestorRange=None, BrokerID=None, InvestorID=None, HedgeFlag=None, LongMarginRatioByMoney=None, LongMarginRatioByVolume=None, ShortMarginRatioByMoney=None, ShortMarginRatioByVolume=None, IsRelative=None):
+        super().__init__()
         if InstrumentID:
             self.InstrumentID = InstrumentID.encode("GBK")
         if InvestorRange:
@@ -2846,29 +1742,8 @@ class ExchangeMarginRate(Struct):
         ("ExchangeID", c_char_Array_9),
     ]
 
-    def __init__(
-        self,
-        BrokerID: str = None,
-        InstrumentID: str = None,
-        HedgeFlag: bytes = None,
-        LongMarginRatioByMoney: float = None,
-        LongMarginRatioByVolume: float = None,
-        ShortMarginRatioByMoney: float = None,
-        ShortMarginRatioByVolume: float = None,
-        ExchangeID: str = None,
-    ):
-        """
-        交易所保证金率
-        :param BrokerID: 经纪公司代码
-        :param InstrumentID: 合约代码
-        :param HedgeFlag: 投机套保标志
-        :param LongMarginRatioByMoney: 多头保证金率
-        :param LongMarginRatioByVolume: 多头保证金费
-        :param ShortMarginRatioByMoney: 空头保证金率
-        :param ShortMarginRatioByVolume: 空头保证金费
-        :param ExchangeID: 交易所代码
-        """
-        super(ExchangeMarginRate, self).__init__()
+    def __init__(self, BrokerID=None, InstrumentID=None, HedgeFlag=None, LongMarginRatioByMoney=None, LongMarginRatioByVolume=None, ShortMarginRatioByMoney=None, ShortMarginRatioByVolume=None, ExchangeID=None):
+        super().__init__()
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
         if InstrumentID:
@@ -2906,43 +1781,8 @@ class ExchangeMarginRateAdjust(Struct):
         ("NoShortMarginRatioByVolume", c_double),
     ]
 
-    def __init__(
-        self,
-        BrokerID: str = None,
-        InstrumentID: str = None,
-        HedgeFlag: bytes = None,
-        LongMarginRatioByMoney: float = None,
-        LongMarginRatioByVolume: float = None,
-        ShortMarginRatioByMoney: float = None,
-        ShortMarginRatioByVolume: float = None,
-        ExchLongMarginRatioByMoney: float = None,
-        ExchLongMarginRatioByVolume: float = None,
-        ExchShortMarginRatioByMoney: float = None,
-        ExchShortMarginRatioByVolume: float = None,
-        NoLongMarginRatioByMoney: float = None,
-        NoLongMarginRatioByVolume: float = None,
-        NoShortMarginRatioByMoney: float = None,
-        NoShortMarginRatioByVolume: float = None,
-    ):
-        """
-        交易所保证金率调整
-        :param BrokerID: 经纪公司代码
-        :param InstrumentID: 合约代码
-        :param HedgeFlag: 投机套保标志
-        :param LongMarginRatioByMoney: 跟随交易所投资者多头保证金率
-        :param LongMarginRatioByVolume: 跟随交易所投资者多头保证金费
-        :param ShortMarginRatioByMoney: 跟随交易所投资者空头保证金率
-        :param ShortMarginRatioByVolume: 跟随交易所投资者空头保证金费
-        :param ExchLongMarginRatioByMoney: 交易所多头保证金率
-        :param ExchLongMarginRatioByVolume: 交易所多头保证金费
-        :param ExchShortMarginRatioByMoney: 交易所空头保证金率
-        :param ExchShortMarginRatioByVolume: 交易所空头保证金费
-        :param NoLongMarginRatioByMoney: 不跟随交易所投资者多头保证金率
-        :param NoLongMarginRatioByVolume: 不跟随交易所投资者多头保证金费
-        :param NoShortMarginRatioByMoney: 不跟随交易所投资者空头保证金率
-        :param NoShortMarginRatioByVolume: 不跟随交易所投资者空头保证金费
-        """
-        super(ExchangeMarginRateAdjust, self).__init__()
+    def __init__(self, BrokerID=None, InstrumentID=None, HedgeFlag=None, LongMarginRatioByMoney=None, LongMarginRatioByVolume=None, ShortMarginRatioByMoney=None, ShortMarginRatioByVolume=None, ExchLongMarginRatioByMoney=None, ExchLongMarginRatioByVolume=None, ExchShortMarginRatioByMoney=None, ExchShortMarginRatioByVolume=None, NoLongMarginRatioByMoney=None, NoLongMarginRatioByVolume=None, NoShortMarginRatioByMoney=None, NoShortMarginRatioByVolume=None):
+        super().__init__()
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
         if InstrumentID:
@@ -2984,23 +1824,8 @@ class ExchangeRate(Struct):
         ("ExchangeRate", c_double),
     ]
 
-    def __init__(
-        self,
-        BrokerID: str = None,
-        FromCurrencyID: str = None,
-        FromCurrencyUnit: float = None,
-        ToCurrencyID: str = None,
-        ExchangeRate: float = None,
-    ):
-        """
-        汇率
-        :param BrokerID: 经纪公司代码
-        :param FromCurrencyID: 源币种
-        :param FromCurrencyUnit: 源币种单位数量
-        :param ToCurrencyID: 目标币种
-        :param ExchangeRate: 汇率
-        """
-        super(ExchangeRate, self).__init__()
+    def __init__(self, BrokerID=None, FromCurrencyID=None, FromCurrencyUnit=None, ToCurrencyID=None, ExchangeRate=None):
+        super().__init__()
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
         if FromCurrencyID:
@@ -3019,17 +1844,8 @@ class SettlementRef(Struct):
         ("SettlementID", c_int),
     ]
 
-    def __init__(
-        self,
-        TradingDay: str = None,
-        SettlementID: int = None,
-    ):
-        """
-        结算引用
-        :param TradingDay: 交易日
-        :param SettlementID: 结算编号
-        """
-        super(SettlementRef, self).__init__()
+    def __init__(self, TradingDay=None, SettlementID=None):
+        super().__init__()
         if TradingDay:
             self.TradingDay = TradingDay.encode("GBK")
         if SettlementID:
@@ -3044,21 +1860,8 @@ class CurrentTime(Struct):
         ("ActionDay", c_char_Array_9),
     ]
 
-    def __init__(
-        self,
-        CurrDate: str = None,
-        CurrTime: str = None,
-        CurrMillisec: int = None,
-        ActionDay: str = None,
-    ):
-        """
-        当前时间
-        :param CurrDate: 当前日期
-        :param CurrTime: 当前时间
-        :param CurrMillisec: 当前时间（毫秒）
-        :param ActionDay: 业务日期
-        """
-        super(CurrentTime, self).__init__()
+    def __init__(self, CurrDate=None, CurrTime=None, CurrMillisec=None, ActionDay=None):
+        super().__init__()
         if CurrDate:
             self.CurrDate = CurrDate.encode("GBK")
         if CurrTime:
@@ -3076,19 +1879,8 @@ class CommPhase(Struct):
         ("SystemID", c_char_Array_21),
     ]
 
-    def __init__(
-        self,
-        TradingDay: str = None,
-        CommPhaseNo: int = None,
-        SystemID: str = None,
-    ):
-        """
-        通讯阶段
-        :param TradingDay: 交易日
-        :param CommPhaseNo: 通讯时段编号
-        :param SystemID: 系统编号
-        """
-        super(CommPhase, self).__init__()
+    def __init__(self, TradingDay=None, CommPhaseNo=None, SystemID=None):
+        super().__init__()
         if TradingDay:
             self.TradingDay = TradingDay.encode("GBK")
         if CommPhaseNo:
@@ -3124,59 +1916,8 @@ class LoginInfo(Struct):
         ("Password", c_char_Array_41),
     ]
 
-    def __init__(
-        self,
-        FrontID: int = None,
-        SessionID: int = None,
-        BrokerID: str = None,
-        UserID: str = None,
-        LoginDate: str = None,
-        LoginTime: str = None,
-        IPAddress: str = None,
-        UserProductInfo: str = None,
-        InterfaceProductInfo: str = None,
-        ProtocolInfo: str = None,
-        SystemName: str = None,
-        PasswordDeprecated: str = None,
-        MaxOrderRef: str = None,
-        SHFETime: str = None,
-        DCETime: str = None,
-        CZCETime: str = None,
-        FFEXTime: str = None,
-        MacAddress: str = None,
-        OneTimePassword: str = None,
-        INETime: str = None,
-        IsQryControl: int = None,
-        LoginRemark: str = None,
-        Password: str = None,
-    ):
-        """
-        登录信息
-        :param FrontID: 前置编号
-        :param SessionID: 会话编号
-        :param BrokerID: 经纪公司代码
-        :param UserID: 用户代码
-        :param LoginDate: 登录日期
-        :param LoginTime: 登录时间
-        :param IPAddress: IP地址
-        :param UserProductInfo: 用户端产品信息
-        :param InterfaceProductInfo: 接口端产品信息
-        :param ProtocolInfo: 协议信息
-        :param SystemName: 系统名称
-        :param PasswordDeprecated: 密码,已弃用
-        :param MaxOrderRef: 最大报单引用
-        :param SHFETime: 上期所时间
-        :param DCETime: 大商所时间
-        :param CZCETime: 郑商所时间
-        :param FFEXTime: 中金所时间
-        :param MacAddress: Mac地址
-        :param OneTimePassword: 动态密码
-        :param INETime: 能源中心时间
-        :param IsQryControl: 查询时是否需要流控
-        :param LoginRemark: 登录备注
-        :param Password: 密码
-        """
-        super(LoginInfo, self).__init__()
+    def __init__(self, FrontID=None, SessionID=None, BrokerID=None, UserID=None, LoginDate=None, LoginTime=None, IPAddress=None, UserProductInfo=None, InterfaceProductInfo=None, ProtocolInfo=None, SystemName=None, PasswordDeprecated=None, MaxOrderRef=None, SHFETime=None, DCETime=None, CZCETime=None, FFEXTime=None, MacAddress=None, OneTimePassword=None, INETime=None, IsQryControl=None, LoginRemark=None, Password=None):
+        super().__init__()
         if FrontID:
             self.FrontID = FrontID
         if SessionID:
@@ -3232,19 +1973,8 @@ class LogoutAll(Struct):
         ("SystemName", c_char_Array_41),
     ]
 
-    def __init__(
-        self,
-        FrontID: int = None,
-        SessionID: int = None,
-        SystemName: str = None,
-    ):
-        """
-        登录信息
-        :param FrontID: 前置编号
-        :param SessionID: 会话编号
-        :param SystemName: 系统名称
-        """
-        super(LogoutAll, self).__init__()
+    def __init__(self, FrontID=None, SessionID=None, SystemName=None):
+        super().__init__()
         if FrontID:
             self.FrontID = FrontID
         if SessionID:
@@ -3261,21 +1991,8 @@ class FrontStatus(Struct):
         ("IsActive", c_int),
     ]
 
-    def __init__(
-        self,
-        FrontID: int = None,
-        LastReportDate: str = None,
-        LastReportTime: str = None,
-        IsActive: int = None,
-    ):
-        """
-        前置状态
-        :param FrontID: 前置编号
-        :param LastReportDate: 上次报告日期
-        :param LastReportTime: 上次报告时间
-        :param IsActive: 是否活跃
-        """
-        super(FrontStatus, self).__init__()
+    def __init__(self, FrontID=None, LastReportDate=None, LastReportTime=None, IsActive=None):
+        super().__init__()
         if FrontID:
             self.FrontID = FrontID
         if LastReportDate:
@@ -3294,21 +2011,8 @@ class UserPasswordUpdate(Struct):
         ("NewPassword", c_char_Array_41),
     ]
 
-    def __init__(
-        self,
-        BrokerID: str = None,
-        UserID: str = None,
-        OldPassword: str = None,
-        NewPassword: str = None,
-    ):
-        """
-        用户口令变更
-        :param BrokerID: 经纪公司代码
-        :param UserID: 用户代码
-        :param OldPassword: 原来的口令
-        :param NewPassword: 新的口令
-        """
-        super(UserPasswordUpdate, self).__init__()
+    def __init__(self, BrokerID=None, UserID=None, OldPassword=None, NewPassword=None):
+        super().__init__()
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
         if UserID:
@@ -3353,73 +2057,8 @@ class InputOrder(Struct):
         ("MacAddress", c_char_Array_21),
     ]
 
-    def __init__(
-        self,
-        BrokerID: str = None,
-        InvestorID: str = None,
-        InstrumentID: str = None,
-        OrderRef: str = None,
-        UserID: str = None,
-        OrderPriceType: bytes = None,
-        Direction: bytes = None,
-        CombOffsetFlag: str = None,
-        CombHedgeFlag: str = None,
-        LimitPrice: float = None,
-        VolumeTotalOriginal: int = None,
-        TimeCondition: bytes = None,
-        GTDDate: str = None,
-        VolumeCondition: bytes = None,
-        MinVolume: int = None,
-        ContingentCondition: bytes = None,
-        StopPrice: float = None,
-        ForceCloseReason: bytes = None,
-        IsAutoSuspend: int = None,
-        BusinessUnit: str = None,
-        RequestID: int = None,
-        UserForceClose: int = None,
-        IsSwapOrder: int = None,
-        ExchangeID: str = None,
-        InvestUnitID: str = None,
-        AccountID: str = None,
-        CurrencyID: str = None,
-        ClientID: str = None,
-        IPAddress: str = None,
-        MacAddress: str = None,
-    ):
-        """
-        输入报单
-        :param BrokerID: 经纪公司代码
-        :param InvestorID: 投资者代码
-        :param InstrumentID: 合约代码
-        :param OrderRef: 报单引用
-        :param UserID: 用户代码
-        :param OrderPriceType: 报单价格条件
-        :param Direction: 买卖方向
-        :param CombOffsetFlag: 组合开平标志
-        :param CombHedgeFlag: 组合投机套保标志
-        :param LimitPrice: 价格
-        :param VolumeTotalOriginal: 数量
-        :param TimeCondition: 有效期类型
-        :param GTDDate: GTD日期
-        :param VolumeCondition: 成交量类型
-        :param MinVolume: 最小成交量
-        :param ContingentCondition: 触发条件
-        :param StopPrice: 止损价
-        :param ForceCloseReason: 强平原因
-        :param IsAutoSuspend: 自动挂起标志
-        :param BusinessUnit: 业务单元
-        :param RequestID: 请求编号
-        :param UserForceClose: 用户强评标志
-        :param IsSwapOrder: 互换单标志
-        :param ExchangeID: 交易所代码
-        :param InvestUnitID: 投资单元代码
-        :param AccountID: 资金账号
-        :param CurrencyID: 币种代码
-        :param ClientID: 交易编码
-        :param IPAddress: IP地址
-        :param MacAddress: Mac地址
-        """
-        super(InputOrder, self).__init__()
+    def __init__(self, BrokerID=None, InvestorID=None, InstrumentID=None, OrderRef=None, UserID=None, OrderPriceType=None, Direction=None, CombOffsetFlag=None, CombHedgeFlag=None, LimitPrice=None, VolumeTotalOriginal=None, TimeCondition=None, GTDDate=None, VolumeCondition=None, MinVolume=None, ContingentCondition=None, StopPrice=None, ForceCloseReason=None, IsAutoSuspend=None, BusinessUnit=None, RequestID=None, UserForceClose=None, IsSwapOrder=None, ExchangeID=None, InvestUnitID=None, AccountID=None, CurrencyID=None, ClientID=None, IPAddress=None, MacAddress=None):
+        super().__init__()
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
         if InvestorID:
@@ -3549,139 +2188,8 @@ class Order(Struct):
         ("MacAddress", c_char_Array_21),
     ]
 
-    def __init__(
-        self,
-        BrokerID: str = None,
-        InvestorID: str = None,
-        InstrumentID: str = None,
-        OrderRef: str = None,
-        UserID: str = None,
-        OrderPriceType: bytes = None,
-        Direction: bytes = None,
-        CombOffsetFlag: str = None,
-        CombHedgeFlag: str = None,
-        LimitPrice: float = None,
-        VolumeTotalOriginal: int = None,
-        TimeCondition: bytes = None,
-        GTDDate: str = None,
-        VolumeCondition: bytes = None,
-        MinVolume: int = None,
-        ContingentCondition: bytes = None,
-        StopPrice: float = None,
-        ForceCloseReason: bytes = None,
-        IsAutoSuspend: int = None,
-        BusinessUnit: str = None,
-        RequestID: int = None,
-        OrderLocalID: str = None,
-        ExchangeID: str = None,
-        ParticipantID: str = None,
-        ClientID: str = None,
-        ExchangeInstID: str = None,
-        TraderID: str = None,
-        InstallID: int = None,
-        OrderSubmitStatus: bytes = None,
-        NotifySequence: int = None,
-        TradingDay: str = None,
-        SettlementID: int = None,
-        OrderSysID: str = None,
-        OrderSource: bytes = None,
-        OrderStatus: bytes = None,
-        OrderType: bytes = None,
-        VolumeTraded: int = None,
-        VolumeTotal: int = None,
-        InsertDate: str = None,
-        InsertTime: str = None,
-        ActiveTime: str = None,
-        SuspendTime: str = None,
-        UpdateTime: str = None,
-        CancelTime: str = None,
-        ActiveTraderID: str = None,
-        ClearingPartID: str = None,
-        SequenceNo: int = None,
-        FrontID: int = None,
-        SessionID: int = None,
-        UserProductInfo: str = None,
-        StatusMsg: str = None,
-        UserForceClose: int = None,
-        ActiveUserID: str = None,
-        BrokerOrderSeq: int = None,
-        RelativeOrderSysID: str = None,
-        ZCETotalTradedVolume: int = None,
-        IsSwapOrder: int = None,
-        BranchID: str = None,
-        InvestUnitID: str = None,
-        AccountID: str = None,
-        CurrencyID: str = None,
-        IPAddress: str = None,
-        MacAddress: str = None,
-    ):
-        """
-        报单
-        :param BrokerID: 经纪公司代码
-        :param InvestorID: 投资者代码
-        :param InstrumentID: 合约代码
-        :param OrderRef: 报单引用
-        :param UserID: 用户代码
-        :param OrderPriceType: 报单价格条件
-        :param Direction: 买卖方向
-        :param CombOffsetFlag: 组合开平标志
-        :param CombHedgeFlag: 组合投机套保标志
-        :param LimitPrice: 价格
-        :param VolumeTotalOriginal: 数量
-        :param TimeCondition: 有效期类型
-        :param GTDDate: GTD日期
-        :param VolumeCondition: 成交量类型
-        :param MinVolume: 最小成交量
-        :param ContingentCondition: 触发条件
-        :param StopPrice: 止损价
-        :param ForceCloseReason: 强平原因
-        :param IsAutoSuspend: 自动挂起标志
-        :param BusinessUnit: 业务单元
-        :param RequestID: 请求编号
-        :param OrderLocalID: 本地报单编号
-        :param ExchangeID: 交易所代码
-        :param ParticipantID: 会员代码
-        :param ClientID: 客户代码
-        :param ExchangeInstID: 合约在交易所的代码
-        :param TraderID: 交易所交易员代码
-        :param InstallID: 安装编号
-        :param OrderSubmitStatus: 报单提交状态
-        :param NotifySequence: 报单提示序号
-        :param TradingDay: 交易日
-        :param SettlementID: 结算编号
-        :param OrderSysID: 报单编号
-        :param OrderSource: 报单来源
-        :param OrderStatus: 报单状态
-        :param OrderType: 报单类型
-        :param VolumeTraded: 今成交数量
-        :param VolumeTotal: 剩余数量
-        :param InsertDate: 报单日期
-        :param InsertTime: 委托时间
-        :param ActiveTime: 激活时间
-        :param SuspendTime: 挂起时间
-        :param UpdateTime: 最后修改时间
-        :param CancelTime: 撤销时间
-        :param ActiveTraderID: 最后修改交易所交易员代码
-        :param ClearingPartID: 结算会员编号
-        :param SequenceNo: 序号
-        :param FrontID: 前置编号
-        :param SessionID: 会话编号
-        :param UserProductInfo: 用户端产品信息
-        :param StatusMsg: 状态信息
-        :param UserForceClose: 用户强评标志
-        :param ActiveUserID: 操作用户代码
-        :param BrokerOrderSeq: 经纪公司报单编号
-        :param RelativeOrderSysID: 相关报单
-        :param ZCETotalTradedVolume: 郑商所成交数量
-        :param IsSwapOrder: 互换单标志
-        :param BranchID: 营业部编号
-        :param InvestUnitID: 投资单元代码
-        :param AccountID: 资金账号
-        :param CurrencyID: 币种代码
-        :param IPAddress: IP地址
-        :param MacAddress: Mac地址
-        """
-        super(Order, self).__init__()
+    def __init__(self, BrokerID=None, InvestorID=None, InstrumentID=None, OrderRef=None, UserID=None, OrderPriceType=None, Direction=None, CombOffsetFlag=None, CombHedgeFlag=None, LimitPrice=None, VolumeTotalOriginal=None, TimeCondition=None, GTDDate=None, VolumeCondition=None, MinVolume=None, ContingentCondition=None, StopPrice=None, ForceCloseReason=None, IsAutoSuspend=None, BusinessUnit=None, RequestID=None, OrderLocalID=None, ExchangeID=None, ParticipantID=None, ClientID=None, ExchangeInstID=None, TraderID=None, InstallID=None, OrderSubmitStatus=None, NotifySequence=None, TradingDay=None, SettlementID=None, OrderSysID=None, OrderSource=None, OrderStatus=None, OrderType=None, VolumeTraded=None, VolumeTotal=None, InsertDate=None, InsertTime=None, ActiveTime=None, SuspendTime=None, UpdateTime=None, CancelTime=None, ActiveTraderID=None, ClearingPartID=None, SequenceNo=None, FrontID=None, SessionID=None, UserProductInfo=None, StatusMsg=None, UserForceClose=None, ActiveUserID=None, BrokerOrderSeq=None, RelativeOrderSysID=None, ZCETotalTradedVolume=None, IsSwapOrder=None, BranchID=None, InvestUnitID=None, AccountID=None, CurrencyID=None, IPAddress=None, MacAddress=None):
+        super().__init__()
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
         if InvestorID:
@@ -3859,103 +2367,8 @@ class ExchangeOrder(Struct):
         ("MacAddress", c_char_Array_21),
     ]
 
-    def __init__(
-        self,
-        OrderPriceType: bytes = None,
-        Direction: bytes = None,
-        CombOffsetFlag: str = None,
-        CombHedgeFlag: str = None,
-        LimitPrice: float = None,
-        VolumeTotalOriginal: int = None,
-        TimeCondition: bytes = None,
-        GTDDate: str = None,
-        VolumeCondition: bytes = None,
-        MinVolume: int = None,
-        ContingentCondition: bytes = None,
-        StopPrice: float = None,
-        ForceCloseReason: bytes = None,
-        IsAutoSuspend: int = None,
-        BusinessUnit: str = None,
-        RequestID: int = None,
-        OrderLocalID: str = None,
-        ExchangeID: str = None,
-        ParticipantID: str = None,
-        ClientID: str = None,
-        ExchangeInstID: str = None,
-        TraderID: str = None,
-        InstallID: int = None,
-        OrderSubmitStatus: bytes = None,
-        NotifySequence: int = None,
-        TradingDay: str = None,
-        SettlementID: int = None,
-        OrderSysID: str = None,
-        OrderSource: bytes = None,
-        OrderStatus: bytes = None,
-        OrderType: bytes = None,
-        VolumeTraded: int = None,
-        VolumeTotal: int = None,
-        InsertDate: str = None,
-        InsertTime: str = None,
-        ActiveTime: str = None,
-        SuspendTime: str = None,
-        UpdateTime: str = None,
-        CancelTime: str = None,
-        ActiveTraderID: str = None,
-        ClearingPartID: str = None,
-        SequenceNo: int = None,
-        BranchID: str = None,
-        IPAddress: str = None,
-        MacAddress: str = None,
-    ):
-        """
-        交易所报单
-        :param OrderPriceType: 报单价格条件
-        :param Direction: 买卖方向
-        :param CombOffsetFlag: 组合开平标志
-        :param CombHedgeFlag: 组合投机套保标志
-        :param LimitPrice: 价格
-        :param VolumeTotalOriginal: 数量
-        :param TimeCondition: 有效期类型
-        :param GTDDate: GTD日期
-        :param VolumeCondition: 成交量类型
-        :param MinVolume: 最小成交量
-        :param ContingentCondition: 触发条件
-        :param StopPrice: 止损价
-        :param ForceCloseReason: 强平原因
-        :param IsAutoSuspend: 自动挂起标志
-        :param BusinessUnit: 业务单元
-        :param RequestID: 请求编号
-        :param OrderLocalID: 本地报单编号
-        :param ExchangeID: 交易所代码
-        :param ParticipantID: 会员代码
-        :param ClientID: 客户代码
-        :param ExchangeInstID: 合约在交易所的代码
-        :param TraderID: 交易所交易员代码
-        :param InstallID: 安装编号
-        :param OrderSubmitStatus: 报单提交状态
-        :param NotifySequence: 报单提示序号
-        :param TradingDay: 交易日
-        :param SettlementID: 结算编号
-        :param OrderSysID: 报单编号
-        :param OrderSource: 报单来源
-        :param OrderStatus: 报单状态
-        :param OrderType: 报单类型
-        :param VolumeTraded: 今成交数量
-        :param VolumeTotal: 剩余数量
-        :param InsertDate: 报单日期
-        :param InsertTime: 委托时间
-        :param ActiveTime: 激活时间
-        :param SuspendTime: 挂起时间
-        :param UpdateTime: 最后修改时间
-        :param CancelTime: 撤销时间
-        :param ActiveTraderID: 最后修改交易所交易员代码
-        :param ClearingPartID: 结算会员编号
-        :param SequenceNo: 序号
-        :param BranchID: 营业部编号
-        :param IPAddress: IP地址
-        :param MacAddress: Mac地址
-        """
-        super(ExchangeOrder, self).__init__()
+    def __init__(self, OrderPriceType=None, Direction=None, CombOffsetFlag=None, CombHedgeFlag=None, LimitPrice=None, VolumeTotalOriginal=None, TimeCondition=None, GTDDate=None, VolumeCondition=None, MinVolume=None, ContingentCondition=None, StopPrice=None, ForceCloseReason=None, IsAutoSuspend=None, BusinessUnit=None, RequestID=None, OrderLocalID=None, ExchangeID=None, ParticipantID=None, ClientID=None, ExchangeInstID=None, TraderID=None, InstallID=None, OrderSubmitStatus=None, NotifySequence=None, TradingDay=None, SettlementID=None, OrderSysID=None, OrderSource=None, OrderStatus=None, OrderType=None, VolumeTraded=None, VolumeTotal=None, InsertDate=None, InsertTime=None, ActiveTime=None, SuspendTime=None, UpdateTime=None, CancelTime=None, ActiveTraderID=None, ClearingPartID=None, SequenceNo=None, BranchID=None, IPAddress=None, MacAddress=None):
+        super().__init__()
         if OrderPriceType:
             self.OrderPriceType = OrderPriceType
         if Direction:
@@ -4059,27 +2472,8 @@ class ExchangeOrderInsertError(Struct):
         ("ErrorMsg", c_char_Array_81),
     ]
 
-    def __init__(
-        self,
-        ExchangeID: str = None,
-        ParticipantID: str = None,
-        TraderID: str = None,
-        InstallID: int = None,
-        OrderLocalID: str = None,
-        ErrorID: int = None,
-        ErrorMsg: str = None,
-    ):
-        """
-        交易所报单插入失败
-        :param ExchangeID: 交易所代码
-        :param ParticipantID: 会员代码
-        :param TraderID: 交易所交易员代码
-        :param InstallID: 安装编号
-        :param OrderLocalID: 本地报单编号
-        :param ErrorID: 错误代码
-        :param ErrorMsg: 错误信息
-        """
-        super(ExchangeOrderInsertError, self).__init__()
+    def __init__(self, ExchangeID=None, ParticipantID=None, TraderID=None, InstallID=None, OrderLocalID=None, ErrorID=None, ErrorMsg=None):
+        super().__init__()
         if ExchangeID:
             self.ExchangeID = ExchangeID.encode("GBK")
         if ParticipantID:
@@ -4117,47 +2511,8 @@ class InputOrderAction(Struct):
         ("MacAddress", c_char_Array_21),
     ]
 
-    def __init__(
-        self,
-        BrokerID: str = None,
-        InvestorID: str = None,
-        OrderActionRef: int = None,
-        OrderRef: str = None,
-        RequestID: int = None,
-        FrontID: int = None,
-        SessionID: int = None,
-        ExchangeID: str = None,
-        OrderSysID: str = None,
-        ActionFlag: bytes = None,
-        LimitPrice: float = None,
-        VolumeChange: int = None,
-        UserID: str = None,
-        InstrumentID: str = None,
-        InvestUnitID: str = None,
-        IPAddress: str = None,
-        MacAddress: str = None,
-    ):
-        """
-        输入报单操作
-        :param BrokerID: 经纪公司代码
-        :param InvestorID: 投资者代码
-        :param OrderActionRef: 报单操作引用
-        :param OrderRef: 报单引用
-        :param RequestID: 请求编号
-        :param FrontID: 前置编号
-        :param SessionID: 会话编号
-        :param ExchangeID: 交易所代码
-        :param OrderSysID: 报单编号
-        :param ActionFlag: 操作标志
-        :param LimitPrice: 价格
-        :param VolumeChange: 数量变化
-        :param UserID: 用户代码
-        :param InstrumentID: 合约代码
-        :param InvestUnitID: 投资单元代码
-        :param IPAddress: IP地址
-        :param MacAddress: Mac地址
-        """
-        super(InputOrderAction, self).__init__()
+    def __init__(self, BrokerID=None, InvestorID=None, OrderActionRef=None, OrderRef=None, RequestID=None, FrontID=None, SessionID=None, ExchangeID=None, OrderSysID=None, ActionFlag=None, LimitPrice=None, VolumeChange=None, UserID=None, InstrumentID=None, InvestUnitID=None, IPAddress=None, MacAddress=None):
+        super().__init__()
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
         if InvestorID:
@@ -4227,71 +2582,8 @@ class OrderAction(Struct):
         ("MacAddress", c_char_Array_21),
     ]
 
-    def __init__(
-        self,
-        BrokerID: str = None,
-        InvestorID: str = None,
-        OrderActionRef: int = None,
-        OrderRef: str = None,
-        RequestID: int = None,
-        FrontID: int = None,
-        SessionID: int = None,
-        ExchangeID: str = None,
-        OrderSysID: str = None,
-        ActionFlag: bytes = None,
-        LimitPrice: float = None,
-        VolumeChange: int = None,
-        ActionDate: str = None,
-        ActionTime: str = None,
-        TraderID: str = None,
-        InstallID: int = None,
-        OrderLocalID: str = None,
-        ActionLocalID: str = None,
-        ParticipantID: str = None,
-        ClientID: str = None,
-        BusinessUnit: str = None,
-        OrderActionStatus: bytes = None,
-        UserID: str = None,
-        StatusMsg: str = None,
-        InstrumentID: str = None,
-        BranchID: str = None,
-        InvestUnitID: str = None,
-        IPAddress: str = None,
-        MacAddress: str = None,
-    ):
-        """
-        报单操作
-        :param BrokerID: 经纪公司代码
-        :param InvestorID: 投资者代码
-        :param OrderActionRef: 报单操作引用
-        :param OrderRef: 报单引用
-        :param RequestID: 请求编号
-        :param FrontID: 前置编号
-        :param SessionID: 会话编号
-        :param ExchangeID: 交易所代码
-        :param OrderSysID: 报单编号
-        :param ActionFlag: 操作标志
-        :param LimitPrice: 价格
-        :param VolumeChange: 数量变化
-        :param ActionDate: 操作日期
-        :param ActionTime: 操作时间
-        :param TraderID: 交易所交易员代码
-        :param InstallID: 安装编号
-        :param OrderLocalID: 本地报单编号
-        :param ActionLocalID: 操作本地编号
-        :param ParticipantID: 会员代码
-        :param ClientID: 客户代码
-        :param BusinessUnit: 业务单元
-        :param OrderActionStatus: 报单操作状态
-        :param UserID: 用户代码
-        :param StatusMsg: 状态信息
-        :param InstrumentID: 合约代码
-        :param BranchID: 营业部编号
-        :param InvestUnitID: 投资单元代码
-        :param IPAddress: IP地址
-        :param MacAddress: Mac地址
-        """
-        super(OrderAction, self).__init__()
+    def __init__(self, BrokerID=None, InvestorID=None, OrderActionRef=None, OrderRef=None, RequestID=None, FrontID=None, SessionID=None, ExchangeID=None, OrderSysID=None, ActionFlag=None, LimitPrice=None, VolumeChange=None, ActionDate=None, ActionTime=None, TraderID=None, InstallID=None, OrderLocalID=None, ActionLocalID=None, ParticipantID=None, ClientID=None, BusinessUnit=None, OrderActionStatus=None, UserID=None, StatusMsg=None, InstrumentID=None, BranchID=None, InvestUnitID=None, IPAddress=None, MacAddress=None):
+        super().__init__()
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
         if InvestorID:
@@ -4375,51 +2667,8 @@ class ExchangeOrderAction(Struct):
         ("MacAddress", c_char_Array_21),
     ]
 
-    def __init__(
-        self,
-        ExchangeID: str = None,
-        OrderSysID: str = None,
-        ActionFlag: bytes = None,
-        LimitPrice: float = None,
-        VolumeChange: int = None,
-        ActionDate: str = None,
-        ActionTime: str = None,
-        TraderID: str = None,
-        InstallID: int = None,
-        OrderLocalID: str = None,
-        ActionLocalID: str = None,
-        ParticipantID: str = None,
-        ClientID: str = None,
-        BusinessUnit: str = None,
-        OrderActionStatus: bytes = None,
-        UserID: str = None,
-        BranchID: str = None,
-        IPAddress: str = None,
-        MacAddress: str = None,
-    ):
-        """
-        交易所报单操作
-        :param ExchangeID: 交易所代码
-        :param OrderSysID: 报单编号
-        :param ActionFlag: 操作标志
-        :param LimitPrice: 价格
-        :param VolumeChange: 数量变化
-        :param ActionDate: 操作日期
-        :param ActionTime: 操作时间
-        :param TraderID: 交易所交易员代码
-        :param InstallID: 安装编号
-        :param OrderLocalID: 本地报单编号
-        :param ActionLocalID: 操作本地编号
-        :param ParticipantID: 会员代码
-        :param ClientID: 客户代码
-        :param BusinessUnit: 业务单元
-        :param OrderActionStatus: 报单操作状态
-        :param UserID: 用户代码
-        :param BranchID: 营业部编号
-        :param IPAddress: IP地址
-        :param MacAddress: Mac地址
-        """
-        super(ExchangeOrderAction, self).__init__()
+    def __init__(self, ExchangeID=None, OrderSysID=None, ActionFlag=None, LimitPrice=None, VolumeChange=None, ActionDate=None, ActionTime=None, TraderID=None, InstallID=None, OrderLocalID=None, ActionLocalID=None, ParticipantID=None, ClientID=None, BusinessUnit=None, OrderActionStatus=None, UserID=None, BranchID=None, IPAddress=None, MacAddress=None):
+        super().__init__()
         if ExchangeID:
             self.ExchangeID = ExchangeID.encode("GBK")
         if OrderSysID:
@@ -4472,29 +2721,8 @@ class ExchangeOrderActionError(Struct):
         ("ErrorMsg", c_char_Array_81),
     ]
 
-    def __init__(
-        self,
-        ExchangeID: str = None,
-        OrderSysID: str = None,
-        TraderID: str = None,
-        InstallID: int = None,
-        OrderLocalID: str = None,
-        ActionLocalID: str = None,
-        ErrorID: int = None,
-        ErrorMsg: str = None,
-    ):
-        """
-        交易所报单操作失败
-        :param ExchangeID: 交易所代码
-        :param OrderSysID: 报单编号
-        :param TraderID: 交易所交易员代码
-        :param InstallID: 安装编号
-        :param OrderLocalID: 本地报单编号
-        :param ActionLocalID: 操作本地编号
-        :param ErrorID: 错误代码
-        :param ErrorMsg: 错误信息
-        """
-        super(ExchangeOrderActionError, self).__init__()
+    def __init__(self, ExchangeID=None, OrderSysID=None, TraderID=None, InstallID=None, OrderLocalID=None, ActionLocalID=None, ErrorID=None, ErrorMsg=None):
+        super().__init__()
         if ExchangeID:
             self.ExchangeID = ExchangeID.encode("GBK")
         if OrderSysID:
@@ -4539,57 +2767,8 @@ class ExchangeTrade(Struct):
         ("TradeSource", c_char),
     ]
 
-    def __init__(
-        self,
-        ExchangeID: str = None,
-        TradeID: str = None,
-        Direction: bytes = None,
-        OrderSysID: str = None,
-        ParticipantID: str = None,
-        ClientID: str = None,
-        TradingRole: bytes = None,
-        ExchangeInstID: str = None,
-        OffsetFlag: bytes = None,
-        HedgeFlag: bytes = None,
-        Price: float = None,
-        Volume: int = None,
-        TradeDate: str = None,
-        TradeTime: str = None,
-        TradeType: bytes = None,
-        PriceSource: bytes = None,
-        TraderID: str = None,
-        OrderLocalID: str = None,
-        ClearingPartID: str = None,
-        BusinessUnit: str = None,
-        SequenceNo: int = None,
-        TradeSource: bytes = None,
-    ):
-        """
-        交易所成交
-        :param ExchangeID: 交易所代码
-        :param TradeID: 成交编号
-        :param Direction: 买卖方向
-        :param OrderSysID: 报单编号
-        :param ParticipantID: 会员代码
-        :param ClientID: 客户代码
-        :param TradingRole: 交易角色
-        :param ExchangeInstID: 合约在交易所的代码
-        :param OffsetFlag: 开平标志
-        :param HedgeFlag: 投机套保标志
-        :param Price: 价格
-        :param Volume: 数量
-        :param TradeDate: 成交时期
-        :param TradeTime: 成交时间
-        :param TradeType: 成交类型
-        :param PriceSource: 成交价来源
-        :param TraderID: 交易所交易员代码
-        :param OrderLocalID: 本地报单编号
-        :param ClearingPartID: 结算会员编号
-        :param BusinessUnit: 业务单元
-        :param SequenceNo: 序号
-        :param TradeSource: 成交来源
-        """
-        super(ExchangeTrade, self).__init__()
+    def __init__(self, ExchangeID=None, TradeID=None, Direction=None, OrderSysID=None, ParticipantID=None, ClientID=None, TradingRole=None, ExchangeInstID=None, OffsetFlag=None, HedgeFlag=None, Price=None, Volume=None, TradeDate=None, TradeTime=None, TradeType=None, PriceSource=None, TraderID=None, OrderLocalID=None, ClearingPartID=None, BusinessUnit=None, SequenceNo=None, TradeSource=None):
+        super().__init__()
         if ExchangeID:
             self.ExchangeID = ExchangeID.encode("GBK")
         if TradeID:
@@ -4671,75 +2850,8 @@ class Trade(Struct):
         ("InvestUnitID", c_char_Array_17),
     ]
 
-    def __init__(
-        self,
-        BrokerID: str = None,
-        InvestorID: str = None,
-        InstrumentID: str = None,
-        OrderRef: str = None,
-        UserID: str = None,
-        ExchangeID: str = None,
-        TradeID: str = None,
-        Direction: bytes = None,
-        OrderSysID: str = None,
-        ParticipantID: str = None,
-        ClientID: str = None,
-        TradingRole: bytes = None,
-        ExchangeInstID: str = None,
-        OffsetFlag: bytes = None,
-        HedgeFlag: bytes = None,
-        Price: float = None,
-        Volume: int = None,
-        TradeDate: str = None,
-        TradeTime: str = None,
-        TradeType: bytes = None,
-        PriceSource: bytes = None,
-        TraderID: str = None,
-        OrderLocalID: str = None,
-        ClearingPartID: str = None,
-        BusinessUnit: str = None,
-        SequenceNo: int = None,
-        TradingDay: str = None,
-        SettlementID: int = None,
-        BrokerOrderSeq: int = None,
-        TradeSource: bytes = None,
-        InvestUnitID: str = None,
-    ):
-        """
-        成交
-        :param BrokerID: 经纪公司代码
-        :param InvestorID: 投资者代码
-        :param InstrumentID: 合约代码
-        :param OrderRef: 报单引用
-        :param UserID: 用户代码
-        :param ExchangeID: 交易所代码
-        :param TradeID: 成交编号
-        :param Direction: 买卖方向
-        :param OrderSysID: 报单编号
-        :param ParticipantID: 会员代码
-        :param ClientID: 客户代码
-        :param TradingRole: 交易角色
-        :param ExchangeInstID: 合约在交易所的代码
-        :param OffsetFlag: 开平标志
-        :param HedgeFlag: 投机套保标志
-        :param Price: 价格
-        :param Volume: 数量
-        :param TradeDate: 成交时期
-        :param TradeTime: 成交时间
-        :param TradeType: 成交类型
-        :param PriceSource: 成交价来源
-        :param TraderID: 交易所交易员代码
-        :param OrderLocalID: 本地报单编号
-        :param ClearingPartID: 结算会员编号
-        :param BusinessUnit: 业务单元
-        :param SequenceNo: 序号
-        :param TradingDay: 交易日
-        :param SettlementID: 结算编号
-        :param BrokerOrderSeq: 经纪公司报单编号
-        :param TradeSource: 成交来源
-        :param InvestUnitID: 投资单元代码
-        """
-        super(Trade, self).__init__()
+    def __init__(self, BrokerID=None, InvestorID=None, InstrumentID=None, OrderRef=None, UserID=None, ExchangeID=None, TradeID=None, Direction=None, OrderSysID=None, ParticipantID=None, ClientID=None, TradingRole=None, ExchangeInstID=None, OffsetFlag=None, HedgeFlag=None, Price=None, Volume=None, TradeDate=None, TradeTime=None, TradeType=None, PriceSource=None, TraderID=None, OrderLocalID=None, ClearingPartID=None, BusinessUnit=None, SequenceNo=None, TradingDay=None, SettlementID=None, BrokerOrderSeq=None, TradeSource=None, InvestUnitID=None):
+        super().__init__()
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
         if InvestorID:
@@ -4820,37 +2932,8 @@ class UserSession(Struct):
         ("LoginRemark", c_char_Array_36),
     ]
 
-    def __init__(
-        self,
-        FrontID: int = None,
-        SessionID: int = None,
-        BrokerID: str = None,
-        UserID: str = None,
-        LoginDate: str = None,
-        LoginTime: str = None,
-        IPAddress: str = None,
-        UserProductInfo: str = None,
-        InterfaceProductInfo: str = None,
-        ProtocolInfo: str = None,
-        MacAddress: str = None,
-        LoginRemark: str = None,
-    ):
-        """
-        用户会话
-        :param FrontID: 前置编号
-        :param SessionID: 会话编号
-        :param BrokerID: 经纪公司代码
-        :param UserID: 用户代码
-        :param LoginDate: 登录日期
-        :param LoginTime: 登录时间
-        :param IPAddress: IP地址
-        :param UserProductInfo: 用户端产品信息
-        :param InterfaceProductInfo: 接口端产品信息
-        :param ProtocolInfo: 协议信息
-        :param MacAddress: Mac地址
-        :param LoginRemark: 登录备注
-        """
-        super(UserSession, self).__init__()
+    def __init__(self, FrontID=None, SessionID=None, BrokerID=None, UserID=None, LoginDate=None, LoginTime=None, IPAddress=None, UserProductInfo=None, InterfaceProductInfo=None, ProtocolInfo=None, MacAddress=None, LoginRemark=None):
+        super().__init__()
         if FrontID:
             self.FrontID = FrontID
         if SessionID:
@@ -4890,31 +2973,8 @@ class QueryMaxOrderVolume(Struct):
         ("InvestUnitID", c_char_Array_17),
     ]
 
-    def __init__(
-        self,
-        BrokerID: str = None,
-        InvestorID: str = None,
-        InstrumentID: str = None,
-        Direction: bytes = None,
-        OffsetFlag: bytes = None,
-        HedgeFlag: bytes = None,
-        MaxVolume: int = None,
-        ExchangeID: str = None,
-        InvestUnitID: str = None,
-    ):
-        """
-        查询最大报单数量
-        :param BrokerID: 经纪公司代码
-        :param InvestorID: 投资者代码
-        :param InstrumentID: 合约代码
-        :param Direction: 买卖方向
-        :param OffsetFlag: 开平标志
-        :param HedgeFlag: 投机套保标志
-        :param MaxVolume: 最大允许报单数量
-        :param ExchangeID: 交易所代码
-        :param InvestUnitID: 投资单元代码
-        """
-        super(QueryMaxOrderVolume, self).__init__()
+    def __init__(self, BrokerID=None, InvestorID=None, InstrumentID=None, Direction=None, OffsetFlag=None, HedgeFlag=None, MaxVolume=None, ExchangeID=None, InvestUnitID=None):
+        super().__init__()
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
         if InvestorID:
@@ -4946,27 +3006,8 @@ class SettlementInfoConfirm(Struct):
         ("CurrencyID", c_char_Array_4),
     ]
 
-    def __init__(
-        self,
-        BrokerID: str = None,
-        InvestorID: str = None,
-        ConfirmDate: str = None,
-        ConfirmTime: str = None,
-        SettlementID: int = None,
-        AccountID: str = None,
-        CurrencyID: str = None,
-    ):
-        """
-        投资者结算结果确认信息
-        :param BrokerID: 经纪公司代码
-        :param InvestorID: 投资者代码
-        :param ConfirmDate: 确认日期
-        :param ConfirmTime: 确认时间
-        :param SettlementID: 结算编号
-        :param AccountID: 投资者帐号
-        :param CurrencyID: 币种代码
-        """
-        super(SettlementInfoConfirm, self).__init__()
+    def __init__(self, BrokerID=None, InvestorID=None, ConfirmDate=None, ConfirmTime=None, SettlementID=None, AccountID=None, CurrencyID=None):
+        super().__init__()
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
         if InvestorID:
@@ -4993,25 +3034,8 @@ class SyncDeposit(Struct):
         ("CurrencyID", c_char_Array_4),
     ]
 
-    def __init__(
-        self,
-        DepositSeqNo: str = None,
-        BrokerID: str = None,
-        InvestorID: str = None,
-        Deposit: float = None,
-        IsForce: int = None,
-        CurrencyID: str = None,
-    ):
-        """
-        出入金同步
-        :param DepositSeqNo: 出入金流水号
-        :param BrokerID: 经纪公司代码
-        :param InvestorID: 投资者代码
-        :param Deposit: 入金金额
-        :param IsForce: 是否强制进行
-        :param CurrencyID: 币种代码
-        """
-        super(SyncDeposit, self).__init__()
+    def __init__(self, DepositSeqNo=None, BrokerID=None, InvestorID=None, Deposit=None, IsForce=None, CurrencyID=None):
+        super().__init__()
         if DepositSeqNo:
             self.DepositSeqNo = DepositSeqNo.encode("GBK")
         if BrokerID:
@@ -5036,25 +3060,8 @@ class SyncFundMortgage(Struct):
         ("ToCurrencyID", c_char_Array_4),
     ]
 
-    def __init__(
-        self,
-        MortgageSeqNo: str = None,
-        BrokerID: str = None,
-        InvestorID: str = None,
-        FromCurrencyID: str = None,
-        MortgageAmount: float = None,
-        ToCurrencyID: str = None,
-    ):
-        """
-        货币质押同步
-        :param MortgageSeqNo: 货币质押流水号
-        :param BrokerID: 经纪公司代码
-        :param InvestorID: 投资者代码
-        :param FromCurrencyID: 源币种
-        :param MortgageAmount: 质押金额
-        :param ToCurrencyID: 目标币种
-        """
-        super(SyncFundMortgage, self).__init__()
+    def __init__(self, MortgageSeqNo=None, BrokerID=None, InvestorID=None, FromCurrencyID=None, MortgageAmount=None, ToCurrencyID=None):
+        super().__init__()
         if MortgageSeqNo:
             self.MortgageSeqNo = MortgageSeqNo.encode("GBK")
         if BrokerID:
@@ -5074,15 +3081,8 @@ class BrokerSync(Struct):
         ("BrokerID", c_char_Array_11),
     ]
 
-    def __init__(
-        self,
-        BrokerID: str = None,
-    ):
-        """
-        经纪公司同步
-        :param BrokerID: 经纪公司代码
-        """
-        super(BrokerSync, self).__init__()
+    def __init__(self, BrokerID=None):
+        super().__init__()
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
 
@@ -5104,39 +3104,8 @@ class SyncingInvestor(Struct):
         ("MarginModelID", c_char_Array_13),
     ]
 
-    def __init__(
-        self,
-        InvestorID: str = None,
-        BrokerID: str = None,
-        InvestorGroupID: str = None,
-        InvestorName: str = None,
-        IdentifiedCardType: bytes = None,
-        IdentifiedCardNo: str = None,
-        IsActive: int = None,
-        Telephone: str = None,
-        Address: str = None,
-        OpenDate: str = None,
-        Mobile: str = None,
-        CommModelID: str = None,
-        MarginModelID: str = None,
-    ):
-        """
-        正在同步中的投资者
-        :param InvestorID: 投资者代码
-        :param BrokerID: 经纪公司代码
-        :param InvestorGroupID: 投资者分组代码
-        :param InvestorName: 投资者名称
-        :param IdentifiedCardType: 证件类型
-        :param IdentifiedCardNo: 证件号码
-        :param IsActive: 是否活跃
-        :param Telephone: 联系电话
-        :param Address: 通讯地址
-        :param OpenDate: 开户日期
-        :param Mobile: 手机
-        :param CommModelID: 手续费率模板代码
-        :param MarginModelID: 保证金率模板代码
-        """
-        super(SyncingInvestor, self).__init__()
+    def __init__(self, InvestorID=None, BrokerID=None, InvestorGroupID=None, InvestorName=None, IdentifiedCardType=None, IdentifiedCardNo=None, IsActive=None, Telephone=None, Address=None, OpenDate=None, Mobile=None, CommModelID=None, MarginModelID=None):
+        super().__init__()
         if InvestorID:
             self.InvestorID = InvestorID.encode("GBK")
         if BrokerID:
@@ -5175,25 +3144,8 @@ class SyncingTradingCode(Struct):
         ("ClientIDType", c_char),
     ]
 
-    def __init__(
-        self,
-        InvestorID: str = None,
-        BrokerID: str = None,
-        ExchangeID: str = None,
-        ClientID: str = None,
-        IsActive: int = None,
-        ClientIDType: bytes = None,
-    ):
-        """
-        正在同步中的交易代码
-        :param InvestorID: 投资者代码
-        :param BrokerID: 经纪公司代码
-        :param ExchangeID: 交易所代码
-        :param ClientID: 客户代码
-        :param IsActive: 是否活跃
-        :param ClientIDType: 交易编码类型
-        """
-        super(SyncingTradingCode, self).__init__()
+    def __init__(self, InvestorID=None, BrokerID=None, ExchangeID=None, ClientID=None, IsActive=None, ClientIDType=None):
+        super().__init__()
         if InvestorID:
             self.InvestorID = InvestorID.encode("GBK")
         if BrokerID:
@@ -5215,19 +3167,8 @@ class SyncingInvestorGroup(Struct):
         ("InvestorGroupName", c_char_Array_41),
     ]
 
-    def __init__(
-        self,
-        BrokerID: str = None,
-        InvestorGroupID: str = None,
-        InvestorGroupName: str = None,
-    ):
-        """
-        正在同步中的投资者分组
-        :param BrokerID: 经纪公司代码
-        :param InvestorGroupID: 投资者分组代码
-        :param InvestorGroupName: 投资者分组名称
-        """
-        super(SyncingInvestorGroup, self).__init__()
+    def __init__(self, BrokerID=None, InvestorGroupID=None, InvestorGroupName=None):
+        super().__init__()
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
         if InvestorGroupID:
@@ -5288,109 +3229,8 @@ class SyncingTradingAccount(Struct):
         ("RemainSwap", c_double),
     ]
 
-    def __init__(
-        self,
-        BrokerID: str = None,
-        AccountID: str = None,
-        PreMortgage: float = None,
-        PreCredit: float = None,
-        PreDeposit: float = None,
-        PreBalance: float = None,
-        PreMargin: float = None,
-        InterestBase: float = None,
-        Interest: float = None,
-        Deposit: float = None,
-        Withdraw: float = None,
-        FrozenMargin: float = None,
-        FrozenCash: float = None,
-        FrozenCommission: float = None,
-        CurrMargin: float = None,
-        CashIn: float = None,
-        Commission: float = None,
-        CloseProfit: float = None,
-        PositionProfit: float = None,
-        Balance: float = None,
-        Available: float = None,
-        WithdrawQuota: float = None,
-        Reserve: float = None,
-        TradingDay: str = None,
-        SettlementID: int = None,
-        Credit: float = None,
-        Mortgage: float = None,
-        ExchangeMargin: float = None,
-        DeliveryMargin: float = None,
-        ExchangeDeliveryMargin: float = None,
-        ReserveBalance: float = None,
-        CurrencyID: str = None,
-        PreFundMortgageIn: float = None,
-        PreFundMortgageOut: float = None,
-        FundMortgageIn: float = None,
-        FundMortgageOut: float = None,
-        FundMortgageAvailable: float = None,
-        MortgageableFund: float = None,
-        SpecProductMargin: float = None,
-        SpecProductFrozenMargin: float = None,
-        SpecProductCommission: float = None,
-        SpecProductFrozenCommission: float = None,
-        SpecProductPositionProfit: float = None,
-        SpecProductCloseProfit: float = None,
-        SpecProductPositionProfitByAlg: float = None,
-        SpecProductExchangeMargin: float = None,
-        FrozenSwap: float = None,
-        RemainSwap: float = None,
-    ):
-        """
-        正在同步中的交易账号
-        :param BrokerID: 经纪公司代码
-        :param AccountID: 投资者帐号
-        :param PreMortgage: 上次质押金额
-        :param PreCredit: 上次信用额度
-        :param PreDeposit: 上次存款额
-        :param PreBalance: 上次结算准备金
-        :param PreMargin: 上次占用的保证金
-        :param InterestBase: 利息基数
-        :param Interest: 利息收入
-        :param Deposit: 入金金额
-        :param Withdraw: 出金金额
-        :param FrozenMargin: 冻结的保证金
-        :param FrozenCash: 冻结的资金
-        :param FrozenCommission: 冻结的手续费
-        :param CurrMargin: 当前保证金总额
-        :param CashIn: 资金差额
-        :param Commission: 手续费
-        :param CloseProfit: 平仓盈亏
-        :param PositionProfit: 持仓盈亏
-        :param Balance: 期货结算准备金
-        :param Available: 可用资金
-        :param WithdrawQuota: 可取资金
-        :param Reserve: 基本准备金
-        :param TradingDay: 交易日
-        :param SettlementID: 结算编号
-        :param Credit: 信用额度
-        :param Mortgage: 质押金额
-        :param ExchangeMargin: 交易所保证金
-        :param DeliveryMargin: 投资者交割保证金
-        :param ExchangeDeliveryMargin: 交易所交割保证金
-        :param ReserveBalance: 保底期货结算准备金
-        :param CurrencyID: 币种代码
-        :param PreFundMortgageIn: 上次货币质入金额
-        :param PreFundMortgageOut: 上次货币质出金额
-        :param FundMortgageIn: 货币质入金额
-        :param FundMortgageOut: 货币质出金额
-        :param FundMortgageAvailable: 货币质押余额
-        :param MortgageableFund: 可质押货币金额
-        :param SpecProductMargin: 特殊产品占用保证金
-        :param SpecProductFrozenMargin: 特殊产品冻结保证金
-        :param SpecProductCommission: 特殊产品手续费
-        :param SpecProductFrozenCommission: 特殊产品冻结手续费
-        :param SpecProductPositionProfit: 特殊产品持仓盈亏
-        :param SpecProductCloseProfit: 特殊产品平仓盈亏
-        :param SpecProductPositionProfitByAlg: 根据持仓盈亏算法计算的特殊产品持仓盈亏
-        :param SpecProductExchangeMargin: 特殊产品交易所保证金
-        :param FrozenSwap: 延时换汇冻结金额
-        :param RemainSwap: 剩余换汇额度
-        """
-        super(SyncingTradingAccount, self).__init__()
+    def __init__(self, BrokerID=None, AccountID=None, PreMortgage=None, PreCredit=None, PreDeposit=None, PreBalance=None, PreMargin=None, InterestBase=None, Interest=None, Deposit=None, Withdraw=None, FrozenMargin=None, FrozenCash=None, FrozenCommission=None, CurrMargin=None, CashIn=None, Commission=None, CloseProfit=None, PositionProfit=None, Balance=None, Available=None, WithdrawQuota=None, Reserve=None, TradingDay=None, SettlementID=None, Credit=None, Mortgage=None, ExchangeMargin=None, DeliveryMargin=None, ExchangeDeliveryMargin=None, ReserveBalance=None, CurrencyID=None, PreFundMortgageIn=None, PreFundMortgageOut=None, FundMortgageIn=None, FundMortgageOut=None, FundMortgageAvailable=None, MortgageableFund=None, SpecProductMargin=None, SpecProductFrozenMargin=None, SpecProductCommission=None, SpecProductFrozenCommission=None, SpecProductPositionProfit=None, SpecProductCloseProfit=None, SpecProductPositionProfitByAlg=None, SpecProductExchangeMargin=None, FrozenSwap=None, RemainSwap=None):
+        super().__init__()
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
         if AccountID:
@@ -5540,107 +3380,8 @@ class SyncingInvestorPosition(Struct):
         ("PositionCostOffset", c_double),
     ]
 
-    def __init__(
-        self,
-        InstrumentID: str = None,
-        BrokerID: str = None,
-        InvestorID: str = None,
-        PosiDirection: bytes = None,
-        HedgeFlag: bytes = None,
-        PositionDate: bytes = None,
-        YdPosition: int = None,
-        Position: int = None,
-        LongFrozen: int = None,
-        ShortFrozen: int = None,
-        LongFrozenAmount: float = None,
-        ShortFrozenAmount: float = None,
-        OpenVolume: int = None,
-        CloseVolume: int = None,
-        OpenAmount: float = None,
-        CloseAmount: float = None,
-        PositionCost: float = None,
-        PreMargin: float = None,
-        UseMargin: float = None,
-        FrozenMargin: float = None,
-        FrozenCash: float = None,
-        FrozenCommission: float = None,
-        CashIn: float = None,
-        Commission: float = None,
-        CloseProfit: float = None,
-        PositionProfit: float = None,
-        PreSettlementPrice: float = None,
-        SettlementPrice: float = None,
-        TradingDay: str = None,
-        SettlementID: int = None,
-        OpenCost: float = None,
-        ExchangeMargin: float = None,
-        CombPosition: int = None,
-        CombLongFrozen: int = None,
-        CombShortFrozen: int = None,
-        CloseProfitByDate: float = None,
-        CloseProfitByTrade: float = None,
-        TodayPosition: int = None,
-        MarginRateByMoney: float = None,
-        MarginRateByVolume: float = None,
-        StrikeFrozen: int = None,
-        StrikeFrozenAmount: float = None,
-        AbandonFrozen: int = None,
-        ExchangeID: str = None,
-        YdStrikeFrozen: int = None,
-        InvestUnitID: str = None,
-        PositionCostOffset: float = None,
-    ):
-        """
-        正在同步中的投资者持仓
-        :param InstrumentID: 合约代码
-        :param BrokerID: 经纪公司代码
-        :param InvestorID: 投资者代码
-        :param PosiDirection: 持仓多空方向
-        :param HedgeFlag: 投机套保标志
-        :param PositionDate: 持仓日期
-        :param YdPosition: 上日持仓
-        :param Position: 今日持仓
-        :param LongFrozen: 多头冻结
-        :param ShortFrozen: 空头冻结
-        :param LongFrozenAmount: 开仓冻结金额
-        :param ShortFrozenAmount: 开仓冻结金额
-        :param OpenVolume: 开仓量
-        :param CloseVolume: 平仓量
-        :param OpenAmount: 开仓金额
-        :param CloseAmount: 平仓金额
-        :param PositionCost: 持仓成本
-        :param PreMargin: 上次占用的保证金
-        :param UseMargin: 占用的保证金
-        :param FrozenMargin: 冻结的保证金
-        :param FrozenCash: 冻结的资金
-        :param FrozenCommission: 冻结的手续费
-        :param CashIn: 资金差额
-        :param Commission: 手续费
-        :param CloseProfit: 平仓盈亏
-        :param PositionProfit: 持仓盈亏
-        :param PreSettlementPrice: 上次结算价
-        :param SettlementPrice: 本次结算价
-        :param TradingDay: 交易日
-        :param SettlementID: 结算编号
-        :param OpenCost: 开仓成本
-        :param ExchangeMargin: 交易所保证金
-        :param CombPosition: 组合成交形成的持仓
-        :param CombLongFrozen: 组合多头冻结
-        :param CombShortFrozen: 组合空头冻结
-        :param CloseProfitByDate: 逐日盯市平仓盈亏
-        :param CloseProfitByTrade: 逐笔对冲平仓盈亏
-        :param TodayPosition: 今日持仓
-        :param MarginRateByMoney: 保证金率
-        :param MarginRateByVolume: 保证金率(按手数)
-        :param StrikeFrozen: 执行冻结
-        :param StrikeFrozenAmount: 执行冻结金额
-        :param AbandonFrozen: 放弃执行冻结
-        :param ExchangeID: 交易所代码
-        :param YdStrikeFrozen: 执行冻结的昨仓
-        :param InvestUnitID: 投资单元代码
-        :param PositionCostOffset: 大商所持仓成本差值，只有大商所使用
-        """
-        super(SyncingInvestorPosition, self).__init__()
+    def __init__(self, InstrumentID=None, BrokerID=None, InvestorID=None, PosiDirection=None, HedgeFlag=None, PositionDate=None, YdPosition=None, Position=None, LongFrozen=None, ShortFrozen=None, LongFrozenAmount=None, ShortFrozenAmount=None, OpenVolume=None, CloseVolume=None, OpenAmount=None, CloseAmount=None, PositionCost=None, PreMargin=None, UseMargin=None, FrozenMargin=None, FrozenCash=None, FrozenCommission=None, CashIn=None, Commission=None, CloseProfit=None, PositionProfit=None, PreSettlementPrice=None, SettlementPrice=None, TradingDay=None, SettlementID=None, OpenCost=None, ExchangeMargin=None, CombPosition=None, CombLongFrozen=None, CombShortFrozen=None, CloseProfitByDate=None, CloseProfitByTrade=None, TodayPosition=None, MarginRateByMoney=None, MarginRateByVolume=None, StrikeFrozen=None, StrikeFrozenAmount=None, AbandonFrozen=None, ExchangeID=None, YdStrikeFrozen=None, InvestUnitID=None, PositionCostOffset=None):
+        super().__init__()
         if InstrumentID:
             self.InstrumentID = InstrumentID.encode("GBK")
         if BrokerID:
@@ -5751,33 +3492,8 @@ class SyncingInstrumentMarginRate(Struct):
         ("IsRelative", c_int),
     ]
 
-    def __init__(
-        self,
-        InstrumentID: str = None,
-        InvestorRange: bytes = None,
-        BrokerID: str = None,
-        InvestorID: str = None,
-        HedgeFlag: bytes = None,
-        LongMarginRatioByMoney: float = None,
-        LongMarginRatioByVolume: float = None,
-        ShortMarginRatioByMoney: float = None,
-        ShortMarginRatioByVolume: float = None,
-        IsRelative: int = None,
-    ):
-        """
-        正在同步中的合约保证金率
-        :param InstrumentID: 合约代码
-        :param InvestorRange: 投资者范围
-        :param BrokerID: 经纪公司代码
-        :param InvestorID: 投资者代码
-        :param HedgeFlag: 投机套保标志
-        :param LongMarginRatioByMoney: 多头保证金率
-        :param LongMarginRatioByVolume: 多头保证金费
-        :param ShortMarginRatioByMoney: 空头保证金率
-        :param ShortMarginRatioByVolume: 空头保证金费
-        :param IsRelative: 是否相对交易所收取
-        """
-        super(SyncingInstrumentMarginRate, self).__init__()
+    def __init__(self, InstrumentID=None, InvestorRange=None, BrokerID=None, InvestorID=None, HedgeFlag=None, LongMarginRatioByMoney=None, LongMarginRatioByVolume=None, ShortMarginRatioByMoney=None, ShortMarginRatioByVolume=None, IsRelative=None):
+        super().__init__()
         if InstrumentID:
             self.InstrumentID = InstrumentID.encode("GBK")
         if InvestorRange:
@@ -5814,33 +3530,8 @@ class SyncingInstrumentCommissionRate(Struct):
         ("CloseTodayRatioByVolume", c_double),
     ]
 
-    def __init__(
-        self,
-        InstrumentID: str = None,
-        InvestorRange: bytes = None,
-        BrokerID: str = None,
-        InvestorID: str = None,
-        OpenRatioByMoney: float = None,
-        OpenRatioByVolume: float = None,
-        CloseRatioByMoney: float = None,
-        CloseRatioByVolume: float = None,
-        CloseTodayRatioByMoney: float = None,
-        CloseTodayRatioByVolume: float = None,
-    ):
-        """
-        正在同步中的合约手续费率
-        :param InstrumentID: 合约代码
-        :param InvestorRange: 投资者范围
-        :param BrokerID: 经纪公司代码
-        :param InvestorID: 投资者代码
-        :param OpenRatioByMoney: 开仓手续费率
-        :param OpenRatioByVolume: 开仓手续费
-        :param CloseRatioByMoney: 平仓手续费率
-        :param CloseRatioByVolume: 平仓手续费
-        :param CloseTodayRatioByMoney: 平今手续费率
-        :param CloseTodayRatioByVolume: 平今手续费
-        """
-        super(SyncingInstrumentCommissionRate, self).__init__()
+    def __init__(self, InstrumentID=None, InvestorRange=None, BrokerID=None, InvestorID=None, OpenRatioByMoney=None, OpenRatioByVolume=None, CloseRatioByMoney=None, CloseRatioByVolume=None, CloseTodayRatioByMoney=None, CloseTodayRatioByVolume=None):
+        super().__init__()
         if InstrumentID:
             self.InstrumentID = InstrumentID.encode("GBK")
         if InvestorRange:
@@ -5872,23 +3563,8 @@ class SyncingInstrumentTradingRight(Struct):
         ("TradingRight", c_char),
     ]
 
-    def __init__(
-        self,
-        InstrumentID: str = None,
-        InvestorRange: bytes = None,
-        BrokerID: str = None,
-        InvestorID: str = None,
-        TradingRight: bytes = None,
-    ):
-        """
-        正在同步中的合约交易权限
-        :param InstrumentID: 合约代码
-        :param InvestorRange: 投资者范围
-        :param BrokerID: 经纪公司代码
-        :param InvestorID: 投资者代码
-        :param TradingRight: 交易权限
-        """
-        super(SyncingInstrumentTradingRight, self).__init__()
+    def __init__(self, InstrumentID=None, InvestorRange=None, BrokerID=None, InvestorID=None, TradingRight=None):
+        super().__init__()
         if InstrumentID:
             self.InstrumentID = InstrumentID.encode("GBK")
         if InvestorRange:
@@ -5913,29 +3589,8 @@ class QryOrder(Struct):
         ("InvestUnitID", c_char_Array_17),
     ]
 
-    def __init__(
-        self,
-        BrokerID: str = None,
-        InvestorID: str = None,
-        InstrumentID: str = None,
-        ExchangeID: str = None,
-        OrderSysID: str = None,
-        InsertTimeStart: str = None,
-        InsertTimeEnd: str = None,
-        InvestUnitID: str = None,
-    ):
-        """
-        查询报单
-        :param BrokerID: 经纪公司代码
-        :param InvestorID: 投资者代码
-        :param InstrumentID: 合约代码
-        :param ExchangeID: 交易所代码
-        :param OrderSysID: 报单编号
-        :param InsertTimeStart: 开始时间
-        :param InsertTimeEnd: 结束时间
-        :param InvestUnitID: 投资单元代码
-        """
-        super(QryOrder, self).__init__()
+    def __init__(self, BrokerID=None, InvestorID=None, InstrumentID=None, ExchangeID=None, OrderSysID=None, InsertTimeStart=None, InsertTimeEnd=None, InvestUnitID=None):
+        super().__init__()
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
         if InvestorID:
@@ -5966,29 +3621,8 @@ class QryTrade(Struct):
         ("InvestUnitID", c_char_Array_17),
     ]
 
-    def __init__(
-        self,
-        BrokerID: str = None,
-        InvestorID: str = None,
-        InstrumentID: str = None,
-        ExchangeID: str = None,
-        TradeID: str = None,
-        TradeTimeStart: str = None,
-        TradeTimeEnd: str = None,
-        InvestUnitID: str = None,
-    ):
-        """
-        查询成交
-        :param BrokerID: 经纪公司代码
-        :param InvestorID: 投资者代码
-        :param InstrumentID: 合约代码
-        :param ExchangeID: 交易所代码
-        :param TradeID: 成交编号
-        :param TradeTimeStart: 开始时间
-        :param TradeTimeEnd: 结束时间
-        :param InvestUnitID: 投资单元代码
-        """
-        super(QryTrade, self).__init__()
+    def __init__(self, BrokerID=None, InvestorID=None, InstrumentID=None, ExchangeID=None, TradeID=None, TradeTimeStart=None, TradeTimeEnd=None, InvestUnitID=None):
+        super().__init__()
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
         if InvestorID:
@@ -6016,23 +3650,8 @@ class QryInvestorPosition(Struct):
         ("InvestUnitID", c_char_Array_17),
     ]
 
-    def __init__(
-        self,
-        BrokerID: str = None,
-        InvestorID: str = None,
-        InstrumentID: str = None,
-        ExchangeID: str = None,
-        InvestUnitID: str = None,
-    ):
-        """
-        查询投资者持仓
-        :param BrokerID: 经纪公司代码
-        :param InvestorID: 投资者代码
-        :param InstrumentID: 合约代码
-        :param ExchangeID: 交易所代码
-        :param InvestUnitID: 投资单元代码
-        """
-        super(QryInvestorPosition, self).__init__()
+    def __init__(self, BrokerID=None, InvestorID=None, InstrumentID=None, ExchangeID=None, InvestUnitID=None):
+        super().__init__()
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
         if InvestorID:
@@ -6054,23 +3673,8 @@ class QryTradingAccount(Struct):
         ("AccountID", c_char_Array_13),
     ]
 
-    def __init__(
-        self,
-        BrokerID: str = None,
-        InvestorID: str = None,
-        CurrencyID: str = None,
-        BizType: bytes = None,
-        AccountID: str = None,
-    ):
-        """
-        查询资金账户
-        :param BrokerID: 经纪公司代码
-        :param InvestorID: 投资者代码
-        :param CurrencyID: 币种代码
-        :param BizType: 业务类型
-        :param AccountID: 投资者帐号
-        """
-        super(QryTradingAccount, self).__init__()
+    def __init__(self, BrokerID=None, InvestorID=None, CurrencyID=None, BizType=None, AccountID=None):
+        super().__init__()
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
         if InvestorID:
@@ -6089,17 +3693,8 @@ class QryInvestor(Struct):
         ("InvestorID", c_char_Array_13),
     ]
 
-    def __init__(
-        self,
-        BrokerID: str = None,
-        InvestorID: str = None,
-    ):
-        """
-        查询投资者
-        :param BrokerID: 经纪公司代码
-        :param InvestorID: 投资者代码
-        """
-        super(QryInvestor, self).__init__()
+    def __init__(self, BrokerID=None, InvestorID=None):
+        super().__init__()
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
         if InvestorID:
@@ -6116,25 +3711,8 @@ class QryTradingCode(Struct):
         ("InvestUnitID", c_char_Array_17),
     ]
 
-    def __init__(
-        self,
-        BrokerID: str = None,
-        InvestorID: str = None,
-        ExchangeID: str = None,
-        ClientID: str = None,
-        ClientIDType: bytes = None,
-        InvestUnitID: str = None,
-    ):
-        """
-        查询交易编码
-        :param BrokerID: 经纪公司代码
-        :param InvestorID: 投资者代码
-        :param ExchangeID: 交易所代码
-        :param ClientID: 客户代码
-        :param ClientIDType: 交易编码类型
-        :param InvestUnitID: 投资单元代码
-        """
-        super(QryTradingCode, self).__init__()
+    def __init__(self, BrokerID=None, InvestorID=None, ExchangeID=None, ClientID=None, ClientIDType=None, InvestUnitID=None):
+        super().__init__()
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
         if InvestorID:
@@ -6154,15 +3732,8 @@ class QryInvestorGroup(Struct):
         ("BrokerID", c_char_Array_11),
     ]
 
-    def __init__(
-        self,
-        BrokerID: str = None,
-    ):
-        """
-        查询投资者组
-        :param BrokerID: 经纪公司代码
-        """
-        super(QryInvestorGroup, self).__init__()
+    def __init__(self, BrokerID=None):
+        super().__init__()
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
 
@@ -6177,25 +3748,8 @@ class QryInstrumentMarginRate(Struct):
         ("InvestUnitID", c_char_Array_17),
     ]
 
-    def __init__(
-        self,
-        BrokerID: str = None,
-        InvestorID: str = None,
-        InstrumentID: str = None,
-        HedgeFlag: bytes = None,
-        ExchangeID: str = None,
-        InvestUnitID: str = None,
-    ):
-        """
-        查询合约保证金率
-        :param BrokerID: 经纪公司代码
-        :param InvestorID: 投资者代码
-        :param InstrumentID: 合约代码
-        :param HedgeFlag: 投机套保标志
-        :param ExchangeID: 交易所代码
-        :param InvestUnitID: 投资单元代码
-        """
-        super(QryInstrumentMarginRate, self).__init__()
+    def __init__(self, BrokerID=None, InvestorID=None, InstrumentID=None, HedgeFlag=None, ExchangeID=None, InvestUnitID=None):
+        super().__init__()
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
         if InvestorID:
@@ -6219,23 +3773,8 @@ class QryInstrumentCommissionRate(Struct):
         ("InvestUnitID", c_char_Array_17),
     ]
 
-    def __init__(
-        self,
-        BrokerID: str = None,
-        InvestorID: str = None,
-        InstrumentID: str = None,
-        ExchangeID: str = None,
-        InvestUnitID: str = None,
-    ):
-        """
-        查询手续费率
-        :param BrokerID: 经纪公司代码
-        :param InvestorID: 投资者代码
-        :param InstrumentID: 合约代码
-        :param ExchangeID: 交易所代码
-        :param InvestUnitID: 投资单元代码
-        """
-        super(QryInstrumentCommissionRate, self).__init__()
+    def __init__(self, BrokerID=None, InvestorID=None, InstrumentID=None, ExchangeID=None, InvestUnitID=None):
+        super().__init__()
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
         if InvestorID:
@@ -6255,19 +3794,8 @@ class QryInstrumentTradingRight(Struct):
         ("InstrumentID", c_char_Array_31),
     ]
 
-    def __init__(
-        self,
-        BrokerID: str = None,
-        InvestorID: str = None,
-        InstrumentID: str = None,
-    ):
-        """
-        查询合约交易权限
-        :param BrokerID: 经纪公司代码
-        :param InvestorID: 投资者代码
-        :param InstrumentID: 合约代码
-        """
-        super(QryInstrumentTradingRight, self).__init__()
+    def __init__(self, BrokerID=None, InvestorID=None, InstrumentID=None):
+        super().__init__()
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
         if InvestorID:
@@ -6281,15 +3809,8 @@ class QryBroker(Struct):
         ("BrokerID", c_char_Array_11),
     ]
 
-    def __init__(
-        self,
-        BrokerID: str = None,
-    ):
-        """
-        查询经纪公司
-        :param BrokerID: 经纪公司代码
-        """
-        super(QryBroker, self).__init__()
+    def __init__(self, BrokerID=None):
+        super().__init__()
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
 
@@ -6301,19 +3822,8 @@ class QryTrader(Struct):
         ("TraderID", c_char_Array_21),
     ]
 
-    def __init__(
-        self,
-        ExchangeID: str = None,
-        ParticipantID: str = None,
-        TraderID: str = None,
-    ):
-        """
-        查询交易员
-        :param ExchangeID: 交易所代码
-        :param ParticipantID: 会员代码
-        :param TraderID: 交易所交易员代码
-        """
-        super(QryTrader, self).__init__()
+    def __init__(self, ExchangeID=None, ParticipantID=None, TraderID=None):
+        super().__init__()
         if ExchangeID:
             self.ExchangeID = ExchangeID.encode("GBK")
         if ParticipantID:
@@ -6327,15 +3837,8 @@ class QrySuperUserFunction(Struct):
         ("UserID", c_char_Array_16),
     ]
 
-    def __init__(
-        self,
-        UserID: str = None,
-    ):
-        """
-        查询管理用户功能权限
-        :param UserID: 用户代码
-        """
-        super(QrySuperUserFunction, self).__init__()
+    def __init__(self, UserID=None):
+        super().__init__()
         if UserID:
             self.UserID = UserID.encode("GBK")
 
@@ -6348,21 +3851,8 @@ class QryUserSession(Struct):
         ("UserID", c_char_Array_16),
     ]
 
-    def __init__(
-        self,
-        FrontID: int = None,
-        SessionID: int = None,
-        BrokerID: str = None,
-        UserID: str = None,
-    ):
-        """
-        查询用户会话
-        :param FrontID: 前置编号
-        :param SessionID: 会话编号
-        :param BrokerID: 经纪公司代码
-        :param UserID: 用户代码
-        """
-        super(QryUserSession, self).__init__()
+    def __init__(self, FrontID=None, SessionID=None, BrokerID=None, UserID=None):
+        super().__init__()
         if FrontID:
             self.FrontID = FrontID
         if SessionID:
@@ -6380,19 +3870,8 @@ class QryPartBroker(Struct):
         ("ParticipantID", c_char_Array_11),
     ]
 
-    def __init__(
-        self,
-        ExchangeID: str = None,
-        BrokerID: str = None,
-        ParticipantID: str = None,
-    ):
-        """
-        查询经纪公司会员代码
-        :param ExchangeID: 交易所代码
-        :param BrokerID: 经纪公司代码
-        :param ParticipantID: 会员代码
-        """
-        super(QryPartBroker, self).__init__()
+    def __init__(self, ExchangeID=None, BrokerID=None, ParticipantID=None):
+        super().__init__()
         if ExchangeID:
             self.ExchangeID = ExchangeID.encode("GBK")
         if BrokerID:
@@ -6406,15 +3885,8 @@ class QryFrontStatus(Struct):
         ("FrontID", c_int),
     ]
 
-    def __init__(
-        self,
-        FrontID: int = None,
-    ):
-        """
-        查询前置状态
-        :param FrontID: 前置编号
-        """
-        super(QryFrontStatus, self).__init__()
+    def __init__(self, FrontID=None):
+        super().__init__()
         if FrontID:
             self.FrontID = FrontID
 
@@ -6428,23 +3900,8 @@ class QryExchangeOrder(Struct):
         ("TraderID", c_char_Array_21),
     ]
 
-    def __init__(
-        self,
-        ParticipantID: str = None,
-        ClientID: str = None,
-        ExchangeInstID: str = None,
-        ExchangeID: str = None,
-        TraderID: str = None,
-    ):
-        """
-        查询交易所报单
-        :param ParticipantID: 会员代码
-        :param ClientID: 客户代码
-        :param ExchangeInstID: 合约在交易所的代码
-        :param ExchangeID: 交易所代码
-        :param TraderID: 交易所交易员代码
-        """
-        super(QryExchangeOrder, self).__init__()
+    def __init__(self, ParticipantID=None, ClientID=None, ExchangeInstID=None, ExchangeID=None, TraderID=None):
+        super().__init__()
         if ParticipantID:
             self.ParticipantID = ParticipantID.encode("GBK")
         if ClientID:
@@ -6464,19 +3921,8 @@ class QryOrderAction(Struct):
         ("ExchangeID", c_char_Array_9),
     ]
 
-    def __init__(
-        self,
-        BrokerID: str = None,
-        InvestorID: str = None,
-        ExchangeID: str = None,
-    ):
-        """
-        查询报单操作
-        :param BrokerID: 经纪公司代码
-        :param InvestorID: 投资者代码
-        :param ExchangeID: 交易所代码
-        """
-        super(QryOrderAction, self).__init__()
+    def __init__(self, BrokerID=None, InvestorID=None, ExchangeID=None):
+        super().__init__()
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
         if InvestorID:
@@ -6493,21 +3939,8 @@ class QryExchangeOrderAction(Struct):
         ("TraderID", c_char_Array_21),
     ]
 
-    def __init__(
-        self,
-        ParticipantID: str = None,
-        ClientID: str = None,
-        ExchangeID: str = None,
-        TraderID: str = None,
-    ):
-        """
-        查询交易所报单操作
-        :param ParticipantID: 会员代码
-        :param ClientID: 客户代码
-        :param ExchangeID: 交易所代码
-        :param TraderID: 交易所交易员代码
-        """
-        super(QryExchangeOrderAction, self).__init__()
+    def __init__(self, ParticipantID=None, ClientID=None, ExchangeID=None, TraderID=None):
+        super().__init__()
         if ParticipantID:
             self.ParticipantID = ParticipantID.encode("GBK")
         if ClientID:
@@ -6523,15 +3956,8 @@ class QrySuperUser(Struct):
         ("UserID", c_char_Array_16),
     ]
 
-    def __init__(
-        self,
-        UserID: str = None,
-    ):
-        """
-        查询管理用户
-        :param UserID: 用户代码
-        """
-        super(QrySuperUser, self).__init__()
+    def __init__(self, UserID=None):
+        super().__init__()
         if UserID:
             self.UserID = UserID.encode("GBK")
 
@@ -6541,15 +3967,8 @@ class QryExchange(Struct):
         ("ExchangeID", c_char_Array_9),
     ]
 
-    def __init__(
-        self,
-        ExchangeID: str = None,
-    ):
-        """
-        查询交易所
-        :param ExchangeID: 交易所代码
-        """
-        super(QryExchange, self).__init__()
+    def __init__(self, ExchangeID=None):
+        super().__init__()
         if ExchangeID:
             self.ExchangeID = ExchangeID.encode("GBK")
 
@@ -6561,19 +3980,8 @@ class QryProduct(Struct):
         ("ExchangeID", c_char_Array_9),
     ]
 
-    def __init__(
-        self,
-        ProductID: str = None,
-        ProductClass: bytes = None,
-        ExchangeID: str = None,
-    ):
-        """
-        查询产品
-        :param ProductID: 产品代码
-        :param ProductClass: 产品类型
-        :param ExchangeID: 交易所代码
-        """
-        super(QryProduct, self).__init__()
+    def __init__(self, ProductID=None, ProductClass=None, ExchangeID=None):
+        super().__init__()
         if ProductID:
             self.ProductID = ProductID.encode("GBK")
         if ProductClass:
@@ -6590,21 +3998,8 @@ class QryInstrument(Struct):
         ("ProductID", c_char_Array_31),
     ]
 
-    def __init__(
-        self,
-        InstrumentID: str = None,
-        ExchangeID: str = None,
-        ExchangeInstID: str = None,
-        ProductID: str = None,
-    ):
-        """
-        查询合约
-        :param InstrumentID: 合约代码
-        :param ExchangeID: 交易所代码
-        :param ExchangeInstID: 合约在交易所的代码
-        :param ProductID: 产品代码
-        """
-        super(QryInstrument, self).__init__()
+    def __init__(self, InstrumentID=None, ExchangeID=None, ExchangeInstID=None, ProductID=None):
+        super().__init__()
         if InstrumentID:
             self.InstrumentID = InstrumentID.encode("GBK")
         if ExchangeID:
@@ -6621,17 +4016,8 @@ class QryDepthMarketData(Struct):
         ("ExchangeID", c_char_Array_9),
     ]
 
-    def __init__(
-        self,
-        InstrumentID: str = None,
-        ExchangeID: str = None,
-    ):
-        """
-        查询行情
-        :param InstrumentID: 合约代码
-        :param ExchangeID: 交易所代码
-        """
-        super(QryDepthMarketData, self).__init__()
+    def __init__(self, InstrumentID=None, ExchangeID=None):
+        super().__init__()
         if InstrumentID:
             self.InstrumentID = InstrumentID.encode("GBK")
         if ExchangeID:
@@ -6644,17 +4030,8 @@ class QryBrokerUser(Struct):
         ("UserID", c_char_Array_16),
     ]
 
-    def __init__(
-        self,
-        BrokerID: str = None,
-        UserID: str = None,
-    ):
-        """
-        查询经纪公司用户
-        :param BrokerID: 经纪公司代码
-        :param UserID: 用户代码
-        """
-        super(QryBrokerUser, self).__init__()
+    def __init__(self, BrokerID=None, UserID=None):
+        super().__init__()
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
         if UserID:
@@ -6667,17 +4044,8 @@ class QryBrokerUserFunction(Struct):
         ("UserID", c_char_Array_16),
     ]
 
-    def __init__(
-        self,
-        BrokerID: str = None,
-        UserID: str = None,
-    ):
-        """
-        查询经纪公司用户权限
-        :param BrokerID: 经纪公司代码
-        :param UserID: 用户代码
-        """
-        super(QryBrokerUserFunction, self).__init__()
+    def __init__(self, BrokerID=None, UserID=None):
+        super().__init__()
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
         if UserID:
@@ -6691,19 +4059,8 @@ class QryTraderOffer(Struct):
         ("TraderID", c_char_Array_21),
     ]
 
-    def __init__(
-        self,
-        ExchangeID: str = None,
-        ParticipantID: str = None,
-        TraderID: str = None,
-    ):
-        """
-        查询交易员报盘机
-        :param ExchangeID: 交易所代码
-        :param ParticipantID: 会员代码
-        :param TraderID: 交易所交易员代码
-        """
-        super(QryTraderOffer, self).__init__()
+    def __init__(self, ExchangeID=None, ParticipantID=None, TraderID=None):
+        super().__init__()
         if ExchangeID:
             self.ExchangeID = ExchangeID.encode("GBK")
         if ParticipantID:
@@ -6718,17 +4075,8 @@ class QrySyncDeposit(Struct):
         ("DepositSeqNo", c_char_Array_15),
     ]
 
-    def __init__(
-        self,
-        BrokerID: str = None,
-        DepositSeqNo: str = None,
-    ):
-        """
-        查询出入金流水
-        :param BrokerID: 经纪公司代码
-        :param DepositSeqNo: 出入金流水号
-        """
-        super(QrySyncDeposit, self).__init__()
+    def __init__(self, BrokerID=None, DepositSeqNo=None):
+        super().__init__()
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
         if DepositSeqNo:
@@ -6744,23 +4092,8 @@ class QrySettlementInfo(Struct):
         ("CurrencyID", c_char_Array_4),
     ]
 
-    def __init__(
-        self,
-        BrokerID: str = None,
-        InvestorID: str = None,
-        TradingDay: str = None,
-        AccountID: str = None,
-        CurrencyID: str = None,
-    ):
-        """
-        查询投资者结算结果
-        :param BrokerID: 经纪公司代码
-        :param InvestorID: 投资者代码
-        :param TradingDay: 交易日
-        :param AccountID: 投资者帐号
-        :param CurrencyID: 币种代码
-        """
-        super(QrySettlementInfo, self).__init__()
+    def __init__(self, BrokerID=None, InvestorID=None, TradingDay=None, AccountID=None, CurrencyID=None):
+        super().__init__()
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
         if InvestorID:
@@ -6781,21 +4114,8 @@ class QryExchangeMarginRate(Struct):
         ("ExchangeID", c_char_Array_9),
     ]
 
-    def __init__(
-        self,
-        BrokerID: str = None,
-        InstrumentID: str = None,
-        HedgeFlag: bytes = None,
-        ExchangeID: str = None,
-    ):
-        """
-        查询交易所保证金率
-        :param BrokerID: 经纪公司代码
-        :param InstrumentID: 合约代码
-        :param HedgeFlag: 投机套保标志
-        :param ExchangeID: 交易所代码
-        """
-        super(QryExchangeMarginRate, self).__init__()
+    def __init__(self, BrokerID=None, InstrumentID=None, HedgeFlag=None, ExchangeID=None):
+        super().__init__()
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
         if InstrumentID:
@@ -6813,19 +4133,8 @@ class QryExchangeMarginRateAdjust(Struct):
         ("HedgeFlag", c_char),
     ]
 
-    def __init__(
-        self,
-        BrokerID: str = None,
-        InstrumentID: str = None,
-        HedgeFlag: bytes = None,
-    ):
-        """
-        查询交易所调整保证金率
-        :param BrokerID: 经纪公司代码
-        :param InstrumentID: 合约代码
-        :param HedgeFlag: 投机套保标志
-        """
-        super(QryExchangeMarginRateAdjust, self).__init__()
+    def __init__(self, BrokerID=None, InstrumentID=None, HedgeFlag=None):
+        super().__init__()
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
         if InstrumentID:
@@ -6841,19 +4150,8 @@ class QryExchangeRate(Struct):
         ("ToCurrencyID", c_char_Array_4),
     ]
 
-    def __init__(
-        self,
-        BrokerID: str = None,
-        FromCurrencyID: str = None,
-        ToCurrencyID: str = None,
-    ):
-        """
-        查询汇率
-        :param BrokerID: 经纪公司代码
-        :param FromCurrencyID: 源币种
-        :param ToCurrencyID: 目标币种
-        """
-        super(QryExchangeRate, self).__init__()
+    def __init__(self, BrokerID=None, FromCurrencyID=None, ToCurrencyID=None):
+        super().__init__()
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
         if FromCurrencyID:
@@ -6868,17 +4166,8 @@ class QrySyncFundMortgage(Struct):
         ("MortgageSeqNo", c_char_Array_15),
     ]
 
-    def __init__(
-        self,
-        BrokerID: str = None,
-        MortgageSeqNo: str = None,
-    ):
-        """
-        查询货币质押流水
-        :param BrokerID: 经纪公司代码
-        :param MortgageSeqNo: 货币质押流水号
-        """
-        super(QrySyncFundMortgage, self).__init__()
+    def __init__(self, BrokerID=None, MortgageSeqNo=None):
+        super().__init__()
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
         if MortgageSeqNo:
@@ -6898,31 +4187,8 @@ class QryHisOrder(Struct):
         ("SettlementID", c_int),
     ]
 
-    def __init__(
-        self,
-        BrokerID: str = None,
-        InvestorID: str = None,
-        InstrumentID: str = None,
-        ExchangeID: str = None,
-        OrderSysID: str = None,
-        InsertTimeStart: str = None,
-        InsertTimeEnd: str = None,
-        TradingDay: str = None,
-        SettlementID: int = None,
-    ):
-        """
-        查询报单
-        :param BrokerID: 经纪公司代码
-        :param InvestorID: 投资者代码
-        :param InstrumentID: 合约代码
-        :param ExchangeID: 交易所代码
-        :param OrderSysID: 报单编号
-        :param InsertTimeStart: 开始时间
-        :param InsertTimeEnd: 结束时间
-        :param TradingDay: 交易日
-        :param SettlementID: 结算编号
-        """
-        super(QryHisOrder, self).__init__()
+    def __init__(self, BrokerID=None, InvestorID=None, InstrumentID=None, ExchangeID=None, OrderSysID=None, InsertTimeStart=None, InsertTimeEnd=None, TradingDay=None, SettlementID=None):
+        super().__init__()
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
         if InvestorID:
@@ -6954,27 +4220,8 @@ class OptionInstrMiniMargin(Struct):
         ("IsRelative", c_int),
     ]
 
-    def __init__(
-        self,
-        InstrumentID: str = None,
-        InvestorRange: bytes = None,
-        BrokerID: str = None,
-        InvestorID: str = None,
-        MinMargin: float = None,
-        ValueMethod: bytes = None,
-        IsRelative: int = None,
-    ):
-        """
-        当前期权合约最小保证金
-        :param InstrumentID: 合约代码
-        :param InvestorRange: 投资者范围
-        :param BrokerID: 经纪公司代码
-        :param InvestorID: 投资者代码
-        :param MinMargin: 单位（手）期权合约最小保证金
-        :param ValueMethod: 取值方式
-        :param IsRelative: 是否跟随交易所收取
-        """
-        super(OptionInstrMiniMargin, self).__init__()
+    def __init__(self, InstrumentID=None, InvestorRange=None, BrokerID=None, InvestorID=None, MinMargin=None, ValueMethod=None, IsRelative=None):
+        super().__init__()
         if InstrumentID:
             self.InstrumentID = InstrumentID.encode("GBK")
         if InvestorRange:
@@ -7008,39 +4255,8 @@ class OptionInstrMarginAdjust(Struct):
         ("MShortMarginRatioByVolume", c_double),
     ]
 
-    def __init__(
-        self,
-        InstrumentID: str = None,
-        InvestorRange: bytes = None,
-        BrokerID: str = None,
-        InvestorID: str = None,
-        SShortMarginRatioByMoney: float = None,
-        SShortMarginRatioByVolume: float = None,
-        HShortMarginRatioByMoney: float = None,
-        HShortMarginRatioByVolume: float = None,
-        AShortMarginRatioByMoney: float = None,
-        AShortMarginRatioByVolume: float = None,
-        IsRelative: int = None,
-        MShortMarginRatioByMoney: float = None,
-        MShortMarginRatioByVolume: float = None,
-    ):
-        """
-        当前期权合约保证金调整系数
-        :param InstrumentID: 合约代码
-        :param InvestorRange: 投资者范围
-        :param BrokerID: 经纪公司代码
-        :param InvestorID: 投资者代码
-        :param SShortMarginRatioByMoney: 投机空头保证金调整系数
-        :param SShortMarginRatioByVolume: 投机空头保证金调整系数
-        :param HShortMarginRatioByMoney: 保值空头保证金调整系数
-        :param HShortMarginRatioByVolume: 保值空头保证金调整系数
-        :param AShortMarginRatioByMoney: 套利空头保证金调整系数
-        :param AShortMarginRatioByVolume: 套利空头保证金调整系数
-        :param IsRelative: 是否跟随交易所收取
-        :param MShortMarginRatioByMoney: 做市商空头保证金调整系数
-        :param MShortMarginRatioByVolume: 做市商空头保证金调整系数
-        """
-        super(OptionInstrMarginAdjust, self).__init__()
+    def __init__(self, InstrumentID=None, InvestorRange=None, BrokerID=None, InvestorID=None, SShortMarginRatioByMoney=None, SShortMarginRatioByVolume=None, HShortMarginRatioByMoney=None, HShortMarginRatioByVolume=None, AShortMarginRatioByMoney=None, AShortMarginRatioByVolume=None, IsRelative=None, MShortMarginRatioByMoney=None, MShortMarginRatioByVolume=None):
+        super().__init__()
         if InstrumentID:
             self.InstrumentID = InstrumentID.encode("GBK")
         if InvestorRange:
@@ -7087,41 +4303,8 @@ class OptionInstrCommRate(Struct):
         ("InvestUnitID", c_char_Array_17),
     ]
 
-    def __init__(
-        self,
-        InstrumentID: str = None,
-        InvestorRange: bytes = None,
-        BrokerID: str = None,
-        InvestorID: str = None,
-        OpenRatioByMoney: float = None,
-        OpenRatioByVolume: float = None,
-        CloseRatioByMoney: float = None,
-        CloseRatioByVolume: float = None,
-        CloseTodayRatioByMoney: float = None,
-        CloseTodayRatioByVolume: float = None,
-        StrikeRatioByMoney: float = None,
-        StrikeRatioByVolume: float = None,
-        ExchangeID: str = None,
-        InvestUnitID: str = None,
-    ):
-        """
-        当前期权合约手续费的详细内容
-        :param InstrumentID: 合约代码
-        :param InvestorRange: 投资者范围
-        :param BrokerID: 经纪公司代码
-        :param InvestorID: 投资者代码
-        :param OpenRatioByMoney: 开仓手续费率
-        :param OpenRatioByVolume: 开仓手续费
-        :param CloseRatioByMoney: 平仓手续费率
-        :param CloseRatioByVolume: 平仓手续费
-        :param CloseTodayRatioByMoney: 平今手续费率
-        :param CloseTodayRatioByVolume: 平今手续费
-        :param StrikeRatioByMoney: 执行手续费率
-        :param StrikeRatioByVolume: 执行手续费
-        :param ExchangeID: 交易所代码
-        :param InvestUnitID: 投资单元代码
-        """
-        super(OptionInstrCommRate, self).__init__()
+    def __init__(self, InstrumentID=None, InvestorRange=None, BrokerID=None, InvestorID=None, OpenRatioByMoney=None, OpenRatioByVolume=None, CloseRatioByMoney=None, CloseRatioByVolume=None, CloseTodayRatioByMoney=None, CloseTodayRatioByVolume=None, StrikeRatioByMoney=None, StrikeRatioByVolume=None, ExchangeID=None, InvestUnitID=None):
+        super().__init__()
         if InstrumentID:
             self.InstrumentID = InstrumentID.encode("GBK")
         if InvestorRange:
@@ -7167,35 +4350,8 @@ class OptionInstrTradeCost(Struct):
         ("InvestUnitID", c_char_Array_17),
     ]
 
-    def __init__(
-        self,
-        BrokerID: str = None,
-        InvestorID: str = None,
-        InstrumentID: str = None,
-        HedgeFlag: bytes = None,
-        FixedMargin: float = None,
-        MiniMargin: float = None,
-        Royalty: float = None,
-        ExchFixedMargin: float = None,
-        ExchMiniMargin: float = None,
-        ExchangeID: str = None,
-        InvestUnitID: str = None,
-    ):
-        """
-        期权交易成本
-        :param BrokerID: 经纪公司代码
-        :param InvestorID: 投资者代码
-        :param InstrumentID: 合约代码
-        :param HedgeFlag: 投机套保标志
-        :param FixedMargin: 期权合约保证金不变部分
-        :param MiniMargin: 期权合约最小保证金
-        :param Royalty: 期权合约权利金
-        :param ExchFixedMargin: 交易所期权合约保证金不变部分
-        :param ExchMiniMargin: 交易所期权合约最小保证金
-        :param ExchangeID: 交易所代码
-        :param InvestUnitID: 投资单元代码
-        """
-        super(OptionInstrTradeCost, self).__init__()
+    def __init__(self, BrokerID=None, InvestorID=None, InstrumentID=None, HedgeFlag=None, FixedMargin=None, MiniMargin=None, Royalty=None, ExchFixedMargin=None, ExchMiniMargin=None, ExchangeID=None, InvestUnitID=None):
+        super().__init__()
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
         if InvestorID:
@@ -7232,29 +4388,8 @@ class QryOptionInstrTradeCost(Struct):
         ("InvestUnitID", c_char_Array_17),
     ]
 
-    def __init__(
-        self,
-        BrokerID: str = None,
-        InvestorID: str = None,
-        InstrumentID: str = None,
-        HedgeFlag: bytes = None,
-        InputPrice: float = None,
-        UnderlyingPrice: float = None,
-        ExchangeID: str = None,
-        InvestUnitID: str = None,
-    ):
-        """
-        期权交易成本查询
-        :param BrokerID: 经纪公司代码
-        :param InvestorID: 投资者代码
-        :param InstrumentID: 合约代码
-        :param HedgeFlag: 投机套保标志
-        :param InputPrice: 期权合约报价
-        :param UnderlyingPrice: 标的价格,填0则用昨结算价
-        :param ExchangeID: 交易所代码
-        :param InvestUnitID: 投资单元代码
-        """
-        super(QryOptionInstrTradeCost, self).__init__()
+    def __init__(self, BrokerID=None, InvestorID=None, InstrumentID=None, HedgeFlag=None, InputPrice=None, UnderlyingPrice=None, ExchangeID=None, InvestUnitID=None):
+        super().__init__()
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
         if InvestorID:
@@ -7282,23 +4417,8 @@ class QryOptionInstrCommRate(Struct):
         ("InvestUnitID", c_char_Array_17),
     ]
 
-    def __init__(
-        self,
-        BrokerID: str = None,
-        InvestorID: str = None,
-        InstrumentID: str = None,
-        ExchangeID: str = None,
-        InvestUnitID: str = None,
-    ):
-        """
-        期权手续费率查询
-        :param BrokerID: 经纪公司代码
-        :param InvestorID: 投资者代码
-        :param InstrumentID: 合约代码
-        :param ExchangeID: 交易所代码
-        :param InvestUnitID: 投资单元代码
-        """
-        super(QryOptionInstrCommRate, self).__init__()
+    def __init__(self, BrokerID=None, InvestorID=None, InstrumentID=None, ExchangeID=None, InvestUnitID=None):
+        super().__init__()
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
         if InvestorID:
@@ -7318,19 +4438,8 @@ class IndexPrice(Struct):
         ("ClosePrice", c_double),
     ]
 
-    def __init__(
-        self,
-        BrokerID: str = None,
-        InstrumentID: str = None,
-        ClosePrice: float = None,
-    ):
-        """
-        股指现货指数
-        :param BrokerID: 经纪公司代码
-        :param InstrumentID: 合约代码
-        :param ClosePrice: 指数现货收盘价
-        """
-        super(IndexPrice, self).__init__()
+    def __init__(self, BrokerID=None, InstrumentID=None, ClosePrice=None):
+        super().__init__()
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
         if InstrumentID:
@@ -7364,55 +4473,8 @@ class InputExecOrder(Struct):
         ("MacAddress", c_char_Array_21),
     ]
 
-    def __init__(
-        self,
-        BrokerID: str = None,
-        InvestorID: str = None,
-        InstrumentID: str = None,
-        ExecOrderRef: str = None,
-        UserID: str = None,
-        Volume: int = None,
-        RequestID: int = None,
-        BusinessUnit: str = None,
-        OffsetFlag: bytes = None,
-        HedgeFlag: bytes = None,
-        ActionType: bytes = None,
-        PosiDirection: bytes = None,
-        ReservePositionFlag: bytes = None,
-        CloseFlag: bytes = None,
-        ExchangeID: str = None,
-        InvestUnitID: str = None,
-        AccountID: str = None,
-        CurrencyID: str = None,
-        ClientID: str = None,
-        IPAddress: str = None,
-        MacAddress: str = None,
-    ):
-        """
-        输入的执行宣告
-        :param BrokerID: 经纪公司代码
-        :param InvestorID: 投资者代码
-        :param InstrumentID: 合约代码
-        :param ExecOrderRef: 执行宣告引用
-        :param UserID: 用户代码
-        :param Volume: 数量
-        :param RequestID: 请求编号
-        :param BusinessUnit: 业务单元
-        :param OffsetFlag: 开平标志
-        :param HedgeFlag: 投机套保标志
-        :param ActionType: 执行类型
-        :param PosiDirection: 保留头寸申请的持仓方向
-        :param ReservePositionFlag: 期权行权后是否保留期货头寸的标记,该字段已废弃
-        :param CloseFlag: 期权行权后生成的头寸是否自动平仓
-        :param ExchangeID: 交易所代码
-        :param InvestUnitID: 投资单元代码
-        :param AccountID: 资金账号
-        :param CurrencyID: 币种代码
-        :param ClientID: 交易编码
-        :param IPAddress: IP地址
-        :param MacAddress: Mac地址
-        """
-        super(InputExecOrder, self).__init__()
+    def __init__(self, BrokerID=None, InvestorID=None, InstrumentID=None, ExecOrderRef=None, UserID=None, Volume=None, RequestID=None, BusinessUnit=None, OffsetFlag=None, HedgeFlag=None, ActionType=None, PosiDirection=None, ReservePositionFlag=None, CloseFlag=None, ExchangeID=None, InvestUnitID=None, AccountID=None, CurrencyID=None, ClientID=None, IPAddress=None, MacAddress=None):
+        super().__init__()
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
         if InvestorID:
@@ -7476,43 +4538,8 @@ class InputExecOrderAction(Struct):
         ("MacAddress", c_char_Array_21),
     ]
 
-    def __init__(
-        self,
-        BrokerID: str = None,
-        InvestorID: str = None,
-        ExecOrderActionRef: int = None,
-        ExecOrderRef: str = None,
-        RequestID: int = None,
-        FrontID: int = None,
-        SessionID: int = None,
-        ExchangeID: str = None,
-        ExecOrderSysID: str = None,
-        ActionFlag: bytes = None,
-        UserID: str = None,
-        InstrumentID: str = None,
-        InvestUnitID: str = None,
-        IPAddress: str = None,
-        MacAddress: str = None,
-    ):
-        """
-        输入执行宣告操作
-        :param BrokerID: 经纪公司代码
-        :param InvestorID: 投资者代码
-        :param ExecOrderActionRef: 执行宣告操作引用
-        :param ExecOrderRef: 执行宣告引用
-        :param RequestID: 请求编号
-        :param FrontID: 前置编号
-        :param SessionID: 会话编号
-        :param ExchangeID: 交易所代码
-        :param ExecOrderSysID: 执行宣告操作编号
-        :param ActionFlag: 操作标志
-        :param UserID: 用户代码
-        :param InstrumentID: 合约代码
-        :param InvestUnitID: 投资单元代码
-        :param IPAddress: IP地址
-        :param MacAddress: Mac地址
-        """
-        super(InputExecOrderAction, self).__init__()
+    def __init__(self, BrokerID=None, InvestorID=None, ExecOrderActionRef=None, ExecOrderRef=None, RequestID=None, FrontID=None, SessionID=None, ExchangeID=None, ExecOrderSysID=None, ActionFlag=None, UserID=None, InstrumentID=None, InvestUnitID=None, IPAddress=None, MacAddress=None):
+        super().__init__()
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
         if InvestorID:
@@ -7593,101 +4620,8 @@ class ExecOrder(Struct):
         ("MacAddress", c_char_Array_21),
     ]
 
-    def __init__(
-        self,
-        BrokerID: str = None,
-        InvestorID: str = None,
-        InstrumentID: str = None,
-        ExecOrderRef: str = None,
-        UserID: str = None,
-        Volume: int = None,
-        RequestID: int = None,
-        BusinessUnit: str = None,
-        OffsetFlag: bytes = None,
-        HedgeFlag: bytes = None,
-        ActionType: bytes = None,
-        PosiDirection: bytes = None,
-        ReservePositionFlag: bytes = None,
-        CloseFlag: bytes = None,
-        ExecOrderLocalID: str = None,
-        ExchangeID: str = None,
-        ParticipantID: str = None,
-        ClientID: str = None,
-        ExchangeInstID: str = None,
-        TraderID: str = None,
-        InstallID: int = None,
-        OrderSubmitStatus: bytes = None,
-        NotifySequence: int = None,
-        TradingDay: str = None,
-        SettlementID: int = None,
-        ExecOrderSysID: str = None,
-        InsertDate: str = None,
-        InsertTime: str = None,
-        CancelTime: str = None,
-        ExecResult: bytes = None,
-        ClearingPartID: str = None,
-        SequenceNo: int = None,
-        FrontID: int = None,
-        SessionID: int = None,
-        UserProductInfo: str = None,
-        StatusMsg: str = None,
-        ActiveUserID: str = None,
-        BrokerExecOrderSeq: int = None,
-        BranchID: str = None,
-        InvestUnitID: str = None,
-        AccountID: str = None,
-        CurrencyID: str = None,
-        IPAddress: str = None,
-        MacAddress: str = None,
-    ):
-        """
-        执行宣告
-        :param BrokerID: 经纪公司代码
-        :param InvestorID: 投资者代码
-        :param InstrumentID: 合约代码
-        :param ExecOrderRef: 执行宣告引用
-        :param UserID: 用户代码
-        :param Volume: 数量
-        :param RequestID: 请求编号
-        :param BusinessUnit: 业务单元
-        :param OffsetFlag: 开平标志
-        :param HedgeFlag: 投机套保标志
-        :param ActionType: 执行类型
-        :param PosiDirection: 保留头寸申请的持仓方向
-        :param ReservePositionFlag: 期权行权后是否保留期货头寸的标记,该字段已废弃
-        :param CloseFlag: 期权行权后生成的头寸是否自动平仓
-        :param ExecOrderLocalID: 本地执行宣告编号
-        :param ExchangeID: 交易所代码
-        :param ParticipantID: 会员代码
-        :param ClientID: 客户代码
-        :param ExchangeInstID: 合约在交易所的代码
-        :param TraderID: 交易所交易员代码
-        :param InstallID: 安装编号
-        :param OrderSubmitStatus: 执行宣告提交状态
-        :param NotifySequence: 报单提示序号
-        :param TradingDay: 交易日
-        :param SettlementID: 结算编号
-        :param ExecOrderSysID: 执行宣告编号
-        :param InsertDate: 报单日期
-        :param InsertTime: 插入时间
-        :param CancelTime: 撤销时间
-        :param ExecResult: 执行结果
-        :param ClearingPartID: 结算会员编号
-        :param SequenceNo: 序号
-        :param FrontID: 前置编号
-        :param SessionID: 会话编号
-        :param UserProductInfo: 用户端产品信息
-        :param StatusMsg: 状态信息
-        :param ActiveUserID: 操作用户代码
-        :param BrokerExecOrderSeq: 经纪公司报单编号
-        :param BranchID: 营业部编号
-        :param InvestUnitID: 投资单元代码
-        :param AccountID: 资金账号
-        :param CurrencyID: 币种代码
-        :param IPAddress: IP地址
-        :param MacAddress: Mac地址
-        """
-        super(ExecOrder, self).__init__()
+    def __init__(self, BrokerID=None, InvestorID=None, InstrumentID=None, ExecOrderRef=None, UserID=None, Volume=None, RequestID=None, BusinessUnit=None, OffsetFlag=None, HedgeFlag=None, ActionType=None, PosiDirection=None, ReservePositionFlag=None, CloseFlag=None, ExecOrderLocalID=None, ExchangeID=None, ParticipantID=None, ClientID=None, ExchangeInstID=None, TraderID=None, InstallID=None, OrderSubmitStatus=None, NotifySequence=None, TradingDay=None, SettlementID=None, ExecOrderSysID=None, InsertDate=None, InsertTime=None, CancelTime=None, ExecResult=None, ClearingPartID=None, SequenceNo=None, FrontID=None, SessionID=None, UserProductInfo=None, StatusMsg=None, ActiveUserID=None, BrokerExecOrderSeq=None, BranchID=None, InvestUnitID=None, AccountID=None, CurrencyID=None, IPAddress=None, MacAddress=None):
+        super().__init__()
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
         if InvestorID:
@@ -7810,69 +4744,8 @@ class ExecOrderAction(Struct):
         ("MacAddress", c_char_Array_21),
     ]
 
-    def __init__(
-        self,
-        BrokerID: str = None,
-        InvestorID: str = None,
-        ExecOrderActionRef: int = None,
-        ExecOrderRef: str = None,
-        RequestID: int = None,
-        FrontID: int = None,
-        SessionID: int = None,
-        ExchangeID: str = None,
-        ExecOrderSysID: str = None,
-        ActionFlag: bytes = None,
-        ActionDate: str = None,
-        ActionTime: str = None,
-        TraderID: str = None,
-        InstallID: int = None,
-        ExecOrderLocalID: str = None,
-        ActionLocalID: str = None,
-        ParticipantID: str = None,
-        ClientID: str = None,
-        BusinessUnit: str = None,
-        OrderActionStatus: bytes = None,
-        UserID: str = None,
-        ActionType: bytes = None,
-        StatusMsg: str = None,
-        InstrumentID: str = None,
-        BranchID: str = None,
-        InvestUnitID: str = None,
-        IPAddress: str = None,
-        MacAddress: str = None,
-    ):
-        """
-        执行宣告操作
-        :param BrokerID: 经纪公司代码
-        :param InvestorID: 投资者代码
-        :param ExecOrderActionRef: 执行宣告操作引用
-        :param ExecOrderRef: 执行宣告引用
-        :param RequestID: 请求编号
-        :param FrontID: 前置编号
-        :param SessionID: 会话编号
-        :param ExchangeID: 交易所代码
-        :param ExecOrderSysID: 执行宣告操作编号
-        :param ActionFlag: 操作标志
-        :param ActionDate: 操作日期
-        :param ActionTime: 操作时间
-        :param TraderID: 交易所交易员代码
-        :param InstallID: 安装编号
-        :param ExecOrderLocalID: 本地执行宣告编号
-        :param ActionLocalID: 操作本地编号
-        :param ParticipantID: 会员代码
-        :param ClientID: 客户代码
-        :param BusinessUnit: 业务单元
-        :param OrderActionStatus: 报单操作状态
-        :param UserID: 用户代码
-        :param ActionType: 执行类型
-        :param StatusMsg: 状态信息
-        :param InstrumentID: 合约代码
-        :param BranchID: 营业部编号
-        :param InvestUnitID: 投资单元代码
-        :param IPAddress: IP地址
-        :param MacAddress: Mac地址
-        """
-        super(ExecOrderAction, self).__init__()
+    def __init__(self, BrokerID=None, InvestorID=None, ExecOrderActionRef=None, ExecOrderRef=None, RequestID=None, FrontID=None, SessionID=None, ExchangeID=None, ExecOrderSysID=None, ActionFlag=None, ActionDate=None, ActionTime=None, TraderID=None, InstallID=None, ExecOrderLocalID=None, ActionLocalID=None, ParticipantID=None, ClientID=None, BusinessUnit=None, OrderActionStatus=None, UserID=None, ActionType=None, StatusMsg=None, InstrumentID=None, BranchID=None, InvestUnitID=None, IPAddress=None, MacAddress=None):
+        super().__init__()
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
         if InvestorID:
@@ -7942,27 +4815,8 @@ class QryExecOrder(Struct):
         ("InsertTimeEnd", c_char_Array_9),
     ]
 
-    def __init__(
-        self,
-        BrokerID: str = None,
-        InvestorID: str = None,
-        InstrumentID: str = None,
-        ExchangeID: str = None,
-        ExecOrderSysID: str = None,
-        InsertTimeStart: str = None,
-        InsertTimeEnd: str = None,
-    ):
-        """
-        执行宣告查询
-        :param BrokerID: 经纪公司代码
-        :param InvestorID: 投资者代码
-        :param InstrumentID: 合约代码
-        :param ExchangeID: 交易所代码
-        :param ExecOrderSysID: 执行宣告编号
-        :param InsertTimeStart: 开始时间
-        :param InsertTimeEnd: 结束时间
-        """
-        super(QryExecOrder, self).__init__()
+    def __init__(self, BrokerID=None, InvestorID=None, InstrumentID=None, ExchangeID=None, ExecOrderSysID=None, InsertTimeStart=None, InsertTimeEnd=None):
+        super().__init__()
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
         if InvestorID:
@@ -8013,73 +4867,8 @@ class ExchangeExecOrder(Struct):
         ("MacAddress", c_char_Array_21),
     ]
 
-    def __init__(
-        self,
-        Volume: int = None,
-        RequestID: int = None,
-        BusinessUnit: str = None,
-        OffsetFlag: bytes = None,
-        HedgeFlag: bytes = None,
-        ActionType: bytes = None,
-        PosiDirection: bytes = None,
-        ReservePositionFlag: bytes = None,
-        CloseFlag: bytes = None,
-        ExecOrderLocalID: str = None,
-        ExchangeID: str = None,
-        ParticipantID: str = None,
-        ClientID: str = None,
-        ExchangeInstID: str = None,
-        TraderID: str = None,
-        InstallID: int = None,
-        OrderSubmitStatus: bytes = None,
-        NotifySequence: int = None,
-        TradingDay: str = None,
-        SettlementID: int = None,
-        ExecOrderSysID: str = None,
-        InsertDate: str = None,
-        InsertTime: str = None,
-        CancelTime: str = None,
-        ExecResult: bytes = None,
-        ClearingPartID: str = None,
-        SequenceNo: int = None,
-        BranchID: str = None,
-        IPAddress: str = None,
-        MacAddress: str = None,
-    ):
-        """
-        交易所执行宣告信息
-        :param Volume: 数量
-        :param RequestID: 请求编号
-        :param BusinessUnit: 业务单元
-        :param OffsetFlag: 开平标志
-        :param HedgeFlag: 投机套保标志
-        :param ActionType: 执行类型
-        :param PosiDirection: 保留头寸申请的持仓方向
-        :param ReservePositionFlag: 期权行权后是否保留期货头寸的标记,该字段已废弃
-        :param CloseFlag: 期权行权后生成的头寸是否自动平仓
-        :param ExecOrderLocalID: 本地执行宣告编号
-        :param ExchangeID: 交易所代码
-        :param ParticipantID: 会员代码
-        :param ClientID: 客户代码
-        :param ExchangeInstID: 合约在交易所的代码
-        :param TraderID: 交易所交易员代码
-        :param InstallID: 安装编号
-        :param OrderSubmitStatus: 执行宣告提交状态
-        :param NotifySequence: 报单提示序号
-        :param TradingDay: 交易日
-        :param SettlementID: 结算编号
-        :param ExecOrderSysID: 执行宣告编号
-        :param InsertDate: 报单日期
-        :param InsertTime: 插入时间
-        :param CancelTime: 撤销时间
-        :param ExecResult: 执行结果
-        :param ClearingPartID: 结算会员编号
-        :param SequenceNo: 序号
-        :param BranchID: 营业部编号
-        :param IPAddress: IP地址
-        :param MacAddress: Mac地址
-        """
-        super(ExchangeExecOrder, self).__init__()
+    def __init__(self, Volume=None, RequestID=None, BusinessUnit=None, OffsetFlag=None, HedgeFlag=None, ActionType=None, PosiDirection=None, ReservePositionFlag=None, CloseFlag=None, ExecOrderLocalID=None, ExchangeID=None, ParticipantID=None, ClientID=None, ExchangeInstID=None, TraderID=None, InstallID=None, OrderSubmitStatus=None, NotifySequence=None, TradingDay=None, SettlementID=None, ExecOrderSysID=None, InsertDate=None, InsertTime=None, CancelTime=None, ExecResult=None, ClearingPartID=None, SequenceNo=None, BranchID=None, IPAddress=None, MacAddress=None):
+        super().__init__()
         if Volume:
             self.Volume = Volume
         if RequestID:
@@ -8151,23 +4940,8 @@ class QryExchangeExecOrder(Struct):
         ("TraderID", c_char_Array_21),
     ]
 
-    def __init__(
-        self,
-        ParticipantID: str = None,
-        ClientID: str = None,
-        ExchangeInstID: str = None,
-        ExchangeID: str = None,
-        TraderID: str = None,
-    ):
-        """
-        交易所执行宣告查询
-        :param ParticipantID: 会员代码
-        :param ClientID: 客户代码
-        :param ExchangeInstID: 合约在交易所的代码
-        :param ExchangeID: 交易所代码
-        :param TraderID: 交易所交易员代码
-        """
-        super(QryExchangeExecOrder, self).__init__()
+    def __init__(self, ParticipantID=None, ClientID=None, ExchangeInstID=None, ExchangeID=None, TraderID=None):
+        super().__init__()
         if ParticipantID:
             self.ParticipantID = ParticipantID.encode("GBK")
         if ClientID:
@@ -8187,19 +4961,8 @@ class QryExecOrderAction(Struct):
         ("ExchangeID", c_char_Array_9),
     ]
 
-    def __init__(
-        self,
-        BrokerID: str = None,
-        InvestorID: str = None,
-        ExchangeID: str = None,
-    ):
-        """
-        执行宣告操作查询
-        :param BrokerID: 经纪公司代码
-        :param InvestorID: 投资者代码
-        :param ExchangeID: 交易所代码
-        """
-        super(QryExecOrderAction, self).__init__()
+    def __init__(self, BrokerID=None, InvestorID=None, ExchangeID=None):
+        super().__init__()
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
         if InvestorID:
@@ -8232,53 +4995,8 @@ class ExchangeExecOrderAction(Struct):
         ("Volume", c_int),
     ]
 
-    def __init__(
-        self,
-        ExchangeID: str = None,
-        ExecOrderSysID: str = None,
-        ActionFlag: bytes = None,
-        ActionDate: str = None,
-        ActionTime: str = None,
-        TraderID: str = None,
-        InstallID: int = None,
-        ExecOrderLocalID: str = None,
-        ActionLocalID: str = None,
-        ParticipantID: str = None,
-        ClientID: str = None,
-        BusinessUnit: str = None,
-        OrderActionStatus: bytes = None,
-        UserID: str = None,
-        ActionType: bytes = None,
-        BranchID: str = None,
-        IPAddress: str = None,
-        MacAddress: str = None,
-        ExchangeInstID: str = None,
-        Volume: int = None,
-    ):
-        """
-        交易所执行宣告操作
-        :param ExchangeID: 交易所代码
-        :param ExecOrderSysID: 执行宣告操作编号
-        :param ActionFlag: 操作标志
-        :param ActionDate: 操作日期
-        :param ActionTime: 操作时间
-        :param TraderID: 交易所交易员代码
-        :param InstallID: 安装编号
-        :param ExecOrderLocalID: 本地执行宣告编号
-        :param ActionLocalID: 操作本地编号
-        :param ParticipantID: 会员代码
-        :param ClientID: 客户代码
-        :param BusinessUnit: 业务单元
-        :param OrderActionStatus: 报单操作状态
-        :param UserID: 用户代码
-        :param ActionType: 执行类型
-        :param BranchID: 营业部编号
-        :param IPAddress: IP地址
-        :param MacAddress: Mac地址
-        :param ExchangeInstID: 合约在交易所的代码
-        :param Volume: 数量
-        """
-        super(ExchangeExecOrderAction, self).__init__()
+    def __init__(self, ExchangeID=None, ExecOrderSysID=None, ActionFlag=None, ActionDate=None, ActionTime=None, TraderID=None, InstallID=None, ExecOrderLocalID=None, ActionLocalID=None, ParticipantID=None, ClientID=None, BusinessUnit=None, OrderActionStatus=None, UserID=None, ActionType=None, BranchID=None, IPAddress=None, MacAddress=None, ExchangeInstID=None, Volume=None):
+        super().__init__()
         if ExchangeID:
             self.ExchangeID = ExchangeID.encode("GBK")
         if ExecOrderSysID:
@@ -8329,21 +5047,8 @@ class QryExchangeExecOrderAction(Struct):
         ("TraderID", c_char_Array_21),
     ]
 
-    def __init__(
-        self,
-        ParticipantID: str = None,
-        ClientID: str = None,
-        ExchangeID: str = None,
-        TraderID: str = None,
-    ):
-        """
-        交易所执行宣告操作查询
-        :param ParticipantID: 会员代码
-        :param ClientID: 客户代码
-        :param ExchangeID: 交易所代码
-        :param TraderID: 交易所交易员代码
-        """
-        super(QryExchangeExecOrderAction, self).__init__()
+    def __init__(self, ParticipantID=None, ClientID=None, ExchangeID=None, TraderID=None):
+        super().__init__()
         if ParticipantID:
             self.ParticipantID = ParticipantID.encode("GBK")
         if ClientID:
@@ -8381,59 +5086,8 @@ class ErrExecOrder(Struct):
         ("ErrorMsg", c_char_Array_81),
     ]
 
-    def __init__(
-        self,
-        BrokerID: str = None,
-        InvestorID: str = None,
-        InstrumentID: str = None,
-        ExecOrderRef: str = None,
-        UserID: str = None,
-        Volume: int = None,
-        RequestID: int = None,
-        BusinessUnit: str = None,
-        OffsetFlag: bytes = None,
-        HedgeFlag: bytes = None,
-        ActionType: bytes = None,
-        PosiDirection: bytes = None,
-        ReservePositionFlag: bytes = None,
-        CloseFlag: bytes = None,
-        ExchangeID: str = None,
-        InvestUnitID: str = None,
-        AccountID: str = None,
-        CurrencyID: str = None,
-        ClientID: str = None,
-        IPAddress: str = None,
-        MacAddress: str = None,
-        ErrorID: int = None,
-        ErrorMsg: str = None,
-    ):
-        """
-        错误执行宣告
-        :param BrokerID: 经纪公司代码
-        :param InvestorID: 投资者代码
-        :param InstrumentID: 合约代码
-        :param ExecOrderRef: 执行宣告引用
-        :param UserID: 用户代码
-        :param Volume: 数量
-        :param RequestID: 请求编号
-        :param BusinessUnit: 业务单元
-        :param OffsetFlag: 开平标志
-        :param HedgeFlag: 投机套保标志
-        :param ActionType: 执行类型
-        :param PosiDirection: 保留头寸申请的持仓方向
-        :param ReservePositionFlag: 期权行权后是否保留期货头寸的标记,该字段已废弃
-        :param CloseFlag: 期权行权后生成的头寸是否自动平仓
-        :param ExchangeID: 交易所代码
-        :param InvestUnitID: 投资单元代码
-        :param AccountID: 资金账号
-        :param CurrencyID: 币种代码
-        :param ClientID: 交易编码
-        :param IPAddress: IP地址
-        :param MacAddress: Mac地址
-        :param ErrorID: 错误代码
-        :param ErrorMsg: 错误信息
-        """
-        super(ErrExecOrder, self).__init__()
+    def __init__(self, BrokerID=None, InvestorID=None, InstrumentID=None, ExecOrderRef=None, UserID=None, Volume=None, RequestID=None, BusinessUnit=None, OffsetFlag=None, HedgeFlag=None, ActionType=None, PosiDirection=None, ReservePositionFlag=None, CloseFlag=None, ExchangeID=None, InvestUnitID=None, AccountID=None, CurrencyID=None, ClientID=None, IPAddress=None, MacAddress=None, ErrorID=None, ErrorMsg=None):
+        super().__init__()
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
         if InvestorID:
@@ -8488,17 +5142,8 @@ class QryErrExecOrder(Struct):
         ("InvestorID", c_char_Array_13),
     ]
 
-    def __init__(
-        self,
-        BrokerID: str = None,
-        InvestorID: str = None,
-    ):
-        """
-        查询错误执行宣告
-        :param BrokerID: 经纪公司代码
-        :param InvestorID: 投资者代码
-        """
-        super(QryErrExecOrder, self).__init__()
+    def __init__(self, BrokerID=None, InvestorID=None):
+        super().__init__()
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
         if InvestorID:
@@ -8526,47 +5171,8 @@ class ErrExecOrderAction(Struct):
         ("ErrorMsg", c_char_Array_81),
     ]
 
-    def __init__(
-        self,
-        BrokerID: str = None,
-        InvestorID: str = None,
-        ExecOrderActionRef: int = None,
-        ExecOrderRef: str = None,
-        RequestID: int = None,
-        FrontID: int = None,
-        SessionID: int = None,
-        ExchangeID: str = None,
-        ExecOrderSysID: str = None,
-        ActionFlag: bytes = None,
-        UserID: str = None,
-        InstrumentID: str = None,
-        InvestUnitID: str = None,
-        IPAddress: str = None,
-        MacAddress: str = None,
-        ErrorID: int = None,
-        ErrorMsg: str = None,
-    ):
-        """
-        错误执行宣告操作
-        :param BrokerID: 经纪公司代码
-        :param InvestorID: 投资者代码
-        :param ExecOrderActionRef: 执行宣告操作引用
-        :param ExecOrderRef: 执行宣告引用
-        :param RequestID: 请求编号
-        :param FrontID: 前置编号
-        :param SessionID: 会话编号
-        :param ExchangeID: 交易所代码
-        :param ExecOrderSysID: 执行宣告操作编号
-        :param ActionFlag: 操作标志
-        :param UserID: 用户代码
-        :param InstrumentID: 合约代码
-        :param InvestUnitID: 投资单元代码
-        :param IPAddress: IP地址
-        :param MacAddress: Mac地址
-        :param ErrorID: 错误代码
-        :param ErrorMsg: 错误信息
-        """
-        super(ErrExecOrderAction, self).__init__()
+    def __init__(self, BrokerID=None, InvestorID=None, ExecOrderActionRef=None, ExecOrderRef=None, RequestID=None, FrontID=None, SessionID=None, ExchangeID=None, ExecOrderSysID=None, ActionFlag=None, UserID=None, InstrumentID=None, InvestUnitID=None, IPAddress=None, MacAddress=None, ErrorID=None, ErrorMsg=None):
+        super().__init__()
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
         if InvestorID:
@@ -8609,17 +5215,8 @@ class QryErrExecOrderAction(Struct):
         ("InvestorID", c_char_Array_13),
     ]
 
-    def __init__(
-        self,
-        BrokerID: str = None,
-        InvestorID: str = None,
-    ):
-        """
-        查询错误执行宣告操作
-        :param BrokerID: 经纪公司代码
-        :param InvestorID: 投资者代码
-        """
-        super(QryErrExecOrderAction, self).__init__()
+    def __init__(self, BrokerID=None, InvestorID=None):
+        super().__init__()
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
         if InvestorID:
@@ -8636,25 +5233,8 @@ class OptionInstrTradingRight(Struct):
         ("TradingRight", c_char),
     ]
 
-    def __init__(
-        self,
-        InstrumentID: str = None,
-        InvestorRange: bytes = None,
-        BrokerID: str = None,
-        InvestorID: str = None,
-        Direction: bytes = None,
-        TradingRight: bytes = None,
-    ):
-        """
-        投资者期权合约交易权限
-        :param InstrumentID: 合约代码
-        :param InvestorRange: 投资者范围
-        :param BrokerID: 经纪公司代码
-        :param InvestorID: 投资者代码
-        :param Direction: 买卖方向
-        :param TradingRight: 交易权限
-        """
-        super(OptionInstrTradingRight, self).__init__()
+    def __init__(self, InstrumentID=None, InvestorRange=None, BrokerID=None, InvestorID=None, Direction=None, TradingRight=None):
+        super().__init__()
         if InstrumentID:
             self.InstrumentID = InstrumentID.encode("GBK")
         if InvestorRange:
@@ -8677,21 +5257,8 @@ class QryOptionInstrTradingRight(Struct):
         ("Direction", c_char),
     ]
 
-    def __init__(
-        self,
-        BrokerID: str = None,
-        InvestorID: str = None,
-        InstrumentID: str = None,
-        Direction: bytes = None,
-    ):
-        """
-        查询期权合约交易权限
-        :param BrokerID: 经纪公司代码
-        :param InvestorID: 投资者代码
-        :param InstrumentID: 合约代码
-        :param Direction: 买卖方向
-        """
-        super(QryOptionInstrTradingRight, self).__init__()
+    def __init__(self, BrokerID=None, InvestorID=None, InstrumentID=None, Direction=None):
+        super().__init__()
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
         if InvestorID:
@@ -8715,31 +5282,8 @@ class InputForQuote(Struct):
         ("MacAddress", c_char_Array_21),
     ]
 
-    def __init__(
-        self,
-        BrokerID: str = None,
-        InvestorID: str = None,
-        InstrumentID: str = None,
-        ForQuoteRef: str = None,
-        UserID: str = None,
-        ExchangeID: str = None,
-        InvestUnitID: str = None,
-        IPAddress: str = None,
-        MacAddress: str = None,
-    ):
-        """
-        输入的询价
-        :param BrokerID: 经纪公司代码
-        :param InvestorID: 投资者代码
-        :param InstrumentID: 合约代码
-        :param ForQuoteRef: 询价引用
-        :param UserID: 用户代码
-        :param ExchangeID: 交易所代码
-        :param InvestUnitID: 投资单元代码
-        :param IPAddress: IP地址
-        :param MacAddress: Mac地址
-        """
-        super(InputForQuote, self).__init__()
+    def __init__(self, BrokerID=None, InvestorID=None, InstrumentID=None, ForQuoteRef=None, UserID=None, ExchangeID=None, InvestUnitID=None, IPAddress=None, MacAddress=None):
+        super().__init__()
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
         if InvestorID:
@@ -8787,59 +5331,8 @@ class ForQuote(Struct):
         ("MacAddress", c_char_Array_21),
     ]
 
-    def __init__(
-        self,
-        BrokerID: str = None,
-        InvestorID: str = None,
-        InstrumentID: str = None,
-        ForQuoteRef: str = None,
-        UserID: str = None,
-        ForQuoteLocalID: str = None,
-        ExchangeID: str = None,
-        ParticipantID: str = None,
-        ClientID: str = None,
-        ExchangeInstID: str = None,
-        TraderID: str = None,
-        InstallID: int = None,
-        InsertDate: str = None,
-        InsertTime: str = None,
-        ForQuoteStatus: bytes = None,
-        FrontID: int = None,
-        SessionID: int = None,
-        StatusMsg: str = None,
-        ActiveUserID: str = None,
-        BrokerForQutoSeq: int = None,
-        InvestUnitID: str = None,
-        IPAddress: str = None,
-        MacAddress: str = None,
-    ):
-        """
-        询价
-        :param BrokerID: 经纪公司代码
-        :param InvestorID: 投资者代码
-        :param InstrumentID: 合约代码
-        :param ForQuoteRef: 询价引用
-        :param UserID: 用户代码
-        :param ForQuoteLocalID: 本地询价编号
-        :param ExchangeID: 交易所代码
-        :param ParticipantID: 会员代码
-        :param ClientID: 客户代码
-        :param ExchangeInstID: 合约在交易所的代码
-        :param TraderID: 交易所交易员代码
-        :param InstallID: 安装编号
-        :param InsertDate: 报单日期
-        :param InsertTime: 插入时间
-        :param ForQuoteStatus: 询价状态
-        :param FrontID: 前置编号
-        :param SessionID: 会话编号
-        :param StatusMsg: 状态信息
-        :param ActiveUserID: 操作用户代码
-        :param BrokerForQutoSeq: 经纪公司询价编号
-        :param InvestUnitID: 投资单元代码
-        :param IPAddress: IP地址
-        :param MacAddress: Mac地址
-        """
-        super(ForQuote, self).__init__()
+    def __init__(self, BrokerID=None, InvestorID=None, InstrumentID=None, ForQuoteRef=None, UserID=None, ForQuoteLocalID=None, ExchangeID=None, ParticipantID=None, ClientID=None, ExchangeInstID=None, TraderID=None, InstallID=None, InsertDate=None, InsertTime=None, ForQuoteStatus=None, FrontID=None, SessionID=None, StatusMsg=None, ActiveUserID=None, BrokerForQutoSeq=None, InvestUnitID=None, IPAddress=None, MacAddress=None):
+        super().__init__()
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
         if InvestorID:
@@ -8899,27 +5392,8 @@ class QryForQuote(Struct):
         ("InvestUnitID", c_char_Array_17),
     ]
 
-    def __init__(
-        self,
-        BrokerID: str = None,
-        InvestorID: str = None,
-        InstrumentID: str = None,
-        ExchangeID: str = None,
-        InsertTimeStart: str = None,
-        InsertTimeEnd: str = None,
-        InvestUnitID: str = None,
-    ):
-        """
-        询价查询
-        :param BrokerID: 经纪公司代码
-        :param InvestorID: 投资者代码
-        :param InstrumentID: 合约代码
-        :param ExchangeID: 交易所代码
-        :param InsertTimeStart: 开始时间
-        :param InsertTimeEnd: 结束时间
-        :param InvestUnitID: 投资单元代码
-        """
-        super(QryForQuote, self).__init__()
+    def __init__(self, BrokerID=None, InvestorID=None, InstrumentID=None, ExchangeID=None, InsertTimeStart=None, InsertTimeEnd=None, InvestUnitID=None):
+        super().__init__()
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
         if InvestorID:
@@ -8952,37 +5426,8 @@ class ExchangeForQuote(Struct):
         ("MacAddress", c_char_Array_21),
     ]
 
-    def __init__(
-        self,
-        ForQuoteLocalID: str = None,
-        ExchangeID: str = None,
-        ParticipantID: str = None,
-        ClientID: str = None,
-        ExchangeInstID: str = None,
-        TraderID: str = None,
-        InstallID: int = None,
-        InsertDate: str = None,
-        InsertTime: str = None,
-        ForQuoteStatus: bytes = None,
-        IPAddress: str = None,
-        MacAddress: str = None,
-    ):
-        """
-        交易所询价信息
-        :param ForQuoteLocalID: 本地询价编号
-        :param ExchangeID: 交易所代码
-        :param ParticipantID: 会员代码
-        :param ClientID: 客户代码
-        :param ExchangeInstID: 合约在交易所的代码
-        :param TraderID: 交易所交易员代码
-        :param InstallID: 安装编号
-        :param InsertDate: 报单日期
-        :param InsertTime: 插入时间
-        :param ForQuoteStatus: 询价状态
-        :param IPAddress: IP地址
-        :param MacAddress: Mac地址
-        """
-        super(ExchangeForQuote, self).__init__()
+    def __init__(self, ForQuoteLocalID=None, ExchangeID=None, ParticipantID=None, ClientID=None, ExchangeInstID=None, TraderID=None, InstallID=None, InsertDate=None, InsertTime=None, ForQuoteStatus=None, IPAddress=None, MacAddress=None):
+        super().__init__()
         if ForQuoteLocalID:
             self.ForQuoteLocalID = ForQuoteLocalID.encode("GBK")
         if ExchangeID:
@@ -9018,23 +5463,8 @@ class QryExchangeForQuote(Struct):
         ("TraderID", c_char_Array_21),
     ]
 
-    def __init__(
-        self,
-        ParticipantID: str = None,
-        ClientID: str = None,
-        ExchangeInstID: str = None,
-        ExchangeID: str = None,
-        TraderID: str = None,
-    ):
-        """
-        交易所询价查询
-        :param ParticipantID: 会员代码
-        :param ClientID: 客户代码
-        :param ExchangeInstID: 合约在交易所的代码
-        :param ExchangeID: 交易所代码
-        :param TraderID: 交易所交易员代码
-        """
-        super(QryExchangeForQuote, self).__init__()
+    def __init__(self, ParticipantID=None, ClientID=None, ExchangeInstID=None, ExchangeID=None, TraderID=None):
+        super().__init__()
         if ParticipantID:
             self.ParticipantID = ParticipantID.encode("GBK")
         if ClientID:
@@ -9074,59 +5504,8 @@ class InputQuote(Struct):
         ("MacAddress", c_char_Array_21),
     ]
 
-    def __init__(
-        self,
-        BrokerID: str = None,
-        InvestorID: str = None,
-        InstrumentID: str = None,
-        QuoteRef: str = None,
-        UserID: str = None,
-        AskPrice: float = None,
-        BidPrice: float = None,
-        AskVolume: int = None,
-        BidVolume: int = None,
-        RequestID: int = None,
-        BusinessUnit: str = None,
-        AskOffsetFlag: bytes = None,
-        BidOffsetFlag: bytes = None,
-        AskHedgeFlag: bytes = None,
-        BidHedgeFlag: bytes = None,
-        AskOrderRef: str = None,
-        BidOrderRef: str = None,
-        ForQuoteSysID: str = None,
-        ExchangeID: str = None,
-        InvestUnitID: str = None,
-        ClientID: str = None,
-        IPAddress: str = None,
-        MacAddress: str = None,
-    ):
-        """
-        输入的报价
-        :param BrokerID: 经纪公司代码
-        :param InvestorID: 投资者代码
-        :param InstrumentID: 合约代码
-        :param QuoteRef: 报价引用
-        :param UserID: 用户代码
-        :param AskPrice: 卖价格
-        :param BidPrice: 买价格
-        :param AskVolume: 卖数量
-        :param BidVolume: 买数量
-        :param RequestID: 请求编号
-        :param BusinessUnit: 业务单元
-        :param AskOffsetFlag: 卖开平标志
-        :param BidOffsetFlag: 买开平标志
-        :param AskHedgeFlag: 卖投机套保标志
-        :param BidHedgeFlag: 买投机套保标志
-        :param AskOrderRef: 衍生卖报单引用
-        :param BidOrderRef: 衍生买报单引用
-        :param ForQuoteSysID: 应价编号
-        :param ExchangeID: 交易所代码
-        :param InvestUnitID: 投资单元代码
-        :param ClientID: 交易编码
-        :param IPAddress: IP地址
-        :param MacAddress: Mac地址
-        """
-        super(InputQuote, self).__init__()
+    def __init__(self, BrokerID=None, InvestorID=None, InstrumentID=None, QuoteRef=None, UserID=None, AskPrice=None, BidPrice=None, AskVolume=None, BidVolume=None, RequestID=None, BusinessUnit=None, AskOffsetFlag=None, BidOffsetFlag=None, AskHedgeFlag=None, BidHedgeFlag=None, AskOrderRef=None, BidOrderRef=None, ForQuoteSysID=None, ExchangeID=None, InvestUnitID=None, ClientID=None, IPAddress=None, MacAddress=None):
+        super().__init__()
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
         if InvestorID:
@@ -9195,45 +5574,8 @@ class InputQuoteAction(Struct):
         ("MacAddress", c_char_Array_21),
     ]
 
-    def __init__(
-        self,
-        BrokerID: str = None,
-        InvestorID: str = None,
-        QuoteActionRef: int = None,
-        QuoteRef: str = None,
-        RequestID: int = None,
-        FrontID: int = None,
-        SessionID: int = None,
-        ExchangeID: str = None,
-        QuoteSysID: str = None,
-        ActionFlag: bytes = None,
-        UserID: str = None,
-        InstrumentID: str = None,
-        InvestUnitID: str = None,
-        ClientID: str = None,
-        IPAddress: str = None,
-        MacAddress: str = None,
-    ):
-        """
-        输入报价操作
-        :param BrokerID: 经纪公司代码
-        :param InvestorID: 投资者代码
-        :param QuoteActionRef: 报价操作引用
-        :param QuoteRef: 报价引用
-        :param RequestID: 请求编号
-        :param FrontID: 前置编号
-        :param SessionID: 会话编号
-        :param ExchangeID: 交易所代码
-        :param QuoteSysID: 报价操作编号
-        :param ActionFlag: 操作标志
-        :param UserID: 用户代码
-        :param InstrumentID: 合约代码
-        :param InvestUnitID: 投资单元代码
-        :param ClientID: 交易编码
-        :param IPAddress: IP地址
-        :param MacAddress: Mac地址
-        """
-        super(InputQuoteAction, self).__init__()
+    def __init__(self, BrokerID=None, InvestorID=None, QuoteActionRef=None, QuoteRef=None, RequestID=None, FrontID=None, SessionID=None, ExchangeID=None, QuoteSysID=None, ActionFlag=None, UserID=None, InstrumentID=None, InvestUnitID=None, ClientID=None, IPAddress=None, MacAddress=None):
+        super().__init__()
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
         if InvestorID:
@@ -9322,113 +5664,8 @@ class Quote(Struct):
         ("MacAddress", c_char_Array_21),
     ]
 
-    def __init__(
-        self,
-        BrokerID: str = None,
-        InvestorID: str = None,
-        InstrumentID: str = None,
-        QuoteRef: str = None,
-        UserID: str = None,
-        AskPrice: float = None,
-        BidPrice: float = None,
-        AskVolume: int = None,
-        BidVolume: int = None,
-        RequestID: int = None,
-        BusinessUnit: str = None,
-        AskOffsetFlag: bytes = None,
-        BidOffsetFlag: bytes = None,
-        AskHedgeFlag: bytes = None,
-        BidHedgeFlag: bytes = None,
-        QuoteLocalID: str = None,
-        ExchangeID: str = None,
-        ParticipantID: str = None,
-        ClientID: str = None,
-        ExchangeInstID: str = None,
-        TraderID: str = None,
-        InstallID: int = None,
-        NotifySequence: int = None,
-        OrderSubmitStatus: bytes = None,
-        TradingDay: str = None,
-        SettlementID: int = None,
-        QuoteSysID: str = None,
-        InsertDate: str = None,
-        InsertTime: str = None,
-        CancelTime: str = None,
-        QuoteStatus: bytes = None,
-        ClearingPartID: str = None,
-        SequenceNo: int = None,
-        AskOrderSysID: str = None,
-        BidOrderSysID: str = None,
-        FrontID: int = None,
-        SessionID: int = None,
-        UserProductInfo: str = None,
-        StatusMsg: str = None,
-        ActiveUserID: str = None,
-        BrokerQuoteSeq: int = None,
-        AskOrderRef: str = None,
-        BidOrderRef: str = None,
-        ForQuoteSysID: str = None,
-        BranchID: str = None,
-        InvestUnitID: str = None,
-        AccountID: str = None,
-        CurrencyID: str = None,
-        IPAddress: str = None,
-        MacAddress: str = None,
-    ):
-        """
-        报价
-        :param BrokerID: 经纪公司代码
-        :param InvestorID: 投资者代码
-        :param InstrumentID: 合约代码
-        :param QuoteRef: 报价引用
-        :param UserID: 用户代码
-        :param AskPrice: 卖价格
-        :param BidPrice: 买价格
-        :param AskVolume: 卖数量
-        :param BidVolume: 买数量
-        :param RequestID: 请求编号
-        :param BusinessUnit: 业务单元
-        :param AskOffsetFlag: 卖开平标志
-        :param BidOffsetFlag: 买开平标志
-        :param AskHedgeFlag: 卖投机套保标志
-        :param BidHedgeFlag: 买投机套保标志
-        :param QuoteLocalID: 本地报价编号
-        :param ExchangeID: 交易所代码
-        :param ParticipantID: 会员代码
-        :param ClientID: 客户代码
-        :param ExchangeInstID: 合约在交易所的代码
-        :param TraderID: 交易所交易员代码
-        :param InstallID: 安装编号
-        :param NotifySequence: 报价提示序号
-        :param OrderSubmitStatus: 报价提交状态
-        :param TradingDay: 交易日
-        :param SettlementID: 结算编号
-        :param QuoteSysID: 报价编号
-        :param InsertDate: 报单日期
-        :param InsertTime: 插入时间
-        :param CancelTime: 撤销时间
-        :param QuoteStatus: 报价状态
-        :param ClearingPartID: 结算会员编号
-        :param SequenceNo: 序号
-        :param AskOrderSysID: 卖方报单编号
-        :param BidOrderSysID: 买方报单编号
-        :param FrontID: 前置编号
-        :param SessionID: 会话编号
-        :param UserProductInfo: 用户端产品信息
-        :param StatusMsg: 状态信息
-        :param ActiveUserID: 操作用户代码
-        :param BrokerQuoteSeq: 经纪公司报价编号
-        :param AskOrderRef: 衍生卖报单引用
-        :param BidOrderRef: 衍生买报单引用
-        :param ForQuoteSysID: 应价编号
-        :param BranchID: 营业部编号
-        :param InvestUnitID: 投资单元代码
-        :param AccountID: 资金账号
-        :param CurrencyID: 币种代码
-        :param IPAddress: IP地址
-        :param MacAddress: Mac地址
-        """
-        super(Quote, self).__init__()
+    def __init__(self, BrokerID=None, InvestorID=None, InstrumentID=None, QuoteRef=None, UserID=None, AskPrice=None, BidPrice=None, AskVolume=None, BidVolume=None, RequestID=None, BusinessUnit=None, AskOffsetFlag=None, BidOffsetFlag=None, AskHedgeFlag=None, BidHedgeFlag=None, QuoteLocalID=None, ExchangeID=None, ParticipantID=None, ClientID=None, ExchangeInstID=None, TraderID=None, InstallID=None, NotifySequence=None, OrderSubmitStatus=None, TradingDay=None, SettlementID=None, QuoteSysID=None, InsertDate=None, InsertTime=None, CancelTime=None, QuoteStatus=None, ClearingPartID=None, SequenceNo=None, AskOrderSysID=None, BidOrderSysID=None, FrontID=None, SessionID=None, UserProductInfo=None, StatusMsg=None, ActiveUserID=None, BrokerQuoteSeq=None, AskOrderRef=None, BidOrderRef=None, ForQuoteSysID=None, BranchID=None, InvestUnitID=None, AccountID=None, CurrencyID=None, IPAddress=None, MacAddress=None):
+        super().__init__()
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
         if InvestorID:
@@ -9562,67 +5799,8 @@ class QuoteAction(Struct):
         ("MacAddress", c_char_Array_21),
     ]
 
-    def __init__(
-        self,
-        BrokerID: str = None,
-        InvestorID: str = None,
-        QuoteActionRef: int = None,
-        QuoteRef: str = None,
-        RequestID: int = None,
-        FrontID: int = None,
-        SessionID: int = None,
-        ExchangeID: str = None,
-        QuoteSysID: str = None,
-        ActionFlag: bytes = None,
-        ActionDate: str = None,
-        ActionTime: str = None,
-        TraderID: str = None,
-        InstallID: int = None,
-        QuoteLocalID: str = None,
-        ActionLocalID: str = None,
-        ParticipantID: str = None,
-        ClientID: str = None,
-        BusinessUnit: str = None,
-        OrderActionStatus: bytes = None,
-        UserID: str = None,
-        StatusMsg: str = None,
-        InstrumentID: str = None,
-        BranchID: str = None,
-        InvestUnitID: str = None,
-        IPAddress: str = None,
-        MacAddress: str = None,
-    ):
-        """
-        报价操作
-        :param BrokerID: 经纪公司代码
-        :param InvestorID: 投资者代码
-        :param QuoteActionRef: 报价操作引用
-        :param QuoteRef: 报价引用
-        :param RequestID: 请求编号
-        :param FrontID: 前置编号
-        :param SessionID: 会话编号
-        :param ExchangeID: 交易所代码
-        :param QuoteSysID: 报价操作编号
-        :param ActionFlag: 操作标志
-        :param ActionDate: 操作日期
-        :param ActionTime: 操作时间
-        :param TraderID: 交易所交易员代码
-        :param InstallID: 安装编号
-        :param QuoteLocalID: 本地报价编号
-        :param ActionLocalID: 操作本地编号
-        :param ParticipantID: 会员代码
-        :param ClientID: 客户代码
-        :param BusinessUnit: 业务单元
-        :param OrderActionStatus: 报单操作状态
-        :param UserID: 用户代码
-        :param StatusMsg: 状态信息
-        :param InstrumentID: 合约代码
-        :param BranchID: 营业部编号
-        :param InvestUnitID: 投资单元代码
-        :param IPAddress: IP地址
-        :param MacAddress: Mac地址
-        """
-        super(QuoteAction, self).__init__()
+    def __init__(self, BrokerID=None, InvestorID=None, QuoteActionRef=None, QuoteRef=None, RequestID=None, FrontID=None, SessionID=None, ExchangeID=None, QuoteSysID=None, ActionFlag=None, ActionDate=None, ActionTime=None, TraderID=None, InstallID=None, QuoteLocalID=None, ActionLocalID=None, ParticipantID=None, ClientID=None, BusinessUnit=None, OrderActionStatus=None, UserID=None, StatusMsg=None, InstrumentID=None, BranchID=None, InvestUnitID=None, IPAddress=None, MacAddress=None):
+        super().__init__()
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
         if InvestorID:
@@ -9691,29 +5869,8 @@ class QryQuote(Struct):
         ("InvestUnitID", c_char_Array_17),
     ]
 
-    def __init__(
-        self,
-        BrokerID: str = None,
-        InvestorID: str = None,
-        InstrumentID: str = None,
-        ExchangeID: str = None,
-        QuoteSysID: str = None,
-        InsertTimeStart: str = None,
-        InsertTimeEnd: str = None,
-        InvestUnitID: str = None,
-    ):
-        """
-        报价查询
-        :param BrokerID: 经纪公司代码
-        :param InvestorID: 投资者代码
-        :param InstrumentID: 合约代码
-        :param ExchangeID: 交易所代码
-        :param QuoteSysID: 报价编号
-        :param InsertTimeStart: 开始时间
-        :param InsertTimeEnd: 结束时间
-        :param InvestUnitID: 投资单元代码
-        """
-        super(QryQuote, self).__init__()
+    def __init__(self, BrokerID=None, InvestorID=None, InstrumentID=None, ExchangeID=None, QuoteSysID=None, InsertTimeStart=None, InsertTimeEnd=None, InvestUnitID=None):
+        super().__init__()
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
         if InvestorID:
@@ -9770,81 +5927,8 @@ class ExchangeQuote(Struct):
         ("MacAddress", c_char_Array_21),
     ]
 
-    def __init__(
-        self,
-        AskPrice: float = None,
-        BidPrice: float = None,
-        AskVolume: int = None,
-        BidVolume: int = None,
-        RequestID: int = None,
-        BusinessUnit: str = None,
-        AskOffsetFlag: bytes = None,
-        BidOffsetFlag: bytes = None,
-        AskHedgeFlag: bytes = None,
-        BidHedgeFlag: bytes = None,
-        QuoteLocalID: str = None,
-        ExchangeID: str = None,
-        ParticipantID: str = None,
-        ClientID: str = None,
-        ExchangeInstID: str = None,
-        TraderID: str = None,
-        InstallID: int = None,
-        NotifySequence: int = None,
-        OrderSubmitStatus: bytes = None,
-        TradingDay: str = None,
-        SettlementID: int = None,
-        QuoteSysID: str = None,
-        InsertDate: str = None,
-        InsertTime: str = None,
-        CancelTime: str = None,
-        QuoteStatus: bytes = None,
-        ClearingPartID: str = None,
-        SequenceNo: int = None,
-        AskOrderSysID: str = None,
-        BidOrderSysID: str = None,
-        ForQuoteSysID: str = None,
-        BranchID: str = None,
-        IPAddress: str = None,
-        MacAddress: str = None,
-    ):
-        """
-        交易所报价信息
-        :param AskPrice: 卖价格
-        :param BidPrice: 买价格
-        :param AskVolume: 卖数量
-        :param BidVolume: 买数量
-        :param RequestID: 请求编号
-        :param BusinessUnit: 业务单元
-        :param AskOffsetFlag: 卖开平标志
-        :param BidOffsetFlag: 买开平标志
-        :param AskHedgeFlag: 卖投机套保标志
-        :param BidHedgeFlag: 买投机套保标志
-        :param QuoteLocalID: 本地报价编号
-        :param ExchangeID: 交易所代码
-        :param ParticipantID: 会员代码
-        :param ClientID: 客户代码
-        :param ExchangeInstID: 合约在交易所的代码
-        :param TraderID: 交易所交易员代码
-        :param InstallID: 安装编号
-        :param NotifySequence: 报价提示序号
-        :param OrderSubmitStatus: 报价提交状态
-        :param TradingDay: 交易日
-        :param SettlementID: 结算编号
-        :param QuoteSysID: 报价编号
-        :param InsertDate: 报单日期
-        :param InsertTime: 插入时间
-        :param CancelTime: 撤销时间
-        :param QuoteStatus: 报价状态
-        :param ClearingPartID: 结算会员编号
-        :param SequenceNo: 序号
-        :param AskOrderSysID: 卖方报单编号
-        :param BidOrderSysID: 买方报单编号
-        :param ForQuoteSysID: 应价编号
-        :param BranchID: 营业部编号
-        :param IPAddress: IP地址
-        :param MacAddress: Mac地址
-        """
-        super(ExchangeQuote, self).__init__()
+    def __init__(self, AskPrice=None, BidPrice=None, AskVolume=None, BidVolume=None, RequestID=None, BusinessUnit=None, AskOffsetFlag=None, BidOffsetFlag=None, AskHedgeFlag=None, BidHedgeFlag=None, QuoteLocalID=None, ExchangeID=None, ParticipantID=None, ClientID=None, ExchangeInstID=None, TraderID=None, InstallID=None, NotifySequence=None, OrderSubmitStatus=None, TradingDay=None, SettlementID=None, QuoteSysID=None, InsertDate=None, InsertTime=None, CancelTime=None, QuoteStatus=None, ClearingPartID=None, SequenceNo=None, AskOrderSysID=None, BidOrderSysID=None, ForQuoteSysID=None, BranchID=None, IPAddress=None, MacAddress=None):
+        super().__init__()
         if AskPrice:
             self.AskPrice = AskPrice
         if BidPrice:
@@ -9924,23 +6008,8 @@ class QryExchangeQuote(Struct):
         ("TraderID", c_char_Array_21),
     ]
 
-    def __init__(
-        self,
-        ParticipantID: str = None,
-        ClientID: str = None,
-        ExchangeInstID: str = None,
-        ExchangeID: str = None,
-        TraderID: str = None,
-    ):
-        """
-        交易所报价查询
-        :param ParticipantID: 会员代码
-        :param ClientID: 客户代码
-        :param ExchangeInstID: 合约在交易所的代码
-        :param ExchangeID: 交易所代码
-        :param TraderID: 交易所交易员代码
-        """
-        super(QryExchangeQuote, self).__init__()
+    def __init__(self, ParticipantID=None, ClientID=None, ExchangeInstID=None, ExchangeID=None, TraderID=None):
+        super().__init__()
         if ParticipantID:
             self.ParticipantID = ParticipantID.encode("GBK")
         if ClientID:
@@ -9960,19 +6029,8 @@ class QryQuoteAction(Struct):
         ("ExchangeID", c_char_Array_9),
     ]
 
-    def __init__(
-        self,
-        BrokerID: str = None,
-        InvestorID: str = None,
-        ExchangeID: str = None,
-    ):
-        """
-        报价操作查询
-        :param BrokerID: 经纪公司代码
-        :param InvestorID: 投资者代码
-        :param ExchangeID: 交易所代码
-        """
-        super(QryQuoteAction, self).__init__()
+    def __init__(self, BrokerID=None, InvestorID=None, ExchangeID=None):
+        super().__init__()
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
         if InvestorID:
@@ -10001,45 +6059,8 @@ class ExchangeQuoteAction(Struct):
         ("MacAddress", c_char_Array_21),
     ]
 
-    def __init__(
-        self,
-        ExchangeID: str = None,
-        QuoteSysID: str = None,
-        ActionFlag: bytes = None,
-        ActionDate: str = None,
-        ActionTime: str = None,
-        TraderID: str = None,
-        InstallID: int = None,
-        QuoteLocalID: str = None,
-        ActionLocalID: str = None,
-        ParticipantID: str = None,
-        ClientID: str = None,
-        BusinessUnit: str = None,
-        OrderActionStatus: bytes = None,
-        UserID: str = None,
-        IPAddress: str = None,
-        MacAddress: str = None,
-    ):
-        """
-        交易所报价操作
-        :param ExchangeID: 交易所代码
-        :param QuoteSysID: 报价操作编号
-        :param ActionFlag: 操作标志
-        :param ActionDate: 操作日期
-        :param ActionTime: 操作时间
-        :param TraderID: 交易所交易员代码
-        :param InstallID: 安装编号
-        :param QuoteLocalID: 本地报价编号
-        :param ActionLocalID: 操作本地编号
-        :param ParticipantID: 会员代码
-        :param ClientID: 客户代码
-        :param BusinessUnit: 业务单元
-        :param OrderActionStatus: 报单操作状态
-        :param UserID: 用户代码
-        :param IPAddress: IP地址
-        :param MacAddress: Mac地址
-        """
-        super(ExchangeQuoteAction, self).__init__()
+    def __init__(self, ExchangeID=None, QuoteSysID=None, ActionFlag=None, ActionDate=None, ActionTime=None, TraderID=None, InstallID=None, QuoteLocalID=None, ActionLocalID=None, ParticipantID=None, ClientID=None, BusinessUnit=None, OrderActionStatus=None, UserID=None, IPAddress=None, MacAddress=None):
+        super().__init__()
         if ExchangeID:
             self.ExchangeID = ExchangeID.encode("GBK")
         if QuoteSysID:
@@ -10082,21 +6103,8 @@ class QryExchangeQuoteAction(Struct):
         ("TraderID", c_char_Array_21),
     ]
 
-    def __init__(
-        self,
-        ParticipantID: str = None,
-        ClientID: str = None,
-        ExchangeID: str = None,
-        TraderID: str = None,
-    ):
-        """
-        交易所报价操作查询
-        :param ParticipantID: 会员代码
-        :param ClientID: 客户代码
-        :param ExchangeID: 交易所代码
-        :param TraderID: 交易所交易员代码
-        """
-        super(QryExchangeQuoteAction, self).__init__()
+    def __init__(self, ParticipantID=None, ClientID=None, ExchangeID=None, TraderID=None):
+        super().__init__()
         if ParticipantID:
             self.ParticipantID = ParticipantID.encode("GBK")
         if ClientID:
@@ -10116,23 +6124,8 @@ class OptionInstrDelta(Struct):
         ("Delta", c_double),
     ]
 
-    def __init__(
-        self,
-        InstrumentID: str = None,
-        InvestorRange: bytes = None,
-        BrokerID: str = None,
-        InvestorID: str = None,
-        Delta: float = None,
-    ):
-        """
-        期权合约delta值
-        :param InstrumentID: 合约代码
-        :param InvestorRange: 投资者范围
-        :param BrokerID: 经纪公司代码
-        :param InvestorID: 投资者代码
-        :param Delta: Delta值
-        """
-        super(OptionInstrDelta, self).__init__()
+    def __init__(self, InstrumentID=None, InvestorRange=None, BrokerID=None, InvestorID=None, Delta=None):
+        super().__init__()
         if InstrumentID:
             self.InstrumentID = InstrumentID.encode("GBK")
         if InvestorRange:
@@ -10155,25 +6148,8 @@ class ForQuoteRsp(Struct):
         ("ExchangeID", c_char_Array_9),
     ]
 
-    def __init__(
-        self,
-        TradingDay: str = None,
-        InstrumentID: str = None,
-        ForQuoteSysID: str = None,
-        ForQuoteTime: str = None,
-        ActionDay: str = None,
-        ExchangeID: str = None,
-    ):
-        """
-        发给做市商的询价请求
-        :param TradingDay: 交易日
-        :param InstrumentID: 合约代码
-        :param ForQuoteSysID: 询价编号
-        :param ForQuoteTime: 询价时间
-        :param ActionDay: 业务日期
-        :param ExchangeID: 交易所代码
-        """
-        super(ForQuoteRsp, self).__init__()
+    def __init__(self, TradingDay=None, InstrumentID=None, ForQuoteSysID=None, ForQuoteTime=None, ActionDay=None, ExchangeID=None):
+        super().__init__()
         if TradingDay:
             self.TradingDay = TradingDay.encode("GBK")
         if InstrumentID:
@@ -10198,25 +6174,8 @@ class StrikeOffset(Struct):
         ("OffsetType", c_char),
     ]
 
-    def __init__(
-        self,
-        InstrumentID: str = None,
-        InvestorRange: bytes = None,
-        BrokerID: str = None,
-        InvestorID: str = None,
-        Offset: float = None,
-        OffsetType: bytes = None,
-    ):
-        """
-        当前期权合约执行偏移值的详细内容
-        :param InstrumentID: 合约代码
-        :param InvestorRange: 投资者范围
-        :param BrokerID: 经纪公司代码
-        :param InvestorID: 投资者代码
-        :param Offset: 执行偏移值
-        :param OffsetType: 执行偏移类型
-        """
-        super(StrikeOffset, self).__init__()
+    def __init__(self, InstrumentID=None, InvestorRange=None, BrokerID=None, InvestorID=None, Offset=None, OffsetType=None):
+        super().__init__()
         if InstrumentID:
             self.InstrumentID = InstrumentID.encode("GBK")
         if InvestorRange:
@@ -10238,19 +6197,8 @@ class QryStrikeOffset(Struct):
         ("InstrumentID", c_char_Array_31),
     ]
 
-    def __init__(
-        self,
-        BrokerID: str = None,
-        InvestorID: str = None,
-        InstrumentID: str = None,
-    ):
-        """
-        期权执行偏移值查询
-        :param BrokerID: 经纪公司代码
-        :param InvestorID: 投资者代码
-        :param InstrumentID: 合约代码
-        """
-        super(QryStrikeOffset, self).__init__()
+    def __init__(self, BrokerID=None, InvestorID=None, InstrumentID=None):
+        super().__init__()
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
         if InvestorID:
@@ -10274,35 +6222,8 @@ class InputBatchOrderAction(Struct):
         ("MacAddress", c_char_Array_21),
     ]
 
-    def __init__(
-        self,
-        BrokerID: str = None,
-        InvestorID: str = None,
-        OrderActionRef: int = None,
-        RequestID: int = None,
-        FrontID: int = None,
-        SessionID: int = None,
-        ExchangeID: str = None,
-        UserID: str = None,
-        InvestUnitID: str = None,
-        IPAddress: str = None,
-        MacAddress: str = None,
-    ):
-        """
-        输入批量报单操作
-        :param BrokerID: 经纪公司代码
-        :param InvestorID: 投资者代码
-        :param OrderActionRef: 报单操作引用
-        :param RequestID: 请求编号
-        :param FrontID: 前置编号
-        :param SessionID: 会话编号
-        :param ExchangeID: 交易所代码
-        :param UserID: 用户代码
-        :param InvestUnitID: 投资单元代码
-        :param IPAddress: IP地址
-        :param MacAddress: Mac地址
-        """
-        super(InputBatchOrderAction, self).__init__()
+    def __init__(self, BrokerID=None, InvestorID=None, OrderActionRef=None, RequestID=None, FrontID=None, SessionID=None, ExchangeID=None, UserID=None, InvestUnitID=None, IPAddress=None, MacAddress=None):
+        super().__init__()
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
         if InvestorID:
@@ -10352,55 +6273,8 @@ class BatchOrderAction(Struct):
         ("MacAddress", c_char_Array_21),
     ]
 
-    def __init__(
-        self,
-        BrokerID: str = None,
-        InvestorID: str = None,
-        OrderActionRef: int = None,
-        RequestID: int = None,
-        FrontID: int = None,
-        SessionID: int = None,
-        ExchangeID: str = None,
-        ActionDate: str = None,
-        ActionTime: str = None,
-        TraderID: str = None,
-        InstallID: int = None,
-        ActionLocalID: str = None,
-        ParticipantID: str = None,
-        ClientID: str = None,
-        BusinessUnit: str = None,
-        OrderActionStatus: bytes = None,
-        UserID: str = None,
-        StatusMsg: str = None,
-        InvestUnitID: str = None,
-        IPAddress: str = None,
-        MacAddress: str = None,
-    ):
-        """
-        批量报单操作
-        :param BrokerID: 经纪公司代码
-        :param InvestorID: 投资者代码
-        :param OrderActionRef: 报单操作引用
-        :param RequestID: 请求编号
-        :param FrontID: 前置编号
-        :param SessionID: 会话编号
-        :param ExchangeID: 交易所代码
-        :param ActionDate: 操作日期
-        :param ActionTime: 操作时间
-        :param TraderID: 交易所交易员代码
-        :param InstallID: 安装编号
-        :param ActionLocalID: 操作本地编号
-        :param ParticipantID: 会员代码
-        :param ClientID: 客户代码
-        :param BusinessUnit: 业务单元
-        :param OrderActionStatus: 报单操作状态
-        :param UserID: 用户代码
-        :param StatusMsg: 状态信息
-        :param InvestUnitID: 投资单元代码
-        :param IPAddress: IP地址
-        :param MacAddress: Mac地址
-        """
-        super(BatchOrderAction, self).__init__()
+    def __init__(self, BrokerID=None, InvestorID=None, OrderActionRef=None, RequestID=None, FrontID=None, SessionID=None, ExchangeID=None, ActionDate=None, ActionTime=None, TraderID=None, InstallID=None, ActionLocalID=None, ParticipantID=None, ClientID=None, BusinessUnit=None, OrderActionStatus=None, UserID=None, StatusMsg=None, InvestUnitID=None, IPAddress=None, MacAddress=None):
+        super().__init__()
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
         if InvestorID:
@@ -10462,39 +6336,8 @@ class ExchangeBatchOrderAction(Struct):
         ("MacAddress", c_char_Array_21),
     ]
 
-    def __init__(
-        self,
-        ExchangeID: str = None,
-        ActionDate: str = None,
-        ActionTime: str = None,
-        TraderID: str = None,
-        InstallID: int = None,
-        ActionLocalID: str = None,
-        ParticipantID: str = None,
-        ClientID: str = None,
-        BusinessUnit: str = None,
-        OrderActionStatus: bytes = None,
-        UserID: str = None,
-        IPAddress: str = None,
-        MacAddress: str = None,
-    ):
-        """
-        交易所批量报单操作
-        :param ExchangeID: 交易所代码
-        :param ActionDate: 操作日期
-        :param ActionTime: 操作时间
-        :param TraderID: 交易所交易员代码
-        :param InstallID: 安装编号
-        :param ActionLocalID: 操作本地编号
-        :param ParticipantID: 会员代码
-        :param ClientID: 客户代码
-        :param BusinessUnit: 业务单元
-        :param OrderActionStatus: 报单操作状态
-        :param UserID: 用户代码
-        :param IPAddress: IP地址
-        :param MacAddress: Mac地址
-        """
-        super(ExchangeBatchOrderAction, self).__init__()
+    def __init__(self, ExchangeID=None, ActionDate=None, ActionTime=None, TraderID=None, InstallID=None, ActionLocalID=None, ParticipantID=None, ClientID=None, BusinessUnit=None, OrderActionStatus=None, UserID=None, IPAddress=None, MacAddress=None):
+        super().__init__()
         if ExchangeID:
             self.ExchangeID = ExchangeID.encode("GBK")
         if ActionDate:
@@ -10530,19 +6373,8 @@ class QryBatchOrderAction(Struct):
         ("ExchangeID", c_char_Array_9),
     ]
 
-    def __init__(
-        self,
-        BrokerID: str = None,
-        InvestorID: str = None,
-        ExchangeID: str = None,
-    ):
-        """
-        查询批量报单操作
-        :param BrokerID: 经纪公司代码
-        :param InvestorID: 投资者代码
-        :param ExchangeID: 交易所代码
-        """
-        super(QryBatchOrderAction, self).__init__()
+    def __init__(self, BrokerID=None, InvestorID=None, ExchangeID=None):
+        super().__init__()
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
         if InvestorID:
@@ -10559,21 +6391,8 @@ class CombInstrumentGuard(Struct):
         ("ExchangeID", c_char_Array_9),
     ]
 
-    def __init__(
-        self,
-        BrokerID: str = None,
-        InstrumentID: str = None,
-        GuarantRatio: float = None,
-        ExchangeID: str = None,
-    ):
-        """
-        组合合约安全系数
-        :param BrokerID: 经纪公司代码
-        :param InstrumentID: 合约代码
-        :param GuarantRatio: 合约代码
-        :param ExchangeID: 交易所代码
-        """
-        super(CombInstrumentGuard, self).__init__()
+    def __init__(self, BrokerID=None, InstrumentID=None, GuarantRatio=None, ExchangeID=None):
+        super().__init__()
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
         if InstrumentID:
@@ -10591,19 +6410,8 @@ class QryCombInstrumentGuard(Struct):
         ("ExchangeID", c_char_Array_9),
     ]
 
-    def __init__(
-        self,
-        BrokerID: str = None,
-        InstrumentID: str = None,
-        ExchangeID: str = None,
-    ):
-        """
-        组合合约安全系数查询
-        :param BrokerID: 经纪公司代码
-        :param InstrumentID: 合约代码
-        :param ExchangeID: 交易所代码
-        """
-        super(QryCombInstrumentGuard, self).__init__()
+    def __init__(self, BrokerID=None, InstrumentID=None, ExchangeID=None):
+        super().__init__()
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
         if InstrumentID:
@@ -10629,39 +6437,8 @@ class InputCombAction(Struct):
         ("InvestUnitID", c_char_Array_17),
     ]
 
-    def __init__(
-        self,
-        BrokerID: str = None,
-        InvestorID: str = None,
-        InstrumentID: str = None,
-        CombActionRef: str = None,
-        UserID: str = None,
-        Direction: bytes = None,
-        Volume: int = None,
-        CombDirection: bytes = None,
-        HedgeFlag: bytes = None,
-        ExchangeID: str = None,
-        IPAddress: str = None,
-        MacAddress: str = None,
-        InvestUnitID: str = None,
-    ):
-        """
-        输入的申请组合
-        :param BrokerID: 经纪公司代码
-        :param InvestorID: 投资者代码
-        :param InstrumentID: 合约代码
-        :param CombActionRef: 组合引用
-        :param UserID: 用户代码
-        :param Direction: 买卖方向
-        :param Volume: 数量
-        :param CombDirection: 组合指令方向
-        :param HedgeFlag: 投机套保标志
-        :param ExchangeID: 交易所代码
-        :param IPAddress: IP地址
-        :param MacAddress: Mac地址
-        :param InvestUnitID: 投资单元代码
-        """
-        super(InputCombAction, self).__init__()
+    def __init__(self, BrokerID=None, InvestorID=None, InstrumentID=None, CombActionRef=None, UserID=None, Direction=None, Volume=None, CombDirection=None, HedgeFlag=None, ExchangeID=None, IPAddress=None, MacAddress=None, InvestUnitID=None):
+        super().__init__()
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
         if InvestorID:
@@ -10724,73 +6501,8 @@ class CombAction(Struct):
         ("InvestUnitID", c_char_Array_17),
     ]
 
-    def __init__(
-        self,
-        BrokerID: str = None,
-        InvestorID: str = None,
-        InstrumentID: str = None,
-        CombActionRef: str = None,
-        UserID: str = None,
-        Direction: bytes = None,
-        Volume: int = None,
-        CombDirection: bytes = None,
-        HedgeFlag: bytes = None,
-        ActionLocalID: str = None,
-        ExchangeID: str = None,
-        ParticipantID: str = None,
-        ClientID: str = None,
-        ExchangeInstID: str = None,
-        TraderID: str = None,
-        InstallID: int = None,
-        ActionStatus: bytes = None,
-        NotifySequence: int = None,
-        TradingDay: str = None,
-        SettlementID: int = None,
-        SequenceNo: int = None,
-        FrontID: int = None,
-        SessionID: int = None,
-        UserProductInfo: str = None,
-        StatusMsg: str = None,
-        IPAddress: str = None,
-        MacAddress: str = None,
-        ComTradeID: str = None,
-        BranchID: str = None,
-        InvestUnitID: str = None,
-    ):
-        """
-        申请组合
-        :param BrokerID: 经纪公司代码
-        :param InvestorID: 投资者代码
-        :param InstrumentID: 合约代码
-        :param CombActionRef: 组合引用
-        :param UserID: 用户代码
-        :param Direction: 买卖方向
-        :param Volume: 数量
-        :param CombDirection: 组合指令方向
-        :param HedgeFlag: 投机套保标志
-        :param ActionLocalID: 本地申请组合编号
-        :param ExchangeID: 交易所代码
-        :param ParticipantID: 会员代码
-        :param ClientID: 客户代码
-        :param ExchangeInstID: 合约在交易所的代码
-        :param TraderID: 交易所交易员代码
-        :param InstallID: 安装编号
-        :param ActionStatus: 组合状态
-        :param NotifySequence: 报单提示序号
-        :param TradingDay: 交易日
-        :param SettlementID: 结算编号
-        :param SequenceNo: 序号
-        :param FrontID: 前置编号
-        :param SessionID: 会话编号
-        :param UserProductInfo: 用户端产品信息
-        :param StatusMsg: 状态信息
-        :param IPAddress: IP地址
-        :param MacAddress: Mac地址
-        :param ComTradeID: 组合编号
-        :param BranchID: 营业部编号
-        :param InvestUnitID: 投资单元代码
-        """
-        super(CombAction, self).__init__()
+    def __init__(self, BrokerID=None, InvestorID=None, InstrumentID=None, CombActionRef=None, UserID=None, Direction=None, Volume=None, CombDirection=None, HedgeFlag=None, ActionLocalID=None, ExchangeID=None, ParticipantID=None, ClientID=None, ExchangeInstID=None, TraderID=None, InstallID=None, ActionStatus=None, NotifySequence=None, TradingDay=None, SettlementID=None, SequenceNo=None, FrontID=None, SessionID=None, UserProductInfo=None, StatusMsg=None, IPAddress=None, MacAddress=None, ComTradeID=None, BranchID=None, InvestUnitID=None):
+        super().__init__()
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
         if InvestorID:
@@ -10862,23 +6574,8 @@ class QryCombAction(Struct):
         ("InvestUnitID", c_char_Array_17),
     ]
 
-    def __init__(
-        self,
-        BrokerID: str = None,
-        InvestorID: str = None,
-        InstrumentID: str = None,
-        ExchangeID: str = None,
-        InvestUnitID: str = None,
-    ):
-        """
-        申请组合查询
-        :param BrokerID: 经纪公司代码
-        :param InvestorID: 投资者代码
-        :param InstrumentID: 合约代码
-        :param ExchangeID: 交易所代码
-        :param InvestUnitID: 投资单元代码
-        """
-        super(QryCombAction, self).__init__()
+    def __init__(self, BrokerID=None, InvestorID=None, InstrumentID=None, ExchangeID=None, InvestUnitID=None):
+        super().__init__()
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
         if InvestorID:
@@ -10915,53 +6612,8 @@ class ExchangeCombAction(Struct):
         ("BranchID", c_char_Array_9),
     ]
 
-    def __init__(
-        self,
-        Direction: bytes = None,
-        Volume: int = None,
-        CombDirection: bytes = None,
-        HedgeFlag: bytes = None,
-        ActionLocalID: str = None,
-        ExchangeID: str = None,
-        ParticipantID: str = None,
-        ClientID: str = None,
-        ExchangeInstID: str = None,
-        TraderID: str = None,
-        InstallID: int = None,
-        ActionStatus: bytes = None,
-        NotifySequence: int = None,
-        TradingDay: str = None,
-        SettlementID: int = None,
-        SequenceNo: int = None,
-        IPAddress: str = None,
-        MacAddress: str = None,
-        ComTradeID: str = None,
-        BranchID: str = None,
-    ):
-        """
-        交易所申请组合信息
-        :param Direction: 买卖方向
-        :param Volume: 数量
-        :param CombDirection: 组合指令方向
-        :param HedgeFlag: 投机套保标志
-        :param ActionLocalID: 本地申请组合编号
-        :param ExchangeID: 交易所代码
-        :param ParticipantID: 会员代码
-        :param ClientID: 客户代码
-        :param ExchangeInstID: 合约在交易所的代码
-        :param TraderID: 交易所交易员代码
-        :param InstallID: 安装编号
-        :param ActionStatus: 组合状态
-        :param NotifySequence: 报单提示序号
-        :param TradingDay: 交易日
-        :param SettlementID: 结算编号
-        :param SequenceNo: 序号
-        :param IPAddress: IP地址
-        :param MacAddress: Mac地址
-        :param ComTradeID: 组合编号
-        :param BranchID: 营业部编号
-        """
-        super(ExchangeCombAction, self).__init__()
+    def __init__(self, Direction=None, Volume=None, CombDirection=None, HedgeFlag=None, ActionLocalID=None, ExchangeID=None, ParticipantID=None, ClientID=None, ExchangeInstID=None, TraderID=None, InstallID=None, ActionStatus=None, NotifySequence=None, TradingDay=None, SettlementID=None, SequenceNo=None, IPAddress=None, MacAddress=None, ComTradeID=None, BranchID=None):
+        super().__init__()
         if Direction:
             self.Direction = Direction
         if Volume:
@@ -11013,23 +6665,8 @@ class QryExchangeCombAction(Struct):
         ("TraderID", c_char_Array_21),
     ]
 
-    def __init__(
-        self,
-        ParticipantID: str = None,
-        ClientID: str = None,
-        ExchangeInstID: str = None,
-        ExchangeID: str = None,
-        TraderID: str = None,
-    ):
-        """
-        交易所申请组合查询
-        :param ParticipantID: 会员代码
-        :param ClientID: 客户代码
-        :param ExchangeInstID: 合约在交易所的代码
-        :param ExchangeID: 交易所代码
-        :param TraderID: 交易所交易员代码
-        """
-        super(QryExchangeCombAction, self).__init__()
+    def __init__(self, ParticipantID=None, ClientID=None, ExchangeInstID=None, ExchangeID=None, TraderID=None):
+        super().__init__()
         if ParticipantID:
             self.ParticipantID = ParticipantID.encode("GBK")
         if ClientID:
@@ -11050,21 +6687,8 @@ class ProductExchRate(Struct):
         ("ExchangeID", c_char_Array_9),
     ]
 
-    def __init__(
-        self,
-        ProductID: str = None,
-        QuoteCurrencyID: str = None,
-        ExchangeRate: float = None,
-        ExchangeID: str = None,
-    ):
-        """
-        产品报价汇率
-        :param ProductID: 产品代码
-        :param QuoteCurrencyID: 报价币种类型
-        :param ExchangeRate: 汇率
-        :param ExchangeID: 交易所代码
-        """
-        super(ProductExchRate, self).__init__()
+    def __init__(self, ProductID=None, QuoteCurrencyID=None, ExchangeRate=None, ExchangeID=None):
+        super().__init__()
         if ProductID:
             self.ProductID = ProductID.encode("GBK")
         if QuoteCurrencyID:
@@ -11081,17 +6705,8 @@ class QryProductExchRate(Struct):
         ("ExchangeID", c_char_Array_9),
     ]
 
-    def __init__(
-        self,
-        ProductID: str = None,
-        ExchangeID: str = None,
-    ):
-        """
-        产品报价汇率查询
-        :param ProductID: 产品代码
-        :param ExchangeID: 交易所代码
-        """
-        super(QryProductExchRate, self).__init__()
+    def __init__(self, ProductID=None, ExchangeID=None):
+        super().__init__()
         if ProductID:
             self.ProductID = ProductID.encode("GBK")
         if ExchangeID:
@@ -11105,19 +6720,8 @@ class QryForQuoteParam(Struct):
         ("ExchangeID", c_char_Array_9),
     ]
 
-    def __init__(
-        self,
-        BrokerID: str = None,
-        InstrumentID: str = None,
-        ExchangeID: str = None,
-    ):
-        """
-        查询询价价差参数
-        :param BrokerID: 经纪公司代码
-        :param InstrumentID: 合约代码
-        :param ExchangeID: 交易所代码
-        """
-        super(QryForQuoteParam, self).__init__()
+    def __init__(self, BrokerID=None, InstrumentID=None, ExchangeID=None):
+        super().__init__()
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
         if InstrumentID:
@@ -11135,23 +6739,8 @@ class ForQuoteParam(Struct):
         ("PriceInterval", c_double),
     ]
 
-    def __init__(
-        self,
-        BrokerID: str = None,
-        InstrumentID: str = None,
-        ExchangeID: str = None,
-        LastPrice: float = None,
-        PriceInterval: float = None,
-    ):
-        """
-        询价价差参数
-        :param BrokerID: 经纪公司代码
-        :param InstrumentID: 合约代码
-        :param ExchangeID: 交易所代码
-        :param LastPrice: 最新价
-        :param PriceInterval: 价差
-        """
-        super(ForQuoteParam, self).__init__()
+    def __init__(self, BrokerID=None, InstrumentID=None, ExchangeID=None, LastPrice=None, PriceInterval=None):
+        super().__init__()
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
         if InstrumentID:
@@ -11180,37 +6769,8 @@ class MMOptionInstrCommRate(Struct):
         ("StrikeRatioByVolume", c_double),
     ]
 
-    def __init__(
-        self,
-        InstrumentID: str = None,
-        InvestorRange: bytes = None,
-        BrokerID: str = None,
-        InvestorID: str = None,
-        OpenRatioByMoney: float = None,
-        OpenRatioByVolume: float = None,
-        CloseRatioByMoney: float = None,
-        CloseRatioByVolume: float = None,
-        CloseTodayRatioByMoney: float = None,
-        CloseTodayRatioByVolume: float = None,
-        StrikeRatioByMoney: float = None,
-        StrikeRatioByVolume: float = None,
-    ):
-        """
-        当前做市商期权合约手续费的详细内容
-        :param InstrumentID: 合约代码
-        :param InvestorRange: 投资者范围
-        :param BrokerID: 经纪公司代码
-        :param InvestorID: 投资者代码
-        :param OpenRatioByMoney: 开仓手续费率
-        :param OpenRatioByVolume: 开仓手续费
-        :param CloseRatioByMoney: 平仓手续费率
-        :param CloseRatioByVolume: 平仓手续费
-        :param CloseTodayRatioByMoney: 平今手续费率
-        :param CloseTodayRatioByVolume: 平今手续费
-        :param StrikeRatioByMoney: 执行手续费率
-        :param StrikeRatioByVolume: 执行手续费
-        """
-        super(MMOptionInstrCommRate, self).__init__()
+    def __init__(self, InstrumentID=None, InvestorRange=None, BrokerID=None, InvestorID=None, OpenRatioByMoney=None, OpenRatioByVolume=None, CloseRatioByMoney=None, CloseRatioByVolume=None, CloseTodayRatioByMoney=None, CloseTodayRatioByVolume=None, StrikeRatioByMoney=None, StrikeRatioByVolume=None):
+        super().__init__()
         if InstrumentID:
             self.InstrumentID = InstrumentID.encode("GBK")
         if InvestorRange:
@@ -11244,19 +6804,8 @@ class QryMMOptionInstrCommRate(Struct):
         ("InstrumentID", c_char_Array_31),
     ]
 
-    def __init__(
-        self,
-        BrokerID: str = None,
-        InvestorID: str = None,
-        InstrumentID: str = None,
-    ):
-        """
-        做市商期权手续费率查询
-        :param BrokerID: 经纪公司代码
-        :param InvestorID: 投资者代码
-        :param InstrumentID: 合约代码
-        """
-        super(QryMMOptionInstrCommRate, self).__init__()
+    def __init__(self, BrokerID=None, InvestorID=None, InstrumentID=None):
+        super().__init__()
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
         if InvestorID:
@@ -11279,33 +6828,8 @@ class MMInstrumentCommissionRate(Struct):
         ("CloseTodayRatioByVolume", c_double),
     ]
 
-    def __init__(
-        self,
-        InstrumentID: str = None,
-        InvestorRange: bytes = None,
-        BrokerID: str = None,
-        InvestorID: str = None,
-        OpenRatioByMoney: float = None,
-        OpenRatioByVolume: float = None,
-        CloseRatioByMoney: float = None,
-        CloseRatioByVolume: float = None,
-        CloseTodayRatioByMoney: float = None,
-        CloseTodayRatioByVolume: float = None,
-    ):
-        """
-        做市商合约手续费率
-        :param InstrumentID: 合约代码
-        :param InvestorRange: 投资者范围
-        :param BrokerID: 经纪公司代码
-        :param InvestorID: 投资者代码
-        :param OpenRatioByMoney: 开仓手续费率
-        :param OpenRatioByVolume: 开仓手续费
-        :param CloseRatioByMoney: 平仓手续费率
-        :param CloseRatioByVolume: 平仓手续费
-        :param CloseTodayRatioByMoney: 平今手续费率
-        :param CloseTodayRatioByVolume: 平今手续费
-        """
-        super(MMInstrumentCommissionRate, self).__init__()
+    def __init__(self, InstrumentID=None, InvestorRange=None, BrokerID=None, InvestorID=None, OpenRatioByMoney=None, OpenRatioByVolume=None, CloseRatioByMoney=None, CloseRatioByVolume=None, CloseTodayRatioByMoney=None, CloseTodayRatioByVolume=None):
+        super().__init__()
         if InstrumentID:
             self.InstrumentID = InstrumentID.encode("GBK")
         if InvestorRange:
@@ -11335,19 +6859,8 @@ class QryMMInstrumentCommissionRate(Struct):
         ("InstrumentID", c_char_Array_31),
     ]
 
-    def __init__(
-        self,
-        BrokerID: str = None,
-        InvestorID: str = None,
-        InstrumentID: str = None,
-    ):
-        """
-        查询做市商合约手续费率
-        :param BrokerID: 经纪公司代码
-        :param InvestorID: 投资者代码
-        :param InstrumentID: 合约代码
-        """
-        super(QryMMInstrumentCommissionRate, self).__init__()
+    def __init__(self, BrokerID=None, InvestorID=None, InstrumentID=None):
+        super().__init__()
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
         if InvestorID:
@@ -11369,31 +6882,8 @@ class InstrumentOrderCommRate(Struct):
         ("InvestUnitID", c_char_Array_17),
     ]
 
-    def __init__(
-        self,
-        InstrumentID: str = None,
-        InvestorRange: bytes = None,
-        BrokerID: str = None,
-        InvestorID: str = None,
-        HedgeFlag: bytes = None,
-        OrderCommByVolume: float = None,
-        OrderActionCommByVolume: float = None,
-        ExchangeID: str = None,
-        InvestUnitID: str = None,
-    ):
-        """
-        当前报单手续费的详细内容
-        :param InstrumentID: 合约代码
-        :param InvestorRange: 投资者范围
-        :param BrokerID: 经纪公司代码
-        :param InvestorID: 投资者代码
-        :param HedgeFlag: 投机套保标志
-        :param OrderCommByVolume: 报单手续费
-        :param OrderActionCommByVolume: 撤单手续费
-        :param ExchangeID: 交易所代码
-        :param InvestUnitID: 投资单元代码
-        """
-        super(InstrumentOrderCommRate, self).__init__()
+    def __init__(self, InstrumentID=None, InvestorRange=None, BrokerID=None, InvestorID=None, HedgeFlag=None, OrderCommByVolume=None, OrderActionCommByVolume=None, ExchangeID=None, InvestUnitID=None):
+        super().__init__()
         if InstrumentID:
             self.InstrumentID = InstrumentID.encode("GBK")
         if InvestorRange:
@@ -11421,19 +6911,8 @@ class QryInstrumentOrderCommRate(Struct):
         ("InstrumentID", c_char_Array_31),
     ]
 
-    def __init__(
-        self,
-        BrokerID: str = None,
-        InvestorID: str = None,
-        InstrumentID: str = None,
-    ):
-        """
-        报单手续费率查询
-        :param BrokerID: 经纪公司代码
-        :param InvestorID: 投资者代码
-        :param InstrumentID: 合约代码
-        """
-        super(QryInstrumentOrderCommRate, self).__init__()
+    def __init__(self, BrokerID=None, InvestorID=None, InstrumentID=None):
+        super().__init__()
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
         if InvestorID:
@@ -11450,21 +6929,8 @@ class TradeParam(Struct):
         ("Memo", c_char_Array_161),
     ]
 
-    def __init__(
-        self,
-        BrokerID: str = None,
-        TradeParamID: bytes = None,
-        TradeParamValue: str = None,
-        Memo: str = None,
-    ):
-        """
-        交易参数
-        :param BrokerID: 经纪公司代码
-        :param TradeParamID: 参数代码
-        :param TradeParamValue: 参数代码值
-        :param Memo: 备注
-        """
-        super(TradeParam, self).__init__()
+    def __init__(self, BrokerID=None, TradeParamID=None, TradeParamValue=None, Memo=None):
+        super().__init__()
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
         if TradeParamID:
@@ -11488,31 +6954,8 @@ class InstrumentMarginRateUL(Struct):
         ("ShortMarginRatioByVolume", c_double),
     ]
 
-    def __init__(
-        self,
-        InstrumentID: str = None,
-        InvestorRange: bytes = None,
-        BrokerID: str = None,
-        InvestorID: str = None,
-        HedgeFlag: bytes = None,
-        LongMarginRatioByMoney: float = None,
-        LongMarginRatioByVolume: float = None,
-        ShortMarginRatioByMoney: float = None,
-        ShortMarginRatioByVolume: float = None,
-    ):
-        """
-        合约保证金率调整
-        :param InstrumentID: 合约代码
-        :param InvestorRange: 投资者范围
-        :param BrokerID: 经纪公司代码
-        :param InvestorID: 投资者代码
-        :param HedgeFlag: 投机套保标志
-        :param LongMarginRatioByMoney: 多头保证金率
-        :param LongMarginRatioByVolume: 多头保证金费
-        :param ShortMarginRatioByMoney: 空头保证金率
-        :param ShortMarginRatioByVolume: 空头保证金费
-        """
-        super(InstrumentMarginRateUL, self).__init__()
+    def __init__(self, InstrumentID=None, InvestorRange=None, BrokerID=None, InvestorID=None, HedgeFlag=None, LongMarginRatioByMoney=None, LongMarginRatioByVolume=None, ShortMarginRatioByMoney=None, ShortMarginRatioByVolume=None):
+        super().__init__()
         if InstrumentID:
             self.InstrumentID = InstrumentID.encode("GBK")
         if InvestorRange:
@@ -11544,27 +6987,8 @@ class FutureLimitPosiParam(Struct):
         ("OpenVolume", c_int),
     ]
 
-    def __init__(
-        self,
-        InvestorRange: bytes = None,
-        BrokerID: str = None,
-        InvestorID: str = None,
-        ProductID: str = None,
-        SpecOpenVolume: int = None,
-        ArbiOpenVolume: int = None,
-        OpenVolume: int = None,
-    ):
-        """
-        期货持仓限制参数
-        :param InvestorRange: 投资者范围
-        :param BrokerID: 经纪公司代码
-        :param InvestorID: 投资者代码
-        :param ProductID: 产品代码
-        :param SpecOpenVolume: 当日投机开仓数量限制
-        :param ArbiOpenVolume: 当日套利开仓数量限制
-        :param OpenVolume: 当日投机+套利开仓数量限制
-        """
-        super(FutureLimitPosiParam, self).__init__()
+    def __init__(self, InvestorRange=None, BrokerID=None, InvestorID=None, ProductID=None, SpecOpenVolume=None, ArbiOpenVolume=None, OpenVolume=None):
+        super().__init__()
         if InvestorRange:
             self.InvestorRange = InvestorRange
         if BrokerID:
@@ -11586,15 +7010,8 @@ class LoginForbiddenIP(Struct):
         ("IPAddress", c_char_Array_16),
     ]
 
-    def __init__(
-        self,
-        IPAddress: str = None,
-    ):
-        """
-        禁止登录IP
-        :param IPAddress: IP地址
-        """
-        super(LoginForbiddenIP, self).__init__()
+    def __init__(self, IPAddress=None):
+        super().__init__()
         if IPAddress:
             self.IPAddress = IPAddress.encode("GBK")
 
@@ -11605,17 +7022,8 @@ class IPList(Struct):
         ("IsWhite", c_int),
     ]
 
-    def __init__(
-        self,
-        IPAddress: str = None,
-        IsWhite: int = None,
-    ):
-        """
-        IP列表
-        :param IPAddress: IP地址
-        :param IsWhite: 是否白名单
-        """
-        super(IPList, self).__init__()
+    def __init__(self, IPAddress=None, IsWhite=None):
+        super().__init__()
         if IPAddress:
             self.IPAddress = IPAddress.encode("GBK")
         if IsWhite:
@@ -11643,47 +7051,8 @@ class InputOptionSelfClose(Struct):
         ("MacAddress", c_char_Array_21),
     ]
 
-    def __init__(
-        self,
-        BrokerID: str = None,
-        InvestorID: str = None,
-        InstrumentID: str = None,
-        OptionSelfCloseRef: str = None,
-        UserID: str = None,
-        Volume: int = None,
-        RequestID: int = None,
-        BusinessUnit: str = None,
-        HedgeFlag: bytes = None,
-        OptSelfCloseFlag: bytes = None,
-        ExchangeID: str = None,
-        InvestUnitID: str = None,
-        AccountID: str = None,
-        CurrencyID: str = None,
-        ClientID: str = None,
-        IPAddress: str = None,
-        MacAddress: str = None,
-    ):
-        """
-        输入的期权自对冲
-        :param BrokerID: 经纪公司代码
-        :param InvestorID: 投资者代码
-        :param InstrumentID: 合约代码
-        :param OptionSelfCloseRef: 期权自对冲引用
-        :param UserID: 用户代码
-        :param Volume: 数量
-        :param RequestID: 请求编号
-        :param BusinessUnit: 业务单元
-        :param HedgeFlag: 投机套保标志
-        :param OptSelfCloseFlag: 期权行权的头寸是否自对冲
-        :param ExchangeID: 交易所代码
-        :param InvestUnitID: 投资单元代码
-        :param AccountID: 资金账号
-        :param CurrencyID: 币种代码
-        :param ClientID: 交易编码
-        :param IPAddress: IP地址
-        :param MacAddress: Mac地址
-        """
-        super(InputOptionSelfClose, self).__init__()
+    def __init__(self, BrokerID=None, InvestorID=None, InstrumentID=None, OptionSelfCloseRef=None, UserID=None, Volume=None, RequestID=None, BusinessUnit=None, HedgeFlag=None, OptSelfCloseFlag=None, ExchangeID=None, InvestUnitID=None, AccountID=None, CurrencyID=None, ClientID=None, IPAddress=None, MacAddress=None):
+        super().__init__()
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
         if InvestorID:
@@ -11739,43 +7108,8 @@ class InputOptionSelfCloseAction(Struct):
         ("MacAddress", c_char_Array_21),
     ]
 
-    def __init__(
-        self,
-        BrokerID: str = None,
-        InvestorID: str = None,
-        OptionSelfCloseActionRef: int = None,
-        OptionSelfCloseRef: str = None,
-        RequestID: int = None,
-        FrontID: int = None,
-        SessionID: int = None,
-        ExchangeID: str = None,
-        OptionSelfCloseSysID: str = None,
-        ActionFlag: bytes = None,
-        UserID: str = None,
-        InstrumentID: str = None,
-        InvestUnitID: str = None,
-        IPAddress: str = None,
-        MacAddress: str = None,
-    ):
-        """
-        输入期权自对冲操作
-        :param BrokerID: 经纪公司代码
-        :param InvestorID: 投资者代码
-        :param OptionSelfCloseActionRef: 期权自对冲操作引用
-        :param OptionSelfCloseRef: 期权自对冲引用
-        :param RequestID: 请求编号
-        :param FrontID: 前置编号
-        :param SessionID: 会话编号
-        :param ExchangeID: 交易所代码
-        :param OptionSelfCloseSysID: 期权自对冲操作编号
-        :param ActionFlag: 操作标志
-        :param UserID: 用户代码
-        :param InstrumentID: 合约代码
-        :param InvestUnitID: 投资单元代码
-        :param IPAddress: IP地址
-        :param MacAddress: Mac地址
-        """
-        super(InputOptionSelfCloseAction, self).__init__()
+    def __init__(self, BrokerID=None, InvestorID=None, OptionSelfCloseActionRef=None, OptionSelfCloseRef=None, RequestID=None, FrontID=None, SessionID=None, ExchangeID=None, OptionSelfCloseSysID=None, ActionFlag=None, UserID=None, InstrumentID=None, InvestUnitID=None, IPAddress=None, MacAddress=None):
+        super().__init__()
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
         if InvestorID:
@@ -11852,93 +7186,8 @@ class OptionSelfClose(Struct):
         ("MacAddress", c_char_Array_21),
     ]
 
-    def __init__(
-        self,
-        BrokerID: str = None,
-        InvestorID: str = None,
-        InstrumentID: str = None,
-        OptionSelfCloseRef: str = None,
-        UserID: str = None,
-        Volume: int = None,
-        RequestID: int = None,
-        BusinessUnit: str = None,
-        HedgeFlag: bytes = None,
-        OptSelfCloseFlag: bytes = None,
-        OptionSelfCloseLocalID: str = None,
-        ExchangeID: str = None,
-        ParticipantID: str = None,
-        ClientID: str = None,
-        ExchangeInstID: str = None,
-        TraderID: str = None,
-        InstallID: int = None,
-        OrderSubmitStatus: bytes = None,
-        NotifySequence: int = None,
-        TradingDay: str = None,
-        SettlementID: int = None,
-        OptionSelfCloseSysID: str = None,
-        InsertDate: str = None,
-        InsertTime: str = None,
-        CancelTime: str = None,
-        ExecResult: bytes = None,
-        ClearingPartID: str = None,
-        SequenceNo: int = None,
-        FrontID: int = None,
-        SessionID: int = None,
-        UserProductInfo: str = None,
-        StatusMsg: str = None,
-        ActiveUserID: str = None,
-        BrokerOptionSelfCloseSeq: int = None,
-        BranchID: str = None,
-        InvestUnitID: str = None,
-        AccountID: str = None,
-        CurrencyID: str = None,
-        IPAddress: str = None,
-        MacAddress: str = None,
-    ):
-        """
-        期权自对冲
-        :param BrokerID: 经纪公司代码
-        :param InvestorID: 投资者代码
-        :param InstrumentID: 合约代码
-        :param OptionSelfCloseRef: 期权自对冲引用
-        :param UserID: 用户代码
-        :param Volume: 数量
-        :param RequestID: 请求编号
-        :param BusinessUnit: 业务单元
-        :param HedgeFlag: 投机套保标志
-        :param OptSelfCloseFlag: 期权行权的头寸是否自对冲
-        :param OptionSelfCloseLocalID: 本地期权自对冲编号
-        :param ExchangeID: 交易所代码
-        :param ParticipantID: 会员代码
-        :param ClientID: 客户代码
-        :param ExchangeInstID: 合约在交易所的代码
-        :param TraderID: 交易所交易员代码
-        :param InstallID: 安装编号
-        :param OrderSubmitStatus: 期权自对冲提交状态
-        :param NotifySequence: 报单提示序号
-        :param TradingDay: 交易日
-        :param SettlementID: 结算编号
-        :param OptionSelfCloseSysID: 期权自对冲编号
-        :param InsertDate: 报单日期
-        :param InsertTime: 插入时间
-        :param CancelTime: 撤销时间
-        :param ExecResult: 自对冲结果
-        :param ClearingPartID: 结算会员编号
-        :param SequenceNo: 序号
-        :param FrontID: 前置编号
-        :param SessionID: 会话编号
-        :param UserProductInfo: 用户端产品信息
-        :param StatusMsg: 状态信息
-        :param ActiveUserID: 操作用户代码
-        :param BrokerOptionSelfCloseSeq: 经纪公司报单编号
-        :param BranchID: 营业部编号
-        :param InvestUnitID: 投资单元代码
-        :param AccountID: 资金账号
-        :param CurrencyID: 币种代码
-        :param IPAddress: IP地址
-        :param MacAddress: Mac地址
-        """
-        super(OptionSelfClose, self).__init__()
+    def __init__(self, BrokerID=None, InvestorID=None, InstrumentID=None, OptionSelfCloseRef=None, UserID=None, Volume=None, RequestID=None, BusinessUnit=None, HedgeFlag=None, OptSelfCloseFlag=None, OptionSelfCloseLocalID=None, ExchangeID=None, ParticipantID=None, ClientID=None, ExchangeInstID=None, TraderID=None, InstallID=None, OrderSubmitStatus=None, NotifySequence=None, TradingDay=None, SettlementID=None, OptionSelfCloseSysID=None, InsertDate=None, InsertTime=None, CancelTime=None, ExecResult=None, ClearingPartID=None, SequenceNo=None, FrontID=None, SessionID=None, UserProductInfo=None, StatusMsg=None, ActiveUserID=None, BrokerOptionSelfCloseSeq=None, BranchID=None, InvestUnitID=None, AccountID=None, CurrencyID=None, IPAddress=None, MacAddress=None):
+        super().__init__()
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
         if InvestorID:
@@ -12052,67 +7301,8 @@ class OptionSelfCloseAction(Struct):
         ("MacAddress", c_char_Array_21),
     ]
 
-    def __init__(
-        self,
-        BrokerID: str = None,
-        InvestorID: str = None,
-        OptionSelfCloseActionRef: int = None,
-        OptionSelfCloseRef: str = None,
-        RequestID: int = None,
-        FrontID: int = None,
-        SessionID: int = None,
-        ExchangeID: str = None,
-        OptionSelfCloseSysID: str = None,
-        ActionFlag: bytes = None,
-        ActionDate: str = None,
-        ActionTime: str = None,
-        TraderID: str = None,
-        InstallID: int = None,
-        OptionSelfCloseLocalID: str = None,
-        ActionLocalID: str = None,
-        ParticipantID: str = None,
-        ClientID: str = None,
-        BusinessUnit: str = None,
-        OrderActionStatus: bytes = None,
-        UserID: str = None,
-        StatusMsg: str = None,
-        InstrumentID: str = None,
-        BranchID: str = None,
-        InvestUnitID: str = None,
-        IPAddress: str = None,
-        MacAddress: str = None,
-    ):
-        """
-        期权自对冲操作
-        :param BrokerID: 经纪公司代码
-        :param InvestorID: 投资者代码
-        :param OptionSelfCloseActionRef: 期权自对冲操作引用
-        :param OptionSelfCloseRef: 期权自对冲引用
-        :param RequestID: 请求编号
-        :param FrontID: 前置编号
-        :param SessionID: 会话编号
-        :param ExchangeID: 交易所代码
-        :param OptionSelfCloseSysID: 期权自对冲操作编号
-        :param ActionFlag: 操作标志
-        :param ActionDate: 操作日期
-        :param ActionTime: 操作时间
-        :param TraderID: 交易所交易员代码
-        :param InstallID: 安装编号
-        :param OptionSelfCloseLocalID: 本地期权自对冲编号
-        :param ActionLocalID: 操作本地编号
-        :param ParticipantID: 会员代码
-        :param ClientID: 客户代码
-        :param BusinessUnit: 业务单元
-        :param OrderActionStatus: 报单操作状态
-        :param UserID: 用户代码
-        :param StatusMsg: 状态信息
-        :param InstrumentID: 合约代码
-        :param BranchID: 营业部编号
-        :param InvestUnitID: 投资单元代码
-        :param IPAddress: IP地址
-        :param MacAddress: Mac地址
-        """
-        super(OptionSelfCloseAction, self).__init__()
+    def __init__(self, BrokerID=None, InvestorID=None, OptionSelfCloseActionRef=None, OptionSelfCloseRef=None, RequestID=None, FrontID=None, SessionID=None, ExchangeID=None, OptionSelfCloseSysID=None, ActionFlag=None, ActionDate=None, ActionTime=None, TraderID=None, InstallID=None, OptionSelfCloseLocalID=None, ActionLocalID=None, ParticipantID=None, ClientID=None, BusinessUnit=None, OrderActionStatus=None, UserID=None, StatusMsg=None, InstrumentID=None, BranchID=None, InvestUnitID=None, IPAddress=None, MacAddress=None):
+        super().__init__()
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
         if InvestorID:
@@ -12180,27 +7370,8 @@ class QryOptionSelfClose(Struct):
         ("InsertTimeEnd", c_char_Array_9),
     ]
 
-    def __init__(
-        self,
-        BrokerID: str = None,
-        InvestorID: str = None,
-        InstrumentID: str = None,
-        ExchangeID: str = None,
-        OptionSelfCloseSysID: str = None,
-        InsertTimeStart: str = None,
-        InsertTimeEnd: str = None,
-    ):
-        """
-        期权自对冲查询
-        :param BrokerID: 经纪公司代码
-        :param InvestorID: 投资者代码
-        :param InstrumentID: 合约代码
-        :param ExchangeID: 交易所代码
-        :param OptionSelfCloseSysID: 期权自对冲编号
-        :param InsertTimeStart: 开始时间
-        :param InsertTimeEnd: 结束时间
-        """
-        super(QryOptionSelfClose, self).__init__()
+    def __init__(self, BrokerID=None, InvestorID=None, InstrumentID=None, ExchangeID=None, OptionSelfCloseSysID=None, InsertTimeStart=None, InsertTimeEnd=None):
+        super().__init__()
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
         if InvestorID:
@@ -12247,65 +7418,8 @@ class ExchangeOptionSelfClose(Struct):
         ("MacAddress", c_char_Array_21),
     ]
 
-    def __init__(
-        self,
-        Volume: int = None,
-        RequestID: int = None,
-        BusinessUnit: str = None,
-        HedgeFlag: bytes = None,
-        OptSelfCloseFlag: bytes = None,
-        OptionSelfCloseLocalID: str = None,
-        ExchangeID: str = None,
-        ParticipantID: str = None,
-        ClientID: str = None,
-        ExchangeInstID: str = None,
-        TraderID: str = None,
-        InstallID: int = None,
-        OrderSubmitStatus: bytes = None,
-        NotifySequence: int = None,
-        TradingDay: str = None,
-        SettlementID: int = None,
-        OptionSelfCloseSysID: str = None,
-        InsertDate: str = None,
-        InsertTime: str = None,
-        CancelTime: str = None,
-        ExecResult: bytes = None,
-        ClearingPartID: str = None,
-        SequenceNo: int = None,
-        BranchID: str = None,
-        IPAddress: str = None,
-        MacAddress: str = None,
-    ):
-        """
-        交易所期权自对冲信息
-        :param Volume: 数量
-        :param RequestID: 请求编号
-        :param BusinessUnit: 业务单元
-        :param HedgeFlag: 投机套保标志
-        :param OptSelfCloseFlag: 期权行权的头寸是否自对冲
-        :param OptionSelfCloseLocalID: 本地期权自对冲编号
-        :param ExchangeID: 交易所代码
-        :param ParticipantID: 会员代码
-        :param ClientID: 客户代码
-        :param ExchangeInstID: 合约在交易所的代码
-        :param TraderID: 交易所交易员代码
-        :param InstallID: 安装编号
-        :param OrderSubmitStatus: 期权自对冲提交状态
-        :param NotifySequence: 报单提示序号
-        :param TradingDay: 交易日
-        :param SettlementID: 结算编号
-        :param OptionSelfCloseSysID: 期权自对冲编号
-        :param InsertDate: 报单日期
-        :param InsertTime: 插入时间
-        :param CancelTime: 撤销时间
-        :param ExecResult: 自对冲结果
-        :param ClearingPartID: 结算会员编号
-        :param SequenceNo: 序号
-        :param BranchID: 营业部编号
-        :param IPAddress: IP地址
-        :param MacAddress: Mac地址
-        """
-        super(ExchangeOptionSelfClose, self).__init__()
+    def __init__(self, Volume=None, RequestID=None, BusinessUnit=None, HedgeFlag=None, OptSelfCloseFlag=None, OptionSelfCloseLocalID=None, ExchangeID=None, ParticipantID=None, ClientID=None, ExchangeInstID=None, TraderID=None, InstallID=None, OrderSubmitStatus=None, NotifySequence=None, TradingDay=None, SettlementID=None, OptionSelfCloseSysID=None, InsertDate=None, InsertTime=None, CancelTime=None, ExecResult=None, ClearingPartID=None, SequenceNo=None, BranchID=None, IPAddress=None, MacAddress=None):
+        super().__init__()
         if Volume:
             self.Volume = Volume
         if RequestID:
@@ -12367,19 +7481,8 @@ class QryOptionSelfCloseAction(Struct):
         ("ExchangeID", c_char_Array_9),
     ]
 
-    def __init__(
-        self,
-        BrokerID: str = None,
-        InvestorID: str = None,
-        ExchangeID: str = None,
-    ):
-        """
-        期权自对冲操作查询
-        :param BrokerID: 经纪公司代码
-        :param InvestorID: 投资者代码
-        :param ExchangeID: 交易所代码
-        """
-        super(QryOptionSelfCloseAction, self).__init__()
+    def __init__(self, BrokerID=None, InvestorID=None, ExchangeID=None):
+        super().__init__()
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
         if InvestorID:
@@ -12411,51 +7514,8 @@ class ExchangeOptionSelfCloseAction(Struct):
         ("OptSelfCloseFlag", c_char),
     ]
 
-    def __init__(
-        self,
-        ExchangeID: str = None,
-        OptionSelfCloseSysID: str = None,
-        ActionFlag: bytes = None,
-        ActionDate: str = None,
-        ActionTime: str = None,
-        TraderID: str = None,
-        InstallID: int = None,
-        OptionSelfCloseLocalID: str = None,
-        ActionLocalID: str = None,
-        ParticipantID: str = None,
-        ClientID: str = None,
-        BusinessUnit: str = None,
-        OrderActionStatus: bytes = None,
-        UserID: str = None,
-        BranchID: str = None,
-        IPAddress: str = None,
-        MacAddress: str = None,
-        ExchangeInstID: str = None,
-        OptSelfCloseFlag: bytes = None,
-    ):
-        """
-        交易所期权自对冲操作
-        :param ExchangeID: 交易所代码
-        :param OptionSelfCloseSysID: 期权自对冲操作编号
-        :param ActionFlag: 操作标志
-        :param ActionDate: 操作日期
-        :param ActionTime: 操作时间
-        :param TraderID: 交易所交易员代码
-        :param InstallID: 安装编号
-        :param OptionSelfCloseLocalID: 本地期权自对冲编号
-        :param ActionLocalID: 操作本地编号
-        :param ParticipantID: 会员代码
-        :param ClientID: 客户代码
-        :param BusinessUnit: 业务单元
-        :param OrderActionStatus: 报单操作状态
-        :param UserID: 用户代码
-        :param BranchID: 营业部编号
-        :param IPAddress: IP地址
-        :param MacAddress: Mac地址
-        :param ExchangeInstID: 合约在交易所的代码
-        :param OptSelfCloseFlag: 期权行权的头寸是否自对冲
-        """
-        super(ExchangeOptionSelfCloseAction, self).__init__()
+    def __init__(self, ExchangeID=None, OptionSelfCloseSysID=None, ActionFlag=None, ActionDate=None, ActionTime=None, TraderID=None, InstallID=None, OptionSelfCloseLocalID=None, ActionLocalID=None, ParticipantID=None, ClientID=None, BusinessUnit=None, OrderActionStatus=None, UserID=None, BranchID=None, IPAddress=None, MacAddress=None, ExchangeInstID=None, OptSelfCloseFlag=None):
+        super().__init__()
         if ExchangeID:
             self.ExchangeID = ExchangeID.encode("GBK")
         if OptionSelfCloseSysID:
@@ -12509,31 +7569,8 @@ class SyncDelaySwap(Struct):
         ("ToAmount", c_double),
     ]
 
-    def __init__(
-        self,
-        DelaySwapSeqNo: str = None,
-        BrokerID: str = None,
-        InvestorID: str = None,
-        FromCurrencyID: str = None,
-        FromAmount: float = None,
-        FromFrozenSwap: float = None,
-        FromRemainSwap: float = None,
-        ToCurrencyID: str = None,
-        ToAmount: float = None,
-    ):
-        """
-        延时换汇同步
-        :param DelaySwapSeqNo: 换汇流水号
-        :param BrokerID: 经纪公司代码
-        :param InvestorID: 投资者代码
-        :param FromCurrencyID: 源币种
-        :param FromAmount: 源金额
-        :param FromFrozenSwap: 源换汇冻结金额(可用冻结)
-        :param FromRemainSwap: 源剩余换汇额度(可提冻结)
-        :param ToCurrencyID: 目标币种
-        :param ToAmount: 目标金额
-        """
-        super(SyncDelaySwap, self).__init__()
+    def __init__(self, DelaySwapSeqNo=None, BrokerID=None, InvestorID=None, FromCurrencyID=None, FromAmount=None, FromFrozenSwap=None, FromRemainSwap=None, ToCurrencyID=None, ToAmount=None):
+        super().__init__()
         if DelaySwapSeqNo:
             self.DelaySwapSeqNo = DelaySwapSeqNo.encode("GBK")
         if BrokerID:
@@ -12560,17 +7597,8 @@ class QrySyncDelaySwap(Struct):
         ("DelaySwapSeqNo", c_char_Array_15),
     ]
 
-    def __init__(
-        self,
-        BrokerID: str = None,
-        DelaySwapSeqNo: str = None,
-    ):
-        """
-        查询延时换汇同步
-        :param BrokerID: 经纪公司代码
-        :param DelaySwapSeqNo: 延时换汇流水号
-        """
-        super(QrySyncDelaySwap, self).__init__()
+    def __init__(self, BrokerID=None, DelaySwapSeqNo=None):
+        super().__init__()
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
         if DelaySwapSeqNo:
@@ -12590,31 +7618,8 @@ class InvestUnit(Struct):
         ("CurrencyID", c_char_Array_4),
     ]
 
-    def __init__(
-        self,
-        BrokerID: str = None,
-        InvestorID: str = None,
-        InvestUnitID: str = None,
-        InvestorUnitName: str = None,
-        InvestorGroupID: str = None,
-        CommModelID: str = None,
-        MarginModelID: str = None,
-        AccountID: str = None,
-        CurrencyID: str = None,
-    ):
-        """
-        投资单元
-        :param BrokerID: 经纪公司代码
-        :param InvestorID: 投资者代码
-        :param InvestUnitID: 投资单元代码
-        :param InvestorUnitName: 投资者单元名称
-        :param InvestorGroupID: 投资者分组代码
-        :param CommModelID: 手续费率模板代码
-        :param MarginModelID: 保证金率模板代码
-        :param AccountID: 资金账号
-        :param CurrencyID: 币种代码
-        """
-        super(InvestUnit, self).__init__()
+    def __init__(self, BrokerID=None, InvestorID=None, InvestUnitID=None, InvestorUnitName=None, InvestorGroupID=None, CommModelID=None, MarginModelID=None, AccountID=None, CurrencyID=None):
+        super().__init__()
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
         if InvestorID:
@@ -12642,19 +7647,8 @@ class QryInvestUnit(Struct):
         ("InvestUnitID", c_char_Array_17),
     ]
 
-    def __init__(
-        self,
-        BrokerID: str = None,
-        InvestorID: str = None,
-        InvestUnitID: str = None,
-    ):
-        """
-        查询投资单元
-        :param BrokerID: 经纪公司代码
-        :param InvestorID: 投资者代码
-        :param InvestUnitID: 投资单元代码
-        """
-        super(QryInvestUnit, self).__init__()
+    def __init__(self, BrokerID=None, InvestorID=None, InvestUnitID=None):
+        super().__init__()
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
         if InvestorID:
@@ -12672,23 +7666,8 @@ class SecAgentCheckMode(Struct):
         ("CheckSelfAccount", c_int),
     ]
 
-    def __init__(
-        self,
-        InvestorID: str = None,
-        BrokerID: str = None,
-        CurrencyID: str = None,
-        BrokerSecAgentID: str = None,
-        CheckSelfAccount: int = None,
-    ):
-        """
-        二级代理商资金校验模式
-        :param InvestorID: 投资者代码
-        :param BrokerID: 经纪公司代码
-        :param CurrencyID: 币种
-        :param BrokerSecAgentID: 境外中介机构资金帐号
-        :param CheckSelfAccount: 是否需要校验自己的资金账户
-        """
-        super(SecAgentCheckMode, self).__init__()
+    def __init__(self, InvestorID=None, BrokerID=None, CurrencyID=None, BrokerSecAgentID=None, CheckSelfAccount=None):
+        super().__init__()
         if InvestorID:
             self.InvestorID = InvestorID.encode("GBK")
         if BrokerID:
@@ -12709,21 +7688,8 @@ class SecAgentTradeInfo(Struct):
         ("LongCustomerName", c_char_Array_161),
     ]
 
-    def __init__(
-        self,
-        BrokerID: str = None,
-        BrokerSecAgentID: str = None,
-        InvestorID: str = None,
-        LongCustomerName: str = None,
-    ):
-        """
-        二级代理商信息
-        :param BrokerID: 经纪公司代码
-        :param BrokerSecAgentID: 境外中介机构资金帐号
-        :param InvestorID: 投资者代码
-        :param LongCustomerName: 二级代理商姓名
-        """
-        super(SecAgentTradeInfo, self).__init__()
+    def __init__(self, BrokerID=None, BrokerSecAgentID=None, InvestorID=None, LongCustomerName=None):
+        super().__init__()
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
         if BrokerSecAgentID:
@@ -12761,59 +7727,8 @@ class MarketData(Struct):
         ("ActionDay", c_char_Array_9),
     ]
 
-    def __init__(
-        self,
-        TradingDay: str = None,
-        InstrumentID: str = None,
-        ExchangeID: str = None,
-        ExchangeInstID: str = None,
-        LastPrice: float = None,
-        PreSettlementPrice: float = None,
-        PreClosePrice: float = None,
-        PreOpenInterest: float = None,
-        OpenPrice: float = None,
-        HighestPrice: float = None,
-        LowestPrice: float = None,
-        Volume: int = None,
-        Turnover: float = None,
-        OpenInterest: float = None,
-        ClosePrice: float = None,
-        SettlementPrice: float = None,
-        UpperLimitPrice: float = None,
-        LowerLimitPrice: float = None,
-        PreDelta: float = None,
-        CurrDelta: float = None,
-        UpdateTime: str = None,
-        UpdateMillisec: int = None,
-        ActionDay: str = None,
-    ):
-        """
-        市场行情
-        :param TradingDay: 交易日
-        :param InstrumentID: 合约代码
-        :param ExchangeID: 交易所代码
-        :param ExchangeInstID: 合约在交易所的代码
-        :param LastPrice: 最新价
-        :param PreSettlementPrice: 上次结算价
-        :param PreClosePrice: 昨收盘
-        :param PreOpenInterest: 昨持仓量
-        :param OpenPrice: 今开盘
-        :param HighestPrice: 最高价
-        :param LowestPrice: 最低价
-        :param Volume: 数量
-        :param Turnover: 成交金额
-        :param OpenInterest: 持仓量
-        :param ClosePrice: 今收盘
-        :param SettlementPrice: 本次结算价
-        :param UpperLimitPrice: 涨停板价
-        :param LowerLimitPrice: 跌停板价
-        :param PreDelta: 昨虚实度
-        :param CurrDelta: 今虚实度
-        :param UpdateTime: 最后修改时间
-        :param UpdateMillisec: 最后修改毫秒
-        :param ActionDay: 业务日期
-        """
-        super(MarketData, self).__init__()
+    def __init__(self, TradingDay=None, InstrumentID=None, ExchangeID=None, ExchangeInstID=None, LastPrice=None, PreSettlementPrice=None, PreClosePrice=None, PreOpenInterest=None, OpenPrice=None, HighestPrice=None, LowestPrice=None, Volume=None, Turnover=None, OpenInterest=None, ClosePrice=None, SettlementPrice=None, UpperLimitPrice=None, LowerLimitPrice=None, PreDelta=None, CurrDelta=None, UpdateTime=None, UpdateMillisec=None, ActionDay=None):
+        super().__init__()
         if TradingDay:
             self.TradingDay = TradingDay.encode("GBK")
         if InstrumentID:
@@ -12871,23 +7786,8 @@ class MarketDataBase(Struct):
         ("PreDelta", c_double),
     ]
 
-    def __init__(
-        self,
-        TradingDay: str = None,
-        PreSettlementPrice: float = None,
-        PreClosePrice: float = None,
-        PreOpenInterest: float = None,
-        PreDelta: float = None,
-    ):
-        """
-        行情基础属性
-        :param TradingDay: 交易日
-        :param PreSettlementPrice: 上次结算价
-        :param PreClosePrice: 昨收盘
-        :param PreOpenInterest: 昨持仓量
-        :param PreDelta: 昨虚实度
-        """
-        super(MarketDataBase, self).__init__()
+    def __init__(self, TradingDay=None, PreSettlementPrice=None, PreClosePrice=None, PreOpenInterest=None, PreDelta=None):
+        super().__init__()
         if TradingDay:
             self.TradingDay = TradingDay.encode("GBK")
         if PreSettlementPrice:
@@ -12912,29 +7812,8 @@ class MarketDataStatic(Struct):
         ("CurrDelta", c_double),
     ]
 
-    def __init__(
-        self,
-        OpenPrice: float = None,
-        HighestPrice: float = None,
-        LowestPrice: float = None,
-        ClosePrice: float = None,
-        UpperLimitPrice: float = None,
-        LowerLimitPrice: float = None,
-        SettlementPrice: float = None,
-        CurrDelta: float = None,
-    ):
-        """
-        行情静态属性
-        :param OpenPrice: 今开盘
-        :param HighestPrice: 最高价
-        :param LowestPrice: 最低价
-        :param ClosePrice: 今收盘
-        :param UpperLimitPrice: 涨停板价
-        :param LowerLimitPrice: 跌停板价
-        :param SettlementPrice: 本次结算价
-        :param CurrDelta: 今虚实度
-        """
-        super(MarketDataStatic, self).__init__()
+    def __init__(self, OpenPrice=None, HighestPrice=None, LowestPrice=None, ClosePrice=None, UpperLimitPrice=None, LowerLimitPrice=None, SettlementPrice=None, CurrDelta=None):
+        super().__init__()
         if OpenPrice:
             self.OpenPrice = OpenPrice
         if HighestPrice:
@@ -12961,21 +7840,8 @@ class MarketDataLastMatch(Struct):
         ("OpenInterest", c_double),
     ]
 
-    def __init__(
-        self,
-        LastPrice: float = None,
-        Volume: int = None,
-        Turnover: float = None,
-        OpenInterest: float = None,
-    ):
-        """
-        行情最新成交属性
-        :param LastPrice: 最新价
-        :param Volume: 数量
-        :param Turnover: 成交金额
-        :param OpenInterest: 持仓量
-        """
-        super(MarketDataLastMatch, self).__init__()
+    def __init__(self, LastPrice=None, Volume=None, Turnover=None, OpenInterest=None):
+        super().__init__()
         if LastPrice:
             self.LastPrice = LastPrice
         if Volume:
@@ -12994,21 +7860,8 @@ class MarketDataBestPrice(Struct):
         ("AskVolume1", c_int),
     ]
 
-    def __init__(
-        self,
-        BidPrice1: float = None,
-        BidVolume1: int = None,
-        AskPrice1: float = None,
-        AskVolume1: int = None,
-    ):
-        """
-        行情最优价属性
-        :param BidPrice1: 申买价一
-        :param BidVolume1: 申买量一
-        :param AskPrice1: 申卖价一
-        :param AskVolume1: 申卖量一
-        """
-        super(MarketDataBestPrice, self).__init__()
+    def __init__(self, BidPrice1=None, BidVolume1=None, AskPrice1=None, AskVolume1=None):
+        super().__init__()
         if BidPrice1:
             self.BidPrice1 = BidPrice1
         if BidVolume1:
@@ -13027,21 +7880,8 @@ class MarketDataBid23(Struct):
         ("BidVolume3", c_int),
     ]
 
-    def __init__(
-        self,
-        BidPrice2: float = None,
-        BidVolume2: int = None,
-        BidPrice3: float = None,
-        BidVolume3: int = None,
-    ):
-        """
-        行情申买二、三属性
-        :param BidPrice2: 申买价二
-        :param BidVolume2: 申买量二
-        :param BidPrice3: 申买价三
-        :param BidVolume3: 申买量三
-        """
-        super(MarketDataBid23, self).__init__()
+    def __init__(self, BidPrice2=None, BidVolume2=None, BidPrice3=None, BidVolume3=None):
+        super().__init__()
         if BidPrice2:
             self.BidPrice2 = BidPrice2
         if BidVolume2:
@@ -13060,21 +7900,8 @@ class MarketDataAsk23(Struct):
         ("AskVolume3", c_int),
     ]
 
-    def __init__(
-        self,
-        AskPrice2: float = None,
-        AskVolume2: int = None,
-        AskPrice3: float = None,
-        AskVolume3: int = None,
-    ):
-        """
-        行情申卖二、三属性
-        :param AskPrice2: 申卖价二
-        :param AskVolume2: 申卖量二
-        :param AskPrice3: 申卖价三
-        :param AskVolume3: 申卖量三
-        """
-        super(MarketDataAsk23, self).__init__()
+    def __init__(self, AskPrice2=None, AskVolume2=None, AskPrice3=None, AskVolume3=None):
+        super().__init__()
         if AskPrice2:
             self.AskPrice2 = AskPrice2
         if AskVolume2:
@@ -13093,21 +7920,8 @@ class MarketDataBid45(Struct):
         ("BidVolume5", c_int),
     ]
 
-    def __init__(
-        self,
-        BidPrice4: float = None,
-        BidVolume4: int = None,
-        BidPrice5: float = None,
-        BidVolume5: int = None,
-    ):
-        """
-        行情申买四、五属性
-        :param BidPrice4: 申买价四
-        :param BidVolume4: 申买量四
-        :param BidPrice5: 申买价五
-        :param BidVolume5: 申买量五
-        """
-        super(MarketDataBid45, self).__init__()
+    def __init__(self, BidPrice4=None, BidVolume4=None, BidPrice5=None, BidVolume5=None):
+        super().__init__()
         if BidPrice4:
             self.BidPrice4 = BidPrice4
         if BidVolume4:
@@ -13126,21 +7940,8 @@ class MarketDataAsk45(Struct):
         ("AskVolume5", c_int),
     ]
 
-    def __init__(
-        self,
-        AskPrice4: float = None,
-        AskVolume4: int = None,
-        AskPrice5: float = None,
-        AskVolume5: int = None,
-    ):
-        """
-        行情申卖四、五属性
-        :param AskPrice4: 申卖价四
-        :param AskVolume4: 申卖量四
-        :param AskPrice5: 申卖价五
-        :param AskVolume5: 申卖量五
-        """
-        super(MarketDataAsk45, self).__init__()
+    def __init__(self, AskPrice4=None, AskVolume4=None, AskPrice5=None, AskVolume5=None):
+        super().__init__()
         if AskPrice4:
             self.AskPrice4 = AskPrice4
         if AskVolume4:
@@ -13159,21 +7960,8 @@ class MarketDataUpdateTime(Struct):
         ("ActionDay", c_char_Array_9),
     ]
 
-    def __init__(
-        self,
-        InstrumentID: str = None,
-        UpdateTime: str = None,
-        UpdateMillisec: int = None,
-        ActionDay: str = None,
-    ):
-        """
-        行情更新时间属性
-        :param InstrumentID: 合约代码
-        :param UpdateTime: 最后修改时间
-        :param UpdateMillisec: 最后修改毫秒
-        :param ActionDay: 业务日期
-        """
-        super(MarketDataUpdateTime, self).__init__()
+    def __init__(self, InstrumentID=None, UpdateTime=None, UpdateMillisec=None, ActionDay=None):
+        super().__init__()
         if InstrumentID:
             self.InstrumentID = InstrumentID.encode("GBK")
         if UpdateTime:
@@ -13189,15 +7977,8 @@ class MarketDataExchange(Struct):
         ("ExchangeID", c_char_Array_9),
     ]
 
-    def __init__(
-        self,
-        ExchangeID: str = None,
-    ):
-        """
-        行情交易所代码属性
-        :param ExchangeID: 交易所代码
-        """
-        super(MarketDataExchange, self).__init__()
+    def __init__(self, ExchangeID=None):
+        super().__init__()
         if ExchangeID:
             self.ExchangeID = ExchangeID.encode("GBK")
 
@@ -13207,15 +7988,8 @@ class SpecificInstrument(Struct):
         ("InstrumentID", c_char_Array_31),
     ]
 
-    def __init__(
-        self,
-        InstrumentID: str = None,
-    ):
-        """
-        指定的合约
-        :param InstrumentID: 合约代码
-        """
-        super(SpecificInstrument, self).__init__()
+    def __init__(self, InstrumentID=None):
+        super().__init__()
         if InstrumentID:
             self.InstrumentID = InstrumentID.encode("GBK")
 
@@ -13232,29 +8006,8 @@ class InstrumentStatus(Struct):
         ("EnterReason", c_char),
     ]
 
-    def __init__(
-        self,
-        ExchangeID: str = None,
-        ExchangeInstID: str = None,
-        SettlementGroupID: str = None,
-        InstrumentID: str = None,
-        InstrumentStatus: bytes = None,
-        TradingSegmentSN: int = None,
-        EnterTime: str = None,
-        EnterReason: bytes = None,
-    ):
-        """
-        合约状态
-        :param ExchangeID: 交易所代码
-        :param ExchangeInstID: 合约在交易所的代码
-        :param SettlementGroupID: 结算组代码
-        :param InstrumentID: 合约代码
-        :param InstrumentStatus: 合约交易状态
-        :param TradingSegmentSN: 交易阶段编号
-        :param EnterTime: 进入本状态时间
-        :param EnterReason: 进入本状态原因
-        """
-        super(InstrumentStatus, self).__init__()
+    def __init__(self, ExchangeID=None, ExchangeInstID=None, SettlementGroupID=None, InstrumentID=None, InstrumentStatus=None, TradingSegmentSN=None, EnterTime=None, EnterReason=None):
+        super().__init__()
         if ExchangeID:
             self.ExchangeID = ExchangeID.encode("GBK")
         if ExchangeInstID:
@@ -13279,17 +8032,8 @@ class QryInstrumentStatus(Struct):
         ("ExchangeInstID", c_char_Array_31),
     ]
 
-    def __init__(
-        self,
-        ExchangeID: str = None,
-        ExchangeInstID: str = None,
-    ):
-        """
-        查询合约状态
-        :param ExchangeID: 交易所代码
-        :param ExchangeInstID: 合约在交易所的代码
-        """
-        super(QryInstrumentStatus, self).__init__()
+    def __init__(self, ExchangeID=None, ExchangeInstID=None):
+        super().__init__()
         if ExchangeID:
             self.ExchangeID = ExchangeID.encode("GBK")
         if ExchangeInstID:
@@ -13304,21 +8048,8 @@ class InvestorAccount(Struct):
         ("CurrencyID", c_char_Array_4),
     ]
 
-    def __init__(
-        self,
-        BrokerID: str = None,
-        InvestorID: str = None,
-        AccountID: str = None,
-        CurrencyID: str = None,
-    ):
-        """
-        投资者账户
-        :param BrokerID: 经纪公司代码
-        :param InvestorID: 投资者代码
-        :param AccountID: 投资者帐号
-        :param CurrencyID: 币种代码
-        """
-        super(InvestorAccount, self).__init__()
+    def __init__(self, BrokerID=None, InvestorID=None, AccountID=None, CurrencyID=None):
+        super().__init__()
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
         if InvestorID:
@@ -13338,23 +8069,8 @@ class PositionProfitAlgorithm(Struct):
         ("CurrencyID", c_char_Array_4),
     ]
 
-    def __init__(
-        self,
-        BrokerID: str = None,
-        AccountID: str = None,
-        Algorithm: bytes = None,
-        Memo: str = None,
-        CurrencyID: str = None,
-    ):
-        """
-        浮动盈亏算法
-        :param BrokerID: 经纪公司代码
-        :param AccountID: 投资者帐号
-        :param Algorithm: 盈亏算法
-        :param Memo: 备注
-        :param CurrencyID: 币种代码
-        """
-        super(PositionProfitAlgorithm, self).__init__()
+    def __init__(self, BrokerID=None, AccountID=None, Algorithm=None, Memo=None, CurrencyID=None):
+        super().__init__()
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
         if AccountID:
@@ -13375,21 +8091,8 @@ class Discount(Struct):
         ("Discount", c_double),
     ]
 
-    def __init__(
-        self,
-        BrokerID: str = None,
-        InvestorRange: bytes = None,
-        InvestorID: str = None,
-        Discount: float = None,
-    ):
-        """
-        会员资金折扣
-        :param BrokerID: 经纪公司代码
-        :param InvestorRange: 投资者范围
-        :param InvestorID: 投资者代码
-        :param Discount: 资金折扣比例
-        """
-        super(Discount, self).__init__()
+    def __init__(self, BrokerID=None, InvestorRange=None, InvestorID=None, Discount=None):
+        super().__init__()
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
         if InvestorRange:
@@ -13406,17 +8109,8 @@ class QryTransferBank(Struct):
         ("BankBrchID", c_char_Array_5),
     ]
 
-    def __init__(
-        self,
-        BankID: str = None,
-        BankBrchID: str = None,
-    ):
-        """
-        查询转帐银行
-        :param BankID: 银行代码
-        :param BankBrchID: 银行分中心代码
-        """
-        super(QryTransferBank, self).__init__()
+    def __init__(self, BankID=None, BankBrchID=None):
+        super().__init__()
         if BankID:
             self.BankID = BankID.encode("GBK")
         if BankBrchID:
@@ -13431,21 +8125,8 @@ class TransferBank(Struct):
         ("IsActive", c_int),
     ]
 
-    def __init__(
-        self,
-        BankID: str = None,
-        BankBrchID: str = None,
-        BankName: str = None,
-        IsActive: int = None,
-    ):
-        """
-        转帐银行
-        :param BankID: 银行代码
-        :param BankBrchID: 银行分中心代码
-        :param BankName: 银行名称
-        :param IsActive: 是否活跃
-        """
-        super(TransferBank, self).__init__()
+    def __init__(self, BankID=None, BankBrchID=None, BankName=None, IsActive=None):
+        super().__init__()
         if BankID:
             self.BankID = BankID.encode("GBK")
         if BankBrchID:
@@ -13465,23 +8146,8 @@ class QryInvestorPositionDetail(Struct):
         ("InvestUnitID", c_char_Array_17),
     ]
 
-    def __init__(
-        self,
-        BrokerID: str = None,
-        InvestorID: str = None,
-        InstrumentID: str = None,
-        ExchangeID: str = None,
-        InvestUnitID: str = None,
-    ):
-        """
-        查询投资者持仓明细
-        :param BrokerID: 经纪公司代码
-        :param InvestorID: 投资者代码
-        :param InstrumentID: 合约代码
-        :param ExchangeID: 交易所代码
-        :param InvestUnitID: 投资单元代码
-        """
-        super(QryInvestorPositionDetail, self).__init__()
+    def __init__(self, BrokerID=None, InvestorID=None, InstrumentID=None, ExchangeID=None, InvestUnitID=None):
+        super().__init__()
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
         if InvestorID:
@@ -13526,69 +8192,8 @@ class InvestorPositionDetail(Struct):
         ("InvestUnitID", c_char_Array_17),
     ]
 
-    def __init__(
-        self,
-        InstrumentID: str = None,
-        BrokerID: str = None,
-        InvestorID: str = None,
-        HedgeFlag: bytes = None,
-        Direction: bytes = None,
-        OpenDate: str = None,
-        TradeID: str = None,
-        Volume: int = None,
-        OpenPrice: float = None,
-        TradingDay: str = None,
-        SettlementID: int = None,
-        TradeType: bytes = None,
-        CombInstrumentID: str = None,
-        ExchangeID: str = None,
-        CloseProfitByDate: float = None,
-        CloseProfitByTrade: float = None,
-        PositionProfitByDate: float = None,
-        PositionProfitByTrade: float = None,
-        Margin: float = None,
-        ExchMargin: float = None,
-        MarginRateByMoney: float = None,
-        MarginRateByVolume: float = None,
-        LastSettlementPrice: float = None,
-        SettlementPrice: float = None,
-        CloseVolume: int = None,
-        CloseAmount: float = None,
-        TimeFirstVolume: int = None,
-        InvestUnitID: str = None,
-    ):
-        """
-        投资者持仓明细
-        :param InstrumentID: 合约代码
-        :param BrokerID: 经纪公司代码
-        :param InvestorID: 投资者代码
-        :param HedgeFlag: 投机套保标志
-        :param Direction: 买卖
-        :param OpenDate: 开仓日期
-        :param TradeID: 成交编号
-        :param Volume: 数量
-        :param OpenPrice: 开仓价
-        :param TradingDay: 交易日
-        :param SettlementID: 结算编号
-        :param TradeType: 成交类型
-        :param CombInstrumentID: 组合合约代码
-        :param ExchangeID: 交易所代码
-        :param CloseProfitByDate: 逐日盯市平仓盈亏
-        :param CloseProfitByTrade: 逐笔对冲平仓盈亏
-        :param PositionProfitByDate: 逐日盯市持仓盈亏
-        :param PositionProfitByTrade: 逐笔对冲持仓盈亏
-        :param Margin: 投资者保证金
-        :param ExchMargin: 交易所保证金
-        :param MarginRateByMoney: 保证金率
-        :param MarginRateByVolume: 保证金率(按手数)
-        :param LastSettlementPrice: 昨结算价
-        :param SettlementPrice: 结算价
-        :param CloseVolume: 平仓量
-        :param CloseAmount: 平仓金额
-        :param TimeFirstVolume: 按照时间顺序平仓的笔数,大商所专用
-        :param InvestUnitID: 投资单元代码
-        """
-        super(InvestorPositionDetail, self).__init__()
+    def __init__(self, InstrumentID=None, BrokerID=None, InvestorID=None, HedgeFlag=None, Direction=None, OpenDate=None, TradeID=None, Volume=None, OpenPrice=None, TradingDay=None, SettlementID=None, TradeType=None, CombInstrumentID=None, ExchangeID=None, CloseProfitByDate=None, CloseProfitByTrade=None, PositionProfitByDate=None, PositionProfitByTrade=None, Margin=None, ExchMargin=None, MarginRateByMoney=None, MarginRateByVolume=None, LastSettlementPrice=None, SettlementPrice=None, CloseVolume=None, CloseAmount=None, TimeFirstVolume=None, InvestUnitID=None):
+        super().__init__()
         if InstrumentID:
             self.InstrumentID = InstrumentID.encode("GBK")
         if BrokerID:
@@ -13655,21 +8260,8 @@ class TradingAccountPassword(Struct):
         ("CurrencyID", c_char_Array_4),
     ]
 
-    def __init__(
-        self,
-        BrokerID: str = None,
-        AccountID: str = None,
-        Password: str = None,
-        CurrencyID: str = None,
-    ):
-        """
-        资金账户口令域
-        :param BrokerID: 经纪公司代码
-        :param AccountID: 投资者帐号
-        :param Password: 密码
-        :param CurrencyID: 币种代码
-        """
-        super(TradingAccountPassword, self).__init__()
+    def __init__(self, BrokerID=None, AccountID=None, Password=None, CurrencyID=None):
+        super().__init__()
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
         if AccountID:
@@ -13703,51 +8295,8 @@ class MDTraderOffer(Struct):
         ("MaxOrderMessageReference", c_char_Array_7),
     ]
 
-    def __init__(
-        self,
-        ExchangeID: str = None,
-        TraderID: str = None,
-        ParticipantID: str = None,
-        Password: str = None,
-        InstallID: int = None,
-        OrderLocalID: str = None,
-        TraderConnectStatus: bytes = None,
-        ConnectRequestDate: str = None,
-        ConnectRequestTime: str = None,
-        LastReportDate: str = None,
-        LastReportTime: str = None,
-        ConnectDate: str = None,
-        ConnectTime: str = None,
-        StartDate: str = None,
-        StartTime: str = None,
-        TradingDay: str = None,
-        BrokerID: str = None,
-        MaxTradeID: str = None,
-        MaxOrderMessageReference: str = None,
-    ):
-        """
-        交易所行情报盘机
-        :param ExchangeID: 交易所代码
-        :param TraderID: 交易所交易员代码
-        :param ParticipantID: 会员代码
-        :param Password: 密码
-        :param InstallID: 安装编号
-        :param OrderLocalID: 本地报单编号
-        :param TraderConnectStatus: 交易所交易员连接状态
-        :param ConnectRequestDate: 发出连接请求的日期
-        :param ConnectRequestTime: 发出连接请求的时间
-        :param LastReportDate: 上次报告日期
-        :param LastReportTime: 上次报告时间
-        :param ConnectDate: 完成连接日期
-        :param ConnectTime: 完成连接时间
-        :param StartDate: 启动日期
-        :param StartTime: 启动时间
-        :param TradingDay: 交易日
-        :param BrokerID: 经纪公司代码
-        :param MaxTradeID: 本席位最大成交编号
-        :param MaxOrderMessageReference: 本席位最大报单备拷
-        """
-        super(MDTraderOffer, self).__init__()
+    def __init__(self, ExchangeID=None, TraderID=None, ParticipantID=None, Password=None, InstallID=None, OrderLocalID=None, TraderConnectStatus=None, ConnectRequestDate=None, ConnectRequestTime=None, LastReportDate=None, LastReportTime=None, ConnectDate=None, ConnectTime=None, StartDate=None, StartTime=None, TradingDay=None, BrokerID=None, MaxTradeID=None, MaxOrderMessageReference=None):
+        super().__init__()
         if ExchangeID:
             self.ExchangeID = ExchangeID.encode("GBK")
         if TraderID:
@@ -13795,19 +8344,8 @@ class QryMDTraderOffer(Struct):
         ("TraderID", c_char_Array_21),
     ]
 
-    def __init__(
-        self,
-        ExchangeID: str = None,
-        ParticipantID: str = None,
-        TraderID: str = None,
-    ):
-        """
-        查询行情报盘机
-        :param ExchangeID: 交易所代码
-        :param ParticipantID: 会员代码
-        :param TraderID: 交易所交易员代码
-        """
-        super(QryMDTraderOffer, self).__init__()
+    def __init__(self, ExchangeID=None, ParticipantID=None, TraderID=None):
+        super().__init__()
         if ExchangeID:
             self.ExchangeID = ExchangeID.encode("GBK")
         if ParticipantID:
@@ -13821,15 +8359,8 @@ class QryNotice(Struct):
         ("BrokerID", c_char_Array_11),
     ]
 
-    def __init__(
-        self,
-        BrokerID: str = None,
-    ):
-        """
-        查询客户通知
-        :param BrokerID: 经纪公司代码
-        """
-        super(QryNotice, self).__init__()
+    def __init__(self, BrokerID=None):
+        super().__init__()
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
 
@@ -13841,19 +8372,8 @@ class Notice(Struct):
         ("SequenceLabel", c_char_Array_2),
     ]
 
-    def __init__(
-        self,
-        BrokerID: str = None,
-        Content: str = None,
-        SequenceLabel: str = None,
-    ):
-        """
-        客户通知
-        :param BrokerID: 经纪公司代码
-        :param Content: 消息正文
-        :param SequenceLabel: 经纪公司通知内容序列号
-        """
-        super(Notice, self).__init__()
+    def __init__(self, BrokerID=None, Content=None, SequenceLabel=None):
+        super().__init__()
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
         if Content:
@@ -13870,21 +8390,8 @@ class UserRight(Struct):
         ("IsForbidden", c_int),
     ]
 
-    def __init__(
-        self,
-        BrokerID: str = None,
-        UserID: str = None,
-        UserRightType: bytes = None,
-        IsForbidden: int = None,
-    ):
-        """
-        用户权限
-        :param BrokerID: 经纪公司代码
-        :param UserID: 用户代码
-        :param UserRightType: 客户权限类型
-        :param IsForbidden: 是否禁止
-        """
-        super(UserRight, self).__init__()
+    def __init__(self, BrokerID=None, UserID=None, UserRightType=None, IsForbidden=None):
+        super().__init__()
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
         if UserID:
@@ -13903,21 +8410,8 @@ class QrySettlementInfoConfirm(Struct):
         ("CurrencyID", c_char_Array_4),
     ]
 
-    def __init__(
-        self,
-        BrokerID: str = None,
-        InvestorID: str = None,
-        AccountID: str = None,
-        CurrencyID: str = None,
-    ):
-        """
-        查询结算信息确认域
-        :param BrokerID: 经纪公司代码
-        :param InvestorID: 投资者代码
-        :param AccountID: 投资者帐号
-        :param CurrencyID: 币种代码
-        """
-        super(QrySettlementInfoConfirm, self).__init__()
+    def __init__(self, BrokerID=None, InvestorID=None, AccountID=None, CurrencyID=None):
+        super().__init__()
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
         if InvestorID:
@@ -13933,15 +8427,8 @@ class LoadSettlementInfo(Struct):
         ("BrokerID", c_char_Array_11),
     ]
 
-    def __init__(
-        self,
-        BrokerID: str = None,
-    ):
-        """
-        装载结算信息
-        :param BrokerID: 经纪公司代码
-        """
-        super(LoadSettlementInfo, self).__init__()
+    def __init__(self, BrokerID=None):
+        super().__init__()
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
 
@@ -13960,33 +8447,8 @@ class BrokerWithdrawAlgorithm(Struct):
         ("BalanceAlgorithm", c_char),
     ]
 
-    def __init__(
-        self,
-        BrokerID: str = None,
-        WithdrawAlgorithm: bytes = None,
-        UsingRatio: float = None,
-        IncludeCloseProfit: bytes = None,
-        AllWithoutTrade: bytes = None,
-        AvailIncludeCloseProfit: bytes = None,
-        IsBrokerUserEvent: int = None,
-        CurrencyID: str = None,
-        FundMortgageRatio: float = None,
-        BalanceAlgorithm: bytes = None,
-    ):
-        """
-        经纪公司可提资金算法表
-        :param BrokerID: 经纪公司代码
-        :param WithdrawAlgorithm: 可提资金算法
-        :param UsingRatio: 资金使用率
-        :param IncludeCloseProfit: 可提是否包含平仓盈利
-        :param AllWithoutTrade: 本日无仓且无成交客户是否受可提比例限制
-        :param AvailIncludeCloseProfit: 可用是否包含平仓盈利
-        :param IsBrokerUserEvent: 是否启用用户事件
-        :param CurrencyID: 币种代码
-        :param FundMortgageRatio: 货币质押比率
-        :param BalanceAlgorithm: 权益算法
-        """
-        super(BrokerWithdrawAlgorithm, self).__init__()
+    def __init__(self, BrokerID=None, WithdrawAlgorithm=None, UsingRatio=None, IncludeCloseProfit=None, AllWithoutTrade=None, AvailIncludeCloseProfit=None, IsBrokerUserEvent=None, CurrencyID=None, FundMortgageRatio=None, BalanceAlgorithm=None):
+        super().__init__()
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
         if WithdrawAlgorithm:
@@ -14017,21 +8479,8 @@ class TradingAccountPasswordUpdateV1(Struct):
         ("NewPassword", c_char_Array_41),
     ]
 
-    def __init__(
-        self,
-        BrokerID: str = None,
-        InvestorID: str = None,
-        OldPassword: str = None,
-        NewPassword: str = None,
-    ):
-        """
-        资金账户口令变更域
-        :param BrokerID: 经纪公司代码
-        :param InvestorID: 投资者代码
-        :param OldPassword: 原来的口令
-        :param NewPassword: 新的口令
-        """
-        super(TradingAccountPasswordUpdateV1, self).__init__()
+    def __init__(self, BrokerID=None, InvestorID=None, OldPassword=None, NewPassword=None):
+        super().__init__()
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
         if InvestorID:
@@ -14051,23 +8500,8 @@ class TradingAccountPasswordUpdate(Struct):
         ("CurrencyID", c_char_Array_4),
     ]
 
-    def __init__(
-        self,
-        BrokerID: str = None,
-        AccountID: str = None,
-        OldPassword: str = None,
-        NewPassword: str = None,
-        CurrencyID: str = None,
-    ):
-        """
-        资金账户口令变更域
-        :param BrokerID: 经纪公司代码
-        :param AccountID: 投资者帐号
-        :param OldPassword: 原来的口令
-        :param NewPassword: 新的口令
-        :param CurrencyID: 币种代码
-        """
-        super(TradingAccountPasswordUpdate, self).__init__()
+    def __init__(self, BrokerID=None, AccountID=None, OldPassword=None, NewPassword=None, CurrencyID=None):
+        super().__init__()
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
         if AccountID:
@@ -14087,19 +8521,8 @@ class QryCombinationLeg(Struct):
         ("LegInstrumentID", c_char_Array_31),
     ]
 
-    def __init__(
-        self,
-        CombInstrumentID: str = None,
-        LegID: int = None,
-        LegInstrumentID: str = None,
-    ):
-        """
-        查询组合合约分腿
-        :param CombInstrumentID: 组合合约代码
-        :param LegID: 单腿编号
-        :param LegInstrumentID: 单腿合约代码
-        """
-        super(QryCombinationLeg, self).__init__()
+    def __init__(self, CombInstrumentID=None, LegID=None, LegInstrumentID=None):
+        super().__init__()
         if CombInstrumentID:
             self.CombInstrumentID = CombInstrumentID.encode("GBK")
         if LegID:
@@ -14113,15 +8536,8 @@ class QrySyncStatus(Struct):
         ("TradingDay", c_char_Array_9),
     ]
 
-    def __init__(
-        self,
-        TradingDay: str = None,
-    ):
-        """
-        查询组合合约分腿
-        :param TradingDay: 交易日
-        """
-        super(QrySyncStatus, self).__init__()
+    def __init__(self, TradingDay=None):
+        super().__init__()
         if TradingDay:
             self.TradingDay = TradingDay.encode("GBK")
 
@@ -14136,25 +8552,8 @@ class CombinationLeg(Struct):
         ("ImplyLevel", c_int),
     ]
 
-    def __init__(
-        self,
-        CombInstrumentID: str = None,
-        LegID: int = None,
-        LegInstrumentID: str = None,
-        Direction: bytes = None,
-        LegMultiple: int = None,
-        ImplyLevel: int = None,
-    ):
-        """
-        组合交易合约的单腿
-        :param CombInstrumentID: 组合合约代码
-        :param LegID: 单腿编号
-        :param LegInstrumentID: 单腿合约代码
-        :param Direction: 买卖方向
-        :param LegMultiple: 单腿乘数
-        :param ImplyLevel: 派生层数
-        """
-        super(CombinationLeg, self).__init__()
+    def __init__(self, CombInstrumentID=None, LegID=None, LegInstrumentID=None, Direction=None, LegMultiple=None, ImplyLevel=None):
+        super().__init__()
         if CombInstrumentID:
             self.CombInstrumentID = CombInstrumentID.encode("GBK")
         if LegID:
@@ -14175,17 +8574,8 @@ class SyncStatus(Struct):
         ("DataSyncStatus", c_char),
     ]
 
-    def __init__(
-        self,
-        TradingDay: str = None,
-        DataSyncStatus: bytes = None,
-    ):
-        """
-        数据同步状态
-        :param TradingDay: 交易日
-        :param DataSyncStatus: 数据同步状态
-        """
-        super(SyncStatus, self).__init__()
+    def __init__(self, TradingDay=None, DataSyncStatus=None):
+        super().__init__()
         if TradingDay:
             self.TradingDay = TradingDay.encode("GBK")
         if DataSyncStatus:
@@ -14198,17 +8588,8 @@ class QryLinkMan(Struct):
         ("InvestorID", c_char_Array_13),
     ]
 
-    def __init__(
-        self,
-        BrokerID: str = None,
-        InvestorID: str = None,
-    ):
-        """
-        查询联系人
-        :param BrokerID: 经纪公司代码
-        :param InvestorID: 投资者代码
-        """
-        super(QryLinkMan, self).__init__()
+    def __init__(self, BrokerID=None, InvestorID=None):
+        super().__init__()
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
         if InvestorID:
@@ -14231,37 +8612,8 @@ class LinkMan(Struct):
         ("PersonFullName", c_char_Array_101),
     ]
 
-    def __init__(
-        self,
-        BrokerID: str = None,
-        InvestorID: str = None,
-        PersonType: bytes = None,
-        IdentifiedCardType: bytes = None,
-        IdentifiedCardNo: str = None,
-        PersonName: str = None,
-        Telephone: str = None,
-        Address: str = None,
-        ZipCode: str = None,
-        Priority: int = None,
-        UOAZipCode: str = None,
-        PersonFullName: str = None,
-    ):
-        """
-        联系人
-        :param BrokerID: 经纪公司代码
-        :param InvestorID: 投资者代码
-        :param PersonType: 联系人类型
-        :param IdentifiedCardType: 证件类型
-        :param IdentifiedCardNo: 证件号码
-        :param PersonName: 名称
-        :param Telephone: 联系电话
-        :param Address: 通讯地址
-        :param ZipCode: 邮政编码
-        :param Priority: 优先级
-        :param UOAZipCode: 开户邮政编码
-        :param PersonFullName: 全称
-        """
-        super(LinkMan, self).__init__()
+    def __init__(self, BrokerID=None, InvestorID=None, PersonType=None, IdentifiedCardType=None, IdentifiedCardNo=None, PersonName=None, Telephone=None, Address=None, ZipCode=None, Priority=None, UOAZipCode=None, PersonFullName=None):
+        super().__init__()
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
         if InvestorID:
@@ -14295,19 +8647,8 @@ class QryBrokerUserEvent(Struct):
         ("UserEventType", c_char),
     ]
 
-    def __init__(
-        self,
-        BrokerID: str = None,
-        UserID: str = None,
-        UserEventType: bytes = None,
-    ):
-        """
-        查询经纪公司用户事件
-        :param BrokerID: 经纪公司代码
-        :param UserID: 用户代码
-        :param UserEventType: 用户事件类型
-        """
-        super(QryBrokerUserEvent, self).__init__()
+    def __init__(self, BrokerID=None, UserID=None, UserEventType=None):
+        super().__init__()
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
         if UserID:
@@ -14329,31 +8670,8 @@ class BrokerUserEvent(Struct):
         ("InstrumentID", c_char_Array_31),
     ]
 
-    def __init__(
-        self,
-        BrokerID: str = None,
-        UserID: str = None,
-        UserEventType: bytes = None,
-        EventSequenceNo: int = None,
-        EventDate: str = None,
-        EventTime: str = None,
-        UserEventInfo: str = None,
-        InvestorID: str = None,
-        InstrumentID: str = None,
-    ):
-        """
-        查询经纪公司用户事件
-        :param BrokerID: 经纪公司代码
-        :param UserID: 用户代码
-        :param UserEventType: 用户事件类型
-        :param EventSequenceNo: 用户事件序号
-        :param EventDate: 事件发生日期
-        :param EventTime: 事件发生时间
-        :param UserEventInfo: 用户事件信息
-        :param InvestorID: 投资者代码
-        :param InstrumentID: 合约代码
-        """
-        super(BrokerUserEvent, self).__init__()
+    def __init__(self, BrokerID=None, UserID=None, UserEventType=None, EventSequenceNo=None, EventDate=None, EventTime=None, UserEventInfo=None, InvestorID=None, InstrumentID=None):
+        super().__init__()
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
         if UserID:
@@ -14381,19 +8699,8 @@ class QryContractBank(Struct):
         ("BankBrchID", c_char_Array_5),
     ]
 
-    def __init__(
-        self,
-        BrokerID: str = None,
-        BankID: str = None,
-        BankBrchID: str = None,
-    ):
-        """
-        查询签约银行请求
-        :param BrokerID: 经纪公司代码
-        :param BankID: 银行代码
-        :param BankBrchID: 银行分中心代码
-        """
-        super(QryContractBank, self).__init__()
+    def __init__(self, BrokerID=None, BankID=None, BankBrchID=None):
+        super().__init__()
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
         if BankID:
@@ -14410,21 +8717,8 @@ class ContractBank(Struct):
         ("BankName", c_char_Array_101),
     ]
 
-    def __init__(
-        self,
-        BrokerID: str = None,
-        BankID: str = None,
-        BankBrchID: str = None,
-        BankName: str = None,
-    ):
-        """
-        查询签约银行响应
-        :param BrokerID: 经纪公司代码
-        :param BankID: 银行代码
-        :param BankBrchID: 银行分中心代码
-        :param BankName: 银行名称
-        """
-        super(ContractBank, self).__init__()
+    def __init__(self, BrokerID=None, BankID=None, BankBrchID=None, BankName=None):
+        super().__init__()
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
         if BankID:
@@ -14460,55 +8754,8 @@ class InvestorPositionCombineDetail(Struct):
         ("InvestUnitID", c_char_Array_17),
     ]
 
-    def __init__(
-        self,
-        TradingDay: str = None,
-        OpenDate: str = None,
-        ExchangeID: str = None,
-        SettlementID: int = None,
-        BrokerID: str = None,
-        InvestorID: str = None,
-        ComTradeID: str = None,
-        TradeID: str = None,
-        InstrumentID: str = None,
-        HedgeFlag: bytes = None,
-        Direction: bytes = None,
-        TotalAmt: int = None,
-        Margin: float = None,
-        ExchMargin: float = None,
-        MarginRateByMoney: float = None,
-        MarginRateByVolume: float = None,
-        LegID: int = None,
-        LegMultiple: int = None,
-        CombInstrumentID: str = None,
-        TradeGroupID: int = None,
-        InvestUnitID: str = None,
-    ):
-        """
-        投资者组合持仓明细
-        :param TradingDay: 交易日
-        :param OpenDate: 开仓日期
-        :param ExchangeID: 交易所代码
-        :param SettlementID: 结算编号
-        :param BrokerID: 经纪公司代码
-        :param InvestorID: 投资者代码
-        :param ComTradeID: 组合编号
-        :param TradeID: 撮合编号
-        :param InstrumentID: 合约代码
-        :param HedgeFlag: 投机套保标志
-        :param Direction: 买卖
-        :param TotalAmt: 持仓量
-        :param Margin: 投资者保证金
-        :param ExchMargin: 交易所保证金
-        :param MarginRateByMoney: 保证金率
-        :param MarginRateByVolume: 保证金率(按手数)
-        :param LegID: 单腿编号
-        :param LegMultiple: 单腿乘数
-        :param CombInstrumentID: 组合持仓合约编码
-        :param TradeGroupID: 成交组号
-        :param InvestUnitID: 投资单元代码
-        """
-        super(InvestorPositionCombineDetail, self).__init__()
+    def __init__(self, TradingDay=None, OpenDate=None, ExchangeID=None, SettlementID=None, BrokerID=None, InvestorID=None, ComTradeID=None, TradeID=None, InstrumentID=None, HedgeFlag=None, Direction=None, TotalAmt=None, Margin=None, ExchMargin=None, MarginRateByMoney=None, MarginRateByVolume=None, LegID=None, LegMultiple=None, CombInstrumentID=None, TradeGroupID=None, InvestUnitID=None):
+        super().__init__()
         if TradingDay:
             self.TradingDay = TradingDay.encode("GBK")
         if OpenDate:
@@ -14592,83 +8839,8 @@ class ParkedOrder(Struct):
         ("MacAddress", c_char_Array_21),
     ]
 
-    def __init__(
-        self,
-        BrokerID: str = None,
-        InvestorID: str = None,
-        InstrumentID: str = None,
-        OrderRef: str = None,
-        UserID: str = None,
-        OrderPriceType: bytes = None,
-        Direction: bytes = None,
-        CombOffsetFlag: str = None,
-        CombHedgeFlag: str = None,
-        LimitPrice: float = None,
-        VolumeTotalOriginal: int = None,
-        TimeCondition: bytes = None,
-        GTDDate: str = None,
-        VolumeCondition: bytes = None,
-        MinVolume: int = None,
-        ContingentCondition: bytes = None,
-        StopPrice: float = None,
-        ForceCloseReason: bytes = None,
-        IsAutoSuspend: int = None,
-        BusinessUnit: str = None,
-        RequestID: int = None,
-        UserForceClose: int = None,
-        ExchangeID: str = None,
-        ParkedOrderID: str = None,
-        UserType: bytes = None,
-        Status: bytes = None,
-        ErrorID: int = None,
-        ErrorMsg: str = None,
-        IsSwapOrder: int = None,
-        AccountID: str = None,
-        CurrencyID: str = None,
-        ClientID: str = None,
-        InvestUnitID: str = None,
-        IPAddress: str = None,
-        MacAddress: str = None,
-    ):
-        """
-        预埋单
-        :param BrokerID: 经纪公司代码
-        :param InvestorID: 投资者代码
-        :param InstrumentID: 合约代码
-        :param OrderRef: 报单引用
-        :param UserID: 用户代码
-        :param OrderPriceType: 报单价格条件
-        :param Direction: 买卖方向
-        :param CombOffsetFlag: 组合开平标志
-        :param CombHedgeFlag: 组合投机套保标志
-        :param LimitPrice: 价格
-        :param VolumeTotalOriginal: 数量
-        :param TimeCondition: 有效期类型
-        :param GTDDate: GTD日期
-        :param VolumeCondition: 成交量类型
-        :param MinVolume: 最小成交量
-        :param ContingentCondition: 触发条件
-        :param StopPrice: 止损价
-        :param ForceCloseReason: 强平原因
-        :param IsAutoSuspend: 自动挂起标志
-        :param BusinessUnit: 业务单元
-        :param RequestID: 请求编号
-        :param UserForceClose: 用户强评标志
-        :param ExchangeID: 交易所代码
-        :param ParkedOrderID: 预埋报单编号
-        :param UserType: 用户类型
-        :param Status: 预埋单状态
-        :param ErrorID: 错误代码
-        :param ErrorMsg: 错误信息
-        :param IsSwapOrder: 互换单标志
-        :param AccountID: 资金账号
-        :param CurrencyID: 币种代码
-        :param ClientID: 交易编码
-        :param InvestUnitID: 投资单元代码
-        :param IPAddress: IP地址
-        :param MacAddress: Mac地址
-        """
-        super(ParkedOrder, self).__init__()
+    def __init__(self, BrokerID=None, InvestorID=None, InstrumentID=None, OrderRef=None, UserID=None, OrderPriceType=None, Direction=None, CombOffsetFlag=None, CombHedgeFlag=None, LimitPrice=None, VolumeTotalOriginal=None, TimeCondition=None, GTDDate=None, VolumeCondition=None, MinVolume=None, ContingentCondition=None, StopPrice=None, ForceCloseReason=None, IsAutoSuspend=None, BusinessUnit=None, RequestID=None, UserForceClose=None, ExchangeID=None, ParkedOrderID=None, UserType=None, Status=None, ErrorID=None, ErrorMsg=None, IsSwapOrder=None, AccountID=None, CurrencyID=None, ClientID=None, InvestUnitID=None, IPAddress=None, MacAddress=None):
+        super().__init__()
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
         if InvestorID:
@@ -14767,57 +8939,8 @@ class ParkedOrderAction(Struct):
         ("MacAddress", c_char_Array_21),
     ]
 
-    def __init__(
-        self,
-        BrokerID: str = None,
-        InvestorID: str = None,
-        OrderActionRef: int = None,
-        OrderRef: str = None,
-        RequestID: int = None,
-        FrontID: int = None,
-        SessionID: int = None,
-        ExchangeID: str = None,
-        OrderSysID: str = None,
-        ActionFlag: bytes = None,
-        LimitPrice: float = None,
-        VolumeChange: int = None,
-        UserID: str = None,
-        InstrumentID: str = None,
-        ParkedOrderActionID: str = None,
-        UserType: bytes = None,
-        Status: bytes = None,
-        ErrorID: int = None,
-        ErrorMsg: str = None,
-        InvestUnitID: str = None,
-        IPAddress: str = None,
-        MacAddress: str = None,
-    ):
-        """
-        输入预埋单操作
-        :param BrokerID: 经纪公司代码
-        :param InvestorID: 投资者代码
-        :param OrderActionRef: 报单操作引用
-        :param OrderRef: 报单引用
-        :param RequestID: 请求编号
-        :param FrontID: 前置编号
-        :param SessionID: 会话编号
-        :param ExchangeID: 交易所代码
-        :param OrderSysID: 报单编号
-        :param ActionFlag: 操作标志
-        :param LimitPrice: 价格
-        :param VolumeChange: 数量变化
-        :param UserID: 用户代码
-        :param InstrumentID: 合约代码
-        :param ParkedOrderActionID: 预埋撤单单编号
-        :param UserType: 用户类型
-        :param Status: 预埋撤单状态
-        :param ErrorID: 错误代码
-        :param ErrorMsg: 错误信息
-        :param InvestUnitID: 投资单元代码
-        :param IPAddress: IP地址
-        :param MacAddress: Mac地址
-        """
-        super(ParkedOrderAction, self).__init__()
+    def __init__(self, BrokerID=None, InvestorID=None, OrderActionRef=None, OrderRef=None, RequestID=None, FrontID=None, SessionID=None, ExchangeID=None, OrderSysID=None, ActionFlag=None, LimitPrice=None, VolumeChange=None, UserID=None, InstrumentID=None, ParkedOrderActionID=None, UserType=None, Status=None, ErrorID=None, ErrorMsg=None, InvestUnitID=None, IPAddress=None, MacAddress=None):
+        super().__init__()
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
         if InvestorID:
@@ -14873,23 +8996,8 @@ class QryParkedOrder(Struct):
         ("InvestUnitID", c_char_Array_17),
     ]
 
-    def __init__(
-        self,
-        BrokerID: str = None,
-        InvestorID: str = None,
-        InstrumentID: str = None,
-        ExchangeID: str = None,
-        InvestUnitID: str = None,
-    ):
-        """
-        查询预埋单
-        :param BrokerID: 经纪公司代码
-        :param InvestorID: 投资者代码
-        :param InstrumentID: 合约代码
-        :param ExchangeID: 交易所代码
-        :param InvestUnitID: 投资单元代码
-        """
-        super(QryParkedOrder, self).__init__()
+    def __init__(self, BrokerID=None, InvestorID=None, InstrumentID=None, ExchangeID=None, InvestUnitID=None):
+        super().__init__()
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
         if InvestorID:
@@ -14911,23 +9019,8 @@ class QryParkedOrderAction(Struct):
         ("InvestUnitID", c_char_Array_17),
     ]
 
-    def __init__(
-        self,
-        BrokerID: str = None,
-        InvestorID: str = None,
-        InstrumentID: str = None,
-        ExchangeID: str = None,
-        InvestUnitID: str = None,
-    ):
-        """
-        查询预埋撤单
-        :param BrokerID: 经纪公司代码
-        :param InvestorID: 投资者代码
-        :param InstrumentID: 合约代码
-        :param ExchangeID: 交易所代码
-        :param InvestUnitID: 投资单元代码
-        """
-        super(QryParkedOrderAction, self).__init__()
+    def __init__(self, BrokerID=None, InvestorID=None, InstrumentID=None, ExchangeID=None, InvestUnitID=None):
+        super().__init__()
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
         if InvestorID:
@@ -14948,21 +9041,8 @@ class RemoveParkedOrder(Struct):
         ("InvestUnitID", c_char_Array_17),
     ]
 
-    def __init__(
-        self,
-        BrokerID: str = None,
-        InvestorID: str = None,
-        ParkedOrderID: str = None,
-        InvestUnitID: str = None,
-    ):
-        """
-        删除预埋单
-        :param BrokerID: 经纪公司代码
-        :param InvestorID: 投资者代码
-        :param ParkedOrderID: 预埋报单编号
-        :param InvestUnitID: 投资单元代码
-        """
-        super(RemoveParkedOrder, self).__init__()
+    def __init__(self, BrokerID=None, InvestorID=None, ParkedOrderID=None, InvestUnitID=None):
+        super().__init__()
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
         if InvestorID:
@@ -14981,21 +9061,8 @@ class RemoveParkedOrderAction(Struct):
         ("InvestUnitID", c_char_Array_17),
     ]
 
-    def __init__(
-        self,
-        BrokerID: str = None,
-        InvestorID: str = None,
-        ParkedOrderActionID: str = None,
-        InvestUnitID: str = None,
-    ):
-        """
-        删除预埋撤单
-        :param BrokerID: 经纪公司代码
-        :param InvestorID: 投资者代码
-        :param ParkedOrderActionID: 预埋撤单编号
-        :param InvestUnitID: 投资单元代码
-        """
-        super(RemoveParkedOrderAction, self).__init__()
+    def __init__(self, BrokerID=None, InvestorID=None, ParkedOrderActionID=None, InvestUnitID=None):
+        super().__init__()
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
         if InvestorID:
@@ -15016,25 +9083,8 @@ class InvestorWithdrawAlgorithm(Struct):
         ("FundMortgageRatio", c_double),
     ]
 
-    def __init__(
-        self,
-        BrokerID: str = None,
-        InvestorRange: bytes = None,
-        InvestorID: str = None,
-        UsingRatio: float = None,
-        CurrencyID: str = None,
-        FundMortgageRatio: float = None,
-    ):
-        """
-        经纪公司可提资金算法表
-        :param BrokerID: 经纪公司代码
-        :param InvestorRange: 投资者范围
-        :param InvestorID: 投资者代码
-        :param UsingRatio: 可提资金比例
-        :param CurrencyID: 币种代码
-        :param FundMortgageRatio: 货币质押比率
-        """
-        super(InvestorWithdrawAlgorithm, self).__init__()
+    def __init__(self, BrokerID=None, InvestorRange=None, InvestorID=None, UsingRatio=None, CurrencyID=None, FundMortgageRatio=None):
+        super().__init__()
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
         if InvestorRange:
@@ -15058,23 +9108,8 @@ class QryInvestorPositionCombineDetail(Struct):
         ("InvestUnitID", c_char_Array_17),
     ]
 
-    def __init__(
-        self,
-        BrokerID: str = None,
-        InvestorID: str = None,
-        CombInstrumentID: str = None,
-        ExchangeID: str = None,
-        InvestUnitID: str = None,
-    ):
-        """
-        查询组合持仓明细
-        :param BrokerID: 经纪公司代码
-        :param InvestorID: 投资者代码
-        :param CombInstrumentID: 组合持仓合约编码
-        :param ExchangeID: 交易所代码
-        :param InvestUnitID: 投资单元代码
-        """
-        super(QryInvestorPositionCombineDetail, self).__init__()
+    def __init__(self, BrokerID=None, InvestorID=None, CombInstrumentID=None, ExchangeID=None, InvestUnitID=None):
+        super().__init__()
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
         if InvestorID:
@@ -15092,15 +9127,8 @@ class MarketDataAveragePrice(Struct):
         ("AveragePrice", c_double),
     ]
 
-    def __init__(
-        self,
-        AveragePrice: float = None,
-    ):
-        """
-        成交均价
-        :param AveragePrice: 当日均价
-        """
-        super(MarketDataAveragePrice, self).__init__()
+    def __init__(self, AveragePrice=None):
+        super().__init__()
         if AveragePrice:
             self.AveragePrice = AveragePrice
 
@@ -15112,19 +9140,8 @@ class VerifyInvestorPassword(Struct):
         ("Password", c_char_Array_41),
     ]
 
-    def __init__(
-        self,
-        BrokerID: str = None,
-        InvestorID: str = None,
-        Password: str = None,
-    ):
-        """
-        校验投资者密码
-        :param BrokerID: 经纪公司代码
-        :param InvestorID: 投资者代码
-        :param Password: 密码
-        """
-        super(VerifyInvestorPassword, self).__init__()
+    def __init__(self, BrokerID=None, InvestorID=None, Password=None):
+        super().__init__()
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
         if InvestorID:
@@ -15142,23 +9159,8 @@ class UserIP(Struct):
         ("MacAddress", c_char_Array_21),
     ]
 
-    def __init__(
-        self,
-        BrokerID: str = None,
-        UserID: str = None,
-        IPAddress: str = None,
-        IPMask: str = None,
-        MacAddress: str = None,
-    ):
-        """
-        用户IP
-        :param BrokerID: 经纪公司代码
-        :param UserID: 用户代码
-        :param IPAddress: IP地址
-        :param IPMask: IP地址掩码
-        :param MacAddress: Mac地址
-        """
-        super(UserIP, self).__init__()
+    def __init__(self, BrokerID=None, UserID=None, IPAddress=None, IPMask=None, MacAddress=None):
+        super().__init__()
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
         if UserID:
@@ -15182,27 +9184,8 @@ class TradingNoticeInfo(Struct):
         ("InvestUnitID", c_char_Array_17),
     ]
 
-    def __init__(
-        self,
-        BrokerID: str = None,
-        InvestorID: str = None,
-        SendTime: str = None,
-        FieldContent: str = None,
-        SequenceSeries: int = None,
-        SequenceNo: int = None,
-        InvestUnitID: str = None,
-    ):
-        """
-        用户事件通知信息
-        :param BrokerID: 经纪公司代码
-        :param InvestorID: 投资者代码
-        :param SendTime: 发送时间
-        :param FieldContent: 消息正文
-        :param SequenceSeries: 序列系列号
-        :param SequenceNo: 序列号
-        :param InvestUnitID: 投资单元代码
-        """
-        super(TradingNoticeInfo, self).__init__()
+    def __init__(self, BrokerID=None, InvestorID=None, SendTime=None, FieldContent=None, SequenceSeries=None, SequenceNo=None, InvestUnitID=None):
+        super().__init__()
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
         if InvestorID:
@@ -15232,31 +9215,8 @@ class TradingNotice(Struct):
         ("InvestUnitID", c_char_Array_17),
     ]
 
-    def __init__(
-        self,
-        BrokerID: str = None,
-        InvestorRange: bytes = None,
-        InvestorID: str = None,
-        SequenceSeries: int = None,
-        UserID: str = None,
-        SendTime: str = None,
-        SequenceNo: int = None,
-        FieldContent: str = None,
-        InvestUnitID: str = None,
-    ):
-        """
-        用户事件通知
-        :param BrokerID: 经纪公司代码
-        :param InvestorRange: 投资者范围
-        :param InvestorID: 投资者代码
-        :param SequenceSeries: 序列系列号
-        :param UserID: 用户代码
-        :param SendTime: 发送时间
-        :param SequenceNo: 序列号
-        :param FieldContent: 消息正文
-        :param InvestUnitID: 投资单元代码
-        """
-        super(TradingNotice, self).__init__()
+    def __init__(self, BrokerID=None, InvestorRange=None, InvestorID=None, SequenceSeries=None, UserID=None, SendTime=None, SequenceNo=None, FieldContent=None, InvestUnitID=None):
+        super().__init__()
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
         if InvestorRange:
@@ -15284,19 +9244,8 @@ class QryTradingNotice(Struct):
         ("InvestUnitID", c_char_Array_17),
     ]
 
-    def __init__(
-        self,
-        BrokerID: str = None,
-        InvestorID: str = None,
-        InvestUnitID: str = None,
-    ):
-        """
-        查询交易事件通知
-        :param BrokerID: 经纪公司代码
-        :param InvestorID: 投资者代码
-        :param InvestUnitID: 投资单元代码
-        """
-        super(QryTradingNotice, self).__init__()
+    def __init__(self, BrokerID=None, InvestorID=None, InvestUnitID=None):
+        super().__init__()
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
         if InvestorID:
@@ -15311,17 +9260,8 @@ class QryErrOrder(Struct):
         ("InvestorID", c_char_Array_13),
     ]
 
-    def __init__(
-        self,
-        BrokerID: str = None,
-        InvestorID: str = None,
-    ):
-        """
-        查询错误报单
-        :param BrokerID: 经纪公司代码
-        :param InvestorID: 投资者代码
-        """
-        super(QryErrOrder, self).__init__()
+    def __init__(self, BrokerID=None, InvestorID=None):
+        super().__init__()
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
         if InvestorID:
@@ -15364,77 +9304,8 @@ class ErrOrder(Struct):
         ("MacAddress", c_char_Array_21),
     ]
 
-    def __init__(
-        self,
-        BrokerID: str = None,
-        InvestorID: str = None,
-        InstrumentID: str = None,
-        OrderRef: str = None,
-        UserID: str = None,
-        OrderPriceType: bytes = None,
-        Direction: bytes = None,
-        CombOffsetFlag: str = None,
-        CombHedgeFlag: str = None,
-        LimitPrice: float = None,
-        VolumeTotalOriginal: int = None,
-        TimeCondition: bytes = None,
-        GTDDate: str = None,
-        VolumeCondition: bytes = None,
-        MinVolume: int = None,
-        ContingentCondition: bytes = None,
-        StopPrice: float = None,
-        ForceCloseReason: bytes = None,
-        IsAutoSuspend: int = None,
-        BusinessUnit: str = None,
-        RequestID: int = None,
-        UserForceClose: int = None,
-        ErrorID: int = None,
-        ErrorMsg: str = None,
-        IsSwapOrder: int = None,
-        ExchangeID: str = None,
-        InvestUnitID: str = None,
-        AccountID: str = None,
-        CurrencyID: str = None,
-        ClientID: str = None,
-        IPAddress: str = None,
-        MacAddress: str = None,
-    ):
-        """
-        错误报单
-        :param BrokerID: 经纪公司代码
-        :param InvestorID: 投资者代码
-        :param InstrumentID: 合约代码
-        :param OrderRef: 报单引用
-        :param UserID: 用户代码
-        :param OrderPriceType: 报单价格条件
-        :param Direction: 买卖方向
-        :param CombOffsetFlag: 组合开平标志
-        :param CombHedgeFlag: 组合投机套保标志
-        :param LimitPrice: 价格
-        :param VolumeTotalOriginal: 数量
-        :param TimeCondition: 有效期类型
-        :param GTDDate: GTD日期
-        :param VolumeCondition: 成交量类型
-        :param MinVolume: 最小成交量
-        :param ContingentCondition: 触发条件
-        :param StopPrice: 止损价
-        :param ForceCloseReason: 强平原因
-        :param IsAutoSuspend: 自动挂起标志
-        :param BusinessUnit: 业务单元
-        :param RequestID: 请求编号
-        :param UserForceClose: 用户强评标志
-        :param ErrorID: 错误代码
-        :param ErrorMsg: 错误信息
-        :param IsSwapOrder: 互换单标志
-        :param ExchangeID: 交易所代码
-        :param InvestUnitID: 投资单元代码
-        :param AccountID: 资金账号
-        :param CurrencyID: 币种代码
-        :param ClientID: 交易编码
-        :param IPAddress: IP地址
-        :param MacAddress: Mac地址
-        """
-        super(ErrOrder, self).__init__()
+    def __init__(self, BrokerID=None, InvestorID=None, InstrumentID=None, OrderRef=None, UserID=None, OrderPriceType=None, Direction=None, CombOffsetFlag=None, CombHedgeFlag=None, LimitPrice=None, VolumeTotalOriginal=None, TimeCondition=None, GTDDate=None, VolumeCondition=None, MinVolume=None, ContingentCondition=None, StopPrice=None, ForceCloseReason=None, IsAutoSuspend=None, BusinessUnit=None, RequestID=None, UserForceClose=None, ErrorID=None, ErrorMsg=None, IsSwapOrder=None, ExchangeID=None, InvestUnitID=None, AccountID=None, CurrencyID=None, ClientID=None, IPAddress=None, MacAddress=None):
+        super().__init__()
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
         if InvestorID:
@@ -15570,143 +9441,8 @@ class ErrorConditionalOrder(Struct):
         ("MacAddress", c_char_Array_21),
     ]
 
-    def __init__(
-        self,
-        BrokerID: str = None,
-        InvestorID: str = None,
-        InstrumentID: str = None,
-        OrderRef: str = None,
-        UserID: str = None,
-        OrderPriceType: bytes = None,
-        Direction: bytes = None,
-        CombOffsetFlag: str = None,
-        CombHedgeFlag: str = None,
-        LimitPrice: float = None,
-        VolumeTotalOriginal: int = None,
-        TimeCondition: bytes = None,
-        GTDDate: str = None,
-        VolumeCondition: bytes = None,
-        MinVolume: int = None,
-        ContingentCondition: bytes = None,
-        StopPrice: float = None,
-        ForceCloseReason: bytes = None,
-        IsAutoSuspend: int = None,
-        BusinessUnit: str = None,
-        RequestID: int = None,
-        OrderLocalID: str = None,
-        ExchangeID: str = None,
-        ParticipantID: str = None,
-        ClientID: str = None,
-        ExchangeInstID: str = None,
-        TraderID: str = None,
-        InstallID: int = None,
-        OrderSubmitStatus: bytes = None,
-        NotifySequence: int = None,
-        TradingDay: str = None,
-        SettlementID: int = None,
-        OrderSysID: str = None,
-        OrderSource: bytes = None,
-        OrderStatus: bytes = None,
-        OrderType: bytes = None,
-        VolumeTraded: int = None,
-        VolumeTotal: int = None,
-        InsertDate: str = None,
-        InsertTime: str = None,
-        ActiveTime: str = None,
-        SuspendTime: str = None,
-        UpdateTime: str = None,
-        CancelTime: str = None,
-        ActiveTraderID: str = None,
-        ClearingPartID: str = None,
-        SequenceNo: int = None,
-        FrontID: int = None,
-        SessionID: int = None,
-        UserProductInfo: str = None,
-        StatusMsg: str = None,
-        UserForceClose: int = None,
-        ActiveUserID: str = None,
-        BrokerOrderSeq: int = None,
-        RelativeOrderSysID: str = None,
-        ZCETotalTradedVolume: int = None,
-        ErrorID: int = None,
-        ErrorMsg: str = None,
-        IsSwapOrder: int = None,
-        BranchID: str = None,
-        InvestUnitID: str = None,
-        AccountID: str = None,
-        CurrencyID: str = None,
-        IPAddress: str = None,
-        MacAddress: str = None,
-    ):
-        """
-        查询错误报单操作
-        :param BrokerID: 经纪公司代码
-        :param InvestorID: 投资者代码
-        :param InstrumentID: 合约代码
-        :param OrderRef: 报单引用
-        :param UserID: 用户代码
-        :param OrderPriceType: 报单价格条件
-        :param Direction: 买卖方向
-        :param CombOffsetFlag: 组合开平标志
-        :param CombHedgeFlag: 组合投机套保标志
-        :param LimitPrice: 价格
-        :param VolumeTotalOriginal: 数量
-        :param TimeCondition: 有效期类型
-        :param GTDDate: GTD日期
-        :param VolumeCondition: 成交量类型
-        :param MinVolume: 最小成交量
-        :param ContingentCondition: 触发条件
-        :param StopPrice: 止损价
-        :param ForceCloseReason: 强平原因
-        :param IsAutoSuspend: 自动挂起标志
-        :param BusinessUnit: 业务单元
-        :param RequestID: 请求编号
-        :param OrderLocalID: 本地报单编号
-        :param ExchangeID: 交易所代码
-        :param ParticipantID: 会员代码
-        :param ClientID: 客户代码
-        :param ExchangeInstID: 合约在交易所的代码
-        :param TraderID: 交易所交易员代码
-        :param InstallID: 安装编号
-        :param OrderSubmitStatus: 报单提交状态
-        :param NotifySequence: 报单提示序号
-        :param TradingDay: 交易日
-        :param SettlementID: 结算编号
-        :param OrderSysID: 报单编号
-        :param OrderSource: 报单来源
-        :param OrderStatus: 报单状态
-        :param OrderType: 报单类型
-        :param VolumeTraded: 今成交数量
-        :param VolumeTotal: 剩余数量
-        :param InsertDate: 报单日期
-        :param InsertTime: 委托时间
-        :param ActiveTime: 激活时间
-        :param SuspendTime: 挂起时间
-        :param UpdateTime: 最后修改时间
-        :param CancelTime: 撤销时间
-        :param ActiveTraderID: 最后修改交易所交易员代码
-        :param ClearingPartID: 结算会员编号
-        :param SequenceNo: 序号
-        :param FrontID: 前置编号
-        :param SessionID: 会话编号
-        :param UserProductInfo: 用户端产品信息
-        :param StatusMsg: 状态信息
-        :param UserForceClose: 用户强评标志
-        :param ActiveUserID: 操作用户代码
-        :param BrokerOrderSeq: 经纪公司报单编号
-        :param RelativeOrderSysID: 相关报单
-        :param ZCETotalTradedVolume: 郑商所成交数量
-        :param ErrorID: 错误代码
-        :param ErrorMsg: 错误信息
-        :param IsSwapOrder: 互换单标志
-        :param BranchID: 营业部编号
-        :param InvestUnitID: 投资单元代码
-        :param AccountID: 资金账号
-        :param CurrencyID: 币种代码
-        :param IPAddress: IP地址
-        :param MacAddress: Mac地址
-        """
-        super(ErrorConditionalOrder, self).__init__()
+    def __init__(self, BrokerID=None, InvestorID=None, InstrumentID=None, OrderRef=None, UserID=None, OrderPriceType=None, Direction=None, CombOffsetFlag=None, CombHedgeFlag=None, LimitPrice=None, VolumeTotalOriginal=None, TimeCondition=None, GTDDate=None, VolumeCondition=None, MinVolume=None, ContingentCondition=None, StopPrice=None, ForceCloseReason=None, IsAutoSuspend=None, BusinessUnit=None, RequestID=None, OrderLocalID=None, ExchangeID=None, ParticipantID=None, ClientID=None, ExchangeInstID=None, TraderID=None, InstallID=None, OrderSubmitStatus=None, NotifySequence=None, TradingDay=None, SettlementID=None, OrderSysID=None, OrderSource=None, OrderStatus=None, OrderType=None, VolumeTraded=None, VolumeTotal=None, InsertDate=None, InsertTime=None, ActiveTime=None, SuspendTime=None, UpdateTime=None, CancelTime=None, ActiveTraderID=None, ClearingPartID=None, SequenceNo=None, FrontID=None, SessionID=None, UserProductInfo=None, StatusMsg=None, UserForceClose=None, ActiveUserID=None, BrokerOrderSeq=None, RelativeOrderSysID=None, ZCETotalTradedVolume=None, ErrorID=None, ErrorMsg=None, IsSwapOrder=None, BranchID=None, InvestUnitID=None, AccountID=None, CurrencyID=None, IPAddress=None, MacAddress=None):
+        super().__init__()
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
         if InvestorID:
@@ -15845,17 +9581,8 @@ class QryErrOrderAction(Struct):
         ("InvestorID", c_char_Array_13),
     ]
 
-    def __init__(
-        self,
-        BrokerID: str = None,
-        InvestorID: str = None,
-    ):
-        """
-        查询错误报单操作
-        :param BrokerID: 经纪公司代码
-        :param InvestorID: 投资者代码
-        """
-        super(QryErrOrderAction, self).__init__()
+    def __init__(self, BrokerID=None, InvestorID=None):
+        super().__init__()
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
         if InvestorID:
@@ -15897,75 +9624,8 @@ class ErrOrderAction(Struct):
         ("ErrorMsg", c_char_Array_81),
     ]
 
-    def __init__(
-        self,
-        BrokerID: str = None,
-        InvestorID: str = None,
-        OrderActionRef: int = None,
-        OrderRef: str = None,
-        RequestID: int = None,
-        FrontID: int = None,
-        SessionID: int = None,
-        ExchangeID: str = None,
-        OrderSysID: str = None,
-        ActionFlag: bytes = None,
-        LimitPrice: float = None,
-        VolumeChange: int = None,
-        ActionDate: str = None,
-        ActionTime: str = None,
-        TraderID: str = None,
-        InstallID: int = None,
-        OrderLocalID: str = None,
-        ActionLocalID: str = None,
-        ParticipantID: str = None,
-        ClientID: str = None,
-        BusinessUnit: str = None,
-        OrderActionStatus: bytes = None,
-        UserID: str = None,
-        StatusMsg: str = None,
-        InstrumentID: str = None,
-        BranchID: str = None,
-        InvestUnitID: str = None,
-        IPAddress: str = None,
-        MacAddress: str = None,
-        ErrorID: int = None,
-        ErrorMsg: str = None,
-    ):
-        """
-        错误报单操作
-        :param BrokerID: 经纪公司代码
-        :param InvestorID: 投资者代码
-        :param OrderActionRef: 报单操作引用
-        :param OrderRef: 报单引用
-        :param RequestID: 请求编号
-        :param FrontID: 前置编号
-        :param SessionID: 会话编号
-        :param ExchangeID: 交易所代码
-        :param OrderSysID: 报单编号
-        :param ActionFlag: 操作标志
-        :param LimitPrice: 价格
-        :param VolumeChange: 数量变化
-        :param ActionDate: 操作日期
-        :param ActionTime: 操作时间
-        :param TraderID: 交易所交易员代码
-        :param InstallID: 安装编号
-        :param OrderLocalID: 本地报单编号
-        :param ActionLocalID: 操作本地编号
-        :param ParticipantID: 会员代码
-        :param ClientID: 客户代码
-        :param BusinessUnit: 业务单元
-        :param OrderActionStatus: 报单操作状态
-        :param UserID: 用户代码
-        :param StatusMsg: 状态信息
-        :param InstrumentID: 合约代码
-        :param BranchID: 营业部编号
-        :param InvestUnitID: 投资单元代码
-        :param IPAddress: IP地址
-        :param MacAddress: Mac地址
-        :param ErrorID: 错误代码
-        :param ErrorMsg: 错误信息
-        """
-        super(ErrOrderAction, self).__init__()
+    def __init__(self, BrokerID=None, InvestorID=None, OrderActionRef=None, OrderRef=None, RequestID=None, FrontID=None, SessionID=None, ExchangeID=None, OrderSysID=None, ActionFlag=None, LimitPrice=None, VolumeChange=None, ActionDate=None, ActionTime=None, TraderID=None, InstallID=None, OrderLocalID=None, ActionLocalID=None, ParticipantID=None, ClientID=None, BusinessUnit=None, OrderActionStatus=None, UserID=None, StatusMsg=None, InstrumentID=None, BranchID=None, InvestUnitID=None, IPAddress=None, MacAddress=None, ErrorID=None, ErrorMsg=None):
+        super().__init__()
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
         if InvestorID:
@@ -16035,15 +9695,8 @@ class QryExchangeSequence(Struct):
         ("ExchangeID", c_char_Array_9),
     ]
 
-    def __init__(
-        self,
-        ExchangeID: str = None,
-    ):
-        """
-        查询交易所状态
-        :param ExchangeID: 交易所代码
-        """
-        super(QryExchangeSequence, self).__init__()
+    def __init__(self, ExchangeID=None):
+        super().__init__()
         if ExchangeID:
             self.ExchangeID = ExchangeID.encode("GBK")
 
@@ -16055,19 +9708,8 @@ class ExchangeSequence(Struct):
         ("MarketStatus", c_char),
     ]
 
-    def __init__(
-        self,
-        ExchangeID: str = None,
-        SequenceNo: int = None,
-        MarketStatus: bytes = None,
-    ):
-        """
-        交易所状态
-        :param ExchangeID: 交易所代码
-        :param SequenceNo: 序号
-        :param MarketStatus: 合约交易状态
-        """
-        super(ExchangeSequence, self).__init__()
+    def __init__(self, ExchangeID=None, SequenceNo=None, MarketStatus=None):
+        super().__init__()
         if ExchangeID:
             self.ExchangeID = ExchangeID.encode("GBK")
         if SequenceNo:
@@ -16090,33 +9732,8 @@ class QueryMaxOrderVolumeWithPrice(Struct):
         ("InvestUnitID", c_char_Array_17),
     ]
 
-    def __init__(
-        self,
-        BrokerID: str = None,
-        InvestorID: str = None,
-        InstrumentID: str = None,
-        Direction: bytes = None,
-        OffsetFlag: bytes = None,
-        HedgeFlag: bytes = None,
-        MaxVolume: int = None,
-        Price: float = None,
-        ExchangeID: str = None,
-        InvestUnitID: str = None,
-    ):
-        """
-        根据价格查询最大报单数量
-        :param BrokerID: 经纪公司代码
-        :param InvestorID: 投资者代码
-        :param InstrumentID: 合约代码
-        :param Direction: 买卖方向
-        :param OffsetFlag: 开平标志
-        :param HedgeFlag: 投机套保标志
-        :param MaxVolume: 最大允许报单数量
-        :param Price: 报单价格
-        :param ExchangeID: 交易所代码
-        :param InvestUnitID: 投资单元代码
-        """
-        super(QueryMaxOrderVolumeWithPrice, self).__init__()
+    def __init__(self, BrokerID=None, InvestorID=None, InstrumentID=None, Direction=None, OffsetFlag=None, HedgeFlag=None, MaxVolume=None, Price=None, ExchangeID=None, InvestUnitID=None):
+        super().__init__()
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
         if InvestorID:
@@ -16147,21 +9764,8 @@ class QryBrokerTradingParams(Struct):
         ("AccountID", c_char_Array_13),
     ]
 
-    def __init__(
-        self,
-        BrokerID: str = None,
-        InvestorID: str = None,
-        CurrencyID: str = None,
-        AccountID: str = None,
-    ):
-        """
-        查询经纪公司交易参数
-        :param BrokerID: 经纪公司代码
-        :param InvestorID: 投资者代码
-        :param CurrencyID: 币种代码
-        :param AccountID: 投资者帐号
-        """
-        super(QryBrokerTradingParams, self).__init__()
+    def __init__(self, BrokerID=None, InvestorID=None, CurrencyID=None, AccountID=None):
+        super().__init__()
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
         if InvestorID:
@@ -16184,29 +9788,8 @@ class BrokerTradingParams(Struct):
         ("AccountID", c_char_Array_13),
     ]
 
-    def __init__(
-        self,
-        BrokerID: str = None,
-        InvestorID: str = None,
-        MarginPriceType: bytes = None,
-        Algorithm: bytes = None,
-        AvailIncludeCloseProfit: bytes = None,
-        CurrencyID: str = None,
-        OptionRoyaltyPriceType: bytes = None,
-        AccountID: str = None,
-    ):
-        """
-        经纪公司交易参数
-        :param BrokerID: 经纪公司代码
-        :param InvestorID: 投资者代码
-        :param MarginPriceType: 保证金价格类型
-        :param Algorithm: 盈亏算法
-        :param AvailIncludeCloseProfit: 可用是否包含平仓盈利
-        :param CurrencyID: 币种代码
-        :param OptionRoyaltyPriceType: 期权权利金价格类型
-        :param AccountID: 投资者帐号
-        """
-        super(BrokerTradingParams, self).__init__()
+    def __init__(self, BrokerID=None, InvestorID=None, MarginPriceType=None, Algorithm=None, AvailIncludeCloseProfit=None, CurrencyID=None, OptionRoyaltyPriceType=None, AccountID=None):
+        super().__init__()
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
         if InvestorID:
@@ -16232,19 +9815,8 @@ class QryBrokerTradingAlgos(Struct):
         ("InstrumentID", c_char_Array_31),
     ]
 
-    def __init__(
-        self,
-        BrokerID: str = None,
-        ExchangeID: str = None,
-        InstrumentID: str = None,
-    ):
-        """
-        查询经纪公司交易算法
-        :param BrokerID: 经纪公司代码
-        :param ExchangeID: 交易所代码
-        :param InstrumentID: 合约代码
-        """
-        super(QryBrokerTradingAlgos, self).__init__()
+    def __init__(self, BrokerID=None, ExchangeID=None, InstrumentID=None):
+        super().__init__()
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
         if ExchangeID:
@@ -16263,25 +9835,8 @@ class BrokerTradingAlgos(Struct):
         ("HandleTradingAccountAlgoID", c_char),
     ]
 
-    def __init__(
-        self,
-        BrokerID: str = None,
-        ExchangeID: str = None,
-        InstrumentID: str = None,
-        HandlePositionAlgoID: bytes = None,
-        FindMarginRateAlgoID: bytes = None,
-        HandleTradingAccountAlgoID: bytes = None,
-    ):
-        """
-        经纪公司交易算法
-        :param BrokerID: 经纪公司代码
-        :param ExchangeID: 交易所代码
-        :param InstrumentID: 合约代码
-        :param HandlePositionAlgoID: 持仓处理算法编号
-        :param FindMarginRateAlgoID: 寻找保证金率算法编号
-        :param HandleTradingAccountAlgoID: 资金处理算法编号
-        """
-        super(BrokerTradingAlgos, self).__init__()
+    def __init__(self, BrokerID=None, ExchangeID=None, InstrumentID=None, HandlePositionAlgoID=None, FindMarginRateAlgoID=None, HandleTradingAccountAlgoID=None):
+        super().__init__()
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
         if ExchangeID:
@@ -16302,17 +9857,8 @@ class QueryBrokerDeposit(Struct):
         ("ExchangeID", c_char_Array_9),
     ]
 
-    def __init__(
-        self,
-        BrokerID: str = None,
-        ExchangeID: str = None,
-    ):
-        """
-        查询经纪公司资金
-        :param BrokerID: 经纪公司代码
-        :param ExchangeID: 交易所代码
-        """
-        super(QueryBrokerDeposit, self).__init__()
+    def __init__(self, BrokerID=None, ExchangeID=None):
+        super().__init__()
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
         if ExchangeID:
@@ -16336,39 +9882,8 @@ class BrokerDeposit(Struct):
         ("FrozenMargin", c_double),
     ]
 
-    def __init__(
-        self,
-        TradingDay: str = None,
-        BrokerID: str = None,
-        ParticipantID: str = None,
-        ExchangeID: str = None,
-        PreBalance: float = None,
-        CurrMargin: float = None,
-        CloseProfit: float = None,
-        Balance: float = None,
-        Deposit: float = None,
-        Withdraw: float = None,
-        Available: float = None,
-        Reserve: float = None,
-        FrozenMargin: float = None,
-    ):
-        """
-        经纪公司资金
-        :param TradingDay: 交易日期
-        :param BrokerID: 经纪公司代码
-        :param ParticipantID: 会员代码
-        :param ExchangeID: 交易所代码
-        :param PreBalance: 上次结算准备金
-        :param CurrMargin: 当前保证金总额
-        :param CloseProfit: 平仓盈亏
-        :param Balance: 期货结算准备金
-        :param Deposit: 入金金额
-        :param Withdraw: 出金金额
-        :param Available: 可提资金
-        :param Reserve: 基本准备金
-        :param FrozenMargin: 冻结的保证金
-        """
-        super(BrokerDeposit, self).__init__()
+    def __init__(self, TradingDay=None, BrokerID=None, ParticipantID=None, ExchangeID=None, PreBalance=None, CurrMargin=None, CloseProfit=None, Balance=None, Deposit=None, Withdraw=None, Available=None, Reserve=None, FrozenMargin=None):
+        super().__init__()
         if TradingDay:
             self.TradingDay = TradingDay.encode("GBK")
         if BrokerID:
@@ -16402,15 +9917,8 @@ class QryCFMMCBrokerKey(Struct):
         ("BrokerID", c_char_Array_11),
     ]
 
-    def __init__(
-        self,
-        BrokerID: str = None,
-    ):
-        """
-        查询保证金监管系统经纪公司密钥
-        :param BrokerID: 经纪公司代码
-        """
-        super(QryCFMMCBrokerKey, self).__init__()
+    def __init__(self, BrokerID=None):
+        super().__init__()
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
 
@@ -16426,27 +9934,8 @@ class CFMMCBrokerKey(Struct):
         ("KeyKind", c_char),
     ]
 
-    def __init__(
-        self,
-        BrokerID: str = None,
-        ParticipantID: str = None,
-        CreateDate: str = None,
-        CreateTime: str = None,
-        KeyID: int = None,
-        CurrentKey: str = None,
-        KeyKind: bytes = None,
-    ):
-        """
-        保证金监管系统经纪公司密钥
-        :param BrokerID: 经纪公司代码
-        :param ParticipantID: 经纪公司统一编码
-        :param CreateDate: 密钥生成日期
-        :param CreateTime: 密钥生成时间
-        :param KeyID: 密钥编号
-        :param CurrentKey: 动态密钥
-        :param KeyKind: 动态密钥类型
-        """
-        super(CFMMCBrokerKey, self).__init__()
+    def __init__(self, BrokerID=None, ParticipantID=None, CreateDate=None, CreateTime=None, KeyID=None, CurrentKey=None, KeyKind=None):
+        super().__init__()
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
         if ParticipantID:
@@ -16472,23 +9961,8 @@ class CFMMCTradingAccountKey(Struct):
         ("CurrentKey", c_char_Array_21),
     ]
 
-    def __init__(
-        self,
-        BrokerID: str = None,
-        ParticipantID: str = None,
-        AccountID: str = None,
-        KeyID: int = None,
-        CurrentKey: str = None,
-    ):
-        """
-        保证金监管系统经纪公司资金账户密钥
-        :param BrokerID: 经纪公司代码
-        :param ParticipantID: 经纪公司统一编码
-        :param AccountID: 投资者帐号
-        :param KeyID: 密钥编号
-        :param CurrentKey: 动态密钥
-        """
-        super(CFMMCTradingAccountKey, self).__init__()
+    def __init__(self, BrokerID=None, ParticipantID=None, AccountID=None, KeyID=None, CurrentKey=None):
+        super().__init__()
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
         if ParticipantID:
@@ -16507,17 +9981,8 @@ class QryCFMMCTradingAccountKey(Struct):
         ("InvestorID", c_char_Array_13),
     ]
 
-    def __init__(
-        self,
-        BrokerID: str = None,
-        InvestorID: str = None,
-    ):
-        """
-        请求查询保证金监管系统经纪公司资金账户密钥
-        :param BrokerID: 经纪公司代码
-        :param InvestorID: 投资者代码
-        """
-        super(QryCFMMCTradingAccountKey, self).__init__()
+    def __init__(self, BrokerID=None, InvestorID=None):
+        super().__init__()
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
         if InvestorID:
@@ -16536,29 +10001,8 @@ class BrokerUserOTPParam(Struct):
         ("OTPType", c_char),
     ]
 
-    def __init__(
-        self,
-        BrokerID: str = None,
-        UserID: str = None,
-        OTPVendorsID: str = None,
-        SerialNumber: str = None,
-        AuthKey: str = None,
-        LastDrift: int = None,
-        LastSuccess: int = None,
-        OTPType: bytes = None,
-    ):
-        """
-        用户动态令牌参数
-        :param BrokerID: 经纪公司代码
-        :param UserID: 用户代码
-        :param OTPVendorsID: 动态令牌提供商
-        :param SerialNumber: 动态令牌序列号
-        :param AuthKey: 令牌密钥
-        :param LastDrift: 漂移值
-        :param LastSuccess: 成功值
-        :param OTPType: 动态令牌类型
-        """
-        super(BrokerUserOTPParam, self).__init__()
+    def __init__(self, BrokerID=None, UserID=None, OTPVendorsID=None, SerialNumber=None, AuthKey=None, LastDrift=None, LastSuccess=None, OTPType=None):
+        super().__init__()
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
         if UserID:
@@ -16586,23 +10030,8 @@ class ManualSyncBrokerUserOTP(Struct):
         ("SecondOTP", c_char_Array_41),
     ]
 
-    def __init__(
-        self,
-        BrokerID: str = None,
-        UserID: str = None,
-        OTPType: bytes = None,
-        FirstOTP: str = None,
-        SecondOTP: str = None,
-    ):
-        """
-        手工同步用户动态令牌
-        :param BrokerID: 经纪公司代码
-        :param UserID: 用户代码
-        :param OTPType: 动态令牌类型
-        :param FirstOTP: 第一个动态密码
-        :param SecondOTP: 第二个动态密码
-        """
-        super(ManualSyncBrokerUserOTP, self).__init__()
+    def __init__(self, BrokerID=None, UserID=None, OTPType=None, FirstOTP=None, SecondOTP=None):
+        super().__init__()
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
         if UserID:
@@ -16622,19 +10051,8 @@ class CommRateModel(Struct):
         ("CommModelName", c_char_Array_161),
     ]
 
-    def __init__(
-        self,
-        BrokerID: str = None,
-        CommModelID: str = None,
-        CommModelName: str = None,
-    ):
-        """
-        投资者手续费率模板
-        :param BrokerID: 经纪公司代码
-        :param CommModelID: 手续费率模板代码
-        :param CommModelName: 模板名称
-        """
-        super(CommRateModel, self).__init__()
+    def __init__(self, BrokerID=None, CommModelID=None, CommModelName=None):
+        super().__init__()
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
         if CommModelID:
@@ -16649,17 +10067,8 @@ class QryCommRateModel(Struct):
         ("CommModelID", c_char_Array_13),
     ]
 
-    def __init__(
-        self,
-        BrokerID: str = None,
-        CommModelID: str = None,
-    ):
-        """
-        请求查询投资者手续费率模板
-        :param BrokerID: 经纪公司代码
-        :param CommModelID: 手续费率模板代码
-        """
-        super(QryCommRateModel, self).__init__()
+    def __init__(self, BrokerID=None, CommModelID=None):
+        super().__init__()
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
         if CommModelID:
@@ -16673,19 +10082,8 @@ class MarginModel(Struct):
         ("MarginModelName", c_char_Array_161),
     ]
 
-    def __init__(
-        self,
-        BrokerID: str = None,
-        MarginModelID: str = None,
-        MarginModelName: str = None,
-    ):
-        """
-        投资者保证金率模板
-        :param BrokerID: 经纪公司代码
-        :param MarginModelID: 保证金率模板代码
-        :param MarginModelName: 模板名称
-        """
-        super(MarginModel, self).__init__()
+    def __init__(self, BrokerID=None, MarginModelID=None, MarginModelName=None):
+        super().__init__()
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
         if MarginModelID:
@@ -16700,17 +10098,8 @@ class QryMarginModel(Struct):
         ("MarginModelID", c_char_Array_13),
     ]
 
-    def __init__(
-        self,
-        BrokerID: str = None,
-        MarginModelID: str = None,
-    ):
-        """
-        请求查询投资者保证金率模板
-        :param BrokerID: 经纪公司代码
-        :param MarginModelID: 保证金率模板代码
-        """
-        super(QryMarginModel, self).__init__()
+    def __init__(self, BrokerID=None, MarginModelID=None):
+        super().__init__()
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
         if MarginModelID:
@@ -16730,31 +10119,8 @@ class EWarrantOffset(Struct):
         ("InvestUnitID", c_char_Array_17),
     ]
 
-    def __init__(
-        self,
-        TradingDay: str = None,
-        BrokerID: str = None,
-        InvestorID: str = None,
-        ExchangeID: str = None,
-        InstrumentID: str = None,
-        Direction: bytes = None,
-        HedgeFlag: bytes = None,
-        Volume: int = None,
-        InvestUnitID: str = None,
-    ):
-        """
-        仓单折抵信息
-        :param TradingDay: 交易日期
-        :param BrokerID: 经纪公司代码
-        :param InvestorID: 投资者代码
-        :param ExchangeID: 交易所代码
-        :param InstrumentID: 合约代码
-        :param Direction: 买卖方向
-        :param HedgeFlag: 投机套保标志
-        :param Volume: 数量
-        :param InvestUnitID: 投资单元代码
-        """
-        super(EWarrantOffset, self).__init__()
+    def __init__(self, TradingDay=None, BrokerID=None, InvestorID=None, ExchangeID=None, InstrumentID=None, Direction=None, HedgeFlag=None, Volume=None, InvestUnitID=None):
+        super().__init__()
         if TradingDay:
             self.TradingDay = TradingDay.encode("GBK")
         if BrokerID:
@@ -16784,23 +10150,8 @@ class QryEWarrantOffset(Struct):
         ("InvestUnitID", c_char_Array_17),
     ]
 
-    def __init__(
-        self,
-        BrokerID: str = None,
-        InvestorID: str = None,
-        ExchangeID: str = None,
-        InstrumentID: str = None,
-        InvestUnitID: str = None,
-    ):
-        """
-        查询仓单折抵信息
-        :param BrokerID: 经纪公司代码
-        :param InvestorID: 投资者代码
-        :param ExchangeID: 交易所代码
-        :param InstrumentID: 合约代码
-        :param InvestUnitID: 投资单元代码
-        """
-        super(QryEWarrantOffset, self).__init__()
+    def __init__(self, BrokerID=None, InvestorID=None, ExchangeID=None, InstrumentID=None, InvestUnitID=None):
+        super().__init__()
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
         if InvestorID:
@@ -16823,25 +10174,8 @@ class QryInvestorProductGroupMargin(Struct):
         ("InvestUnitID", c_char_Array_17),
     ]
 
-    def __init__(
-        self,
-        BrokerID: str = None,
-        InvestorID: str = None,
-        ProductGroupID: str = None,
-        HedgeFlag: bytes = None,
-        ExchangeID: str = None,
-        InvestUnitID: str = None,
-    ):
-        """
-        查询投资者品种跨品种保证金
-        :param BrokerID: 经纪公司代码
-        :param InvestorID: 投资者代码
-        :param ProductGroupID: 品种跨品种标示
-        :param HedgeFlag: 投机套保标志
-        :param ExchangeID: 交易所代码
-        :param InvestUnitID: 投资单元代码
-        """
-        super(QryInvestorProductGroupMargin, self).__init__()
+    def __init__(self, BrokerID=None, InvestorID=None, ProductGroupID=None, HedgeFlag=None, ExchangeID=None, InvestUnitID=None):
+        super().__init__()
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
         if InvestorID:
@@ -16889,71 +10223,8 @@ class InvestorProductGroupMargin(Struct):
         ("InvestUnitID", c_char_Array_17),
     ]
 
-    def __init__(
-        self,
-        ProductGroupID: str = None,
-        BrokerID: str = None,
-        InvestorID: str = None,
-        TradingDay: str = None,
-        SettlementID: int = None,
-        FrozenMargin: float = None,
-        LongFrozenMargin: float = None,
-        ShortFrozenMargin: float = None,
-        UseMargin: float = None,
-        LongUseMargin: float = None,
-        ShortUseMargin: float = None,
-        ExchMargin: float = None,
-        LongExchMargin: float = None,
-        ShortExchMargin: float = None,
-        CloseProfit: float = None,
-        FrozenCommission: float = None,
-        Commission: float = None,
-        FrozenCash: float = None,
-        CashIn: float = None,
-        PositionProfit: float = None,
-        OffsetAmount: float = None,
-        LongOffsetAmount: float = None,
-        ShortOffsetAmount: float = None,
-        ExchOffsetAmount: float = None,
-        LongExchOffsetAmount: float = None,
-        ShortExchOffsetAmount: float = None,
-        HedgeFlag: bytes = None,
-        ExchangeID: str = None,
-        InvestUnitID: str = None,
-    ):
-        """
-        投资者品种跨品种保证金
-        :param ProductGroupID: 品种跨品种标示
-        :param BrokerID: 经纪公司代码
-        :param InvestorID: 投资者代码
-        :param TradingDay: 交易日
-        :param SettlementID: 结算编号
-        :param FrozenMargin: 冻结的保证金
-        :param LongFrozenMargin: 多头冻结的保证金
-        :param ShortFrozenMargin: 空头冻结的保证金
-        :param UseMargin: 占用的保证金
-        :param LongUseMargin: 多头保证金
-        :param ShortUseMargin: 空头保证金
-        :param ExchMargin: 交易所保证金
-        :param LongExchMargin: 交易所多头保证金
-        :param ShortExchMargin: 交易所空头保证金
-        :param CloseProfit: 平仓盈亏
-        :param FrozenCommission: 冻结的手续费
-        :param Commission: 手续费
-        :param FrozenCash: 冻结的资金
-        :param CashIn: 资金差额
-        :param PositionProfit: 持仓盈亏
-        :param OffsetAmount: 折抵总金额
-        :param LongOffsetAmount: 多头折抵总金额
-        :param ShortOffsetAmount: 空头折抵总金额
-        :param ExchOffsetAmount: 交易所折抵总金额
-        :param LongExchOffsetAmount: 交易所多头折抵总金额
-        :param ShortExchOffsetAmount: 交易所空头折抵总金额
-        :param HedgeFlag: 投机套保标志
-        :param ExchangeID: 交易所代码
-        :param InvestUnitID: 投资单元代码
-        """
-        super(InvestorProductGroupMargin, self).__init__()
+    def __init__(self, ProductGroupID=None, BrokerID=None, InvestorID=None, TradingDay=None, SettlementID=None, FrozenMargin=None, LongFrozenMargin=None, ShortFrozenMargin=None, UseMargin=None, LongUseMargin=None, ShortUseMargin=None, ExchMargin=None, LongExchMargin=None, ShortExchMargin=None, CloseProfit=None, FrozenCommission=None, Commission=None, FrozenCash=None, CashIn=None, PositionProfit=None, OffsetAmount=None, LongOffsetAmount=None, ShortOffsetAmount=None, ExchOffsetAmount=None, LongExchOffsetAmount=None, ShortExchOffsetAmount=None, HedgeFlag=None, ExchangeID=None, InvestUnitID=None):
+        super().__init__()
         if ProductGroupID:
             self.ProductGroupID = ProductGroupID.encode("GBK")
         if BrokerID:
@@ -17021,19 +10292,8 @@ class QueryCFMMCTradingAccountToken(Struct):
         ("InvestUnitID", c_char_Array_17),
     ]
 
-    def __init__(
-        self,
-        BrokerID: str = None,
-        InvestorID: str = None,
-        InvestUnitID: str = None,
-    ):
-        """
-        查询监控中心用户令牌
-        :param BrokerID: 经纪公司代码
-        :param InvestorID: 投资者代码
-        :param InvestUnitID: 投资单元代码
-        """
-        super(QueryCFMMCTradingAccountToken, self).__init__()
+    def __init__(self, BrokerID=None, InvestorID=None, InvestUnitID=None):
+        super().__init__()
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
         if InvestorID:
@@ -17051,23 +10311,8 @@ class CFMMCTradingAccountToken(Struct):
         ("Token", c_char_Array_21),
     ]
 
-    def __init__(
-        self,
-        BrokerID: str = None,
-        ParticipantID: str = None,
-        AccountID: str = None,
-        KeyID: int = None,
-        Token: str = None,
-    ):
-        """
-        监控中心用户令牌
-        :param BrokerID: 经纪公司代码
-        :param ParticipantID: 经纪公司统一编码
-        :param AccountID: 投资者帐号
-        :param KeyID: 密钥编号
-        :param Token: 动态令牌
-        """
-        super(CFMMCTradingAccountToken, self).__init__()
+    def __init__(self, BrokerID=None, ParticipantID=None, AccountID=None, KeyID=None, Token=None):
+        super().__init__()
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
         if ParticipantID:
@@ -17086,17 +10331,8 @@ class QryProductGroup(Struct):
         ("ExchangeID", c_char_Array_9),
     ]
 
-    def __init__(
-        self,
-        ProductID: str = None,
-        ExchangeID: str = None,
-    ):
-        """
-        查询产品组
-        :param ProductID: 产品代码
-        :param ExchangeID: 交易所代码
-        """
-        super(QryProductGroup, self).__init__()
+    def __init__(self, ProductID=None, ExchangeID=None):
+        super().__init__()
         if ProductID:
             self.ProductID = ProductID.encode("GBK")
         if ExchangeID:
@@ -17110,19 +10346,8 @@ class ProductGroup(Struct):
         ("ProductGroupID", c_char_Array_31),
     ]
 
-    def __init__(
-        self,
-        ProductID: str = None,
-        ExchangeID: str = None,
-        ProductGroupID: str = None,
-    ):
-        """
-        投资者品种跨品种保证金产品组
-        :param ProductID: 产品代码
-        :param ExchangeID: 交易所代码
-        :param ProductGroupID: 产品组代码
-        """
-        super(ProductGroup, self).__init__()
+    def __init__(self, ProductID=None, ExchangeID=None, ProductGroupID=None):
+        super().__init__()
         if ProductID:
             self.ProductID = ProductID.encode("GBK")
         if ExchangeID:
@@ -17147,37 +10372,8 @@ class Bulletin(Struct):
         ("MarketID", c_char_Array_31),
     ]
 
-    def __init__(
-        self,
-        ExchangeID: str = None,
-        TradingDay: str = None,
-        BulletinID: int = None,
-        SequenceNo: int = None,
-        NewsType: str = None,
-        NewsUrgency: str = None,
-        SendTime: str = None,
-        Abstract: str = None,
-        ComeFrom: str = None,
-        Content: str = None,
-        URLLink: str = None,
-        MarketID: str = None,
-    ):
-        """
-        交易所公告
-        :param ExchangeID: 交易所代码
-        :param TradingDay: 交易日
-        :param BulletinID: 公告编号
-        :param SequenceNo: 序列号
-        :param NewsType: 公告类型
-        :param NewsUrgency: 紧急程度
-        :param SendTime: 发送时间
-        :param Abstract: 消息摘要
-        :param ComeFrom: 消息来源
-        :param Content: 消息正文
-        :param URLLink: WEB地址
-        :param MarketID: 市场代码
-        """
-        super(Bulletin, self).__init__()
+    def __init__(self, ExchangeID=None, TradingDay=None, BulletinID=None, SequenceNo=None, NewsType=None, NewsUrgency=None, SendTime=None, Abstract=None, ComeFrom=None, Content=None, URLLink=None, MarketID=None):
+        super().__init__()
         if ExchangeID:
             self.ExchangeID = ExchangeID.encode("GBK")
         if TradingDay:
@@ -17213,23 +10409,8 @@ class QryBulletin(Struct):
         ("NewsUrgency", c_char),
     ]
 
-    def __init__(
-        self,
-        ExchangeID: str = None,
-        BulletinID: int = None,
-        SequenceNo: int = None,
-        NewsType: str = None,
-        NewsUrgency: str = None,
-    ):
-        """
-        查询交易所公告
-        :param ExchangeID: 交易所代码
-        :param BulletinID: 公告编号
-        :param SequenceNo: 序列号
-        :param NewsType: 公告类型
-        :param NewsUrgency: 紧急程度
-        """
-        super(QryBulletin, self).__init__()
+    def __init__(self, ExchangeID=None, BulletinID=None, SequenceNo=None, NewsType=None, NewsUrgency=None):
+        super().__init__()
         if ExchangeID:
             self.ExchangeID = ExchangeID.encode("GBK")
         if BulletinID:
@@ -17291,103 +10472,8 @@ class ReqOpenAccount(Struct):
         ("LongCustomerName", c_char_Array_161),
     ]
 
-    def __init__(
-        self,
-        TradeCode: str = None,
-        BankID: str = None,
-        BankBranchID: str = None,
-        BrokerID: str = None,
-        BrokerBranchID: str = None,
-        TradeDate: str = None,
-        TradeTime: str = None,
-        BankSerial: str = None,
-        TradingDay: str = None,
-        PlateSerial: int = None,
-        LastFragment: bytes = None,
-        SessionID: int = None,
-        CustomerName: str = None,
-        IdCardType: bytes = None,
-        IdentifiedCardNo: str = None,
-        Gender: bytes = None,
-        CountryCode: str = None,
-        CustType: bytes = None,
-        Address: str = None,
-        ZipCode: str = None,
-        Telephone: str = None,
-        MobilePhone: str = None,
-        Fax: str = None,
-        EMail: str = None,
-        MoneyAccountStatus: bytes = None,
-        BankAccount: str = None,
-        BankPassWord: str = None,
-        AccountID: str = None,
-        Password: str = None,
-        InstallID: int = None,
-        VerifyCertNoFlag: bytes = None,
-        CurrencyID: str = None,
-        CashExchangeCode: bytes = None,
-        Digest: str = None,
-        BankAccType: bytes = None,
-        DeviceID: str = None,
-        BankSecuAccType: bytes = None,
-        BrokerIDByBank: str = None,
-        BankSecuAcc: str = None,
-        BankPwdFlag: bytes = None,
-        SecuPwdFlag: bytes = None,
-        OperNo: str = None,
-        TID: int = None,
-        UserID: str = None,
-        LongCustomerName: str = None,
-    ):
-        """
-        转帐开户请求
-        :param TradeCode: 业务功能码
-        :param BankID: 银行代码
-        :param BankBranchID: 银行分支机构代码
-        :param BrokerID: 期商代码
-        :param BrokerBranchID: 期商分支机构代码
-        :param TradeDate: 交易日期
-        :param TradeTime: 交易时间
-        :param BankSerial: 银行流水号
-        :param TradingDay: 交易系统日期
-        :param PlateSerial: 银期平台消息流水号
-        :param LastFragment: 最后分片标志
-        :param SessionID: 会话号
-        :param CustomerName: 客户姓名
-        :param IdCardType: 证件类型
-        :param IdentifiedCardNo: 证件号码
-        :param Gender: 性别
-        :param CountryCode: 国家代码
-        :param CustType: 客户类型
-        :param Address: 地址
-        :param ZipCode: 邮编
-        :param Telephone: 电话号码
-        :param MobilePhone: 手机
-        :param Fax: 传真
-        :param EMail: 电子邮件
-        :param MoneyAccountStatus: 资金账户状态
-        :param BankAccount: 银行帐号
-        :param BankPassWord: 银行密码
-        :param AccountID: 投资者帐号
-        :param Password: 期货密码
-        :param InstallID: 安装编号
-        :param VerifyCertNoFlag: 验证客户证件号码标志
-        :param CurrencyID: 币种代码
-        :param CashExchangeCode: 汇钞标志
-        :param Digest: 摘要
-        :param BankAccType: 银行帐号类型
-        :param DeviceID: 渠道标志
-        :param BankSecuAccType: 期货单位帐号类型
-        :param BrokerIDByBank: 期货公司银行编码
-        :param BankSecuAcc: 期货单位帐号
-        :param BankPwdFlag: 银行密码标志
-        :param SecuPwdFlag: 期货资金密码核对标志
-        :param OperNo: 交易柜员
-        :param TID: 交易ID
-        :param UserID: 用户标识
-        :param LongCustomerName: 长客户姓名
-        """
-        super(ReqOpenAccount, self).__init__()
+    def __init__(self, TradeCode=None, BankID=None, BankBranchID=None, BrokerID=None, BrokerBranchID=None, TradeDate=None, TradeTime=None, BankSerial=None, TradingDay=None, PlateSerial=None, LastFragment=None, SessionID=None, CustomerName=None, IdCardType=None, IdentifiedCardNo=None, Gender=None, CountryCode=None, CustType=None, Address=None, ZipCode=None, Telephone=None, MobilePhone=None, Fax=None, EMail=None, MoneyAccountStatus=None, BankAccount=None, BankPassWord=None, AccountID=None, Password=None, InstallID=None, VerifyCertNoFlag=None, CurrencyID=None, CashExchangeCode=None, Digest=None, BankAccType=None, DeviceID=None, BankSecuAccType=None, BrokerIDByBank=None, BankSecuAcc=None, BankPwdFlag=None, SecuPwdFlag=None, OperNo=None, TID=None, UserID=None, LongCustomerName=None):
+        super().__init__()
         if TradeCode:
             self.TradeCode = TradeCode.encode("GBK")
         if BankID:
@@ -17529,103 +10615,8 @@ class ReqCancelAccount(Struct):
         ("LongCustomerName", c_char_Array_161),
     ]
 
-    def __init__(
-        self,
-        TradeCode: str = None,
-        BankID: str = None,
-        BankBranchID: str = None,
-        BrokerID: str = None,
-        BrokerBranchID: str = None,
-        TradeDate: str = None,
-        TradeTime: str = None,
-        BankSerial: str = None,
-        TradingDay: str = None,
-        PlateSerial: int = None,
-        LastFragment: bytes = None,
-        SessionID: int = None,
-        CustomerName: str = None,
-        IdCardType: bytes = None,
-        IdentifiedCardNo: str = None,
-        Gender: bytes = None,
-        CountryCode: str = None,
-        CustType: bytes = None,
-        Address: str = None,
-        ZipCode: str = None,
-        Telephone: str = None,
-        MobilePhone: str = None,
-        Fax: str = None,
-        EMail: str = None,
-        MoneyAccountStatus: bytes = None,
-        BankAccount: str = None,
-        BankPassWord: str = None,
-        AccountID: str = None,
-        Password: str = None,
-        InstallID: int = None,
-        VerifyCertNoFlag: bytes = None,
-        CurrencyID: str = None,
-        CashExchangeCode: bytes = None,
-        Digest: str = None,
-        BankAccType: bytes = None,
-        DeviceID: str = None,
-        BankSecuAccType: bytes = None,
-        BrokerIDByBank: str = None,
-        BankSecuAcc: str = None,
-        BankPwdFlag: bytes = None,
-        SecuPwdFlag: bytes = None,
-        OperNo: str = None,
-        TID: int = None,
-        UserID: str = None,
-        LongCustomerName: str = None,
-    ):
-        """
-        转帐销户请求
-        :param TradeCode: 业务功能码
-        :param BankID: 银行代码
-        :param BankBranchID: 银行分支机构代码
-        :param BrokerID: 期商代码
-        :param BrokerBranchID: 期商分支机构代码
-        :param TradeDate: 交易日期
-        :param TradeTime: 交易时间
-        :param BankSerial: 银行流水号
-        :param TradingDay: 交易系统日期
-        :param PlateSerial: 银期平台消息流水号
-        :param LastFragment: 最后分片标志
-        :param SessionID: 会话号
-        :param CustomerName: 客户姓名
-        :param IdCardType: 证件类型
-        :param IdentifiedCardNo: 证件号码
-        :param Gender: 性别
-        :param CountryCode: 国家代码
-        :param CustType: 客户类型
-        :param Address: 地址
-        :param ZipCode: 邮编
-        :param Telephone: 电话号码
-        :param MobilePhone: 手机
-        :param Fax: 传真
-        :param EMail: 电子邮件
-        :param MoneyAccountStatus: 资金账户状态
-        :param BankAccount: 银行帐号
-        :param BankPassWord: 银行密码
-        :param AccountID: 投资者帐号
-        :param Password: 期货密码
-        :param InstallID: 安装编号
-        :param VerifyCertNoFlag: 验证客户证件号码标志
-        :param CurrencyID: 币种代码
-        :param CashExchangeCode: 汇钞标志
-        :param Digest: 摘要
-        :param BankAccType: 银行帐号类型
-        :param DeviceID: 渠道标志
-        :param BankSecuAccType: 期货单位帐号类型
-        :param BrokerIDByBank: 期货公司银行编码
-        :param BankSecuAcc: 期货单位帐号
-        :param BankPwdFlag: 银行密码标志
-        :param SecuPwdFlag: 期货资金密码核对标志
-        :param OperNo: 交易柜员
-        :param TID: 交易ID
-        :param UserID: 用户标识
-        :param LongCustomerName: 长客户姓名
-        """
-        super(ReqCancelAccount, self).__init__()
+    def __init__(self, TradeCode=None, BankID=None, BankBranchID=None, BrokerID=None, BrokerBranchID=None, TradeDate=None, TradeTime=None, BankSerial=None, TradingDay=None, PlateSerial=None, LastFragment=None, SessionID=None, CustomerName=None, IdCardType=None, IdentifiedCardNo=None, Gender=None, CountryCode=None, CustType=None, Address=None, ZipCode=None, Telephone=None, MobilePhone=None, Fax=None, EMail=None, MoneyAccountStatus=None, BankAccount=None, BankPassWord=None, AccountID=None, Password=None, InstallID=None, VerifyCertNoFlag=None, CurrencyID=None, CashExchangeCode=None, Digest=None, BankAccType=None, DeviceID=None, BankSecuAccType=None, BrokerIDByBank=None, BankSecuAcc=None, BankPwdFlag=None, SecuPwdFlag=None, OperNo=None, TID=None, UserID=None, LongCustomerName=None):
+        super().__init__()
         if TradeCode:
             self.TradeCode = TradeCode.encode("GBK")
         if BankID:
@@ -17763,95 +10754,8 @@ class ReqChangeAccount(Struct):
         ("LongCustomerName", c_char_Array_161),
     ]
 
-    def __init__(
-        self,
-        TradeCode: str = None,
-        BankID: str = None,
-        BankBranchID: str = None,
-        BrokerID: str = None,
-        BrokerBranchID: str = None,
-        TradeDate: str = None,
-        TradeTime: str = None,
-        BankSerial: str = None,
-        TradingDay: str = None,
-        PlateSerial: int = None,
-        LastFragment: bytes = None,
-        SessionID: int = None,
-        CustomerName: str = None,
-        IdCardType: bytes = None,
-        IdentifiedCardNo: str = None,
-        Gender: bytes = None,
-        CountryCode: str = None,
-        CustType: bytes = None,
-        Address: str = None,
-        ZipCode: str = None,
-        Telephone: str = None,
-        MobilePhone: str = None,
-        Fax: str = None,
-        EMail: str = None,
-        MoneyAccountStatus: bytes = None,
-        BankAccount: str = None,
-        BankPassWord: str = None,
-        NewBankAccount: str = None,
-        NewBankPassWord: str = None,
-        AccountID: str = None,
-        Password: str = None,
-        BankAccType: bytes = None,
-        InstallID: int = None,
-        VerifyCertNoFlag: bytes = None,
-        CurrencyID: str = None,
-        BrokerIDByBank: str = None,
-        BankPwdFlag: bytes = None,
-        SecuPwdFlag: bytes = None,
-        TID: int = None,
-        Digest: str = None,
-        LongCustomerName: str = None,
-    ):
-        """
-        变更银行账户请求
-        :param TradeCode: 业务功能码
-        :param BankID: 银行代码
-        :param BankBranchID: 银行分支机构代码
-        :param BrokerID: 期商代码
-        :param BrokerBranchID: 期商分支机构代码
-        :param TradeDate: 交易日期
-        :param TradeTime: 交易时间
-        :param BankSerial: 银行流水号
-        :param TradingDay: 交易系统日期
-        :param PlateSerial: 银期平台消息流水号
-        :param LastFragment: 最后分片标志
-        :param SessionID: 会话号
-        :param CustomerName: 客户姓名
-        :param IdCardType: 证件类型
-        :param IdentifiedCardNo: 证件号码
-        :param Gender: 性别
-        :param CountryCode: 国家代码
-        :param CustType: 客户类型
-        :param Address: 地址
-        :param ZipCode: 邮编
-        :param Telephone: 电话号码
-        :param MobilePhone: 手机
-        :param Fax: 传真
-        :param EMail: 电子邮件
-        :param MoneyAccountStatus: 资金账户状态
-        :param BankAccount: 银行帐号
-        :param BankPassWord: 银行密码
-        :param NewBankAccount: 新银行帐号
-        :param NewBankPassWord: 新银行密码
-        :param AccountID: 投资者帐号
-        :param Password: 期货密码
-        :param BankAccType: 银行帐号类型
-        :param InstallID: 安装编号
-        :param VerifyCertNoFlag: 验证客户证件号码标志
-        :param CurrencyID: 币种代码
-        :param BrokerIDByBank: 期货公司银行编码
-        :param BankPwdFlag: 银行密码标志
-        :param SecuPwdFlag: 期货资金密码核对标志
-        :param TID: 交易ID
-        :param Digest: 摘要
-        :param LongCustomerName: 长客户姓名
-        """
-        super(ReqChangeAccount, self).__init__()
+    def __init__(self, TradeCode=None, BankID=None, BankBranchID=None, BrokerID=None, BrokerBranchID=None, TradeDate=None, TradeTime=None, BankSerial=None, TradingDay=None, PlateSerial=None, LastFragment=None, SessionID=None, CustomerName=None, IdCardType=None, IdentifiedCardNo=None, Gender=None, CountryCode=None, CustType=None, Address=None, ZipCode=None, Telephone=None, MobilePhone=None, Fax=None, EMail=None, MoneyAccountStatus=None, BankAccount=None, BankPassWord=None, NewBankAccount=None, NewBankPassWord=None, AccountID=None, Password=None, BankAccType=None, InstallID=None, VerifyCertNoFlag=None, CurrencyID=None, BrokerIDByBank=None, BankPwdFlag=None, SecuPwdFlag=None, TID=None, Digest=None, LongCustomerName=None):
+        super().__init__()
         if TradeCode:
             self.TradeCode = TradeCode.encode("GBK")
         if BankID:
@@ -17984,101 +10888,8 @@ class ReqTransfer(Struct):
         ("LongCustomerName", c_char_Array_161),
     ]
 
-    def __init__(
-        self,
-        TradeCode: str = None,
-        BankID: str = None,
-        BankBranchID: str = None,
-        BrokerID: str = None,
-        BrokerBranchID: str = None,
-        TradeDate: str = None,
-        TradeTime: str = None,
-        BankSerial: str = None,
-        TradingDay: str = None,
-        PlateSerial: int = None,
-        LastFragment: bytes = None,
-        SessionID: int = None,
-        CustomerName: str = None,
-        IdCardType: bytes = None,
-        IdentifiedCardNo: str = None,
-        CustType: bytes = None,
-        BankAccount: str = None,
-        BankPassWord: str = None,
-        AccountID: str = None,
-        Password: str = None,
-        InstallID: int = None,
-        FutureSerial: int = None,
-        UserID: str = None,
-        VerifyCertNoFlag: bytes = None,
-        CurrencyID: str = None,
-        TradeAmount: float = None,
-        FutureFetchAmount: float = None,
-        FeePayFlag: bytes = None,
-        CustFee: float = None,
-        BrokerFee: float = None,
-        Message: str = None,
-        Digest: str = None,
-        BankAccType: bytes = None,
-        DeviceID: str = None,
-        BankSecuAccType: bytes = None,
-        BrokerIDByBank: str = None,
-        BankSecuAcc: str = None,
-        BankPwdFlag: bytes = None,
-        SecuPwdFlag: bytes = None,
-        OperNo: str = None,
-        RequestID: int = None,
-        TID: int = None,
-        TransferStatus: bytes = None,
-        LongCustomerName: str = None,
-    ):
-        """
-        转账请求
-        :param TradeCode: 业务功能码
-        :param BankID: 银行代码
-        :param BankBranchID: 银行分支机构代码
-        :param BrokerID: 期商代码
-        :param BrokerBranchID: 期商分支机构代码
-        :param TradeDate: 交易日期
-        :param TradeTime: 交易时间
-        :param BankSerial: 银行流水号
-        :param TradingDay: 交易系统日期
-        :param PlateSerial: 银期平台消息流水号
-        :param LastFragment: 最后分片标志
-        :param SessionID: 会话号
-        :param CustomerName: 客户姓名
-        :param IdCardType: 证件类型
-        :param IdentifiedCardNo: 证件号码
-        :param CustType: 客户类型
-        :param BankAccount: 银行帐号
-        :param BankPassWord: 银行密码
-        :param AccountID: 投资者帐号
-        :param Password: 期货密码
-        :param InstallID: 安装编号
-        :param FutureSerial: 期货公司流水号
-        :param UserID: 用户标识
-        :param VerifyCertNoFlag: 验证客户证件号码标志
-        :param CurrencyID: 币种代码
-        :param TradeAmount: 转帐金额
-        :param FutureFetchAmount: 期货可取金额
-        :param FeePayFlag: 费用支付标志
-        :param CustFee: 应收客户费用
-        :param BrokerFee: 应收期货公司费用
-        :param Message: 发送方给接收方的消息
-        :param Digest: 摘要
-        :param BankAccType: 银行帐号类型
-        :param DeviceID: 渠道标志
-        :param BankSecuAccType: 期货单位帐号类型
-        :param BrokerIDByBank: 期货公司银行编码
-        :param BankSecuAcc: 期货单位帐号
-        :param BankPwdFlag: 银行密码标志
-        :param SecuPwdFlag: 期货资金密码核对标志
-        :param OperNo: 交易柜员
-        :param RequestID: 请求编号
-        :param TID: 交易ID
-        :param TransferStatus: 转账交易状态
-        :param LongCustomerName: 长客户姓名
-        """
-        super(ReqTransfer, self).__init__()
+    def __init__(self, TradeCode=None, BankID=None, BankBranchID=None, BrokerID=None, BrokerBranchID=None, TradeDate=None, TradeTime=None, BankSerial=None, TradingDay=None, PlateSerial=None, LastFragment=None, SessionID=None, CustomerName=None, IdCardType=None, IdentifiedCardNo=None, CustType=None, BankAccount=None, BankPassWord=None, AccountID=None, Password=None, InstallID=None, FutureSerial=None, UserID=None, VerifyCertNoFlag=None, CurrencyID=None, TradeAmount=None, FutureFetchAmount=None, FeePayFlag=None, CustFee=None, BrokerFee=None, Message=None, Digest=None, BankAccType=None, DeviceID=None, BankSecuAccType=None, BrokerIDByBank=None, BankSecuAcc=None, BankPwdFlag=None, SecuPwdFlag=None, OperNo=None, RequestID=None, TID=None, TransferStatus=None, LongCustomerName=None):
+        super().__init__()
         if TradeCode:
             self.TradeCode = TradeCode.encode("GBK")
         if BankID:
@@ -18219,105 +11030,8 @@ class RspTransfer(Struct):
         ("LongCustomerName", c_char_Array_161),
     ]
 
-    def __init__(
-        self,
-        TradeCode: str = None,
-        BankID: str = None,
-        BankBranchID: str = None,
-        BrokerID: str = None,
-        BrokerBranchID: str = None,
-        TradeDate: str = None,
-        TradeTime: str = None,
-        BankSerial: str = None,
-        TradingDay: str = None,
-        PlateSerial: int = None,
-        LastFragment: bytes = None,
-        SessionID: int = None,
-        CustomerName: str = None,
-        IdCardType: bytes = None,
-        IdentifiedCardNo: str = None,
-        CustType: bytes = None,
-        BankAccount: str = None,
-        BankPassWord: str = None,
-        AccountID: str = None,
-        Password: str = None,
-        InstallID: int = None,
-        FutureSerial: int = None,
-        UserID: str = None,
-        VerifyCertNoFlag: bytes = None,
-        CurrencyID: str = None,
-        TradeAmount: float = None,
-        FutureFetchAmount: float = None,
-        FeePayFlag: bytes = None,
-        CustFee: float = None,
-        BrokerFee: float = None,
-        Message: str = None,
-        Digest: str = None,
-        BankAccType: bytes = None,
-        DeviceID: str = None,
-        BankSecuAccType: bytes = None,
-        BrokerIDByBank: str = None,
-        BankSecuAcc: str = None,
-        BankPwdFlag: bytes = None,
-        SecuPwdFlag: bytes = None,
-        OperNo: str = None,
-        RequestID: int = None,
-        TID: int = None,
-        TransferStatus: bytes = None,
-        ErrorID: int = None,
-        ErrorMsg: str = None,
-        LongCustomerName: str = None,
-    ):
-        """
-        银行发起银行资金转期货响应
-        :param TradeCode: 业务功能码
-        :param BankID: 银行代码
-        :param BankBranchID: 银行分支机构代码
-        :param BrokerID: 期商代码
-        :param BrokerBranchID: 期商分支机构代码
-        :param TradeDate: 交易日期
-        :param TradeTime: 交易时间
-        :param BankSerial: 银行流水号
-        :param TradingDay: 交易系统日期
-        :param PlateSerial: 银期平台消息流水号
-        :param LastFragment: 最后分片标志
-        :param SessionID: 会话号
-        :param CustomerName: 客户姓名
-        :param IdCardType: 证件类型
-        :param IdentifiedCardNo: 证件号码
-        :param CustType: 客户类型
-        :param BankAccount: 银行帐号
-        :param BankPassWord: 银行密码
-        :param AccountID: 投资者帐号
-        :param Password: 期货密码
-        :param InstallID: 安装编号
-        :param FutureSerial: 期货公司流水号
-        :param UserID: 用户标识
-        :param VerifyCertNoFlag: 验证客户证件号码标志
-        :param CurrencyID: 币种代码
-        :param TradeAmount: 转帐金额
-        :param FutureFetchAmount: 期货可取金额
-        :param FeePayFlag: 费用支付标志
-        :param CustFee: 应收客户费用
-        :param BrokerFee: 应收期货公司费用
-        :param Message: 发送方给接收方的消息
-        :param Digest: 摘要
-        :param BankAccType: 银行帐号类型
-        :param DeviceID: 渠道标志
-        :param BankSecuAccType: 期货单位帐号类型
-        :param BrokerIDByBank: 期货公司银行编码
-        :param BankSecuAcc: 期货单位帐号
-        :param BankPwdFlag: 银行密码标志
-        :param SecuPwdFlag: 期货资金密码核对标志
-        :param OperNo: 交易柜员
-        :param RequestID: 请求编号
-        :param TID: 交易ID
-        :param TransferStatus: 转账交易状态
-        :param ErrorID: 错误代码
-        :param ErrorMsg: 错误信息
-        :param LongCustomerName: 长客户姓名
-        """
-        super(RspTransfer, self).__init__()
+    def __init__(self, TradeCode=None, BankID=None, BankBranchID=None, BrokerID=None, BrokerBranchID=None, TradeDate=None, TradeTime=None, BankSerial=None, TradingDay=None, PlateSerial=None, LastFragment=None, SessionID=None, CustomerName=None, IdCardType=None, IdentifiedCardNo=None, CustType=None, BankAccount=None, BankPassWord=None, AccountID=None, Password=None, InstallID=None, FutureSerial=None, UserID=None, VerifyCertNoFlag=None, CurrencyID=None, TradeAmount=None, FutureFetchAmount=None, FeePayFlag=None, CustFee=None, BrokerFee=None, Message=None, Digest=None, BankAccType=None, DeviceID=None, BankSecuAccType=None, BrokerIDByBank=None, BankSecuAcc=None, BankPwdFlag=None, SecuPwdFlag=None, OperNo=None, RequestID=None, TID=None, TransferStatus=None, ErrorID=None, ErrorMsg=None, LongCustomerName=None):
+        super().__init__()
         if TradeCode:
             self.TradeCode = TradeCode.encode("GBK")
         if BankID:
@@ -18467,115 +11181,8 @@ class ReqRepeal(Struct):
         ("LongCustomerName", c_char_Array_161),
     ]
 
-    def __init__(
-        self,
-        RepealTimeInterval: int = None,
-        RepealedTimes: int = None,
-        BankRepealFlag: bytes = None,
-        BrokerRepealFlag: bytes = None,
-        PlateRepealSerial: int = None,
-        BankRepealSerial: str = None,
-        FutureRepealSerial: int = None,
-        TradeCode: str = None,
-        BankID: str = None,
-        BankBranchID: str = None,
-        BrokerID: str = None,
-        BrokerBranchID: str = None,
-        TradeDate: str = None,
-        TradeTime: str = None,
-        BankSerial: str = None,
-        TradingDay: str = None,
-        PlateSerial: int = None,
-        LastFragment: bytes = None,
-        SessionID: int = None,
-        CustomerName: str = None,
-        IdCardType: bytes = None,
-        IdentifiedCardNo: str = None,
-        CustType: bytes = None,
-        BankAccount: str = None,
-        BankPassWord: str = None,
-        AccountID: str = None,
-        Password: str = None,
-        InstallID: int = None,
-        FutureSerial: int = None,
-        UserID: str = None,
-        VerifyCertNoFlag: bytes = None,
-        CurrencyID: str = None,
-        TradeAmount: float = None,
-        FutureFetchAmount: float = None,
-        FeePayFlag: bytes = None,
-        CustFee: float = None,
-        BrokerFee: float = None,
-        Message: str = None,
-        Digest: str = None,
-        BankAccType: bytes = None,
-        DeviceID: str = None,
-        BankSecuAccType: bytes = None,
-        BrokerIDByBank: str = None,
-        BankSecuAcc: str = None,
-        BankPwdFlag: bytes = None,
-        SecuPwdFlag: bytes = None,
-        OperNo: str = None,
-        RequestID: int = None,
-        TID: int = None,
-        TransferStatus: bytes = None,
-        LongCustomerName: str = None,
-    ):
-        """
-        冲正请求
-        :param RepealTimeInterval: 冲正时间间隔
-        :param RepealedTimes: 已经冲正次数
-        :param BankRepealFlag: 银行冲正标志
-        :param BrokerRepealFlag: 期商冲正标志
-        :param PlateRepealSerial: 被冲正平台流水号
-        :param BankRepealSerial: 被冲正银行流水号
-        :param FutureRepealSerial: 被冲正期货流水号
-        :param TradeCode: 业务功能码
-        :param BankID: 银行代码
-        :param BankBranchID: 银行分支机构代码
-        :param BrokerID: 期商代码
-        :param BrokerBranchID: 期商分支机构代码
-        :param TradeDate: 交易日期
-        :param TradeTime: 交易时间
-        :param BankSerial: 银行流水号
-        :param TradingDay: 交易系统日期
-        :param PlateSerial: 银期平台消息流水号
-        :param LastFragment: 最后分片标志
-        :param SessionID: 会话号
-        :param CustomerName: 客户姓名
-        :param IdCardType: 证件类型
-        :param IdentifiedCardNo: 证件号码
-        :param CustType: 客户类型
-        :param BankAccount: 银行帐号
-        :param BankPassWord: 银行密码
-        :param AccountID: 投资者帐号
-        :param Password: 期货密码
-        :param InstallID: 安装编号
-        :param FutureSerial: 期货公司流水号
-        :param UserID: 用户标识
-        :param VerifyCertNoFlag: 验证客户证件号码标志
-        :param CurrencyID: 币种代码
-        :param TradeAmount: 转帐金额
-        :param FutureFetchAmount: 期货可取金额
-        :param FeePayFlag: 费用支付标志
-        :param CustFee: 应收客户费用
-        :param BrokerFee: 应收期货公司费用
-        :param Message: 发送方给接收方的消息
-        :param Digest: 摘要
-        :param BankAccType: 银行帐号类型
-        :param DeviceID: 渠道标志
-        :param BankSecuAccType: 期货单位帐号类型
-        :param BrokerIDByBank: 期货公司银行编码
-        :param BankSecuAcc: 期货单位帐号
-        :param BankPwdFlag: 银行密码标志
-        :param SecuPwdFlag: 期货资金密码核对标志
-        :param OperNo: 交易柜员
-        :param RequestID: 请求编号
-        :param TID: 交易ID
-        :param TransferStatus: 转账交易状态
-        :param LongCustomerName: 长客户姓名
-        """
-        super(ReqRepeal, self).__init__()
+    def __init__(self, RepealTimeInterval=None, RepealedTimes=None, BankRepealFlag=None, BrokerRepealFlag=None, PlateRepealSerial=None, BankRepealSerial=None, FutureRepealSerial=None, TradeCode=None, BankID=None, BankBranchID=None, BrokerID=None, BrokerBranchID=None, TradeDate=None, TradeTime=None, BankSerial=None, TradingDay=None, PlateSerial=None, LastFragment=None, SessionID=None, CustomerName=None, IdCardType=None, IdentifiedCardNo=None, CustType=None, BankAccount=None, BankPassWord=None, AccountID=None, Password=None, InstallID=None, FutureSerial=None, UserID=None, VerifyCertNoFlag=None, CurrencyID=None, TradeAmount=None, FutureFetchAmount=None, FeePayFlag=None, CustFee=None, BrokerFee=None, Message=None, Digest=None, BankAccType=None, DeviceID=None, BankSecuAccType=None, BrokerIDByBank=None, BankSecuAcc=None, BankPwdFlag=None, SecuPwdFlag=None, OperNo=None, RequestID=None, TID=None, TransferStatus=None, LongCustomerName=None):
+        super().__init__()
         if RepealTimeInterval:
             self.RepealTimeInterval = RepealTimeInterval
         if RepealedTimes:
@@ -18737,119 +11344,8 @@ class RspRepeal(Struct):
         ("LongCustomerName", c_char_Array_161),
     ]
 
-    def __init__(
-        self,
-        RepealTimeInterval: int = None,
-        RepealedTimes: int = None,
-        BankRepealFlag: bytes = None,
-        BrokerRepealFlag: bytes = None,
-        PlateRepealSerial: int = None,
-        BankRepealSerial: str = None,
-        FutureRepealSerial: int = None,
-        TradeCode: str = None,
-        BankID: str = None,
-        BankBranchID: str = None,
-        BrokerID: str = None,
-        BrokerBranchID: str = None,
-        TradeDate: str = None,
-        TradeTime: str = None,
-        BankSerial: str = None,
-        TradingDay: str = None,
-        PlateSerial: int = None,
-        LastFragment: bytes = None,
-        SessionID: int = None,
-        CustomerName: str = None,
-        IdCardType: bytes = None,
-        IdentifiedCardNo: str = None,
-        CustType: bytes = None,
-        BankAccount: str = None,
-        BankPassWord: str = None,
-        AccountID: str = None,
-        Password: str = None,
-        InstallID: int = None,
-        FutureSerial: int = None,
-        UserID: str = None,
-        VerifyCertNoFlag: bytes = None,
-        CurrencyID: str = None,
-        TradeAmount: float = None,
-        FutureFetchAmount: float = None,
-        FeePayFlag: bytes = None,
-        CustFee: float = None,
-        BrokerFee: float = None,
-        Message: str = None,
-        Digest: str = None,
-        BankAccType: bytes = None,
-        DeviceID: str = None,
-        BankSecuAccType: bytes = None,
-        BrokerIDByBank: str = None,
-        BankSecuAcc: str = None,
-        BankPwdFlag: bytes = None,
-        SecuPwdFlag: bytes = None,
-        OperNo: str = None,
-        RequestID: int = None,
-        TID: int = None,
-        TransferStatus: bytes = None,
-        ErrorID: int = None,
-        ErrorMsg: str = None,
-        LongCustomerName: str = None,
-    ):
-        """
-        冲正响应
-        :param RepealTimeInterval: 冲正时间间隔
-        :param RepealedTimes: 已经冲正次数
-        :param BankRepealFlag: 银行冲正标志
-        :param BrokerRepealFlag: 期商冲正标志
-        :param PlateRepealSerial: 被冲正平台流水号
-        :param BankRepealSerial: 被冲正银行流水号
-        :param FutureRepealSerial: 被冲正期货流水号
-        :param TradeCode: 业务功能码
-        :param BankID: 银行代码
-        :param BankBranchID: 银行分支机构代码
-        :param BrokerID: 期商代码
-        :param BrokerBranchID: 期商分支机构代码
-        :param TradeDate: 交易日期
-        :param TradeTime: 交易时间
-        :param BankSerial: 银行流水号
-        :param TradingDay: 交易系统日期
-        :param PlateSerial: 银期平台消息流水号
-        :param LastFragment: 最后分片标志
-        :param SessionID: 会话号
-        :param CustomerName: 客户姓名
-        :param IdCardType: 证件类型
-        :param IdentifiedCardNo: 证件号码
-        :param CustType: 客户类型
-        :param BankAccount: 银行帐号
-        :param BankPassWord: 银行密码
-        :param AccountID: 投资者帐号
-        :param Password: 期货密码
-        :param InstallID: 安装编号
-        :param FutureSerial: 期货公司流水号
-        :param UserID: 用户标识
-        :param VerifyCertNoFlag: 验证客户证件号码标志
-        :param CurrencyID: 币种代码
-        :param TradeAmount: 转帐金额
-        :param FutureFetchAmount: 期货可取金额
-        :param FeePayFlag: 费用支付标志
-        :param CustFee: 应收客户费用
-        :param BrokerFee: 应收期货公司费用
-        :param Message: 发送方给接收方的消息
-        :param Digest: 摘要
-        :param BankAccType: 银行帐号类型
-        :param DeviceID: 渠道标志
-        :param BankSecuAccType: 期货单位帐号类型
-        :param BrokerIDByBank: 期货公司银行编码
-        :param BankSecuAcc: 期货单位帐号
-        :param BankPwdFlag: 银行密码标志
-        :param SecuPwdFlag: 期货资金密码核对标志
-        :param OperNo: 交易柜员
-        :param RequestID: 请求编号
-        :param TID: 交易ID
-        :param TransferStatus: 转账交易状态
-        :param ErrorID: 错误代码
-        :param ErrorMsg: 错误信息
-        :param LongCustomerName: 长客户姓名
-        """
-        super(RspRepeal, self).__init__()
+    def __init__(self, RepealTimeInterval=None, RepealedTimes=None, BankRepealFlag=None, BrokerRepealFlag=None, PlateRepealSerial=None, BankRepealSerial=None, FutureRepealSerial=None, TradeCode=None, BankID=None, BankBranchID=None, BrokerID=None, BrokerBranchID=None, TradeDate=None, TradeTime=None, BankSerial=None, TradingDay=None, PlateSerial=None, LastFragment=None, SessionID=None, CustomerName=None, IdCardType=None, IdentifiedCardNo=None, CustType=None, BankAccount=None, BankPassWord=None, AccountID=None, Password=None, InstallID=None, FutureSerial=None, UserID=None, VerifyCertNoFlag=None, CurrencyID=None, TradeAmount=None, FutureFetchAmount=None, FeePayFlag=None, CustFee=None, BrokerFee=None, Message=None, Digest=None, BankAccType=None, DeviceID=None, BankSecuAccType=None, BrokerIDByBank=None, BankSecuAcc=None, BankPwdFlag=None, SecuPwdFlag=None, OperNo=None, RequestID=None, TID=None, TransferStatus=None, ErrorID=None, ErrorMsg=None, LongCustomerName=None):
+        super().__init__()
         if RepealTimeInterval:
             self.RepealTimeInterval = RepealTimeInterval
         if RepealedTimes:
@@ -18999,87 +11495,8 @@ class ReqQueryAccount(Struct):
         ("LongCustomerName", c_char_Array_161),
     ]
 
-    def __init__(
-        self,
-        TradeCode: str = None,
-        BankID: str = None,
-        BankBranchID: str = None,
-        BrokerID: str = None,
-        BrokerBranchID: str = None,
-        TradeDate: str = None,
-        TradeTime: str = None,
-        BankSerial: str = None,
-        TradingDay: str = None,
-        PlateSerial: int = None,
-        LastFragment: bytes = None,
-        SessionID: int = None,
-        CustomerName: str = None,
-        IdCardType: bytes = None,
-        IdentifiedCardNo: str = None,
-        CustType: bytes = None,
-        BankAccount: str = None,
-        BankPassWord: str = None,
-        AccountID: str = None,
-        Password: str = None,
-        FutureSerial: int = None,
-        InstallID: int = None,
-        UserID: str = None,
-        VerifyCertNoFlag: bytes = None,
-        CurrencyID: str = None,
-        Digest: str = None,
-        BankAccType: bytes = None,
-        DeviceID: str = None,
-        BankSecuAccType: bytes = None,
-        BrokerIDByBank: str = None,
-        BankSecuAcc: str = None,
-        BankPwdFlag: bytes = None,
-        SecuPwdFlag: bytes = None,
-        OperNo: str = None,
-        RequestID: int = None,
-        TID: int = None,
-        LongCustomerName: str = None,
-    ):
-        """
-        查询账户信息请求
-        :param TradeCode: 业务功能码
-        :param BankID: 银行代码
-        :param BankBranchID: 银行分支机构代码
-        :param BrokerID: 期商代码
-        :param BrokerBranchID: 期商分支机构代码
-        :param TradeDate: 交易日期
-        :param TradeTime: 交易时间
-        :param BankSerial: 银行流水号
-        :param TradingDay: 交易系统日期
-        :param PlateSerial: 银期平台消息流水号
-        :param LastFragment: 最后分片标志
-        :param SessionID: 会话号
-        :param CustomerName: 客户姓名
-        :param IdCardType: 证件类型
-        :param IdentifiedCardNo: 证件号码
-        :param CustType: 客户类型
-        :param BankAccount: 银行帐号
-        :param BankPassWord: 银行密码
-        :param AccountID: 投资者帐号
-        :param Password: 期货密码
-        :param FutureSerial: 期货公司流水号
-        :param InstallID: 安装编号
-        :param UserID: 用户标识
-        :param VerifyCertNoFlag: 验证客户证件号码标志
-        :param CurrencyID: 币种代码
-        :param Digest: 摘要
-        :param BankAccType: 银行帐号类型
-        :param DeviceID: 渠道标志
-        :param BankSecuAccType: 期货单位帐号类型
-        :param BrokerIDByBank: 期货公司银行编码
-        :param BankSecuAcc: 期货单位帐号
-        :param BankPwdFlag: 银行密码标志
-        :param SecuPwdFlag: 期货资金密码核对标志
-        :param OperNo: 交易柜员
-        :param RequestID: 请求编号
-        :param TID: 交易ID
-        :param LongCustomerName: 长客户姓名
-        """
-        super(ReqQueryAccount, self).__init__()
+    def __init__(self, TradeCode=None, BankID=None, BankBranchID=None, BrokerID=None, BrokerBranchID=None, TradeDate=None, TradeTime=None, BankSerial=None, TradingDay=None, PlateSerial=None, LastFragment=None, SessionID=None, CustomerName=None, IdCardType=None, IdentifiedCardNo=None, CustType=None, BankAccount=None, BankPassWord=None, AccountID=None, Password=None, FutureSerial=None, InstallID=None, UserID=None, VerifyCertNoFlag=None, CurrencyID=None, Digest=None, BankAccType=None, DeviceID=None, BankSecuAccType=None, BrokerIDByBank=None, BankSecuAcc=None, BankPwdFlag=None, SecuPwdFlag=None, OperNo=None, RequestID=None, TID=None, LongCustomerName=None):
+        super().__init__()
         if TradeCode:
             self.TradeCode = TradeCode.encode("GBK")
         if BankID:
@@ -19199,91 +11616,8 @@ class RspQueryAccount(Struct):
         ("LongCustomerName", c_char_Array_161),
     ]
 
-    def __init__(
-        self,
-        TradeCode: str = None,
-        BankID: str = None,
-        BankBranchID: str = None,
-        BrokerID: str = None,
-        BrokerBranchID: str = None,
-        TradeDate: str = None,
-        TradeTime: str = None,
-        BankSerial: str = None,
-        TradingDay: str = None,
-        PlateSerial: int = None,
-        LastFragment: bytes = None,
-        SessionID: int = None,
-        CustomerName: str = None,
-        IdCardType: bytes = None,
-        IdentifiedCardNo: str = None,
-        CustType: bytes = None,
-        BankAccount: str = None,
-        BankPassWord: str = None,
-        AccountID: str = None,
-        Password: str = None,
-        FutureSerial: int = None,
-        InstallID: int = None,
-        UserID: str = None,
-        VerifyCertNoFlag: bytes = None,
-        CurrencyID: str = None,
-        Digest: str = None,
-        BankAccType: bytes = None,
-        DeviceID: str = None,
-        BankSecuAccType: bytes = None,
-        BrokerIDByBank: str = None,
-        BankSecuAcc: str = None,
-        BankPwdFlag: bytes = None,
-        SecuPwdFlag: bytes = None,
-        OperNo: str = None,
-        RequestID: int = None,
-        TID: int = None,
-        BankUseAmount: float = None,
-        BankFetchAmount: float = None,
-        LongCustomerName: str = None,
-    ):
-        """
-        查询账户信息响应
-        :param TradeCode: 业务功能码
-        :param BankID: 银行代码
-        :param BankBranchID: 银行分支机构代码
-        :param BrokerID: 期商代码
-        :param BrokerBranchID: 期商分支机构代码
-        :param TradeDate: 交易日期
-        :param TradeTime: 交易时间
-        :param BankSerial: 银行流水号
-        :param TradingDay: 交易系统日期
-        :param PlateSerial: 银期平台消息流水号
-        :param LastFragment: 最后分片标志
-        :param SessionID: 会话号
-        :param CustomerName: 客户姓名
-        :param IdCardType: 证件类型
-        :param IdentifiedCardNo: 证件号码
-        :param CustType: 客户类型
-        :param BankAccount: 银行帐号
-        :param BankPassWord: 银行密码
-        :param AccountID: 投资者帐号
-        :param Password: 期货密码
-        :param FutureSerial: 期货公司流水号
-        :param InstallID: 安装编号
-        :param UserID: 用户标识
-        :param VerifyCertNoFlag: 验证客户证件号码标志
-        :param CurrencyID: 币种代码
-        :param Digest: 摘要
-        :param BankAccType: 银行帐号类型
-        :param DeviceID: 渠道标志
-        :param BankSecuAccType: 期货单位帐号类型
-        :param BrokerIDByBank: 期货公司银行编码
-        :param BankSecuAcc: 期货单位帐号
-        :param BankPwdFlag: 银行密码标志
-        :param SecuPwdFlag: 期货资金密码核对标志
-        :param OperNo: 交易柜员
-        :param RequestID: 请求编号
-        :param TID: 交易ID
-        :param BankUseAmount: 银行可用金额
-        :param BankFetchAmount: 银行可取金额
-        :param LongCustomerName: 长客户姓名
-        """
-        super(RspQueryAccount, self).__init__()
+    def __init__(self, TradeCode=None, BankID=None, BankBranchID=None, BrokerID=None, BrokerBranchID=None, TradeDate=None, TradeTime=None, BankSerial=None, TradingDay=None, PlateSerial=None, LastFragment=None, SessionID=None, CustomerName=None, IdCardType=None, IdentifiedCardNo=None, CustType=None, BankAccount=None, BankPassWord=None, AccountID=None, Password=None, FutureSerial=None, InstallID=None, UserID=None, VerifyCertNoFlag=None, CurrencyID=None, Digest=None, BankAccType=None, DeviceID=None, BankSecuAccType=None, BrokerIDByBank=None, BankSecuAcc=None, BankPwdFlag=None, SecuPwdFlag=None, OperNo=None, RequestID=None, TID=None, BankUseAmount=None, BankFetchAmount=None, LongCustomerName=None):
+        super().__init__()
         if TradeCode:
             self.TradeCode = TradeCode.encode("GBK")
         if BankID:
@@ -19389,55 +11723,8 @@ class FutureSignIO(Struct):
         ("TID", c_int),
     ]
 
-    def __init__(
-        self,
-        TradeCode: str = None,
-        BankID: str = None,
-        BankBranchID: str = None,
-        BrokerID: str = None,
-        BrokerBranchID: str = None,
-        TradeDate: str = None,
-        TradeTime: str = None,
-        BankSerial: str = None,
-        TradingDay: str = None,
-        PlateSerial: int = None,
-        LastFragment: bytes = None,
-        SessionID: int = None,
-        InstallID: int = None,
-        UserID: str = None,
-        Digest: str = None,
-        CurrencyID: str = None,
-        DeviceID: str = None,
-        BrokerIDByBank: str = None,
-        OperNo: str = None,
-        RequestID: int = None,
-        TID: int = None,
-    ):
-        """
-        期商签到签退
-        :param TradeCode: 业务功能码
-        :param BankID: 银行代码
-        :param BankBranchID: 银行分支机构代码
-        :param BrokerID: 期商代码
-        :param BrokerBranchID: 期商分支机构代码
-        :param TradeDate: 交易日期
-        :param TradeTime: 交易时间
-        :param BankSerial: 银行流水号
-        :param TradingDay: 交易系统日期
-        :param PlateSerial: 银期平台消息流水号
-        :param LastFragment: 最后分片标志
-        :param SessionID: 会话号
-        :param InstallID: 安装编号
-        :param UserID: 用户标识
-        :param Digest: 摘要
-        :param CurrencyID: 币种代码
-        :param DeviceID: 渠道标志
-        :param BrokerIDByBank: 期货公司银行编码
-        :param OperNo: 交易柜员
-        :param RequestID: 请求编号
-        :param TID: 交易ID
-        """
-        super(FutureSignIO, self).__init__()
+    def __init__(self, TradeCode=None, BankID=None, BankBranchID=None, BrokerID=None, BrokerBranchID=None, TradeDate=None, TradeTime=None, BankSerial=None, TradingDay=None, PlateSerial=None, LastFragment=None, SessionID=None, InstallID=None, UserID=None, Digest=None, CurrencyID=None, DeviceID=None, BrokerIDByBank=None, OperNo=None, RequestID=None, TID=None):
+        super().__init__()
         if TradeCode:
             self.TradeCode = TradeCode.encode("GBK")
         if BankID:
@@ -19511,63 +11798,8 @@ class RspFutureSignIn(Struct):
         ("MacKey", c_char_Array_129),
     ]
 
-    def __init__(
-        self,
-        TradeCode: str = None,
-        BankID: str = None,
-        BankBranchID: str = None,
-        BrokerID: str = None,
-        BrokerBranchID: str = None,
-        TradeDate: str = None,
-        TradeTime: str = None,
-        BankSerial: str = None,
-        TradingDay: str = None,
-        PlateSerial: int = None,
-        LastFragment: bytes = None,
-        SessionID: int = None,
-        InstallID: int = None,
-        UserID: str = None,
-        Digest: str = None,
-        CurrencyID: str = None,
-        DeviceID: str = None,
-        BrokerIDByBank: str = None,
-        OperNo: str = None,
-        RequestID: int = None,
-        TID: int = None,
-        ErrorID: int = None,
-        ErrorMsg: str = None,
-        PinKey: str = None,
-        MacKey: str = None,
-    ):
-        """
-        期商签到响应
-        :param TradeCode: 业务功能码
-        :param BankID: 银行代码
-        :param BankBranchID: 银行分支机构代码
-        :param BrokerID: 期商代码
-        :param BrokerBranchID: 期商分支机构代码
-        :param TradeDate: 交易日期
-        :param TradeTime: 交易时间
-        :param BankSerial: 银行流水号
-        :param TradingDay: 交易系统日期
-        :param PlateSerial: 银期平台消息流水号
-        :param LastFragment: 最后分片标志
-        :param SessionID: 会话号
-        :param InstallID: 安装编号
-        :param UserID: 用户标识
-        :param Digest: 摘要
-        :param CurrencyID: 币种代码
-        :param DeviceID: 渠道标志
-        :param BrokerIDByBank: 期货公司银行编码
-        :param OperNo: 交易柜员
-        :param RequestID: 请求编号
-        :param TID: 交易ID
-        :param ErrorID: 错误代码
-        :param ErrorMsg: 错误信息
-        :param PinKey: PIN密钥
-        :param MacKey: MAC密钥
-        """
-        super(RspFutureSignIn, self).__init__()
+    def __init__(self, TradeCode=None, BankID=None, BankBranchID=None, BrokerID=None, BrokerBranchID=None, TradeDate=None, TradeTime=None, BankSerial=None, TradingDay=None, PlateSerial=None, LastFragment=None, SessionID=None, InstallID=None, UserID=None, Digest=None, CurrencyID=None, DeviceID=None, BrokerIDByBank=None, OperNo=None, RequestID=None, TID=None, ErrorID=None, ErrorMsg=None, PinKey=None, MacKey=None):
+        super().__init__()
         if TradeCode:
             self.TradeCode = TradeCode.encode("GBK")
         if BankID:
@@ -19645,55 +11877,8 @@ class ReqFutureSignOut(Struct):
         ("TID", c_int),
     ]
 
-    def __init__(
-        self,
-        TradeCode: str = None,
-        BankID: str = None,
-        BankBranchID: str = None,
-        BrokerID: str = None,
-        BrokerBranchID: str = None,
-        TradeDate: str = None,
-        TradeTime: str = None,
-        BankSerial: str = None,
-        TradingDay: str = None,
-        PlateSerial: int = None,
-        LastFragment: bytes = None,
-        SessionID: int = None,
-        InstallID: int = None,
-        UserID: str = None,
-        Digest: str = None,
-        CurrencyID: str = None,
-        DeviceID: str = None,
-        BrokerIDByBank: str = None,
-        OperNo: str = None,
-        RequestID: int = None,
-        TID: int = None,
-    ):
-        """
-        期商签退请求
-        :param TradeCode: 业务功能码
-        :param BankID: 银行代码
-        :param BankBranchID: 银行分支机构代码
-        :param BrokerID: 期商代码
-        :param BrokerBranchID: 期商分支机构代码
-        :param TradeDate: 交易日期
-        :param TradeTime: 交易时间
-        :param BankSerial: 银行流水号
-        :param TradingDay: 交易系统日期
-        :param PlateSerial: 银期平台消息流水号
-        :param LastFragment: 最后分片标志
-        :param SessionID: 会话号
-        :param InstallID: 安装编号
-        :param UserID: 用户标识
-        :param Digest: 摘要
-        :param CurrencyID: 币种代码
-        :param DeviceID: 渠道标志
-        :param BrokerIDByBank: 期货公司银行编码
-        :param OperNo: 交易柜员
-        :param RequestID: 请求编号
-        :param TID: 交易ID
-        """
-        super(ReqFutureSignOut, self).__init__()
+    def __init__(self, TradeCode=None, BankID=None, BankBranchID=None, BrokerID=None, BrokerBranchID=None, TradeDate=None, TradeTime=None, BankSerial=None, TradingDay=None, PlateSerial=None, LastFragment=None, SessionID=None, InstallID=None, UserID=None, Digest=None, CurrencyID=None, DeviceID=None, BrokerIDByBank=None, OperNo=None, RequestID=None, TID=None):
+        super().__init__()
         if TradeCode:
             self.TradeCode = TradeCode.encode("GBK")
         if BankID:
@@ -19765,59 +11950,8 @@ class RspFutureSignOut(Struct):
         ("ErrorMsg", c_char_Array_81),
     ]
 
-    def __init__(
-        self,
-        TradeCode: str = None,
-        BankID: str = None,
-        BankBranchID: str = None,
-        BrokerID: str = None,
-        BrokerBranchID: str = None,
-        TradeDate: str = None,
-        TradeTime: str = None,
-        BankSerial: str = None,
-        TradingDay: str = None,
-        PlateSerial: int = None,
-        LastFragment: bytes = None,
-        SessionID: int = None,
-        InstallID: int = None,
-        UserID: str = None,
-        Digest: str = None,
-        CurrencyID: str = None,
-        DeviceID: str = None,
-        BrokerIDByBank: str = None,
-        OperNo: str = None,
-        RequestID: int = None,
-        TID: int = None,
-        ErrorID: int = None,
-        ErrorMsg: str = None,
-    ):
-        """
-        期商签退响应
-        :param TradeCode: 业务功能码
-        :param BankID: 银行代码
-        :param BankBranchID: 银行分支机构代码
-        :param BrokerID: 期商代码
-        :param BrokerBranchID: 期商分支机构代码
-        :param TradeDate: 交易日期
-        :param TradeTime: 交易时间
-        :param BankSerial: 银行流水号
-        :param TradingDay: 交易系统日期
-        :param PlateSerial: 银期平台消息流水号
-        :param LastFragment: 最后分片标志
-        :param SessionID: 会话号
-        :param InstallID: 安装编号
-        :param UserID: 用户标识
-        :param Digest: 摘要
-        :param CurrencyID: 币种代码
-        :param DeviceID: 渠道标志
-        :param BrokerIDByBank: 期货公司银行编码
-        :param OperNo: 交易柜员
-        :param RequestID: 请求编号
-        :param TID: 交易ID
-        :param ErrorID: 错误代码
-        :param ErrorMsg: 错误信息
-        """
-        super(RspFutureSignOut, self).__init__()
+    def __init__(self, TradeCode=None, BankID=None, BankBranchID=None, BrokerID=None, BrokerBranchID=None, TradeDate=None, TradeTime=None, BankSerial=None, TradingDay=None, PlateSerial=None, LastFragment=None, SessionID=None, InstallID=None, UserID=None, Digest=None, CurrencyID=None, DeviceID=None, BrokerIDByBank=None, OperNo=None, RequestID=None, TID=None, ErrorID=None, ErrorMsg=None):
+        super().__init__()
         if TradeCode:
             self.TradeCode = TradeCode.encode("GBK")
         if BankID:
@@ -19897,67 +12031,8 @@ class ReqQueryTradeResultBySerial(Struct):
         ("LongCustomerName", c_char_Array_161),
     ]
 
-    def __init__(
-        self,
-        TradeCode: str = None,
-        BankID: str = None,
-        BankBranchID: str = None,
-        BrokerID: str = None,
-        BrokerBranchID: str = None,
-        TradeDate: str = None,
-        TradeTime: str = None,
-        BankSerial: str = None,
-        TradingDay: str = None,
-        PlateSerial: int = None,
-        LastFragment: bytes = None,
-        SessionID: int = None,
-        Reference: int = None,
-        RefrenceIssureType: bytes = None,
-        RefrenceIssure: str = None,
-        CustomerName: str = None,
-        IdCardType: bytes = None,
-        IdentifiedCardNo: str = None,
-        CustType: bytes = None,
-        BankAccount: str = None,
-        BankPassWord: str = None,
-        AccountID: str = None,
-        Password: str = None,
-        CurrencyID: str = None,
-        TradeAmount: float = None,
-        Digest: str = None,
-        LongCustomerName: str = None,
-    ):
-        """
-        查询指定流水号的交易结果请求
-        :param TradeCode: 业务功能码
-        :param BankID: 银行代码
-        :param BankBranchID: 银行分支机构代码
-        :param BrokerID: 期商代码
-        :param BrokerBranchID: 期商分支机构代码
-        :param TradeDate: 交易日期
-        :param TradeTime: 交易时间
-        :param BankSerial: 银行流水号
-        :param TradingDay: 交易系统日期
-        :param PlateSerial: 银期平台消息流水号
-        :param LastFragment: 最后分片标志
-        :param SessionID: 会话号
-        :param Reference: 流水号
-        :param RefrenceIssureType: 本流水号发布者的机构类型
-        :param RefrenceIssure: 本流水号发布者机构编码
-        :param CustomerName: 客户姓名
-        :param IdCardType: 证件类型
-        :param IdentifiedCardNo: 证件号码
-        :param CustType: 客户类型
-        :param BankAccount: 银行帐号
-        :param BankPassWord: 银行密码
-        :param AccountID: 投资者帐号
-        :param Password: 期货密码
-        :param CurrencyID: 币种代码
-        :param TradeAmount: 转帐金额
-        :param Digest: 摘要
-        :param LongCustomerName: 长客户姓名
-        """
-        super(ReqQueryTradeResultBySerial, self).__init__()
+    def __init__(self, TradeCode=None, BankID=None, BankBranchID=None, BrokerID=None, BrokerBranchID=None, TradeDate=None, TradeTime=None, BankSerial=None, TradingDay=None, PlateSerial=None, LastFragment=None, SessionID=None, Reference=None, RefrenceIssureType=None, RefrenceIssure=None, CustomerName=None, IdCardType=None, IdentifiedCardNo=None, CustType=None, BankAccount=None, BankPassWord=None, AccountID=None, Password=None, CurrencyID=None, TradeAmount=None, Digest=None, LongCustomerName=None):
+        super().__init__()
         if TradeCode:
             self.TradeCode = TradeCode.encode("GBK")
         if BankID:
@@ -20044,65 +12119,8 @@ class RspQueryTradeResultBySerial(Struct):
         ("Digest", c_char_Array_36),
     ]
 
-    def __init__(
-        self,
-        TradeCode: str = None,
-        BankID: str = None,
-        BankBranchID: str = None,
-        BrokerID: str = None,
-        BrokerBranchID: str = None,
-        TradeDate: str = None,
-        TradeTime: str = None,
-        BankSerial: str = None,
-        TradingDay: str = None,
-        PlateSerial: int = None,
-        LastFragment: bytes = None,
-        SessionID: int = None,
-        ErrorID: int = None,
-        ErrorMsg: str = None,
-        Reference: int = None,
-        RefrenceIssureType: bytes = None,
-        RefrenceIssure: str = None,
-        OriginReturnCode: str = None,
-        OriginDescrInfoForReturnCode: str = None,
-        BankAccount: str = None,
-        BankPassWord: str = None,
-        AccountID: str = None,
-        Password: str = None,
-        CurrencyID: str = None,
-        TradeAmount: float = None,
-        Digest: str = None,
-    ):
-        """
-        查询指定流水号的交易结果响应
-        :param TradeCode: 业务功能码
-        :param BankID: 银行代码
-        :param BankBranchID: 银行分支机构代码
-        :param BrokerID: 期商代码
-        :param BrokerBranchID: 期商分支机构代码
-        :param TradeDate: 交易日期
-        :param TradeTime: 交易时间
-        :param BankSerial: 银行流水号
-        :param TradingDay: 交易系统日期
-        :param PlateSerial: 银期平台消息流水号
-        :param LastFragment: 最后分片标志
-        :param SessionID: 会话号
-        :param ErrorID: 错误代码
-        :param ErrorMsg: 错误信息
-        :param Reference: 流水号
-        :param RefrenceIssureType: 本流水号发布者的机构类型
-        :param RefrenceIssure: 本流水号发布者机构编码
-        :param OriginReturnCode: 原始返回代码
-        :param OriginDescrInfoForReturnCode: 原始返回码描述
-        :param BankAccount: 银行帐号
-        :param BankPassWord: 银行密码
-        :param AccountID: 投资者帐号
-        :param Password: 期货密码
-        :param CurrencyID: 币种代码
-        :param TradeAmount: 转帐金额
-        :param Digest: 摘要
-        """
-        super(RspQueryTradeResultBySerial, self).__init__()
+    def __init__(self, TradeCode=None, BankID=None, BankBranchID=None, BrokerID=None, BrokerBranchID=None, TradeDate=None, TradeTime=None, BankSerial=None, TradingDay=None, PlateSerial=None, LastFragment=None, SessionID=None, ErrorID=None, ErrorMsg=None, Reference=None, RefrenceIssureType=None, RefrenceIssure=None, OriginReturnCode=None, OriginDescrInfoForReturnCode=None, BankAccount=None, BankPassWord=None, AccountID=None, Password=None, CurrencyID=None, TradeAmount=None, Digest=None):
+        super().__init__()
         if TradeCode:
             self.TradeCode = TradeCode.encode("GBK")
         if BankID:
@@ -20175,41 +12193,8 @@ class ReqDayEndFileReady(Struct):
         ("Digest", c_char_Array_36),
     ]
 
-    def __init__(
-        self,
-        TradeCode: str = None,
-        BankID: str = None,
-        BankBranchID: str = None,
-        BrokerID: str = None,
-        BrokerBranchID: str = None,
-        TradeDate: str = None,
-        TradeTime: str = None,
-        BankSerial: str = None,
-        TradingDay: str = None,
-        PlateSerial: int = None,
-        LastFragment: bytes = None,
-        SessionID: int = None,
-        FileBusinessCode: bytes = None,
-        Digest: str = None,
-    ):
-        """
-        日终文件就绪请求
-        :param TradeCode: 业务功能码
-        :param BankID: 银行代码
-        :param BankBranchID: 银行分支机构代码
-        :param BrokerID: 期商代码
-        :param BrokerBranchID: 期商分支机构代码
-        :param TradeDate: 交易日期
-        :param TradeTime: 交易时间
-        :param BankSerial: 银行流水号
-        :param TradingDay: 交易系统日期
-        :param PlateSerial: 银期平台消息流水号
-        :param LastFragment: 最后分片标志
-        :param SessionID: 会话号
-        :param FileBusinessCode: 文件业务功能
-        :param Digest: 摘要
-        """
-        super(ReqDayEndFileReady, self).__init__()
+    def __init__(self, TradeCode=None, BankID=None, BankBranchID=None, BrokerID=None, BrokerBranchID=None, TradeDate=None, TradeTime=None, BankSerial=None, TradingDay=None, PlateSerial=None, LastFragment=None, SessionID=None, FileBusinessCode=None, Digest=None):
+        super().__init__()
         if TradeCode:
             self.TradeCode = TradeCode.encode("GBK")
         if BankID:
@@ -20246,17 +12231,8 @@ class ReturnResult(Struct):
         ("DescrInfoForReturnCode", c_char_Array_129),
     ]
 
-    def __init__(
-        self,
-        ReturnCode: str = None,
-        DescrInfoForReturnCode: str = None,
-    ):
-        """
-        返回结果
-        :param ReturnCode: 返回代码
-        :param DescrInfoForReturnCode: 返回码描述
-        """
-        super(ReturnResult, self).__init__()
+    def __init__(self, ReturnCode=None, DescrInfoForReturnCode=None):
+        super().__init__()
         if ReturnCode:
             self.ReturnCode = ReturnCode.encode("GBK")
         if DescrInfoForReturnCode:
@@ -20286,51 +12262,8 @@ class VerifyFuturePassword(Struct):
         ("CurrencyID", c_char_Array_4),
     ]
 
-    def __init__(
-        self,
-        TradeCode: str = None,
-        BankID: str = None,
-        BankBranchID: str = None,
-        BrokerID: str = None,
-        BrokerBranchID: str = None,
-        TradeDate: str = None,
-        TradeTime: str = None,
-        BankSerial: str = None,
-        TradingDay: str = None,
-        PlateSerial: int = None,
-        LastFragment: bytes = None,
-        SessionID: int = None,
-        AccountID: str = None,
-        Password: str = None,
-        BankAccount: str = None,
-        BankPassWord: str = None,
-        InstallID: int = None,
-        TID: int = None,
-        CurrencyID: str = None,
-    ):
-        """
-        验证期货资金密码
-        :param TradeCode: 业务功能码
-        :param BankID: 银行代码
-        :param BankBranchID: 银行分支机构代码
-        :param BrokerID: 期商代码
-        :param BrokerBranchID: 期商分支机构代码
-        :param TradeDate: 交易日期
-        :param TradeTime: 交易时间
-        :param BankSerial: 银行流水号
-        :param TradingDay: 交易系统日期
-        :param PlateSerial: 银期平台消息流水号
-        :param LastFragment: 最后分片标志
-        :param SessionID: 会话号
-        :param AccountID: 投资者帐号
-        :param Password: 期货密码
-        :param BankAccount: 银行帐号
-        :param BankPassWord: 银行密码
-        :param InstallID: 安装编号
-        :param TID: 交易ID
-        :param CurrencyID: 币种代码
-        """
-        super(VerifyFuturePassword, self).__init__()
+    def __init__(self, TradeCode=None, BankID=None, BankBranchID=None, BrokerID=None, BrokerBranchID=None, TradeDate=None, TradeTime=None, BankSerial=None, TradingDay=None, PlateSerial=None, LastFragment=None, SessionID=None, AccountID=None, Password=None, BankAccount=None, BankPassWord=None, InstallID=None, TID=None, CurrencyID=None):
+        super().__init__()
         if TradeCode:
             self.TradeCode = TradeCode.encode("GBK")
         if BankID:
@@ -20380,23 +12313,8 @@ class VerifyCustInfo(Struct):
         ("LongCustomerName", c_char_Array_161),
     ]
 
-    def __init__(
-        self,
-        CustomerName: str = None,
-        IdCardType: bytes = None,
-        IdentifiedCardNo: str = None,
-        CustType: bytes = None,
-        LongCustomerName: str = None,
-    ):
-        """
-        验证客户信息
-        :param CustomerName: 客户姓名
-        :param IdCardType: 证件类型
-        :param IdentifiedCardNo: 证件号码
-        :param CustType: 客户类型
-        :param LongCustomerName: 长客户姓名
-        """
-        super(VerifyCustInfo, self).__init__()
+    def __init__(self, CustomerName=None, IdCardType=None, IdentifiedCardNo=None, CustType=None, LongCustomerName=None):
+        super().__init__()
         if CustomerName:
             self.CustomerName = CustomerName.encode("GBK")
         if IdCardType:
@@ -20421,29 +12339,8 @@ class VerifyFuturePasswordAndCustInfo(Struct):
         ("LongCustomerName", c_char_Array_161),
     ]
 
-    def __init__(
-        self,
-        CustomerName: str = None,
-        IdCardType: bytes = None,
-        IdentifiedCardNo: str = None,
-        CustType: bytes = None,
-        AccountID: str = None,
-        Password: str = None,
-        CurrencyID: str = None,
-        LongCustomerName: str = None,
-    ):
-        """
-        验证期货资金密码和客户信息
-        :param CustomerName: 客户姓名
-        :param IdCardType: 证件类型
-        :param IdentifiedCardNo: 证件号码
-        :param CustType: 客户类型
-        :param AccountID: 投资者帐号
-        :param Password: 期货密码
-        :param CurrencyID: 币种代码
-        :param LongCustomerName: 长客户姓名
-        """
-        super(VerifyFuturePasswordAndCustInfo, self).__init__()
+    def __init__(self, CustomerName=None, IdCardType=None, IdentifiedCardNo=None, CustType=None, AccountID=None, Password=None, CurrencyID=None, LongCustomerName=None):
+        super().__init__()
         if CustomerName:
             self.CustomerName = CustomerName.encode("GBK")
         if IdCardType:
@@ -20473,27 +12370,8 @@ class DepositResultInform(Struct):
         ("DescrInfoForReturnCode", c_char_Array_129),
     ]
 
-    def __init__(
-        self,
-        DepositSeqNo: str = None,
-        BrokerID: str = None,
-        InvestorID: str = None,
-        Deposit: float = None,
-        RequestID: int = None,
-        ReturnCode: str = None,
-        DescrInfoForReturnCode: str = None,
-    ):
-        """
-        验证期货资金密码和客户信息
-        :param DepositSeqNo: 出入金流水号，该流水号为银期报盘返回的流水号
-        :param BrokerID: 经纪公司代码
-        :param InvestorID: 投资者代码
-        :param Deposit: 入金金额
-        :param RequestID: 请求编号
-        :param ReturnCode: 返回代码
-        :param DescrInfoForReturnCode: 返回码描述
-        """
-        super(DepositResultInform, self).__init__()
+    def __init__(self, DepositSeqNo=None, BrokerID=None, InvestorID=None, Deposit=None, RequestID=None, ReturnCode=None, DescrInfoForReturnCode=None):
+        super().__init__()
         if DepositSeqNo:
             self.DepositSeqNo = DepositSeqNo.encode("GBK")
         if BrokerID:
@@ -20534,53 +12412,8 @@ class ReqSyncKey(Struct):
         ("TID", c_int),
     ]
 
-    def __init__(
-        self,
-        TradeCode: str = None,
-        BankID: str = None,
-        BankBranchID: str = None,
-        BrokerID: str = None,
-        BrokerBranchID: str = None,
-        TradeDate: str = None,
-        TradeTime: str = None,
-        BankSerial: str = None,
-        TradingDay: str = None,
-        PlateSerial: int = None,
-        LastFragment: bytes = None,
-        SessionID: int = None,
-        InstallID: int = None,
-        UserID: str = None,
-        Message: str = None,
-        DeviceID: str = None,
-        BrokerIDByBank: str = None,
-        OperNo: str = None,
-        RequestID: int = None,
-        TID: int = None,
-    ):
-        """
-        交易核心向银期报盘发出密钥同步请求
-        :param TradeCode: 业务功能码
-        :param BankID: 银行代码
-        :param BankBranchID: 银行分支机构代码
-        :param BrokerID: 期商代码
-        :param BrokerBranchID: 期商分支机构代码
-        :param TradeDate: 交易日期
-        :param TradeTime: 交易时间
-        :param BankSerial: 银行流水号
-        :param TradingDay: 交易系统日期
-        :param PlateSerial: 银期平台消息流水号
-        :param LastFragment: 最后分片标志
-        :param SessionID: 会话号
-        :param InstallID: 安装编号
-        :param UserID: 用户标识
-        :param Message: 交易核心给银期报盘的消息
-        :param DeviceID: 渠道标志
-        :param BrokerIDByBank: 期货公司银行编码
-        :param OperNo: 交易柜员
-        :param RequestID: 请求编号
-        :param TID: 交易ID
-        """
-        super(ReqSyncKey, self).__init__()
+    def __init__(self, TradeCode=None, BankID=None, BankBranchID=None, BrokerID=None, BrokerBranchID=None, TradeDate=None, TradeTime=None, BankSerial=None, TradingDay=None, PlateSerial=None, LastFragment=None, SessionID=None, InstallID=None, UserID=None, Message=None, DeviceID=None, BrokerIDByBank=None, OperNo=None, RequestID=None, TID=None):
+        super().__init__()
         if TradeCode:
             self.TradeCode = TradeCode.encode("GBK")
         if BankID:
@@ -20649,57 +12482,8 @@ class RspSyncKey(Struct):
         ("ErrorMsg", c_char_Array_81),
     ]
 
-    def __init__(
-        self,
-        TradeCode: str = None,
-        BankID: str = None,
-        BankBranchID: str = None,
-        BrokerID: str = None,
-        BrokerBranchID: str = None,
-        TradeDate: str = None,
-        TradeTime: str = None,
-        BankSerial: str = None,
-        TradingDay: str = None,
-        PlateSerial: int = None,
-        LastFragment: bytes = None,
-        SessionID: int = None,
-        InstallID: int = None,
-        UserID: str = None,
-        Message: str = None,
-        DeviceID: str = None,
-        BrokerIDByBank: str = None,
-        OperNo: str = None,
-        RequestID: int = None,
-        TID: int = None,
-        ErrorID: int = None,
-        ErrorMsg: str = None,
-    ):
-        """
-        交易核心向银期报盘发出密钥同步响应
-        :param TradeCode: 业务功能码
-        :param BankID: 银行代码
-        :param BankBranchID: 银行分支机构代码
-        :param BrokerID: 期商代码
-        :param BrokerBranchID: 期商分支机构代码
-        :param TradeDate: 交易日期
-        :param TradeTime: 交易时间
-        :param BankSerial: 银行流水号
-        :param TradingDay: 交易系统日期
-        :param PlateSerial: 银期平台消息流水号
-        :param LastFragment: 最后分片标志
-        :param SessionID: 会话号
-        :param InstallID: 安装编号
-        :param UserID: 用户标识
-        :param Message: 交易核心给银期报盘的消息
-        :param DeviceID: 渠道标志
-        :param BrokerIDByBank: 期货公司银行编码
-        :param OperNo: 交易柜员
-        :param RequestID: 请求编号
-        :param TID: 交易ID
-        :param ErrorID: 错误代码
-        :param ErrorMsg: 错误信息
-        """
-        super(RspSyncKey, self).__init__()
+    def __init__(self, TradeCode=None, BankID=None, BankBranchID=None, BrokerID=None, BrokerBranchID=None, TradeDate=None, TradeTime=None, BankSerial=None, TradingDay=None, PlateSerial=None, LastFragment=None, SessionID=None, InstallID=None, UserID=None, Message=None, DeviceID=None, BrokerIDByBank=None, OperNo=None, RequestID=None, TID=None, ErrorID=None, ErrorMsg=None):
+        super().__init__()
         if TradeCode:
             self.TradeCode = TradeCode.encode("GBK")
         if BankID:
@@ -20791,95 +12575,8 @@ class NotifyQueryAccount(Struct):
         ("LongCustomerName", c_char_Array_161),
     ]
 
-    def __init__(
-        self,
-        TradeCode: str = None,
-        BankID: str = None,
-        BankBranchID: str = None,
-        BrokerID: str = None,
-        BrokerBranchID: str = None,
-        TradeDate: str = None,
-        TradeTime: str = None,
-        BankSerial: str = None,
-        TradingDay: str = None,
-        PlateSerial: int = None,
-        LastFragment: bytes = None,
-        SessionID: int = None,
-        CustomerName: str = None,
-        IdCardType: bytes = None,
-        IdentifiedCardNo: str = None,
-        CustType: bytes = None,
-        BankAccount: str = None,
-        BankPassWord: str = None,
-        AccountID: str = None,
-        Password: str = None,
-        FutureSerial: int = None,
-        InstallID: int = None,
-        UserID: str = None,
-        VerifyCertNoFlag: bytes = None,
-        CurrencyID: str = None,
-        Digest: str = None,
-        BankAccType: bytes = None,
-        DeviceID: str = None,
-        BankSecuAccType: bytes = None,
-        BrokerIDByBank: str = None,
-        BankSecuAcc: str = None,
-        BankPwdFlag: bytes = None,
-        SecuPwdFlag: bytes = None,
-        OperNo: str = None,
-        RequestID: int = None,
-        TID: int = None,
-        BankUseAmount: float = None,
-        BankFetchAmount: float = None,
-        ErrorID: int = None,
-        ErrorMsg: str = None,
-        LongCustomerName: str = None,
-    ):
-        """
-        查询账户信息通知
-        :param TradeCode: 业务功能码
-        :param BankID: 银行代码
-        :param BankBranchID: 银行分支机构代码
-        :param BrokerID: 期商代码
-        :param BrokerBranchID: 期商分支机构代码
-        :param TradeDate: 交易日期
-        :param TradeTime: 交易时间
-        :param BankSerial: 银行流水号
-        :param TradingDay: 交易系统日期
-        :param PlateSerial: 银期平台消息流水号
-        :param LastFragment: 最后分片标志
-        :param SessionID: 会话号
-        :param CustomerName: 客户姓名
-        :param IdCardType: 证件类型
-        :param IdentifiedCardNo: 证件号码
-        :param CustType: 客户类型
-        :param BankAccount: 银行帐号
-        :param BankPassWord: 银行密码
-        :param AccountID: 投资者帐号
-        :param Password: 期货密码
-        :param FutureSerial: 期货公司流水号
-        :param InstallID: 安装编号
-        :param UserID: 用户标识
-        :param VerifyCertNoFlag: 验证客户证件号码标志
-        :param CurrencyID: 币种代码
-        :param Digest: 摘要
-        :param BankAccType: 银行帐号类型
-        :param DeviceID: 渠道标志
-        :param BankSecuAccType: 期货单位帐号类型
-        :param BrokerIDByBank: 期货公司银行编码
-        :param BankSecuAcc: 期货单位帐号
-        :param BankPwdFlag: 银行密码标志
-        :param SecuPwdFlag: 期货资金密码核对标志
-        :param OperNo: 交易柜员
-        :param RequestID: 请求编号
-        :param TID: 交易ID
-        :param BankUseAmount: 银行可用金额
-        :param BankFetchAmount: 银行可取金额
-        :param ErrorID: 错误代码
-        :param ErrorMsg: 错误信息
-        :param LongCustomerName: 长客户姓名
-        """
-        super(NotifyQueryAccount, self).__init__()
+    def __init__(self, TradeCode=None, BankID=None, BankBranchID=None, BrokerID=None, BrokerBranchID=None, TradeDate=None, TradeTime=None, BankSerial=None, TradingDay=None, PlateSerial=None, LastFragment=None, SessionID=None, CustomerName=None, IdCardType=None, IdentifiedCardNo=None, CustType=None, BankAccount=None, BankPassWord=None, AccountID=None, Password=None, FutureSerial=None, InstallID=None, UserID=None, VerifyCertNoFlag=None, CurrencyID=None, Digest=None, BankAccType=None, DeviceID=None, BankSecuAccType=None, BrokerIDByBank=None, BankSecuAcc=None, BankPwdFlag=None, SecuPwdFlag=None, OperNo=None, RequestID=None, TID=None, BankUseAmount=None, BankFetchAmount=None, ErrorID=None, ErrorMsg=None, LongCustomerName=None):
+        super().__init__()
         if TradeCode:
             self.TradeCode = TradeCode.encode("GBK")
         if BankID:
@@ -20996,69 +12693,8 @@ class TransferSerial(Struct):
         ("ErrorMsg", c_char_Array_81),
     ]
 
-    def __init__(
-        self,
-        PlateSerial: int = None,
-        TradeDate: str = None,
-        TradingDay: str = None,
-        TradeTime: str = None,
-        TradeCode: str = None,
-        SessionID: int = None,
-        BankID: str = None,
-        BankBranchID: str = None,
-        BankAccType: bytes = None,
-        BankAccount: str = None,
-        BankSerial: str = None,
-        BrokerID: str = None,
-        BrokerBranchID: str = None,
-        FutureAccType: bytes = None,
-        AccountID: str = None,
-        InvestorID: str = None,
-        FutureSerial: int = None,
-        IdCardType: bytes = None,
-        IdentifiedCardNo: str = None,
-        CurrencyID: str = None,
-        TradeAmount: float = None,
-        CustFee: float = None,
-        BrokerFee: float = None,
-        AvailabilityFlag: bytes = None,
-        OperatorCode: str = None,
-        BankNewAccount: str = None,
-        ErrorID: int = None,
-        ErrorMsg: str = None,
-    ):
-        """
-        银期转账交易流水表
-        :param PlateSerial: 平台流水号
-        :param TradeDate: 交易发起方日期
-        :param TradingDay: 交易日期
-        :param TradeTime: 交易时间
-        :param TradeCode: 交易代码
-        :param SessionID: 会话编号
-        :param BankID: 银行编码
-        :param BankBranchID: 银行分支机构编码
-        :param BankAccType: 银行帐号类型
-        :param BankAccount: 银行帐号
-        :param BankSerial: 银行流水号
-        :param BrokerID: 期货公司编码
-        :param BrokerBranchID: 期商分支机构代码
-        :param FutureAccType: 期货公司帐号类型
-        :param AccountID: 投资者帐号
-        :param InvestorID: 投资者代码
-        :param FutureSerial: 期货公司流水号
-        :param IdCardType: 证件类型
-        :param IdentifiedCardNo: 证件号码
-        :param CurrencyID: 币种代码
-        :param TradeAmount: 交易金额
-        :param CustFee: 应收客户费用
-        :param BrokerFee: 应收期货公司费用
-        :param AvailabilityFlag: 有效标志
-        :param OperatorCode: 操作员
-        :param BankNewAccount: 新银行帐号
-        :param ErrorID: 错误代码
-        :param ErrorMsg: 错误信息
-        """
-        super(TransferSerial, self).__init__()
+    def __init__(self, PlateSerial=None, TradeDate=None, TradingDay=None, TradeTime=None, TradeCode=None, SessionID=None, BankID=None, BankBranchID=None, BankAccType=None, BankAccount=None, BankSerial=None, BrokerID=None, BrokerBranchID=None, FutureAccType=None, AccountID=None, InvestorID=None, FutureSerial=None, IdCardType=None, IdentifiedCardNo=None, CurrencyID=None, TradeAmount=None, CustFee=None, BrokerFee=None, AvailabilityFlag=None, OperatorCode=None, BankNewAccount=None, ErrorID=None, ErrorMsg=None):
+        super().__init__()
         if PlateSerial:
             self.PlateSerial = PlateSerial
         if TradeDate:
@@ -21125,21 +12761,8 @@ class QryTransferSerial(Struct):
         ("CurrencyID", c_char_Array_4),
     ]
 
-    def __init__(
-        self,
-        BrokerID: str = None,
-        AccountID: str = None,
-        BankID: str = None,
-        CurrencyID: str = None,
-    ):
-        """
-        请求查询转帐流水
-        :param BrokerID: 经纪公司代码
-        :param AccountID: 投资者帐号
-        :param BankID: 银行编码
-        :param CurrencyID: 币种代码
-        """
-        super(QryTransferSerial, self).__init__()
+    def __init__(self, BrokerID=None, AccountID=None, BankID=None, CurrencyID=None):
+        super().__init__()
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
         if AccountID:
@@ -21179,63 +12802,8 @@ class NotifyFutureSignIn(Struct):
         ("MacKey", c_char_Array_129),
     ]
 
-    def __init__(
-        self,
-        TradeCode: str = None,
-        BankID: str = None,
-        BankBranchID: str = None,
-        BrokerID: str = None,
-        BrokerBranchID: str = None,
-        TradeDate: str = None,
-        TradeTime: str = None,
-        BankSerial: str = None,
-        TradingDay: str = None,
-        PlateSerial: int = None,
-        LastFragment: bytes = None,
-        SessionID: int = None,
-        InstallID: int = None,
-        UserID: str = None,
-        Digest: str = None,
-        CurrencyID: str = None,
-        DeviceID: str = None,
-        BrokerIDByBank: str = None,
-        OperNo: str = None,
-        RequestID: int = None,
-        TID: int = None,
-        ErrorID: int = None,
-        ErrorMsg: str = None,
-        PinKey: str = None,
-        MacKey: str = None,
-    ):
-        """
-        期商签到通知
-        :param TradeCode: 业务功能码
-        :param BankID: 银行代码
-        :param BankBranchID: 银行分支机构代码
-        :param BrokerID: 期商代码
-        :param BrokerBranchID: 期商分支机构代码
-        :param TradeDate: 交易日期
-        :param TradeTime: 交易时间
-        :param BankSerial: 银行流水号
-        :param TradingDay: 交易系统日期
-        :param PlateSerial: 银期平台消息流水号
-        :param LastFragment: 最后分片标志
-        :param SessionID: 会话号
-        :param InstallID: 安装编号
-        :param UserID: 用户标识
-        :param Digest: 摘要
-        :param CurrencyID: 币种代码
-        :param DeviceID: 渠道标志
-        :param BrokerIDByBank: 期货公司银行编码
-        :param OperNo: 交易柜员
-        :param RequestID: 请求编号
-        :param TID: 交易ID
-        :param ErrorID: 错误代码
-        :param ErrorMsg: 错误信息
-        :param PinKey: PIN密钥
-        :param MacKey: MAC密钥
-        """
-        super(NotifyFutureSignIn, self).__init__()
+    def __init__(self, TradeCode=None, BankID=None, BankBranchID=None, BrokerID=None, BrokerBranchID=None, TradeDate=None, TradeTime=None, BankSerial=None, TradingDay=None, PlateSerial=None, LastFragment=None, SessionID=None, InstallID=None, UserID=None, Digest=None, CurrencyID=None, DeviceID=None, BrokerIDByBank=None, OperNo=None, RequestID=None, TID=None, ErrorID=None, ErrorMsg=None, PinKey=None, MacKey=None):
+        super().__init__()
         if TradeCode:
             self.TradeCode = TradeCode.encode("GBK")
         if BankID:
@@ -21315,59 +12883,8 @@ class NotifyFutureSignOut(Struct):
         ("ErrorMsg", c_char_Array_81),
     ]
 
-    def __init__(
-        self,
-        TradeCode: str = None,
-        BankID: str = None,
-        BankBranchID: str = None,
-        BrokerID: str = None,
-        BrokerBranchID: str = None,
-        TradeDate: str = None,
-        TradeTime: str = None,
-        BankSerial: str = None,
-        TradingDay: str = None,
-        PlateSerial: int = None,
-        LastFragment: bytes = None,
-        SessionID: int = None,
-        InstallID: int = None,
-        UserID: str = None,
-        Digest: str = None,
-        CurrencyID: str = None,
-        DeviceID: str = None,
-        BrokerIDByBank: str = None,
-        OperNo: str = None,
-        RequestID: int = None,
-        TID: int = None,
-        ErrorID: int = None,
-        ErrorMsg: str = None,
-    ):
-        """
-        期商签退通知
-        :param TradeCode: 业务功能码
-        :param BankID: 银行代码
-        :param BankBranchID: 银行分支机构代码
-        :param BrokerID: 期商代码
-        :param BrokerBranchID: 期商分支机构代码
-        :param TradeDate: 交易日期
-        :param TradeTime: 交易时间
-        :param BankSerial: 银行流水号
-        :param TradingDay: 交易系统日期
-        :param PlateSerial: 银期平台消息流水号
-        :param LastFragment: 最后分片标志
-        :param SessionID: 会话号
-        :param InstallID: 安装编号
-        :param UserID: 用户标识
-        :param Digest: 摘要
-        :param CurrencyID: 币种代码
-        :param DeviceID: 渠道标志
-        :param BrokerIDByBank: 期货公司银行编码
-        :param OperNo: 交易柜员
-        :param RequestID: 请求编号
-        :param TID: 交易ID
-        :param ErrorID: 错误代码
-        :param ErrorMsg: 错误信息
-        """
-        super(NotifyFutureSignOut, self).__init__()
+    def __init__(self, TradeCode=None, BankID=None, BankBranchID=None, BrokerID=None, BrokerBranchID=None, TradeDate=None, TradeTime=None, BankSerial=None, TradingDay=None, PlateSerial=None, LastFragment=None, SessionID=None, InstallID=None, UserID=None, Digest=None, CurrencyID=None, DeviceID=None, BrokerIDByBank=None, OperNo=None, RequestID=None, TID=None, ErrorID=None, ErrorMsg=None):
+        super().__init__()
         if TradeCode:
             self.TradeCode = TradeCode.encode("GBK")
         if BankID:
@@ -21442,57 +12959,8 @@ class NotifySyncKey(Struct):
         ("ErrorMsg", c_char_Array_81),
     ]
 
-    def __init__(
-        self,
-        TradeCode: str = None,
-        BankID: str = None,
-        BankBranchID: str = None,
-        BrokerID: str = None,
-        BrokerBranchID: str = None,
-        TradeDate: str = None,
-        TradeTime: str = None,
-        BankSerial: str = None,
-        TradingDay: str = None,
-        PlateSerial: int = None,
-        LastFragment: bytes = None,
-        SessionID: int = None,
-        InstallID: int = None,
-        UserID: str = None,
-        Message: str = None,
-        DeviceID: str = None,
-        BrokerIDByBank: str = None,
-        OperNo: str = None,
-        RequestID: int = None,
-        TID: int = None,
-        ErrorID: int = None,
-        ErrorMsg: str = None,
-    ):
-        """
-        交易核心向银期报盘发出密钥同步处理结果的通知
-        :param TradeCode: 业务功能码
-        :param BankID: 银行代码
-        :param BankBranchID: 银行分支机构代码
-        :param BrokerID: 期商代码
-        :param BrokerBranchID: 期商分支机构代码
-        :param TradeDate: 交易日期
-        :param TradeTime: 交易时间
-        :param BankSerial: 银行流水号
-        :param TradingDay: 交易系统日期
-        :param PlateSerial: 银期平台消息流水号
-        :param LastFragment: 最后分片标志
-        :param SessionID: 会话号
-        :param InstallID: 安装编号
-        :param UserID: 用户标识
-        :param Message: 交易核心给银期报盘的消息
-        :param DeviceID: 渠道标志
-        :param BrokerIDByBank: 期货公司银行编码
-        :param OperNo: 交易柜员
-        :param RequestID: 请求编号
-        :param TID: 交易ID
-        :param ErrorID: 错误代码
-        :param ErrorMsg: 错误信息
-        """
-        super(NotifySyncKey, self).__init__()
+    def __init__(self, TradeCode=None, BankID=None, BankBranchID=None, BrokerID=None, BrokerBranchID=None, TradeDate=None, TradeTime=None, BankSerial=None, TradingDay=None, PlateSerial=None, LastFragment=None, SessionID=None, InstallID=None, UserID=None, Message=None, DeviceID=None, BrokerIDByBank=None, OperNo=None, RequestID=None, TID=None, ErrorID=None, ErrorMsg=None):
+        super().__init__()
         if TradeCode:
             self.TradeCode = TradeCode.encode("GBK")
         if BankID:
@@ -21548,23 +13016,8 @@ class QryAccountregister(Struct):
         ("CurrencyID", c_char_Array_4),
     ]
 
-    def __init__(
-        self,
-        BrokerID: str = None,
-        AccountID: str = None,
-        BankID: str = None,
-        BankBranchID: str = None,
-        CurrencyID: str = None,
-    ):
-        """
-        请求查询银期签约关系
-        :param BrokerID: 经纪公司代码
-        :param AccountID: 投资者帐号
-        :param BankID: 银行编码
-        :param BankBranchID: 银行分支机构编码
-        :param CurrencyID: 币种代码
-        """
-        super(QryAccountregister, self).__init__()
+    def __init__(self, BrokerID=None, AccountID=None, BankID=None, BankBranchID=None, CurrencyID=None):
+        super().__init__()
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
         if AccountID:
@@ -21599,49 +13052,8 @@ class Accountregister(Struct):
         ("LongCustomerName", c_char_Array_161),
     ]
 
-    def __init__(
-        self,
-        TradeDay: str = None,
-        BankID: str = None,
-        BankBranchID: str = None,
-        BankAccount: str = None,
-        BrokerID: str = None,
-        BrokerBranchID: str = None,
-        AccountID: str = None,
-        IdCardType: bytes = None,
-        IdentifiedCardNo: str = None,
-        CustomerName: str = None,
-        CurrencyID: str = None,
-        OpenOrDestroy: bytes = None,
-        RegDate: str = None,
-        OutDate: str = None,
-        TID: int = None,
-        CustType: bytes = None,
-        BankAccType: bytes = None,
-        LongCustomerName: str = None,
-    ):
-        """
-        客户开销户信息表
-        :param TradeDay: 交易日期
-        :param BankID: 银行编码
-        :param BankBranchID: 银行分支机构编码
-        :param BankAccount: 银行帐号
-        :param BrokerID: 期货公司编码
-        :param BrokerBranchID: 期货公司分支机构编码
-        :param AccountID: 投资者帐号
-        :param IdCardType: 证件类型
-        :param IdentifiedCardNo: 证件号码
-        :param CustomerName: 客户姓名
-        :param CurrencyID: 币种代码
-        :param OpenOrDestroy: 开销户类别
-        :param RegDate: 签约日期
-        :param OutDate: 解约日期
-        :param TID: 交易ID
-        :param CustType: 客户类型
-        :param BankAccType: 银行帐号类型
-        :param LongCustomerName: 长客户姓名
-        """
-        super(Accountregister, self).__init__()
+    def __init__(self, TradeDay=None, BankID=None, BankBranchID=None, BankAccount=None, BrokerID=None, BrokerBranchID=None, AccountID=None, IdCardType=None, IdentifiedCardNo=None, CustomerName=None, CurrencyID=None, OpenOrDestroy=None, RegDate=None, OutDate=None, TID=None, CustType=None, BankAccType=None, LongCustomerName=None):
+        super().__init__()
         if TradeDay:
             self.TradeDay = TradeDay.encode("GBK")
         if BankID:
@@ -21731,107 +13143,8 @@ class OpenAccount(Struct):
         ("LongCustomerName", c_char_Array_161),
     ]
 
-    def __init__(
-        self,
-        TradeCode: str = None,
-        BankID: str = None,
-        BankBranchID: str = None,
-        BrokerID: str = None,
-        BrokerBranchID: str = None,
-        TradeDate: str = None,
-        TradeTime: str = None,
-        BankSerial: str = None,
-        TradingDay: str = None,
-        PlateSerial: int = None,
-        LastFragment: bytes = None,
-        SessionID: int = None,
-        CustomerName: str = None,
-        IdCardType: bytes = None,
-        IdentifiedCardNo: str = None,
-        Gender: bytes = None,
-        CountryCode: str = None,
-        CustType: bytes = None,
-        Address: str = None,
-        ZipCode: str = None,
-        Telephone: str = None,
-        MobilePhone: str = None,
-        Fax: str = None,
-        EMail: str = None,
-        MoneyAccountStatus: bytes = None,
-        BankAccount: str = None,
-        BankPassWord: str = None,
-        AccountID: str = None,
-        Password: str = None,
-        InstallID: int = None,
-        VerifyCertNoFlag: bytes = None,
-        CurrencyID: str = None,
-        CashExchangeCode: bytes = None,
-        Digest: str = None,
-        BankAccType: bytes = None,
-        DeviceID: str = None,
-        BankSecuAccType: bytes = None,
-        BrokerIDByBank: str = None,
-        BankSecuAcc: str = None,
-        BankPwdFlag: bytes = None,
-        SecuPwdFlag: bytes = None,
-        OperNo: str = None,
-        TID: int = None,
-        UserID: str = None,
-        ErrorID: int = None,
-        ErrorMsg: str = None,
-        LongCustomerName: str = None,
-    ):
-        """
-        银期开户信息
-        :param TradeCode: 业务功能码
-        :param BankID: 银行代码
-        :param BankBranchID: 银行分支机构代码
-        :param BrokerID: 期商代码
-        :param BrokerBranchID: 期商分支机构代码
-        :param TradeDate: 交易日期
-        :param TradeTime: 交易时间
-        :param BankSerial: 银行流水号
-        :param TradingDay: 交易系统日期
-        :param PlateSerial: 银期平台消息流水号
-        :param LastFragment: 最后分片标志
-        :param SessionID: 会话号
-        :param CustomerName: 客户姓名
-        :param IdCardType: 证件类型
-        :param IdentifiedCardNo: 证件号码
-        :param Gender: 性别
-        :param CountryCode: 国家代码
-        :param CustType: 客户类型
-        :param Address: 地址
-        :param ZipCode: 邮编
-        :param Telephone: 电话号码
-        :param MobilePhone: 手机
-        :param Fax: 传真
-        :param EMail: 电子邮件
-        :param MoneyAccountStatus: 资金账户状态
-        :param BankAccount: 银行帐号
-        :param BankPassWord: 银行密码
-        :param AccountID: 投资者帐号
-        :param Password: 期货密码
-        :param InstallID: 安装编号
-        :param VerifyCertNoFlag: 验证客户证件号码标志
-        :param CurrencyID: 币种代码
-        :param CashExchangeCode: 汇钞标志
-        :param Digest: 摘要
-        :param BankAccType: 银行帐号类型
-        :param DeviceID: 渠道标志
-        :param BankSecuAccType: 期货单位帐号类型
-        :param BrokerIDByBank: 期货公司银行编码
-        :param BankSecuAcc: 期货单位帐号
-        :param BankPwdFlag: 银行密码标志
-        :param SecuPwdFlag: 期货资金密码核对标志
-        :param OperNo: 交易柜员
-        :param TID: 交易ID
-        :param UserID: 用户标识
-        :param ErrorID: 错误代码
-        :param ErrorMsg: 错误信息
-        :param LongCustomerName: 长客户姓名
-        """
-        super(OpenAccount, self).__init__()
+    def __init__(self, TradeCode=None, BankID=None, BankBranchID=None, BrokerID=None, BrokerBranchID=None, TradeDate=None, TradeTime=None, BankSerial=None, TradingDay=None, PlateSerial=None, LastFragment=None, SessionID=None, CustomerName=None, IdCardType=None, IdentifiedCardNo=None, Gender=None, CountryCode=None, CustType=None, Address=None, ZipCode=None, Telephone=None, MobilePhone=None, Fax=None, EMail=None, MoneyAccountStatus=None, BankAccount=None, BankPassWord=None, AccountID=None, Password=None, InstallID=None, VerifyCertNoFlag=None, CurrencyID=None, CashExchangeCode=None, Digest=None, BankAccType=None, DeviceID=None, BankSecuAccType=None, BrokerIDByBank=None, BankSecuAcc=None, BankPwdFlag=None, SecuPwdFlag=None, OperNo=None, TID=None, UserID=None, ErrorID=None, ErrorMsg=None, LongCustomerName=None):
+        super().__init__()
         if TradeCode:
             self.TradeCode = TradeCode.encode("GBK")
         if BankID:
@@ -21979,107 +13292,8 @@ class CancelAccount(Struct):
         ("LongCustomerName", c_char_Array_161),
     ]
 
-    def __init__(
-        self,
-        TradeCode: str = None,
-        BankID: str = None,
-        BankBranchID: str = None,
-        BrokerID: str = None,
-        BrokerBranchID: str = None,
-        TradeDate: str = None,
-        TradeTime: str = None,
-        BankSerial: str = None,
-        TradingDay: str = None,
-        PlateSerial: int = None,
-        LastFragment: bytes = None,
-        SessionID: int = None,
-        CustomerName: str = None,
-        IdCardType: bytes = None,
-        IdentifiedCardNo: str = None,
-        Gender: bytes = None,
-        CountryCode: str = None,
-        CustType: bytes = None,
-        Address: str = None,
-        ZipCode: str = None,
-        Telephone: str = None,
-        MobilePhone: str = None,
-        Fax: str = None,
-        EMail: str = None,
-        MoneyAccountStatus: bytes = None,
-        BankAccount: str = None,
-        BankPassWord: str = None,
-        AccountID: str = None,
-        Password: str = None,
-        InstallID: int = None,
-        VerifyCertNoFlag: bytes = None,
-        CurrencyID: str = None,
-        CashExchangeCode: bytes = None,
-        Digest: str = None,
-        BankAccType: bytes = None,
-        DeviceID: str = None,
-        BankSecuAccType: bytes = None,
-        BrokerIDByBank: str = None,
-        BankSecuAcc: str = None,
-        BankPwdFlag: bytes = None,
-        SecuPwdFlag: bytes = None,
-        OperNo: str = None,
-        TID: int = None,
-        UserID: str = None,
-        ErrorID: int = None,
-        ErrorMsg: str = None,
-        LongCustomerName: str = None,
-    ):
-        """
-        银期销户信息
-        :param TradeCode: 业务功能码
-        :param BankID: 银行代码
-        :param BankBranchID: 银行分支机构代码
-        :param BrokerID: 期商代码
-        :param BrokerBranchID: 期商分支机构代码
-        :param TradeDate: 交易日期
-        :param TradeTime: 交易时间
-        :param BankSerial: 银行流水号
-        :param TradingDay: 交易系统日期
-        :param PlateSerial: 银期平台消息流水号
-        :param LastFragment: 最后分片标志
-        :param SessionID: 会话号
-        :param CustomerName: 客户姓名
-        :param IdCardType: 证件类型
-        :param IdentifiedCardNo: 证件号码
-        :param Gender: 性别
-        :param CountryCode: 国家代码
-        :param CustType: 客户类型
-        :param Address: 地址
-        :param ZipCode: 邮编
-        :param Telephone: 电话号码
-        :param MobilePhone: 手机
-        :param Fax: 传真
-        :param EMail: 电子邮件
-        :param MoneyAccountStatus: 资金账户状态
-        :param BankAccount: 银行帐号
-        :param BankPassWord: 银行密码
-        :param AccountID: 投资者帐号
-        :param Password: 期货密码
-        :param InstallID: 安装编号
-        :param VerifyCertNoFlag: 验证客户证件号码标志
-        :param CurrencyID: 币种代码
-        :param CashExchangeCode: 汇钞标志
-        :param Digest: 摘要
-        :param BankAccType: 银行帐号类型
-        :param DeviceID: 渠道标志
-        :param BankSecuAccType: 期货单位帐号类型
-        :param BrokerIDByBank: 期货公司银行编码
-        :param BankSecuAcc: 期货单位帐号
-        :param BankPwdFlag: 银行密码标志
-        :param SecuPwdFlag: 期货资金密码核对标志
-        :param OperNo: 交易柜员
-        :param TID: 交易ID
-        :param UserID: 用户标识
-        :param ErrorID: 错误代码
-        :param ErrorMsg: 错误信息
-        :param LongCustomerName: 长客户姓名
-        """
-        super(CancelAccount, self).__init__()
+    def __init__(self, TradeCode=None, BankID=None, BankBranchID=None, BrokerID=None, BrokerBranchID=None, TradeDate=None, TradeTime=None, BankSerial=None, TradingDay=None, PlateSerial=None, LastFragment=None, SessionID=None, CustomerName=None, IdCardType=None, IdentifiedCardNo=None, Gender=None, CountryCode=None, CustType=None, Address=None, ZipCode=None, Telephone=None, MobilePhone=None, Fax=None, EMail=None, MoneyAccountStatus=None, BankAccount=None, BankPassWord=None, AccountID=None, Password=None, InstallID=None, VerifyCertNoFlag=None, CurrencyID=None, CashExchangeCode=None, Digest=None, BankAccType=None, DeviceID=None, BankSecuAccType=None, BrokerIDByBank=None, BankSecuAcc=None, BankPwdFlag=None, SecuPwdFlag=None, OperNo=None, TID=None, UserID=None, ErrorID=None, ErrorMsg=None, LongCustomerName=None):
+        super().__init__()
         if TradeCode:
             self.TradeCode = TradeCode.encode("GBK")
         if BankID:
@@ -22223,99 +13437,8 @@ class ChangeAccount(Struct):
         ("LongCustomerName", c_char_Array_161),
     ]
 
-    def __init__(
-        self,
-        TradeCode: str = None,
-        BankID: str = None,
-        BankBranchID: str = None,
-        BrokerID: str = None,
-        BrokerBranchID: str = None,
-        TradeDate: str = None,
-        TradeTime: str = None,
-        BankSerial: str = None,
-        TradingDay: str = None,
-        PlateSerial: int = None,
-        LastFragment: bytes = None,
-        SessionID: int = None,
-        CustomerName: str = None,
-        IdCardType: bytes = None,
-        IdentifiedCardNo: str = None,
-        Gender: bytes = None,
-        CountryCode: str = None,
-        CustType: bytes = None,
-        Address: str = None,
-        ZipCode: str = None,
-        Telephone: str = None,
-        MobilePhone: str = None,
-        Fax: str = None,
-        EMail: str = None,
-        MoneyAccountStatus: bytes = None,
-        BankAccount: str = None,
-        BankPassWord: str = None,
-        NewBankAccount: str = None,
-        NewBankPassWord: str = None,
-        AccountID: str = None,
-        Password: str = None,
-        BankAccType: bytes = None,
-        InstallID: int = None,
-        VerifyCertNoFlag: bytes = None,
-        CurrencyID: str = None,
-        BrokerIDByBank: str = None,
-        BankPwdFlag: bytes = None,
-        SecuPwdFlag: bytes = None,
-        TID: int = None,
-        Digest: str = None,
-        ErrorID: int = None,
-        ErrorMsg: str = None,
-        LongCustomerName: str = None,
-    ):
-        """
-        银期变更银行账号信息
-        :param TradeCode: 业务功能码
-        :param BankID: 银行代码
-        :param BankBranchID: 银行分支机构代码
-        :param BrokerID: 期商代码
-        :param BrokerBranchID: 期商分支机构代码
-        :param TradeDate: 交易日期
-        :param TradeTime: 交易时间
-        :param BankSerial: 银行流水号
-        :param TradingDay: 交易系统日期
-        :param PlateSerial: 银期平台消息流水号
-        :param LastFragment: 最后分片标志
-        :param SessionID: 会话号
-        :param CustomerName: 客户姓名
-        :param IdCardType: 证件类型
-        :param IdentifiedCardNo: 证件号码
-        :param Gender: 性别
-        :param CountryCode: 国家代码
-        :param CustType: 客户类型
-        :param Address: 地址
-        :param ZipCode: 邮编
-        :param Telephone: 电话号码
-        :param MobilePhone: 手机
-        :param Fax: 传真
-        :param EMail: 电子邮件
-        :param MoneyAccountStatus: 资金账户状态
-        :param BankAccount: 银行帐号
-        :param BankPassWord: 银行密码
-        :param NewBankAccount: 新银行帐号
-        :param NewBankPassWord: 新银行密码
-        :param AccountID: 投资者帐号
-        :param Password: 期货密码
-        :param BankAccType: 银行帐号类型
-        :param InstallID: 安装编号
-        :param VerifyCertNoFlag: 验证客户证件号码标志
-        :param CurrencyID: 币种代码
-        :param BrokerIDByBank: 期货公司银行编码
-        :param BankPwdFlag: 银行密码标志
-        :param SecuPwdFlag: 期货资金密码核对标志
-        :param TID: 交易ID
-        :param Digest: 摘要
-        :param ErrorID: 错误代码
-        :param ErrorMsg: 错误信息
-        :param LongCustomerName: 长客户姓名
-        """
-        super(ChangeAccount, self).__init__()
+    def __init__(self, TradeCode=None, BankID=None, BankBranchID=None, BrokerID=None, BrokerBranchID=None, TradeDate=None, TradeTime=None, BankSerial=None, TradingDay=None, PlateSerial=None, LastFragment=None, SessionID=None, CustomerName=None, IdCardType=None, IdentifiedCardNo=None, Gender=None, CountryCode=None, CustType=None, Address=None, ZipCode=None, Telephone=None, MobilePhone=None, Fax=None, EMail=None, MoneyAccountStatus=None, BankAccount=None, BankPassWord=None, NewBankAccount=None, NewBankPassWord=None, AccountID=None, Password=None, BankAccType=None, InstallID=None, VerifyCertNoFlag=None, CurrencyID=None, BrokerIDByBank=None, BankPwdFlag=None, SecuPwdFlag=None, TID=None, Digest=None, ErrorID=None, ErrorMsg=None, LongCustomerName=None):
+        super().__init__()
         if TradeCode:
             self.TradeCode = TradeCode.encode("GBK")
         if BankID:
@@ -22413,23 +13536,8 @@ class SecAgentACIDMap(Struct):
         ("BrokerSecAgentID", c_char_Array_13),
     ]
 
-    def __init__(
-        self,
-        BrokerID: str = None,
-        UserID: str = None,
-        AccountID: str = None,
-        CurrencyID: str = None,
-        BrokerSecAgentID: str = None,
-    ):
-        """
-        二级代理操作员银期权限
-        :param BrokerID: 经纪公司代码
-        :param UserID: 用户代码
-        :param AccountID: 资金账户
-        :param CurrencyID: 币种
-        :param BrokerSecAgentID: 境外中介机构资金帐号
-        """
-        super(SecAgentACIDMap, self).__init__()
+    def __init__(self, BrokerID=None, UserID=None, AccountID=None, CurrencyID=None, BrokerSecAgentID=None):
+        super().__init__()
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
         if UserID:
@@ -22450,21 +13558,8 @@ class QrySecAgentACIDMap(Struct):
         ("CurrencyID", c_char_Array_4),
     ]
 
-    def __init__(
-        self,
-        BrokerID: str = None,
-        UserID: str = None,
-        AccountID: str = None,
-        CurrencyID: str = None,
-    ):
-        """
-        二级代理操作员银期权限查询
-        :param BrokerID: 经纪公司代码
-        :param UserID: 用户代码
-        :param AccountID: 资金账户
-        :param CurrencyID: 币种
-        """
-        super(QrySecAgentACIDMap, self).__init__()
+    def __init__(self, BrokerID=None, UserID=None, AccountID=None, CurrencyID=None):
+        super().__init__()
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
         if UserID:
@@ -22482,19 +13577,8 @@ class UserRightsAssign(Struct):
         ("DRIdentityID", c_int),
     ]
 
-    def __init__(
-        self,
-        BrokerID: str = None,
-        UserID: str = None,
-        DRIdentityID: int = None,
-    ):
-        """
-        灾备中心交易权限
-        :param BrokerID: 应用单元代码
-        :param UserID: 用户代码
-        :param DRIdentityID: 交易中心代码
-        """
-        super(UserRightsAssign, self).__init__()
+    def __init__(self, BrokerID=None, UserID=None, DRIdentityID=None):
+        super().__init__()
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
         if UserID:
@@ -22510,19 +13594,8 @@ class BrokerUserRightAssign(Struct):
         ("Tradeable", c_int),
     ]
 
-    def __init__(
-        self,
-        BrokerID: str = None,
-        DRIdentityID: int = None,
-        Tradeable: int = None,
-    ):
-        """
-        经济公司是否有在本标示的交易权限
-        :param BrokerID: 应用单元代码
-        :param DRIdentityID: 交易中心代码
-        :param Tradeable: 能否交易
-        """
-        super(BrokerUserRightAssign, self).__init__()
+    def __init__(self, BrokerID=None, DRIdentityID=None, Tradeable=None):
+        super().__init__()
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
         if DRIdentityID:
@@ -22539,21 +13612,8 @@ class DRTransfer(Struct):
         ("DestBrokerID", c_char_Array_11),
     ]
 
-    def __init__(
-        self,
-        OrigDRIdentityID: int = None,
-        DestDRIdentityID: int = None,
-        OrigBrokerID: str = None,
-        DestBrokerID: str = None,
-    ):
-        """
-        灾备交易转换报文
-        :param OrigDRIdentityID: 原交易中心代码
-        :param DestDRIdentityID: 目标交易中心代码
-        :param OrigBrokerID: 原应用单元代码
-        :param DestBrokerID: 目标易用单元代码
-        """
-        super(DRTransfer, self).__init__()
+    def __init__(self, OrigDRIdentityID=None, DestDRIdentityID=None, OrigBrokerID=None, DestBrokerID=None):
+        super().__init__()
         if OrigDRIdentityID:
             self.OrigDRIdentityID = OrigDRIdentityID
         if DestDRIdentityID:
@@ -22571,19 +13631,8 @@ class FensUserInfo(Struct):
         ("LoginMode", c_char),
     ]
 
-    def __init__(
-        self,
-        BrokerID: str = None,
-        UserID: str = None,
-        LoginMode: bytes = None,
-    ):
-        """
-        Fens用户信息
-        :param BrokerID: 经纪公司代码
-        :param UserID: 用户代码
-        :param LoginMode: 登录模式
-        """
-        super(FensUserInfo, self).__init__()
+    def __init__(self, BrokerID=None, UserID=None, LoginMode=None):
+        super().__init__()
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
         if UserID:
@@ -22597,15 +13646,8 @@ class CurrTransferIdentity(Struct):
         ("IdentityID", c_int),
     ]
 
-    def __init__(
-        self,
-        IdentityID: int = None,
-    ):
-        """
-        当前银期所属交易中心
-        :param IdentityID: 交易中心代码
-        """
-        super(CurrTransferIdentity, self).__init__()
+    def __init__(self, IdentityID=None):
+        super().__init__()
         if IdentityID:
             self.IdentityID = IdentityID
 
@@ -22617,19 +13659,8 @@ class LoginForbiddenUser(Struct):
         ("IPAddress", c_char_Array_16),
     ]
 
-    def __init__(
-        self,
-        BrokerID: str = None,
-        UserID: str = None,
-        IPAddress: str = None,
-    ):
-        """
-        禁止登录用户
-        :param BrokerID: 经纪公司代码
-        :param UserID: 用户代码
-        :param IPAddress: IP地址
-        """
-        super(LoginForbiddenUser, self).__init__()
+    def __init__(self, BrokerID=None, UserID=None, IPAddress=None):
+        super().__init__()
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
         if UserID:
@@ -22644,17 +13675,8 @@ class QryLoginForbiddenUser(Struct):
         ("UserID", c_char_Array_16),
     ]
 
-    def __init__(
-        self,
-        BrokerID: str = None,
-        UserID: str = None,
-    ):
-        """
-        查询禁止登录用户
-        :param BrokerID: 经纪公司代码
-        :param UserID: 用户代码
-        """
-        super(QryLoginForbiddenUser, self).__init__()
+    def __init__(self, BrokerID=None, UserID=None):
+        super().__init__()
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
         if UserID:
@@ -22668,19 +13690,8 @@ class MulticastGroupInfo(Struct):
         ("SourceIP", c_char_Array_16),
     ]
 
-    def __init__(
-        self,
-        GroupIP: str = None,
-        GroupPort: int = None,
-        SourceIP: str = None,
-    ):
-        """
-        UDP组播组信息
-        :param GroupIP: 组播组IP地址
-        :param GroupPort: 组播组IP端口
-        :param SourceIP: 源地址
-        """
-        super(MulticastGroupInfo, self).__init__()
+    def __init__(self, GroupIP=None, GroupPort=None, SourceIP=None):
+        super().__init__()
         if GroupIP:
             self.GroupIP = GroupIP.encode("GBK")
         if GroupPort:
@@ -22697,21 +13708,8 @@ class TradingAccountReserve(Struct):
         ("CurrencyID", c_char_Array_4),
     ]
 
-    def __init__(
-        self,
-        BrokerID: str = None,
-        AccountID: str = None,
-        Reserve: float = None,
-        CurrencyID: str = None,
-    ):
-        """
-        资金账户基本准备金
-        :param BrokerID: 经纪公司代码
-        :param AccountID: 投资者帐号
-        :param Reserve: 基本准备金
-        :param CurrencyID: 币种代码
-        """
-        super(TradingAccountReserve, self).__init__()
+    def __init__(self, BrokerID=None, AccountID=None, Reserve=None, CurrencyID=None):
+        super().__init__()
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
         if AccountID:
@@ -22727,15 +13725,8 @@ class QryLoginForbiddenIP(Struct):
         ("IPAddress", c_char_Array_16),
     ]
 
-    def __init__(
-        self,
-        IPAddress: str = None,
-    ):
-        """
-        查询禁止登录IP
-        :param IPAddress: IP地址
-        """
-        super(QryLoginForbiddenIP, self).__init__()
+    def __init__(self, IPAddress=None):
+        super().__init__()
         if IPAddress:
             self.IPAddress = IPAddress.encode("GBK")
 
@@ -22745,15 +13736,8 @@ class QryIPList(Struct):
         ("IPAddress", c_char_Array_16),
     ]
 
-    def __init__(
-        self,
-        IPAddress: str = None,
-    ):
-        """
-        查询IP列表
-        :param IPAddress: IP地址
-        """
-        super(QryIPList, self).__init__()
+    def __init__(self, IPAddress=None):
+        super().__init__()
         if IPAddress:
             self.IPAddress = IPAddress.encode("GBK")
 
@@ -22764,17 +13748,8 @@ class QryUserRightsAssign(Struct):
         ("UserID", c_char_Array_16),
     ]
 
-    def __init__(
-        self,
-        BrokerID: str = None,
-        UserID: str = None,
-    ):
-        """
-        查询用户下单权限分配表
-        :param BrokerID: 应用单元代码
-        :param UserID: 用户代码
-        """
-        super(QryUserRightsAssign, self).__init__()
+    def __init__(self, BrokerID=None, UserID=None):
+        super().__init__()
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
         if UserID:
@@ -22826,95 +13801,8 @@ class ReserveOpenAccountConfirm(Struct):
         ("ErrorMsg", c_char_Array_81),
     ]
 
-    def __init__(
-        self,
-        TradeCode: str = None,
-        BankID: str = None,
-        BankBranchID: str = None,
-        BrokerID: str = None,
-        BrokerBranchID: str = None,
-        TradeDate: str = None,
-        TradeTime: str = None,
-        BankSerial: str = None,
-        TradingDay: str = None,
-        PlateSerial: int = None,
-        LastFragment: bytes = None,
-        SessionID: int = None,
-        CustomerName: str = None,
-        IdCardType: bytes = None,
-        IdentifiedCardNo: str = None,
-        Gender: bytes = None,
-        CountryCode: str = None,
-        CustType: bytes = None,
-        Address: str = None,
-        ZipCode: str = None,
-        Telephone: str = None,
-        MobilePhone: str = None,
-        Fax: str = None,
-        EMail: str = None,
-        MoneyAccountStatus: bytes = None,
-        BankAccount: str = None,
-        BankPassWord: str = None,
-        InstallID: int = None,
-        VerifyCertNoFlag: bytes = None,
-        CurrencyID: str = None,
-        Digest: str = None,
-        BankAccType: bytes = None,
-        BrokerIDByBank: str = None,
-        TID: int = None,
-        AccountID: str = None,
-        Password: str = None,
-        BankReserveOpenSeq: str = None,
-        BookDate: str = None,
-        BookPsw: str = None,
-        ErrorID: int = None,
-        ErrorMsg: str = None,
-    ):
-        """
-        银期预约开户确认请求
-        :param TradeCode: 业务功能码
-        :param BankID: 银行代码
-        :param BankBranchID: 银行分支机构代码
-        :param BrokerID: 期商代码
-        :param BrokerBranchID: 期商分支机构代码
-        :param TradeDate: 交易日期
-        :param TradeTime: 交易时间
-        :param BankSerial: 银行流水号
-        :param TradingDay: 交易系统日期
-        :param PlateSerial: 银期平台消息流水号
-        :param LastFragment: 最后分片标志
-        :param SessionID: 会话号
-        :param CustomerName: 客户姓名
-        :param IdCardType: 证件类型
-        :param IdentifiedCardNo: 证件号码
-        :param Gender: 性别
-        :param CountryCode: 国家代码
-        :param CustType: 客户类型
-        :param Address: 地址
-        :param ZipCode: 邮编
-        :param Telephone: 电话号码
-        :param MobilePhone: 手机
-        :param Fax: 传真
-        :param EMail: 电子邮件
-        :param MoneyAccountStatus: 资金账户状态
-        :param BankAccount: 银行帐号
-        :param BankPassWord: 银行密码
-        :param InstallID: 安装编号
-        :param VerifyCertNoFlag: 验证客户证件号码标志
-        :param CurrencyID: 币种代码
-        :param Digest: 摘要
-        :param BankAccType: 银行帐号类型
-        :param BrokerIDByBank: 期货公司银行编码
-        :param TID: 交易ID
-        :param AccountID: 投资者帐号
-        :param Password: 期货密码
-        :param BankReserveOpenSeq: 预约开户银行流水号
-        :param BookDate: 预约开户日期
-        :param BookPsw: 预约开户验证密码
-        :param ErrorID: 错误代码
-        :param ErrorMsg: 错误信息
-        """
-        super(ReserveOpenAccountConfirm, self).__init__()
+    def __init__(self, TradeCode=None, BankID=None, BankBranchID=None, BrokerID=None, BrokerBranchID=None, TradeDate=None, TradeTime=None, BankSerial=None, TradingDay=None, PlateSerial=None, LastFragment=None, SessionID=None, CustomerName=None, IdCardType=None, IdentifiedCardNo=None, Gender=None, CountryCode=None, CustType=None, Address=None, ZipCode=None, Telephone=None, MobilePhone=None, Fax=None, EMail=None, MoneyAccountStatus=None, BankAccount=None, BankPassWord=None, InstallID=None, VerifyCertNoFlag=None, CurrencyID=None, Digest=None, BankAccType=None, BrokerIDByBank=None, TID=None, AccountID=None, Password=None, BankReserveOpenSeq=None, BookDate=None, BookPsw=None, ErrorID=None, ErrorMsg=None):
+        super().__init__()
         if TradeCode:
             self.TradeCode = TradeCode.encode("GBK")
         if BankID:
@@ -23040,87 +13928,8 @@ class ReserveOpenAccount(Struct):
         ("ErrorMsg", c_char_Array_81),
     ]
 
-    def __init__(
-        self,
-        TradeCode: str = None,
-        BankID: str = None,
-        BankBranchID: str = None,
-        BrokerID: str = None,
-        BrokerBranchID: str = None,
-        TradeDate: str = None,
-        TradeTime: str = None,
-        BankSerial: str = None,
-        TradingDay: str = None,
-        PlateSerial: int = None,
-        LastFragment: bytes = None,
-        SessionID: int = None,
-        CustomerName: str = None,
-        IdCardType: bytes = None,
-        IdentifiedCardNo: str = None,
-        Gender: bytes = None,
-        CountryCode: str = None,
-        CustType: bytes = None,
-        Address: str = None,
-        ZipCode: str = None,
-        Telephone: str = None,
-        MobilePhone: str = None,
-        Fax: str = None,
-        EMail: str = None,
-        MoneyAccountStatus: bytes = None,
-        BankAccount: str = None,
-        BankPassWord: str = None,
-        InstallID: int = None,
-        VerifyCertNoFlag: bytes = None,
-        CurrencyID: str = None,
-        Digest: str = None,
-        BankAccType: bytes = None,
-        BrokerIDByBank: str = None,
-        TID: int = None,
-        ReserveOpenAccStas: bytes = None,
-        ErrorID: int = None,
-        ErrorMsg: str = None,
-    ):
-        """
-        银期预约开户
-        :param TradeCode: 业务功能码
-        :param BankID: 银行代码
-        :param BankBranchID: 银行分支机构代码
-        :param BrokerID: 期商代码
-        :param BrokerBranchID: 期商分支机构代码
-        :param TradeDate: 交易日期
-        :param TradeTime: 交易时间
-        :param BankSerial: 银行流水号
-        :param TradingDay: 交易系统日期
-        :param PlateSerial: 银期平台消息流水号
-        :param LastFragment: 最后分片标志
-        :param SessionID: 会话号
-        :param CustomerName: 客户姓名
-        :param IdCardType: 证件类型
-        :param IdentifiedCardNo: 证件号码
-        :param Gender: 性别
-        :param CountryCode: 国家代码
-        :param CustType: 客户类型
-        :param Address: 地址
-        :param ZipCode: 邮编
-        :param Telephone: 电话号码
-        :param MobilePhone: 手机
-        :param Fax: 传真
-        :param EMail: 电子邮件
-        :param MoneyAccountStatus: 资金账户状态
-        :param BankAccount: 银行帐号
-        :param BankPassWord: 银行密码
-        :param InstallID: 安装编号
-        :param VerifyCertNoFlag: 验证客户证件号码标志
-        :param CurrencyID: 币种代码
-        :param Digest: 摘要
-        :param BankAccType: 银行帐号类型
-        :param BrokerIDByBank: 期货公司银行编码
-        :param TID: 交易ID
-        :param ReserveOpenAccStas: 预约开户状态
-        :param ErrorID: 错误代码
-        :param ErrorMsg: 错误信息
-        """
-        super(ReserveOpenAccount, self).__init__()
+    def __init__(self, TradeCode=None, BankID=None, BankBranchID=None, BrokerID=None, BrokerBranchID=None, TradeDate=None, TradeTime=None, BankSerial=None, TradingDay=None, PlateSerial=None, LastFragment=None, SessionID=None, CustomerName=None, IdCardType=None, IdentifiedCardNo=None, Gender=None, CountryCode=None, CustType=None, Address=None, ZipCode=None, Telephone=None, MobilePhone=None, Fax=None, EMail=None, MoneyAccountStatus=None, BankAccount=None, BankPassWord=None, InstallID=None, VerifyCertNoFlag=None, CurrencyID=None, Digest=None, BankAccType=None, BrokerIDByBank=None, TID=None, ReserveOpenAccStas=None, ErrorID=None, ErrorMsg=None):
+        super().__init__()
         if TradeCode:
             self.TradeCode = TradeCode.encode("GBK")
         if BankID:
@@ -23215,41 +14024,8 @@ class AccountProperty(Struct):
         ("CurrencyID", c_char_Array_4),
     ]
 
-    def __init__(
-        self,
-        BrokerID: str = None,
-        AccountID: str = None,
-        BankID: str = None,
-        BankAccount: str = None,
-        OpenName: str = None,
-        OpenBank: str = None,
-        IsActive: int = None,
-        AccountSourceType: bytes = None,
-        OpenDate: str = None,
-        CancelDate: str = None,
-        OperatorID: str = None,
-        OperateDate: str = None,
-        OperateTime: str = None,
-        CurrencyID: str = None,
-    ):
-        """
-        银行账户属性
-        :param BrokerID: 经纪公司代码
-        :param AccountID: 投资者帐号
-        :param BankID: 银行统一标识类型
-        :param BankAccount: 银行账户
-        :param OpenName: 银行账户的开户人名称
-        :param OpenBank: 银行账户的开户行
-        :param IsActive: 是否活跃
-        :param AccountSourceType: 账户来源
-        :param OpenDate: 开户日期
-        :param CancelDate: 注销日期
-        :param OperatorID: 录入员代码
-        :param OperateDate: 录入日期
-        :param OperateTime: 录入时间
-        :param CurrencyID: 币种代码
-        """
-        super(AccountProperty, self).__init__()
+    def __init__(self, BrokerID=None, AccountID=None, BankID=None, BankAccount=None, OpenName=None, OpenBank=None, IsActive=None, AccountSourceType=None, OpenDate=None, CancelDate=None, OperatorID=None, OperateDate=None, OperateTime=None, CurrencyID=None):
+        super().__init__()
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
         if AccountID:
@@ -23285,15 +14061,8 @@ class QryCurrDRIdentity(Struct):
         ("DRIdentityID", c_int),
     ]
 
-    def __init__(
-        self,
-        DRIdentityID: int = None,
-    ):
-        """
-        查询当前交易中心
-        :param DRIdentityID: 交易中心代码
-        """
-        super(QryCurrDRIdentity, self).__init__()
+    def __init__(self, DRIdentityID=None):
+        super().__init__()
         if DRIdentityID:
             self.DRIdentityID = DRIdentityID
 
@@ -23303,15 +14072,8 @@ class CurrDRIdentity(Struct):
         ("DRIdentityID", c_int),
     ]
 
-    def __init__(
-        self,
-        DRIdentityID: int = None,
-    ):
-        """
-        当前交易中心
-        :param DRIdentityID: 交易中心代码
-        """
-        super(CurrDRIdentity, self).__init__()
+    def __init__(self, DRIdentityID=None):
+        super().__init__()
         if DRIdentityID:
             self.DRIdentityID = DRIdentityID
 
@@ -23322,17 +14084,8 @@ class QrySecAgentCheckMode(Struct):
         ("InvestorID", c_char_Array_13),
     ]
 
-    def __init__(
-        self,
-        BrokerID: str = None,
-        InvestorID: str = None,
-    ):
-        """
-        查询二级代理商资金校验模式
-        :param BrokerID: 经纪公司代码
-        :param InvestorID: 投资者代码
-        """
-        super(QrySecAgentCheckMode, self).__init__()
+    def __init__(self, BrokerID=None, InvestorID=None):
+        super().__init__()
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
         if InvestorID:
@@ -23345,17 +14098,8 @@ class QrySecAgentTradeInfo(Struct):
         ("BrokerSecAgentID", c_char_Array_13),
     ]
 
-    def __init__(
-        self,
-        BrokerID: str = None,
-        BrokerSecAgentID: str = None,
-    ):
-        """
-        查询二级代理商信息
-        :param BrokerID: 经纪公司代码
-        :param BrokerSecAgentID: 境外中介机构资金帐号
-        """
-        super(QrySecAgentTradeInfo, self).__init__()
+    def __init__(self, BrokerID=None, BrokerSecAgentID=None):
+        super().__init__()
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
         if BrokerSecAgentID:
@@ -23374,29 +14118,8 @@ class UserSystemInfo(Struct):
         ("ClientAppID", c_char_Array_33),
     ]
 
-    def __init__(
-        self,
-        BrokerID: str = None,
-        UserID: str = None,
-        ClientSystemInfoLen: int = None,
-        ClientSystemInfo: str = None,
-        ClientPublicIP: str = None,
-        ClientIPPort: int = None,
-        ClientLoginTime: str = None,
-        ClientAppID: str = None,
-    ):
-        """
-        用户系统信息
-        :param BrokerID: 经纪公司代码
-        :param UserID: 用户代码
-        :param ClientSystemInfoLen: 用户端系统内部信息长度
-        :param ClientSystemInfo: 用户端系统内部信息
-        :param ClientPublicIP: 用户公网IP
-        :param ClientIPPort: 终端IP端口
-        :param ClientLoginTime: 登录成功时间
-        :param ClientAppID: App代码
-        """
-        super(UserSystemInfo, self).__init__()
+    def __init__(self, BrokerID=None, UserID=None, ClientSystemInfoLen=None, ClientSystemInfo=None, ClientPublicIP=None, ClientIPPort=None, ClientLoginTime=None, ClientAppID=None):
+        super().__init__()
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
         if UserID:
@@ -23422,19 +14145,8 @@ class ReqUserAuthMethod(Struct):
         ("UserID", c_char_Array_16),
     ]
 
-    def __init__(
-        self,
-        TradingDay: str = None,
-        BrokerID: str = None,
-        UserID: str = None,
-    ):
-        """
-        用户发出获取安全安全登陆方法请求
-        :param TradingDay: 交易日
-        :param BrokerID: 经纪公司代码
-        :param UserID: 用户代码
-        """
-        super(ReqUserAuthMethod, self).__init__()
+    def __init__(self, TradingDay=None, BrokerID=None, UserID=None):
+        super().__init__()
         if TradingDay:
             self.TradingDay = TradingDay.encode("GBK")
         if BrokerID:
@@ -23448,15 +14160,8 @@ class RspUserAuthMethod(Struct):
         ("UsableAuthMethod", c_int),
     ]
 
-    def __init__(
-        self,
-        UsableAuthMethod: int = None,
-    ):
-        """
-        用户发出获取安全安全登陆方法回复
-        :param UsableAuthMethod: 当前可以用的认证模式
-        """
-        super(RspUserAuthMethod, self).__init__()
+    def __init__(self, UsableAuthMethod=None):
+        super().__init__()
         if UsableAuthMethod:
             self.UsableAuthMethod = UsableAuthMethod
 
@@ -23468,19 +14173,8 @@ class ReqGenUserCaptcha(Struct):
         ("UserID", c_char_Array_16),
     ]
 
-    def __init__(
-        self,
-        TradingDay: str = None,
-        BrokerID: str = None,
-        UserID: str = None,
-    ):
-        """
-        用户发出获取安全安全登陆方法请求
-        :param TradingDay: 交易日
-        :param BrokerID: 经纪公司代码
-        :param UserID: 用户代码
-        """
-        super(ReqGenUserCaptcha, self).__init__()
+    def __init__(self, TradingDay=None, BrokerID=None, UserID=None):
+        super().__init__()
         if TradingDay:
             self.TradingDay = TradingDay.encode("GBK")
         if BrokerID:
@@ -23497,21 +14191,8 @@ class RspGenUserCaptcha(Struct):
         ("CaptchaInfo", c_char_Array_2561),
     ]
 
-    def __init__(
-        self,
-        BrokerID: str = None,
-        UserID: str = None,
-        CaptchaInfoLen: int = None,
-        CaptchaInfo: str = None,
-    ):
-        """
-        生成的图片验证码信息
-        :param BrokerID: 经纪公司代码
-        :param UserID: 用户代码
-        :param CaptchaInfoLen: 图片信息长度
-        :param CaptchaInfo: 图片信息
-        """
-        super(RspGenUserCaptcha, self).__init__()
+    def __init__(self, BrokerID=None, UserID=None, CaptchaInfoLen=None, CaptchaInfo=None):
+        super().__init__()
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
         if UserID:
@@ -23529,19 +14210,8 @@ class ReqGenUserText(Struct):
         ("UserID", c_char_Array_16),
     ]
 
-    def __init__(
-        self,
-        TradingDay: str = None,
-        BrokerID: str = None,
-        UserID: str = None,
-    ):
-        """
-        用户发出获取安全安全登陆方法请求
-        :param TradingDay: 交易日
-        :param BrokerID: 经纪公司代码
-        :param UserID: 用户代码
-        """
-        super(ReqGenUserText, self).__init__()
+    def __init__(self, TradingDay=None, BrokerID=None, UserID=None):
+        super().__init__()
         if TradingDay:
             self.TradingDay = TradingDay.encode("GBK")
         if BrokerID:
@@ -23555,15 +14225,8 @@ class RspGenUserText(Struct):
         ("UserTextSeq", c_int),
     ]
 
-    def __init__(
-        self,
-        UserTextSeq: int = None,
-    ):
-        """
-        短信验证码生成的回复
-        :param UserTextSeq: 短信验证码序号
-        """
-        super(RspGenUserText, self).__init__()
+    def __init__(self, UserTextSeq=None):
+        super().__init__()
         if UserTextSeq:
             self.UserTextSeq = UserTextSeq
 
@@ -23584,37 +14247,8 @@ class ReqUserLoginWithCaptcha(Struct):
         ("ClientIPPort", c_int),
     ]
 
-    def __init__(
-        self,
-        TradingDay: str = None,
-        BrokerID: str = None,
-        UserID: str = None,
-        Password: str = None,
-        UserProductInfo: str = None,
-        InterfaceProductInfo: str = None,
-        ProtocolInfo: str = None,
-        MacAddress: str = None,
-        ClientIPAddress: str = None,
-        LoginRemark: str = None,
-        Captcha: str = None,
-        ClientIPPort: int = None,
-    ):
-        """
-        用户发出带图形验证码的登录请求请求
-        :param TradingDay: 交易日
-        :param BrokerID: 经纪公司代码
-        :param UserID: 用户代码
-        :param Password: 密码
-        :param UserProductInfo: 用户端产品信息
-        :param InterfaceProductInfo: 接口端产品信息
-        :param ProtocolInfo: 协议信息
-        :param MacAddress: Mac地址
-        :param ClientIPAddress: 终端IP地址
-        :param LoginRemark: 登录备注
-        :param Captcha: 图形验证码的文字内容
-        :param ClientIPPort: 终端IP端口
-        """
-        super(ReqUserLoginWithCaptcha, self).__init__()
+    def __init__(self, TradingDay=None, BrokerID=None, UserID=None, Password=None, UserProductInfo=None, InterfaceProductInfo=None, ProtocolInfo=None, MacAddress=None, ClientIPAddress=None, LoginRemark=None, Captcha=None, ClientIPPort=None):
+        super().__init__()
         if TradingDay:
             self.TradingDay = TradingDay.encode("GBK")
         if BrokerID:
@@ -23657,37 +14291,8 @@ class ReqUserLoginWithText(Struct):
         ("ClientIPPort", c_int),
     ]
 
-    def __init__(
-        self,
-        TradingDay: str = None,
-        BrokerID: str = None,
-        UserID: str = None,
-        Password: str = None,
-        UserProductInfo: str = None,
-        InterfaceProductInfo: str = None,
-        ProtocolInfo: str = None,
-        MacAddress: str = None,
-        ClientIPAddress: str = None,
-        LoginRemark: str = None,
-        Text: str = None,
-        ClientIPPort: int = None,
-    ):
-        """
-        用户发出带短信验证码的登录请求请求
-        :param TradingDay: 交易日
-        :param BrokerID: 经纪公司代码
-        :param UserID: 用户代码
-        :param Password: 密码
-        :param UserProductInfo: 用户端产品信息
-        :param InterfaceProductInfo: 接口端产品信息
-        :param ProtocolInfo: 协议信息
-        :param MacAddress: Mac地址
-        :param ClientIPAddress: 终端IP地址
-        :param LoginRemark: 登录备注
-        :param Text: 短信验证码文字内容
-        :param ClientIPPort: 终端IP端口
-        """
-        super(ReqUserLoginWithText, self).__init__()
+    def __init__(self, TradingDay=None, BrokerID=None, UserID=None, Password=None, UserProductInfo=None, InterfaceProductInfo=None, ProtocolInfo=None, MacAddress=None, ClientIPAddress=None, LoginRemark=None, Text=None, ClientIPPort=None):
+        super().__init__()
         if TradingDay:
             self.TradingDay = TradingDay.encode("GBK")
         if BrokerID:
@@ -23730,37 +14335,8 @@ class ReqUserLoginWithOTP(Struct):
         ("ClientIPPort", c_int),
     ]
 
-    def __init__(
-        self,
-        TradingDay: str = None,
-        BrokerID: str = None,
-        UserID: str = None,
-        Password: str = None,
-        UserProductInfo: str = None,
-        InterfaceProductInfo: str = None,
-        ProtocolInfo: str = None,
-        MacAddress: str = None,
-        ClientIPAddress: str = None,
-        LoginRemark: str = None,
-        OTPPassword: str = None,
-        ClientIPPort: int = None,
-    ):
-        """
-        用户发出带动态验证码的登录请求请求
-        :param TradingDay: 交易日
-        :param BrokerID: 经纪公司代码
-        :param UserID: 用户代码
-        :param Password: 密码
-        :param UserProductInfo: 用户端产品信息
-        :param InterfaceProductInfo: 接口端产品信息
-        :param ProtocolInfo: 协议信息
-        :param MacAddress: Mac地址
-        :param ClientIPAddress: 终端IP地址
-        :param LoginRemark: 登录备注
-        :param OTPPassword: OTP密码
-        :param ClientIPPort: 终端IP端口
-        """
-        super(ReqUserLoginWithOTP, self).__init__()
+    def __init__(self, TradingDay=None, BrokerID=None, UserID=None, Password=None, UserProductInfo=None, InterfaceProductInfo=None, ProtocolInfo=None, MacAddress=None, ClientIPAddress=None, LoginRemark=None, OTPPassword=None, ClientIPPort=None):
+        super().__init__()
         if TradingDay:
             self.TradingDay = TradingDay.encode("GBK")
         if BrokerID:
@@ -23792,15 +14368,8 @@ class ReqApiHandshake(Struct):
         ("CryptoKeyVersion", c_char_Array_31),
     ]
 
-    def __init__(
-        self,
-        CryptoKeyVersion: str = None,
-    ):
-        """
-        api握手请求
-        :param CryptoKeyVersion: api与front通信密钥版本号
-        """
-        super(ReqApiHandshake, self).__init__()
+    def __init__(self, CryptoKeyVersion=None):
+        super().__init__()
         if CryptoKeyVersion:
             self.CryptoKeyVersion = CryptoKeyVersion.encode("GBK")
 
@@ -23812,19 +14381,8 @@ class RspApiHandshake(Struct):
         ("IsApiAuthEnabled", c_int),
     ]
 
-    def __init__(
-        self,
-        FrontHandshakeDataLen: int = None,
-        FrontHandshakeData: str = None,
-        IsApiAuthEnabled: int = None,
-    ):
-        """
-        front发给api的握手回复
-        :param FrontHandshakeDataLen: 握手回复数据长度
-        :param FrontHandshakeData: 握手回复数据
-        :param IsApiAuthEnabled: API认证是否开启
-        """
-        super(RspApiHandshake, self).__init__()
+    def __init__(self, FrontHandshakeDataLen=None, FrontHandshakeData=None, IsApiAuthEnabled=None):
+        super().__init__()
         if FrontHandshakeDataLen:
             self.FrontHandshakeDataLen = FrontHandshakeDataLen
         if FrontHandshakeData:
@@ -23839,17 +14397,8 @@ class ReqVerifyApiKey(Struct):
         ("ApiHandshakeData", c_char_Array_301),
     ]
 
-    def __init__(
-        self,
-        ApiHandshakeDataLen: int = None,
-        ApiHandshakeData: str = None,
-    ):
-        """
-        api给front的验证key的请求
-        :param ApiHandshakeDataLen: 握手回复数据长度
-        :param ApiHandshakeData: 握手回复数据
-        """
-        super(ReqVerifyApiKey, self).__init__()
+    def __init__(self, ApiHandshakeDataLen=None, ApiHandshakeData=None):
+        super().__init__()
         if ApiHandshakeDataLen:
             self.ApiHandshakeDataLen = ApiHandshakeDataLen
         if ApiHandshakeData:
@@ -23864,21 +14413,8 @@ class DepartmentUser(Struct):
         ("InvestorID", c_char_Array_13),
     ]
 
-    def __init__(
-        self,
-        BrokerID: str = None,
-        UserID: str = None,
-        InvestorRange: bytes = None,
-        InvestorID: str = None,
-    ):
-        """
-        操作员组织架构关系
-        :param BrokerID: 经纪公司代码
-        :param UserID: 用户代码
-        :param InvestorRange: 投资者范围
-        :param InvestorID: 投资者代码
-        """
-        super(DepartmentUser, self).__init__()
+    def __init__(self, BrokerID=None, UserID=None, InvestorRange=None, InvestorID=None):
+        super().__init__()
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
         if UserID:
@@ -23894,14 +14430,7 @@ class QueryFreq(Struct):
         ("QueryFreq", c_int),
     ]
 
-    def __init__(
-        self,
-        QueryFreq: int = None,
-    ):
-        """
-        查询频率，每秒查询比数
-        :param QueryFreq: 查询频率
-        """
-        super(QueryFreq, self).__init__()
+    def __init__(self, QueryFreq=None):
+        super().__init__()
         if QueryFreq:
             self.QueryFreq = QueryFreq

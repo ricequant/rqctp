@@ -150,7 +150,27 @@ class StructType(NamedTuple):
                 yield SPACE_8 + f"(\"{member.name}\", {member.type.to_py_ctype()}),"
             yield SPACE_4 + "]"
 
+        def _init_body():
+            yield SPACE_8 + "super().__init__()"
+            for member in self.members:
+                yield SPACE_8 + "if {}:".format(member.name)
+                if member.type.to_py_type() == 'str':
+                    yield SPACE_12 + "self.{} = {}.encode(\"GBK\")".format(member.name, member.name)
+                else:
+                    yield SPACE_12 + "self.{} = {}".format(member.name, member.name)
+
+        class_name = re.match(r"CThostFtdc(?P<name>[\d\w]+)Field", self.name).group("name")
+
+        yield f"class {class_name}(Struct):"
+        yield from _field_declare()
+        yield ""
+        yield SPACE_4 + "def __init__({}):".format(", ".join(["self"] + [m.name + "=None" for m in self.members]))
+        yield from _init_body()
+
+    def to_pyi_lines(self):
         def _init_header():
+            class_name = re.match(r"CThostFtdc(?P<name>[\d\w]+)Field", self.name).group("name")
+            yield f"class {class_name}(Struct):"
             yield SPACE_4 + "def __init__("
             yield SPACE_8 + "self,"
             for member in self.members:
@@ -164,25 +184,10 @@ class StructType(NamedTuple):
                 yield SPACE_8 + f":param {member.name}: {member.comment}"
             yield SPACE_8 + "\"\"\""
 
-        def _init_body():
-            yield SPACE_8 + "super({}, self).__init__()".format(class_name)
-            for member in self.members:
-                yield SPACE_8 + "if {}:".format(member.name)
-                if member.type.to_py_type() == 'str':
-                    yield SPACE_12 + "self.{} = {}.encode(\"GBK\")".format(member.name, member.name)
-                else:
-                    yield SPACE_12 + "self.{} = {}".format(member.name, member.name)
-
-        class_name = re.match(r"CThostFtdc(?P<name>[\d\w]+)Field", self.name).group("name")
-
-        yield f"class {class_name}(Struct):"
-        yield from _field_declare()
-        yield ""
         yield from _init_header()
         yield from _init_comment()
-        yield from _init_body()
-
-
+        yield SPACE_8 + "super().__init__()"
+        yield SPACE_8 + "..."
 
     def get_py_types(self):
         return {m.type.to_py_ctype() for m in self.members}
@@ -394,6 +399,14 @@ class PyCodeGenerator(object):
             for s in self._structs.values():
                 lines.extend([""] * 2)
                 for line in s.to_py_lines():
+                    lines.append(line)
+            f.writelines([l + "\n" for l in lines])
+
+        with open(os.path.join(py_path, "structs.pyi"), "w+", encoding="utf-8") as f:
+            lines = [LICENSE, "", "from .utils import Struct"]
+            for s in self._structs.values():
+                lines.extend([""] * 2)
+                for line in s.to_pyi_lines():
                     lines.append(line)
             f.writelines([l + "\n" for l in lines])
 

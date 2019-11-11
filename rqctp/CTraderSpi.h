@@ -24,6 +24,7 @@ static inline int TraderSpi__OnFrontConnected(PyObject *);
 static inline int TraderSpi__OnFrontDisconnected(PyObject *, int);
 static inline int TraderSpi__OnRspUserLogin(PyObject *, CThostFtdcRspUserLoginField *, CThostFtdcRspInfoField *, int, bool);
 static inline int TraderSpi__OnRtnTrade(PyObject *, CThostFtdcTradeField *);
+static inline int TraderSpi__OnRspQrySettlementInfo(PyObject *, CThostFtdcSettlementInfoField *, CThostFtdcRspInfoField *, int, bool);
 
 
 #define PyGIL(func) \
@@ -53,6 +54,10 @@ class CTraderSpi: public CThostFtdcTraderSpi {
 
         virtual void OnRtnTrade(CThostFtdcTradeField *pTrade) {
             PyGIL(TraderSpi__OnRtnTrade(api, pTrade));
+        };
+
+        virtual void OnRspQrySettlementInfo(CThostFtdcSettlementInfoField *pSettlementInfo, CThostFtdcRspInfoField *pRspInfo, int nRequestID, bool bIsLast) {
+            PyGIL(TraderSpi__OnRspQrySettlementInfo(api, pSettlementInfo, pRspInfo, nRequestID, bIsLast));
         };
 
     private:

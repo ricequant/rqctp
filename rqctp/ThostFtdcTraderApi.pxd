@@ -21,6 +21,7 @@ from libc.string cimport const_char
 
 from .ThostFtdcUserApiStruct cimport *
 
+
 cdef extern from "ThostFtdcTraderApi.h":
     cdef cppclass CTraderApi "CThostFtdcTraderApi":
         void Release() nogil
@@ -31,6 +32,7 @@ cdef extern from "ThostFtdcTraderApi.h":
         void SubscribePrivateTopic(THOST_TE_RESUME_TYPE nResumeType) nogil except +
         void SubscribePublicTopic(THOST_TE_RESUME_TYPE nResumeType) nogil except +
         int ReqUserLogin(CThostFtdcReqUserLoginField *pReqUserLoginField, int nRequestID) nogil except +
+        int ReqQrySettlementInfo(CThostFtdcQrySettlementInfoField *pQrySettlementInfo, int nRequestID) nogil except +
 
 
 cdef extern from "ThostFtdcTraderApi.h" namespace "CThostFtdcTraderApi":

@@ -25,7 +25,7 @@ from .ThostFtdcUserApiStruct cimport *
 
 import ctypes
 
-from .structs import RspUserLogin, RspInfo, Trade
+from .structs import *
 
 
 cdef class TraderApi:
@@ -92,11 +92,20 @@ cdef class TraderApi:
     def ReqUserLogin(self, reqUserLoginField, int nRequestID):
         cdef int result
         cdef size_t address
-        if self._spi is not NULL:
-            address = ctypes.addressof(reqUserLoginField)
-            with nogil:
-                result = self._api.ReqUserLogin(<CThostFtdcReqUserLoginField *> address, nRequestID)
-            return result
+        self._ensure_api_not_null()
+        address = ctypes.addressof(reqUserLoginField)
+        with nogil:
+            result = self._api.ReqUserLogin(<CThostFtdcReqUserLoginField *> address, nRequestID)
+        return result
+
+    def ReqQrySettlementInfo(self, pQrySettlementInfo, int nRequestID):
+        cdef int result
+        cdef size_t address
+        self._ensure_api_not_null()
+        address = ctypes.addressof(pQrySettlementInfo)
+        with nogil:
+            result = self._api.ReqQrySettlementInfo(<CThostFtdcQrySettlementInfoField *> address, nRequestID)
+        return result
 
 
 cdef extern int TraderSpi__OnFrontConnected(api) except -1:
@@ -110,7 +119,12 @@ cdef extern int TraderSpi__OnFrontDisconnected(api, int nReason) except -1:
 
 
 cdef extern int TraderSpi__OnRspUserLogin(api, CThostFtdcRspUserLoginField *pRspUserLogin, CThostFtdcRspInfoField *pRspInfo, int nRequestID, cbool bIsLast) except -1:
-    api.OnRspUserLogin(None if pRspUserLogin is NULL else RspUserLogin.from_address(<size_t> pRspUserLogin).to_tuple(), None if pRspInfo is NULL else RspInfo.from_address(<size_t> pRspInfo).to_tuple(), nRequestID, bIsLast)
+    api.OnRspUserLogin(
+        None if pRspUserLogin is NULL else RspUserLogin.from_address(<size_t> pRspUserLogin).to_tuple(),
+        None if pRspInfo is NULL else RspInfo.from_address(<size_t> pRspInfo).to_tuple(),
+        nRequestID,
+        bIsLast
+    )
     return 0
 
 
@@ -118,3 +132,12 @@ cdef extern int TraderSpi__OnRtnTrade(api, CThostFtdcTradeField *pTrade) except 
     api.OnRtnTrade(None if pTrade is NULL else Trade.from_address(<size_t> pTrade).to_tuple())
     return 0
 
+
+cdef extern int TraderSpi__OnRspQrySettlementInfo(api, CThostFtdcSettlementInfoField *pSettlementInfo, CThostFtdcRspInfoField *pRspInfo, int nRequestID, cbool bIsLast) except -1:
+    api.OnRspQrySettlementInfo(
+        None if pSettlementInfo is NULL else SettlementInfo.from_address(<size_t> pSettlementInfo).to_tuple(),
+        None if pRspInfo is NULL else RspInfo.from_address(<size_t> pRspInfo).to_tuple(),
+        nRequestID,
+        bIsLast
+    )
+    return 0
