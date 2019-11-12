@@ -105,3 +105,5 @@ rqctp/*.so
 rqctp/ThostFtdc*.h
 rqctp/*.lib
 rqctp/*.dll
+
+.vscode
