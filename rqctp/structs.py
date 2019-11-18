@@ -16,7 +16,7 @@
 #     See the License for the specific language governing permissions and
 #     limitations under the License.
 
-from ctypes import c_char, c_int, c_short, c_double
+from ctypes import c_double, c_int, c_char, c_short
 
 from .utils import Struct
 

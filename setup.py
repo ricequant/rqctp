@@ -23,58 +23,51 @@ from setuptools import setup, Extension, find_packages
 from Cython.Build import cythonize
 
 
-def do_setup(ext_modules, package_data):
-    setup(
-        name="rqctp",
-        version="0.0.1",
-        ext_modules=ext_modules,
-        packages=find_packages(exclude=[]),
-        package_data=package_data
-    )
-
-
 project_dir = os.path.dirname(os.path.abspath(__file__))
 proj_dir = os.path.join(project_dir, "rqctp")
 lib_dir = os.path.join(project_dir, "ctp")
 platform = sys.platform
 
-if platform == "linux":
-    lib_extensions = (".so", ".h")
-    extra_compile_args = None
-    extra_link_args = ['-Wl,-rpath,$ORIGIN']
-elif platform == 'win32':
-    lib_extensions = (".dll", ".lib", ".h")
-    extra_compile_args = ["/GR", "/EHsc"]
-    extra_link_args = None
-else:
-    raise RuntimeError("dose not support current plaform {}".format(platform))
 
+if platform in ("linux", "win32"):
+    if platform == "linux":
+        lib_extensions = (".so", ".h")
+        extra_compile_args = None
+        extra_link_args = ['-Wl,-rpath,$ORIGIN']
+        package_data = {".": ["libthosttraderapi_se.so"]}
+    elif platform == 'win32':
+        lib_extensions = (".dll", ".lib", ".h")
+        extra_compile_args = ["/GR", "/EHsc"]
+        extra_link_args = None
+        package_data = {".": ["thosttraderapi_se.dll", "thosttraderapi_se.lib"]}
 
-for name in os.listdir(lib_dir):
-    if any([name.endswith(e) for e in lib_extensions]):
-        shutil.copy(os.path.join(lib_dir, name), os.path.join(proj_dir, name))
-    
-    setup(
-        name="rqctp",
-        version="0.0.1",
-        ext_modules=cythonize(module_list=[
-            Extension(
-                name="rqctp.TraderApi",
-                sources=["rqctp/TraderApi.pyx"],
-                libraries=["thosttraderapi_se"],
-                language="c++",
-                library_dirs=["rqctp/"],
-                extra_compile_args=extra_compile_args,
-                extra_link_args=extra_link_args,
-            )
-        ], compiler_directives={
-            "language_level": 3,
-            "binding": True
-        }),
-        packages=find_packages(exclude=[]),
-        package_data={".": ["libthosttraderapi_se.so"]}
-    )
-
+    for name in os.listdir(lib_dir):
+        if any([name.endswith(e) for e in lib_extensions]):
+            shutil.copy(os.path.join(lib_dir, name), os.path.join(proj_dir, name))
+        
+    ext_modules = cythonize(module_list=[
+        Extension(
+            name="rqctp.TraderApi",
+            sources=["rqctp/TraderApi.pyx"],
+            libraries=["thosttraderapi_se"],
+            language="c++",
+            library_dirs=["rqctp/"],
+            extra_compile_args=extra_compile_args,
+            extra_link_args=extra_link_args,
+        )
+    ], compiler_directives={
+        "language_level": 3,
+        "binding": True
+    })
 
 else:
-    do_setup(ext_modules=[], package_data={})
+    ext_modules = []
+    package_data = {}
+
+setup(
+    name="rqctp",
+    version="0.0.1",
+    ext_modules=ext_modules,
+    packages=find_packages(exclude=[]),
+    package_data=package_data
+)

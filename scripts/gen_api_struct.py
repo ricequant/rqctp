@@ -56,7 +56,7 @@ class Constant(NamedTuple):
             name = "_" + name
         value = self.value
         if is_bytes:
-            value = f"b{self.value}"
+            value = f"{self.value}"
         return "{} = {}  # {}".format(name, value, self.comment)
 
 
