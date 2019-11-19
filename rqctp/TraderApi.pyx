@@ -107,6 +107,15 @@ cdef class TraderApi:
             result = self._api.ReqQrySettlementInfo(<CThostFtdcQrySettlementInfoField *> address, nRequestID)
         return result
 
+    def ReqAuthenticate(self, pReqAuthenticateField, int nRequestID):
+        cdef int result
+        cdef size_t address
+        self._ensure_api_not_null()
+        address = ctypes.addressof(pReqAuthenticateField)
+        with nogil:
+            result = self._api.ReqAuthenticate(<CThostFtdcReqAuthenticateField *> address, nRequestID)
+        return result
+
 
 cdef extern int TraderSpi__OnFrontConnected(api) except -1:
     api.OnFrontConnected()
@@ -136,6 +145,16 @@ cdef extern int TraderSpi__OnRtnTrade(api, CThostFtdcTradeField *pTrade) except 
 cdef extern int TraderSpi__OnRspQrySettlementInfo(api, CThostFtdcSettlementInfoField *pSettlementInfo, CThostFtdcRspInfoField *pRspInfo, int nRequestID, cbool bIsLast) except -1:
     api.OnRspQrySettlementInfo(
         None if pSettlementInfo is NULL else SettlementInfo.from_address(<size_t> pSettlementInfo).to_tuple(),
+        None if pRspInfo is NULL else RspInfo.from_address(<size_t> pRspInfo).to_tuple(),
+        nRequestID,
+        bIsLast
+    )
+    return 0
+
+
+cdef extern int TraderSpi__OnRspAuthenticate(api, CThostFtdcRspAuthenticateField *pRspAuthenticateField, CThostFtdcRspInfoField *pRspInfo, int nRequestID, cbool bIsLast) except -1:
+    api.OnRspAuthenticate(
+        None if pRspAuthenticateField is NULL else RspAuthenticate.from_address(<size_t> pRspAuthenticateField).to_tuple(),
         None if pRspInfo is NULL else RspInfo.from_address(<size_t> pRspInfo).to_tuple(),
         nRequestID,
         bIsLast
