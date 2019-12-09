@@ -39,7 +39,7 @@ if platform in ("linux", "win32"):
         lib_extensions = (".dll", ".lib", ".h")
         extra_compile_args = ["/GR", "/EHsc"]
         extra_link_args = None
-        package_data = {".": ["thosttraderapi_se.dll", "thosttraderapi_se.lib"]}
+        package_data = {"rqctp": ["thosttraderapi_se.dll", "thosttraderapi_se.lib"]}
 
     for name in os.listdir(lib_dir):
         if any([name.endswith(e) for e in lib_extensions]):
@@ -64,9 +64,10 @@ else:
     ext_modules = []
     package_data = {}
 
+print(package_data)
 setup(
     name="rqctp",
-    version="0.0.1",
+    version="0.0.2",
     ext_modules=ext_modules,
     packages=find_packages(exclude=[]),
     package_data=package_data
