@@ -45,6 +45,76 @@ LICENSE = """# -*- coding: utf-8 -*-
 #     limitations under the License.
 """
 
+TRADER_API_PXD_DEFAULT_LINES = """
+cdef extern from "ThostFtdcTraderApi.h":
+    cdef cppclass CTraderApi "CThostFtdcTraderApi":
+        void Release() nogil
+        void Init() nogil
+        int Join() nogil"""
+
+
+TRADER_API_PXD_ADDITIONAL_LINES = """cdef extern from "ThostFtdcTraderApi.h" namespace "CThostFtdcTraderApi":
+    CTraderApi *CreateFtdcTraderApi(const_char *pszFlowPath) nogil except +
+    const_char *GetApiVersion() nogil
+
+
+cdef extern from "CTraderSpi.h":
+    cdef cppclass CTraderSpi:
+        CTraderSpi(PyObject *obj)"""
+
+
+TRADER_API_DEFAULT_PYX_LINES = """cdef class TraderApi:
+    cdef CTraderApi *_api
+    cdef CTraderSpi *_spi
+
+    def __cinit__(self):
+        self._api = NULL
+        self._spi = NULL
+
+    def __init__(self, const_char *pszFlowPath):
+        self._api = CreateFtdcTraderApi(pszFlowPath)
+        if self._api is NULL:
+            raise MemoryError()
+        self._spi = new CTraderSpi(<PyObject *>self)
+        if self._spi is NULL:
+            raise MemoryError()
+        self._api.RegisterSpi(self._spi)
+
+    def __dealloc__(self):
+        if self._api is not NULL:
+            self._api.RegisterSpi(NULL)
+            self._api.Release()
+            self._api = NULL
+            self._spi = NULL
+
+    def _ensure_api_not_null(self):
+        if self._api is NULL:
+            raise MemoryError()
+
+    def Release(self):
+        if self._api is not NULL:
+            self._api.RegisterSpi(NULL)
+            self._api.Release()
+            self._api = NULL
+            self._spi = NULL
+
+    def Init(self):
+        self._ensure_api_not_null()
+        self._api.Init()
+
+    def Join(self):
+        cdef int result
+        self._ensure_api_not_null()
+        if self._spi is not NULL:
+
+            print("before api join")
+            with nogil:
+                result = self._api.Join()
+            return result
+
+"""
+
+
 RE_CONST = r"THOST_FTDC_([\d\w]+)_(?P<name>[\d\w]+)"
 RE_API_METHOD = r"virtual (?P<return_type>[\w]+) (?P<name>[\d\w]+)\((?P<params>[\d\w\s\*,]*)\) = 0;"
 RE_SPI_METHOD = r"virtual void (?P<name>[\d\w]+)\((?P<params>[\d\w\s\*,]*)\)( )?{};"
@@ -197,19 +267,49 @@ class StructType(NamedTuple):
         return {m.type.to_py_ctype() for m in self.members}
 
 
+class Parameter(NamedTuple):
+    name: str
+    type: Union[str, StructType]
+    pointer: bool
+
+    def to_api_pxd_line(self):
+        if self.type == "CThostFtdcTraderSpi":
+            type_ = "CTraderSpi"
+        elif isinstance(self.type, str):
+            type_ = self.type
+        else:
+            type_ = self.type.name
+        if self.pointer:
+            return f"{type_} *{self.name}"
+        else:
+            return f"{type_} {self.name}"
+
+
 class Method(NamedTuple):
     name: str
     return_type: str
-    params: List[Tuple[Union[StructType, str], str]]
+    params: List[Parameter]
     comments: List[str]
+
+    def to_api_pxd_line(self):
+        return "{} {}({}) nogil except +".format(
+            self.return_type, self.name, ", ".join([p.to_api_pxd_line() for p in self.params])
+        )
 
 
 class Api(NamedTuple):
     methods: List[Method]
 
+    def to_api_pyx_lines(self):
+        pass
 
-class Spi(NamedTuple):
-    methods: List[Method]
+    def to_api_pxd_lines(self):
+        for l in TRADER_API_PXD_DEFAULT_LINES.split("\n"):
+            yield l
+        for method in self.methods:
+            if method.name in ("Release", "Init", "Join"):
+                continue
+            yield SPACE_8 + method.to_api_pxd_line()
 
 
 def is_comment(line: str):
@@ -348,16 +448,17 @@ def parse_trader_api_header(raw_lines: List[str], struct_dict: Dict[str, StructT
             for param in (params.split(",") if "," in params else [params]):
                 param = param.strip()
                 param_elements = param.split(" ")
+                pointer = False
                 if "*" in param_elements:
                     param_elements.remove("*")
+                    pointer = True
                 param_type, param_name = param_elements
                 if param_name.startswith("*"):
                     param_name = param_name.split("*")[1]
-                if param_type == "THOST_TE_RESUME_TYPE":
-                    param_type = "int"
-                elif param_type not in {"int", "bool", "char"}:
+                    pointer = True
+                elif param_type not in {"int", "bool", "char", "CThostFtdcTraderSpi", "THOST_TE_RESUME_TYPE"}:
                     param_type = struct_dict[param_type]
-                yield param_type, param_name
+                yield Parameter(name=param_name, type=param_type, pointer=pointer)
 
     def _parse_api(line_iter: Iterator[str]):
         assert next(line_iter) == "{"
@@ -375,8 +476,7 @@ def parse_trader_api_header(raw_lines: List[str], struct_dict: Dict[str, StructT
                 name, return_type, params = itemgetter("name", "return_type", "params")(
                     re.match(RE_API_METHOD, l).groupdict()
                 )
-                if name != "RegisterSpi":
-                    yield Method(name=name, return_type=return_type, params=list(_parse_params(params)), comments=comments)
+                yield Method(name=name, return_type=return_type, params=list(_parse_params(params)), comments=comments)
                 comments.clear()
             elif l.startswith("static") or l.startswith("virtual const"):
                 comments.clear()
@@ -411,7 +511,7 @@ def parse_trader_api_header(raw_lines: List[str], struct_dict: Dict[str, StructT
         if line == "class TRADER_API_EXPORT CThostFtdcTraderApi":
             api = Api(methods=list(_parse_api(lines)))
         elif line == "class CThostFtdcTraderSpi":
-            spi = Spi(methods=list(_parse_spi(lines)))
+            spi = Api(methods=list(_parse_spi(lines)))
         else:
             pass
     if not (api and spi):
@@ -450,8 +550,7 @@ class PyCodeGenerator(object):
                 self._structs[struct_obj.name] = struct_obj
 
         with open(os.path.join(api_path, "ThostFtdcTraderApi.h"), encoding="GBK") as f:
-            spi, api = parse_trader_api_header(f.readlines(), self._structs)
-            print(spi, api)
+            self._trader_spi, self._trader_api = parse_trader_api_header(f.readlines(), self._structs)
 
     def write(self, py_path):
         if not os.path.exists(py_path):
@@ -512,6 +611,14 @@ class PyCodeGenerator(object):
                 lines.extend(list(s.to_consts_py_lines()))
             f.writelines([l + "\n" for l in lines])
 
+        with open(os.path.join(py_path, "ThostFtdcTraderApi.pxd"), "w+", encoding="utf-8") as f:
+            lines = [
+                LICENSE, "from cpython cimport PyObject", "from libc.string cimport const_char", "",
+                "from .ThostFtdcUserApiStruct cimport *", ""
+            ]
+            lines.extend(list(self._trader_api.to_api_pxd_lines()) + [""] * 2)
+            lines.append(TRADER_API_PXD_ADDITIONAL_LINES)
+            f.writelines([l + "\n" for l in lines])
 
 if __name__ == "__main__":
     PyCodeGenerator("ctp").write("rqctp")
