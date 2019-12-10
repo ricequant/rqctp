@@ -18,8 +18,9 @@
 
 import os
 import re
-from typing import List, Iterator, Mapping, Generator, Union, NamedTuple, Optional, Tuple
-from collections import OrderedDict, namedtuple, ChainMap
+from operator import itemgetter
+from typing import List, Iterator, Union, NamedTuple, Optional, Tuple, Dict
+from collections import OrderedDict
 
 SPACE_4 = " " * 4
 SPACE_8 = " " * 8
@@ -44,6 +45,9 @@ LICENSE = """# -*- coding: utf-8 -*-
 #     limitations under the License.
 """
 
+RE_CONST = r"THOST_FTDC_([\d\w]+)_(?P<name>[\d\w]+)"
+RE_API_METHOD = r"virtual (?P<return_type>[\w]+) (?P<name>[\d\w]+)\((?P<params>[\d\w\s\*,]*)\) = 0;"
+RE_SPI_METHOD = r"virtual void (?P<name>[\d\w]+)\((?P<params>[\d\w\s\*,]*)\)( )?{};"
 
 class Constant(NamedTuple):
     name: str
@@ -51,7 +55,7 @@ class Constant(NamedTuple):
     comment: str
 
     def to_consts_py_line(self, is_bytes: bool):
-        name = re.match(r"THOST_FTDC_([\d\w]+)_(?P<name>[\d\w]+)", self.name).group("name")
+        name = re.match(RE_CONST, self.name).group("name")
         if name == "None" or re.match(r"^\d+", name):
             name = "_" + name
         value = self.value
@@ -193,6 +197,21 @@ class StructType(NamedTuple):
         return {m.type.to_py_ctype() for m in self.members}
 
 
+class Method(NamedTuple):
+    name: str
+    return_type: str
+    params: List[Tuple[Union[StructType, str], str]]
+    comments: List[str]
+
+
+class Api(NamedTuple):
+    methods: List[Method]
+
+
+class Spi(NamedTuple):
+    methods: List[Method]
+
+
 def is_comment(line: str):
     return line.startswith("/")
 
@@ -248,10 +267,6 @@ def parse_enum_def(first_line: str, line_iter: Iterator[str]):
             raise RuntimeError(f"cannot parse lines: {line}")
         items.append((m.groupdict()["name"], m.groupdict()["value"]))
     return EnumType(name, items)
-
-
-def is_struct_def(line: str):
-    return line.startswith("struct ")
 
 
 def parse_struct_def(first_line: str, line_iter: Iterator[str], comment: str, type_dict: dict):
@@ -323,8 +338,85 @@ def parse_struct_header(raw_lines: List[str], type_dict: dict):
         line = next(lines)
         if is_comment(line):
             comment = parse_comment(line)
-        elif is_struct_def(line):
+        elif line.startswith("struct "):
             yield parse_struct_def(line, lines, comment, type_dict)
+
+
+def parse_trader_api_header(raw_lines: List[str], struct_dict: Dict[str, StructType]):
+    def _parse_params(params: str):
+        if params:
+            for param in (params.split(",") if "," in params else [params]):
+                param = param.strip()
+                param_elements = param.split(" ")
+                if "*" in param_elements:
+                    param_elements.remove("*")
+                param_type, param_name = param_elements
+                if param_name.startswith("*"):
+                    param_name = param_name.split("*")[1]
+                if param_type == "THOST_TE_RESUME_TYPE":
+                    param_type = "int"
+                elif param_type not in {"int", "bool", "char"}:
+                    param_type = struct_dict[param_type]
+                yield param_type, param_name
+
+    def _parse_api(line_iter: Iterator[str]):
+        assert next(line_iter) == "{"
+        assert next(line_iter) == "public:"
+        comments = []
+        while True:
+            l = next(line_iter)
+            if l == "protected:":
+                assert next(line_iter) == "~CThostFtdcTraderApi(){};"
+                assert next(line_iter) == "};"
+                break
+            elif l.startswith("///"):
+                comments.append(l.split("///")[1])
+            elif re.match(RE_API_METHOD, l):
+                name, return_type, params = itemgetter("name", "return_type", "params")(
+                    re.match(RE_API_METHOD, l).groupdict()
+                )
+                if name != "RegisterSpi":
+                    yield Method(name=name, return_type=return_type, params=list(_parse_params(params)), comments=comments)
+                comments.clear()
+            elif l.startswith("static") or l.startswith("virtual const"):
+                comments.clear()
+            else:
+                raise RuntimeError(f"Bad line: {l}")
+
+    def _parse_spi(line_iter: Iterator[str]):
+        assert next(line_iter) == "{"
+        assert next(line_iter) == "public:"
+        comments = []
+        while True:
+            l = next(line_iter)
+            if l == "};":
+                break
+            elif l.startswith("///"):
+                comments.append(l.split("///")[1])
+            elif re.match(RE_SPI_METHOD, l):
+                name, params = itemgetter("name", "params")(re.match(RE_SPI_METHOD, l).groupdict())
+                yield Method(name=name, return_type="void", params=list(_parse_params(params)), comments=comments)
+                comments.clear()
+            else:
+                raise RuntimeError(f"Bad line: {l}")
+
+    lines = line_gen(raw_lines)
+
+    api, spi = None, None
+    while True:
+        try:
+            line = next(lines)
+        except StopIteration:
+            break
+        if line == "class TRADER_API_EXPORT CThostFtdcTraderApi":
+            api = Api(methods=list(_parse_api(lines)))
+        elif line == "class CThostFtdcTraderSpi":
+            spi = Spi(methods=list(_parse_spi(lines)))
+        else:
+            pass
+    if not (api and spi):
+        raise RuntimeError("{} not found".format("api" if api is None else "spi"))
+    return spi, api
 
 
 def gen_py_struct_lines(struct: StructType):
@@ -356,6 +448,10 @@ class PyCodeGenerator(object):
         with open(os.path.join(api_path, "ThostFtdcUserApiStruct.h"), encoding="GBK") as f:
             for struct_obj in parse_struct_header(f.readlines(), self._types):
                 self._structs[struct_obj.name] = struct_obj
+
+        with open(os.path.join(api_path, "ThostFtdcTraderApi.h"), encoding="GBK") as f:
+            spi, api = parse_trader_api_header(f.readlines(), self._structs)
+            print(spi, api)
 
     def write(self, py_path):
         if not os.path.exists(py_path):
