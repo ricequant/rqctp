@@ -22,92 +22,6 @@ from operator import itemgetter, attrgetter
 from typing import List, Iterator, Union, NamedTuple, Optional, Tuple, Dict
 from collections import OrderedDict
 
-SPACE_4 = " " * 4
-SPACE_8 = " " * 8
-SPACE_12 = " " * 12
-
-LICENSE = """# -*- coding: utf-8 -*-
-#
-# Copyright 2019 Ricequant, Inc
-#
-# * Commercial Usage: please contact public@ricequant.com
-# * Non-Commercial Usage:
-#     Licensed under the Apache License, Version 2.0 (the "License");
-#     you may not use this file except in compliance with the License.
-#     You may obtain a copy of the License at
-#
-#         http://www.apache.org/licenses/LICENSE-2.0
-#
-#     Unless required by applicable law or agreed to in writing, software
-#     distributed under the License is distributed on an "AS IS" BASIS,
-#     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-#     See the License for the specific language governing permissions and
-#     limitations under the License.
-"""
-
-TRADER_API_PXD_DEFAULT_LINES = """
-cdef extern from "ThostFtdcTraderApi.h":
-    cdef cppclass CTraderApi "CThostFtdcTraderApi":
-        void Release() nogil
-        void Init() nogil
-        int Join() nogil"""
-
-TRADER_API_PXD_ADDITIONAL_LINES = """cdef extern from "ThostFtdcTraderApi.h" namespace "CThostFtdcTraderApi":
-    CTraderApi *CreateFtdcTraderApi(const_char *pszFlowPath) nogil except +
-    const_char *GetApiVersion() nogil
-
-
-cdef extern from "CTraderSpi.h":
-    cdef cppclass CTraderSpi:
-        CTraderSpi(PyObject *obj)"""
-
-TRADER_API_DEFAULT_PYX_LINES = """cdef class TraderApi:
-    cdef CTraderApi *_api
-    cdef CTraderSpi *_spi
-
-    def __cinit__(self):
-        self._api = NULL
-        self._spi = NULL
-
-    def __init__(self, const_char *pszFlowPath):
-        self._api = CreateFtdcTraderApi(pszFlowPath)
-        if self._api is NULL:
-            raise MemoryError()
-        self._spi = new CTraderSpi(<PyObject *>self)
-        if self._spi is NULL:
-            raise MemoryError()
-        self._api.RegisterSpi(self._spi)
-
-    def __dealloc__(self):
-        if self._api is not NULL:
-            self._api.RegisterSpi(NULL)
-            self._api.Release()
-            self._api = NULL
-            self._spi = NULL
-
-    def _ensure_api_not_null(self):
-        if self._api is NULL:
-            raise MemoryError()
-
-    def Release(self):
-        if self._api is not NULL:
-            self._api.RegisterSpi(NULL)
-            self._api.Release()
-            self._api = NULL
-            self._spi = NULL
-
-    def Join(self):
-        cdef int result
-        self._ensure_api_not_null()
-        if self._spi is not NULL:
-
-            print("before api join")
-            with nogil:
-                result = self._api.Join()
-            return result
-
-"""
-
 RE_CONST = r"THOST_FTDC_([\d\w]+)_(?P<name>[\d\w]+)"
 RE_API_METHOD = r"virtual (?P<return_type>[\w]+) (?P<name>[\d\w]+)\((?P<params>[\d\w\s\*,]*)\) = 0;"
 RE_SPI_METHOD = r"virtual void (?P<name>[\d\w]+)\((?P<params>[\d\w\s\*,]*)\)( )?{};"
@@ -169,23 +83,12 @@ class StructType(NamedTuple):
 
 class Parameter(NamedTuple):
     name: str
-    type: Union[str, StructType]
+    type: str
     pointer: bool
 
-    def to_api_pxd_line(self):
-        if self.type == "CThostFtdcTraderSpi":
-            type_ = "CTraderSpi"
-        elif isinstance(self.type, str):
-            type_ = self.type
-        else:
-            type_ = self.type.name
-        if self.pointer:
-            return f"{type_} *{self.name}"
-        else:
-            return f"{type_} {self.name}"
-
-    def to_api_pyx_method_signature(self):
-        return self.to_api_pxd_line()
+    @property
+    def type_py_class_name(self):
+        return re.match(r"CThostFtdc(?P<name>[\d\w]+)Field", self.type).group("name")
 
 
 class Method(NamedTuple):
@@ -194,33 +97,13 @@ class Method(NamedTuple):
     params: List[Parameter]
     comments: List[str]
 
-    def to_api_pxd_line(self):
-        return "{} {}({}) nogil except +".format(
-            self.return_type, self.name, ", ".join([p.to_api_pxd_line() for p in self.params])
-        )
 
-    def to_api_pyx_lines(self):
-        yield "def {}({});".format(
-            self.name, ", ".join(["self"] + [p.to_api_pyx_method_signature() for p in self.params])
-        )
-        if self.return_type == "void":
-            yield "self._ensure_api_not_null()"
-            yield "self._api."
-
-
-class Api(NamedTuple):
-    methods: List[Method]
-
-    def to_api_pyx_lines(self):
-        pass
-
-    def to_api_pxd_lines(self):
-        for l in TRADER_API_PXD_DEFAULT_LINES.split("\n"):
-            yield l
-        for method in self.methods:
-            if method.name in ("Release", "Init", "Join"):
-                continue
-            yield SPACE_8 + method.to_api_pxd_line()
+class ApiMethod(NamedTuple):
+    name : str
+    return_type: str
+    first_param: Parameter
+    req_id_in_params: bool
+    comments: str
 
 
 def is_comment(line: str):
@@ -342,19 +225,20 @@ def parse_trader_api_header(raw_lines: List[str], struct_dict: Dict[str, StructT
     def _parse_params(params: str):
         if params:
             for param in (params.split(",") if "," in params else [params]):
-                param = param.strip()
-                param_elements = param.split(" ")
-                pointer = False
-                if "*" in param_elements:
-                    param_elements.remove("*")
-                    pointer = True
-                param_type, param_name = param_elements
-                if param_name.startswith("*"):
-                    param_name = param_name.split("*")[1]
-                    pointer = True
-                elif param_type not in {"int", "bool", "char", "CThostFtdcTraderSpi", "THOST_TE_RESUME_TYPE"}:
-                    param_type = struct_dict[param_type]
-                yield Parameter(name=param_name, type=param_type, pointer=pointer)
+                yield _parse_param(param)
+
+    def _parse_param(param: str):
+        param = param.strip()
+        param_elements = param.split(" ")
+        pointer = False
+        if "*" in param_elements:
+            param_elements.remove("*")
+            pointer = True
+        param_type, param_name = param_elements
+        if param_name.startswith("*"):
+            param_name = param_name.split("*")[1]
+            pointer = True
+        return Parameter(name=param_name, type=param_type, pointer=pointer)
 
     def _parse_api(line_iter: Iterator[str]):
         assert next(line_iter) == "{"
@@ -372,7 +256,21 @@ def parse_trader_api_header(raw_lines: List[str], struct_dict: Dict[str, StructT
                 name, return_type, params = itemgetter("name", "return_type", "params")(
                     re.match(RE_API_METHOD, l).groupdict()
                 )
-                yield Method(name=name, return_type=return_type, params=list(_parse_params(params)), comments=comments)
+                if name in ("Init", "Release", "Join", "RegisterFront", "SubscribePrivateTopic", "SubscribePublicTopic", "RegisterSpi"):
+                    continue
+                req_id_in_params = False
+                if "," in params:
+                    assert len(params.split(",")) == 2
+                    first, second = params.split(",")
+                    assert second.strip() == "int nRequestID"
+                    req_id_in_params = True
+                    first_param= _parse_param(first)
+                else:
+                    first_param = _parse_param(params)
+                yield ApiMethod(
+                    name=name, return_type=return_type, first_param=first_param, req_id_in_params=req_id_in_params,
+                    comments="\n".join(comments)
+                )
                 comments.clear()
             elif l.startswith("static") or l.startswith("virtual const"):
                 comments.clear()
@@ -397,30 +295,30 @@ def parse_trader_api_header(raw_lines: List[str], struct_dict: Dict[str, StructT
                 raise RuntimeError(f"Bad line: {l}")
 
     lines = line_gen(raw_lines)
-
-    api, spi = None, None
+    
+    api_methods, spi_methods = None, None
     while True:
         try:
             line = next(lines)
         except StopIteration:
             break
         if line == "class TRADER_API_EXPORT CThostFtdcTraderApi":
-            api = Api(methods=list(_parse_api(lines)))
+            api_methods = list(_parse_api(lines))
         elif line == "class CThostFtdcTraderSpi":
-            spi = Api(methods=list(_parse_spi(lines)))
+            spi_methods = list(_parse_spi(lines))
         else:
             pass
-    if not (api and spi):
+    if not (api_methods and spi_methods):
         raise RuntimeError("{} not found".format("api" if api is None else "spi"))
-    return spi, api
+    return api_methods, spi_methods
 
 
 class PyCodeGenerator(object):
     def __init__(self, api_path):
         self._types: OrderedDict[str, Union[CustomType, EnumType]] = OrderedDict()
         self._structs = OrderedDict()
-        self._trader_spi = None
-        self._trader_api = None
+        self._spi_methods = None
+        self._api_methods = None
 
         with open(os.path.join(api_path, "ThostFtdcUserApiDataType.h"), encoding="GBK") as f:
             for type_obj in parse_data_type_header(f.readlines()):
@@ -431,7 +329,7 @@ class PyCodeGenerator(object):
                 self._structs[struct_obj.name] = struct_obj
 
         with open(os.path.join(api_path, "ThostFtdcTraderApi.h"), encoding="GBK") as f:
-            self._trader_spi, self._trader_api = parse_trader_api_header(f.readlines(), self._structs)
+            self._api_methods, self._spi_methods = parse_trader_api_header(f.readlines(), self._structs)
 
     def write(self, py_path):
         from jinja2 import Environment, FileSystemLoader
@@ -469,13 +367,13 @@ class PyCodeGenerator(object):
             f.write(template.render(enum_types=[t for t in self._types.values() if t.enum_values]))
 
         with open(os.path.join(py_path, "ThostFtdcTraderApi.pxd"), "w+", encoding="utf-8") as f:
-            lines = [
-                LICENSE, "from cpython cimport PyObject", "from libc.string cimport const_char", "",
-                "from .ThostFtdcUserApiStruct cimport *", ""
-            ]
-            lines.extend(list(self._trader_api.to_api_pxd_lines()) + [""] * 2)
-            lines.append(TRADER_API_PXD_ADDITIONAL_LINES)
-            f.writelines([l + "\n" for l in lines])
+            template = env.get_template("ThostFtdcTraderApi.pxd.jinja")
+            f.write(template.render(methods=self._api_methods))
+
+        with open(os.path.join(py_path, "TraderApi.pyx"), "w+", encoding="utf-8") as f:
+            template = env.get_template("TraderApi.pyx.jinja")
+            f.write(template.render(api_methods=self._api_methods, spi_methods=self._spi_methods))
+        
 
 
 if __name__ == "__main__":
