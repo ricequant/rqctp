@@ -17,15 +17,23 @@
 #     limitations under the License.
 
 
-cdef extern from "ThostFtdcUserApiDataType.h":
-    cdef enum THOST_TE_RESUME_TYPE:
-        THOST_TERT_RESTART = 0
-        THOST_TERT_RESUME
-        THOST_TERT_QUICK
-    {% for type in types %}
-        {% if type.array_len is none %}
-    ctypedef {{ type.base_type }} {{ type.name }}  # {{ type.comment }}
-        {% else %}
-    ctypedef {{ type.base_type }} {{ type.name }}[{{ type.array_len }}]  # {{ type.comment }}
-        {% endif %}
-    {% endfor %}
+from .utils import Struct
+{% for struct in structs %}
+
+
+class {{ struct.py_class_name }}(Struct):
+    def __init__(
+        self,
+        {% for member in struct.members %}
+        {{ member.name }}: {{ member.type.py_type }} = None,
+        {% endfor %}
+    ):
+        """
+        {{ struct.comment }}
+        {% for member in struct.members %}
+        :param {{ member.name }}: {{ member.comment }}
+        {% endfor %}
+        """
+        super().__init__()
+        ...
+{% endfor %}

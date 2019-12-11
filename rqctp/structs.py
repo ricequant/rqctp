@@ -24,15 +24,22 @@ c_char_Array_2 = c_char * 2
 c_char_Array_3 = c_char * 3
 c_char_Array_4 = c_char * 4
 c_char_Array_5 = c_char * 5
+c_char_Array_6 = c_char * 6
 c_char_Array_7 = c_char * 7
 c_char_Array_9 = c_char * 9
+c_char_Array_10 = c_char * 10
 c_char_Array_11 = c_char * 11
+c_char_Array_12 = c_char * 12
 c_char_Array_13 = c_char * 13
 c_char_Array_15 = c_char * 15
 c_char_Array_16 = c_char * 16
 c_char_Array_17 = c_char * 17
+c_char_Array_20 = c_char * 20
 c_char_Array_21 = c_char * 21
 c_char_Array_22 = c_char * 22
+c_char_Array_23 = c_char * 23
+c_char_Array_24 = c_char * 24
+c_char_Array_25 = c_char * 25
 c_char_Array_31 = c_char * 31
 c_char_Array_33 = c_char * 33
 c_char_Array_36 = c_char * 36
@@ -40,16 +47,26 @@ c_char_Array_41 = c_char * 41
 c_char_Array_51 = c_char * 51
 c_char_Array_61 = c_char * 61
 c_char_Array_65 = c_char * 65
+c_char_Array_71 = c_char * 71
 c_char_Array_81 = c_char * 81
+c_char_Array_100 = c_char * 100
 c_char_Array_101 = c_char * 101
 c_char_Array_129 = c_char * 129
 c_char_Array_161 = c_char * 161
 c_char_Array_201 = c_char * 201
 c_char_Array_256 = c_char * 256
+c_char_Array_257 = c_char * 257
+c_char_Array_261 = c_char * 261
 c_char_Array_273 = c_char * 273
 c_char_Array_301 = c_char * 301
+c_char_Array_349 = c_char * 349
+c_char_Array_365 = c_char * 365
+c_char_Array_401 = c_char * 401
 c_char_Array_501 = c_char * 501
+c_char_Array_513 = c_char * 513
+c_char_Array_1001 = c_char * 1001
 c_char_Array_1025 = c_char * 1025
+c_char_Array_2049 = c_char * 2049
 c_char_Array_2561 = c_char * 2561
 
 
@@ -229,7 +246,7 @@ class RspAuthenticate(Struct):
         if AppID:
             self.AppID = AppID.encode("GBK")
         if AppType:
-            self.AppType = AppType
+            self.AppType = AppType.encode("GBK")
 
 
 class AuthenticationInfo(Struct):
@@ -258,7 +275,7 @@ class AuthenticationInfo(Struct):
         if AppID:
             self.AppID = AppID.encode("GBK")
         if AppType:
-            self.AppType = AppType
+            self.AppType = AppType.encode("GBK")
 
 
 class RspUserLogin2(Struct):
@@ -373,7 +390,7 @@ class TransferBankToFutureReq(Struct):
         if FutureAccount:
             self.FutureAccount = FutureAccount.encode("GBK")
         if FuturePwdFlag:
-            self.FuturePwdFlag = FuturePwdFlag
+            self.FuturePwdFlag = FuturePwdFlag.encode("GBK")
         if FutureAccPwd:
             self.FutureAccPwd = FutureAccPwd.encode("GBK")
         if TradeAmt:
@@ -425,7 +442,7 @@ class TransferFutureToBankReq(Struct):
         if FutureAccount:
             self.FutureAccount = FutureAccount.encode("GBK")
         if FuturePwdFlag:
-            self.FuturePwdFlag = FuturePwdFlag
+            self.FuturePwdFlag = FuturePwdFlag.encode("GBK")
         if FutureAccPwd:
             self.FutureAccPwd = FutureAccPwd.encode("GBK")
         if TradeAmt:
@@ -475,7 +492,7 @@ class TransferQryBankReq(Struct):
         if FutureAccount:
             self.FutureAccount = FutureAccount.encode("GBK")
         if FuturePwdFlag:
-            self.FuturePwdFlag = FuturePwdFlag
+            self.FuturePwdFlag = FuturePwdFlag.encode("GBK")
         if FutureAccPwd:
             self.FutureAccPwd = FutureAccPwd.encode("GBK")
         if CurrencyCode:
@@ -569,7 +586,7 @@ class TransferQryDetailRsp(Struct):
         if TxAmount:
             self.TxAmount = TxAmount
         if Flag:
-            self.Flag = Flag
+            self.Flag = Flag.encode("GBK")
 
 
 class RspInfo(Struct):
@@ -600,7 +617,7 @@ class Exchange(Struct):
         if ExchangeName:
             self.ExchangeName = ExchangeName.encode("GBK")
         if ExchangeProperty:
-            self.ExchangeProperty = ExchangeProperty
+            self.ExchangeProperty = ExchangeProperty.encode("GBK")
 
 
 class Product(Struct):
@@ -633,7 +650,7 @@ class Product(Struct):
         if ExchangeID:
             self.ExchangeID = ExchangeID.encode("GBK")
         if ProductClass:
-            self.ProductClass = ProductClass
+            self.ProductClass = ProductClass.encode("GBK")
         if VolumeMultiple:
             self.VolumeMultiple = VolumeMultiple
         if PriceTick:
@@ -647,15 +664,15 @@ class Product(Struct):
         if MinLimitOrderVolume:
             self.MinLimitOrderVolume = MinLimitOrderVolume
         if PositionType:
-            self.PositionType = PositionType
+            self.PositionType = PositionType.encode("GBK")
         if PositionDateType:
-            self.PositionDateType = PositionDateType
+            self.PositionDateType = PositionDateType.encode("GBK")
         if CloseDealType:
-            self.CloseDealType = CloseDealType
+            self.CloseDealType = CloseDealType.encode("GBK")
         if TradeCurrencyID:
             self.TradeCurrencyID = TradeCurrencyID.encode("GBK")
         if MortgageFundUseRange:
-            self.MortgageFundUseRange = MortgageFundUseRange
+            self.MortgageFundUseRange = MortgageFundUseRange.encode("GBK")
         if ExchangeProductID:
             self.ExchangeProductID = ExchangeProductID.encode("GBK")
         if UnderlyingMultiple:
@@ -710,7 +727,7 @@ class Instrument(Struct):
         if ProductID:
             self.ProductID = ProductID.encode("GBK")
         if ProductClass:
-            self.ProductClass = ProductClass
+            self.ProductClass = ProductClass.encode("GBK")
         if DeliveryYear:
             self.DeliveryYear = DeliveryYear
         if DeliveryMonth:
@@ -738,29 +755,29 @@ class Instrument(Struct):
         if EndDelivDate:
             self.EndDelivDate = EndDelivDate.encode("GBK")
         if InstLifePhase:
-            self.InstLifePhase = InstLifePhase
+            self.InstLifePhase = InstLifePhase.encode("GBK")
         if IsTrading:
             self.IsTrading = IsTrading
         if PositionType:
-            self.PositionType = PositionType
+            self.PositionType = PositionType.encode("GBK")
         if PositionDateType:
-            self.PositionDateType = PositionDateType
+            self.PositionDateType = PositionDateType.encode("GBK")
         if LongMarginRatio:
             self.LongMarginRatio = LongMarginRatio
         if ShortMarginRatio:
             self.ShortMarginRatio = ShortMarginRatio
         if MaxMarginSideAlgorithm:
-            self.MaxMarginSideAlgorithm = MaxMarginSideAlgorithm
+            self.MaxMarginSideAlgorithm = MaxMarginSideAlgorithm.encode("GBK")
         if UnderlyingInstrID:
             self.UnderlyingInstrID = UnderlyingInstrID.encode("GBK")
         if StrikePrice:
             self.StrikePrice = StrikePrice
         if OptionsType:
-            self.OptionsType = OptionsType
+            self.OptionsType = OptionsType.encode("GBK")
         if UnderlyingMultiple:
             self.UnderlyingMultiple = UnderlyingMultiple
         if CombinationType:
-            self.CombinationType = CombinationType
+            self.CombinationType = CombinationType.encode("GBK")
 
 
 class Broker(Struct):
@@ -837,7 +854,7 @@ class Investor(Struct):
         if InvestorName:
             self.InvestorName = InvestorName.encode("GBK")
         if IdentifiedCardType:
-            self.IdentifiedCardType = IdentifiedCardType
+            self.IdentifiedCardType = IdentifiedCardType.encode("GBK")
         if IdentifiedCardNo:
             self.IdentifiedCardNo = IdentifiedCardNo.encode("GBK")
         if IsActive:
@@ -882,11 +899,11 @@ class TradingCode(Struct):
         if IsActive:
             self.IsActive = IsActive
         if ClientIDType:
-            self.ClientIDType = ClientIDType
+            self.ClientIDType = ClientIDType.encode("GBK")
         if BranchID:
             self.BranchID = BranchID.encode("GBK")
         if BizType:
-            self.BizType = BizType
+            self.BizType = BizType.encode("GBK")
         if InvestUnitID:
             self.InvestUnitID = InvestUnitID.encode("GBK")
 
@@ -942,7 +959,7 @@ class SuperUserFunction(Struct):
         if UserID:
             self.UserID = UserID.encode("GBK")
         if FunctionCode:
-            self.FunctionCode = FunctionCode
+            self.FunctionCode = FunctionCode.encode("GBK")
 
 
 class InvestorGroup(Struct):
@@ -1110,7 +1127,7 @@ class TradingAccount(Struct):
         if SpecProductExchangeMargin:
             self.SpecProductExchangeMargin = SpecProductExchangeMargin
         if BizType:
-            self.BizType = BizType
+            self.BizType = BizType.encode("GBK")
         if FrozenSwap:
             self.FrozenSwap = FrozenSwap
         if RemainSwap:
@@ -1177,11 +1194,11 @@ class InvestorPosition(Struct):
         if InvestorID:
             self.InvestorID = InvestorID.encode("GBK")
         if PosiDirection:
-            self.PosiDirection = PosiDirection
+            self.PosiDirection = PosiDirection.encode("GBK")
         if HedgeFlag:
-            self.HedgeFlag = HedgeFlag
+            self.HedgeFlag = HedgeFlag.encode("GBK")
         if PositionDate:
-            self.PositionDate = PositionDate
+            self.PositionDate = PositionDate.encode("GBK")
         if YdPosition:
             self.YdPosition = YdPosition
         if Position:
@@ -1287,13 +1304,13 @@ class InstrumentMarginRate(Struct):
         if InstrumentID:
             self.InstrumentID = InstrumentID.encode("GBK")
         if InvestorRange:
-            self.InvestorRange = InvestorRange
+            self.InvestorRange = InvestorRange.encode("GBK")
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
         if InvestorID:
             self.InvestorID = InvestorID.encode("GBK")
         if HedgeFlag:
-            self.HedgeFlag = HedgeFlag
+            self.HedgeFlag = HedgeFlag.encode("GBK")
         if LongMarginRatioByMoney:
             self.LongMarginRatioByMoney = LongMarginRatioByMoney
         if LongMarginRatioByVolume:
@@ -1332,7 +1349,7 @@ class InstrumentCommissionRate(Struct):
         if InstrumentID:
             self.InstrumentID = InstrumentID.encode("GBK")
         if InvestorRange:
-            self.InvestorRange = InvestorRange
+            self.InvestorRange = InvestorRange.encode("GBK")
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
         if InvestorID:
@@ -1352,7 +1369,7 @@ class InstrumentCommissionRate(Struct):
         if ExchangeID:
             self.ExchangeID = ExchangeID.encode("GBK")
         if BizType:
-            self.BizType = BizType
+            self.BizType = BizType.encode("GBK")
         if InvestUnitID:
             self.InvestUnitID = InvestUnitID.encode("GBK")
 
@@ -1511,13 +1528,13 @@ class InstrumentTradingRight(Struct):
         if InstrumentID:
             self.InstrumentID = InstrumentID.encode("GBK")
         if InvestorRange:
-            self.InvestorRange = InvestorRange
+            self.InvestorRange = InvestorRange.encode("GBK")
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
         if InvestorID:
             self.InvestorID = InvestorID.encode("GBK")
         if TradingRight:
-            self.TradingRight = TradingRight
+            self.TradingRight = TradingRight.encode("GBK")
 
 
 class BrokerUser(Struct):
@@ -1540,7 +1557,7 @@ class BrokerUser(Struct):
         if UserName:
             self.UserName = UserName.encode("GBK")
         if UserType:
-            self.UserType = UserType
+            self.UserType = UserType.encode("GBK")
         if IsActive:
             self.IsActive = IsActive
         if IsUsingOTP:
@@ -1592,7 +1609,7 @@ class BrokerUserFunction(Struct):
         if UserID:
             self.UserID = UserID.encode("GBK")
         if BrokerFunctionCode:
-            self.BrokerFunctionCode = BrokerFunctionCode
+            self.BrokerFunctionCode = BrokerFunctionCode.encode("GBK")
 
 
 class TraderOffer(Struct):
@@ -1633,7 +1650,7 @@ class TraderOffer(Struct):
         if OrderLocalID:
             self.OrderLocalID = OrderLocalID.encode("GBK")
         if TraderConnectStatus:
-            self.TraderConnectStatus = TraderConnectStatus
+            self.TraderConnectStatus = TraderConnectStatus.encode("GBK")
         if ConnectRequestDate:
             self.ConnectRequestDate = ConnectRequestDate.encode("GBK")
         if ConnectRequestTime:
@@ -1711,13 +1728,13 @@ class InstrumentMarginRateAdjust(Struct):
         if InstrumentID:
             self.InstrumentID = InstrumentID.encode("GBK")
         if InvestorRange:
-            self.InvestorRange = InvestorRange
+            self.InvestorRange = InvestorRange.encode("GBK")
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
         if InvestorID:
             self.InvestorID = InvestorID.encode("GBK")
         if HedgeFlag:
-            self.HedgeFlag = HedgeFlag
+            self.HedgeFlag = HedgeFlag.encode("GBK")
         if LongMarginRatioByMoney:
             self.LongMarginRatioByMoney = LongMarginRatioByMoney
         if LongMarginRatioByVolume:
@@ -1749,7 +1766,7 @@ class ExchangeMarginRate(Struct):
         if InstrumentID:
             self.InstrumentID = InstrumentID.encode("GBK")
         if HedgeFlag:
-            self.HedgeFlag = HedgeFlag
+            self.HedgeFlag = HedgeFlag.encode("GBK")
         if LongMarginRatioByMoney:
             self.LongMarginRatioByMoney = LongMarginRatioByMoney
         if LongMarginRatioByVolume:
@@ -1788,7 +1805,7 @@ class ExchangeMarginRateAdjust(Struct):
         if InstrumentID:
             self.InstrumentID = InstrumentID.encode("GBK")
         if HedgeFlag:
-            self.HedgeFlag = HedgeFlag
+            self.HedgeFlag = HedgeFlag.encode("GBK")
         if LongMarginRatioByMoney:
             self.LongMarginRatioByMoney = LongMarginRatioByMoney
         if LongMarginRatioByVolume:
@@ -2070,9 +2087,9 @@ class InputOrder(Struct):
         if UserID:
             self.UserID = UserID.encode("GBK")
         if OrderPriceType:
-            self.OrderPriceType = OrderPriceType
+            self.OrderPriceType = OrderPriceType.encode("GBK")
         if Direction:
-            self.Direction = Direction
+            self.Direction = Direction.encode("GBK")
         if CombOffsetFlag:
             self.CombOffsetFlag = CombOffsetFlag.encode("GBK")
         if CombHedgeFlag:
@@ -2082,19 +2099,19 @@ class InputOrder(Struct):
         if VolumeTotalOriginal:
             self.VolumeTotalOriginal = VolumeTotalOriginal
         if TimeCondition:
-            self.TimeCondition = TimeCondition
+            self.TimeCondition = TimeCondition.encode("GBK")
         if GTDDate:
             self.GTDDate = GTDDate.encode("GBK")
         if VolumeCondition:
-            self.VolumeCondition = VolumeCondition
+            self.VolumeCondition = VolumeCondition.encode("GBK")
         if MinVolume:
             self.MinVolume = MinVolume
         if ContingentCondition:
-            self.ContingentCondition = ContingentCondition
+            self.ContingentCondition = ContingentCondition.encode("GBK")
         if StopPrice:
             self.StopPrice = StopPrice
         if ForceCloseReason:
-            self.ForceCloseReason = ForceCloseReason
+            self.ForceCloseReason = ForceCloseReason.encode("GBK")
         if IsAutoSuspend:
             self.IsAutoSuspend = IsAutoSuspend
         if BusinessUnit:
@@ -2201,9 +2218,9 @@ class Order(Struct):
         if UserID:
             self.UserID = UserID.encode("GBK")
         if OrderPriceType:
-            self.OrderPriceType = OrderPriceType
+            self.OrderPriceType = OrderPriceType.encode("GBK")
         if Direction:
-            self.Direction = Direction
+            self.Direction = Direction.encode("GBK")
         if CombOffsetFlag:
             self.CombOffsetFlag = CombOffsetFlag.encode("GBK")
         if CombHedgeFlag:
@@ -2213,19 +2230,19 @@ class Order(Struct):
         if VolumeTotalOriginal:
             self.VolumeTotalOriginal = VolumeTotalOriginal
         if TimeCondition:
-            self.TimeCondition = TimeCondition
+            self.TimeCondition = TimeCondition.encode("GBK")
         if GTDDate:
             self.GTDDate = GTDDate.encode("GBK")
         if VolumeCondition:
-            self.VolumeCondition = VolumeCondition
+            self.VolumeCondition = VolumeCondition.encode("GBK")
         if MinVolume:
             self.MinVolume = MinVolume
         if ContingentCondition:
-            self.ContingentCondition = ContingentCondition
+            self.ContingentCondition = ContingentCondition.encode("GBK")
         if StopPrice:
             self.StopPrice = StopPrice
         if ForceCloseReason:
-            self.ForceCloseReason = ForceCloseReason
+            self.ForceCloseReason = ForceCloseReason.encode("GBK")
         if IsAutoSuspend:
             self.IsAutoSuspend = IsAutoSuspend
         if BusinessUnit:
@@ -2247,7 +2264,7 @@ class Order(Struct):
         if InstallID:
             self.InstallID = InstallID
         if OrderSubmitStatus:
-            self.OrderSubmitStatus = OrderSubmitStatus
+            self.OrderSubmitStatus = OrderSubmitStatus.encode("GBK")
         if NotifySequence:
             self.NotifySequence = NotifySequence
         if TradingDay:
@@ -2257,11 +2274,11 @@ class Order(Struct):
         if OrderSysID:
             self.OrderSysID = OrderSysID.encode("GBK")
         if OrderSource:
-            self.OrderSource = OrderSource
+            self.OrderSource = OrderSource.encode("GBK")
         if OrderStatus:
-            self.OrderStatus = OrderStatus
+            self.OrderStatus = OrderStatus.encode("GBK")
         if OrderType:
-            self.OrderType = OrderType
+            self.OrderType = OrderType.encode("GBK")
         if VolumeTraded:
             self.VolumeTraded = VolumeTraded
         if VolumeTotal:
@@ -2370,9 +2387,9 @@ class ExchangeOrder(Struct):
     def __init__(self, OrderPriceType=None, Direction=None, CombOffsetFlag=None, CombHedgeFlag=None, LimitPrice=None, VolumeTotalOriginal=None, TimeCondition=None, GTDDate=None, VolumeCondition=None, MinVolume=None, ContingentCondition=None, StopPrice=None, ForceCloseReason=None, IsAutoSuspend=None, BusinessUnit=None, RequestID=None, OrderLocalID=None, ExchangeID=None, ParticipantID=None, ClientID=None, ExchangeInstID=None, TraderID=None, InstallID=None, OrderSubmitStatus=None, NotifySequence=None, TradingDay=None, SettlementID=None, OrderSysID=None, OrderSource=None, OrderStatus=None, OrderType=None, VolumeTraded=None, VolumeTotal=None, InsertDate=None, InsertTime=None, ActiveTime=None, SuspendTime=None, UpdateTime=None, CancelTime=None, ActiveTraderID=None, ClearingPartID=None, SequenceNo=None, BranchID=None, IPAddress=None, MacAddress=None):
         super().__init__()
         if OrderPriceType:
-            self.OrderPriceType = OrderPriceType
+            self.OrderPriceType = OrderPriceType.encode("GBK")
         if Direction:
-            self.Direction = Direction
+            self.Direction = Direction.encode("GBK")
         if CombOffsetFlag:
             self.CombOffsetFlag = CombOffsetFlag.encode("GBK")
         if CombHedgeFlag:
@@ -2382,19 +2399,19 @@ class ExchangeOrder(Struct):
         if VolumeTotalOriginal:
             self.VolumeTotalOriginal = VolumeTotalOriginal
         if TimeCondition:
-            self.TimeCondition = TimeCondition
+            self.TimeCondition = TimeCondition.encode("GBK")
         if GTDDate:
             self.GTDDate = GTDDate.encode("GBK")
         if VolumeCondition:
-            self.VolumeCondition = VolumeCondition
+            self.VolumeCondition = VolumeCondition.encode("GBK")
         if MinVolume:
             self.MinVolume = MinVolume
         if ContingentCondition:
-            self.ContingentCondition = ContingentCondition
+            self.ContingentCondition = ContingentCondition.encode("GBK")
         if StopPrice:
             self.StopPrice = StopPrice
         if ForceCloseReason:
-            self.ForceCloseReason = ForceCloseReason
+            self.ForceCloseReason = ForceCloseReason.encode("GBK")
         if IsAutoSuspend:
             self.IsAutoSuspend = IsAutoSuspend
         if BusinessUnit:
@@ -2416,7 +2433,7 @@ class ExchangeOrder(Struct):
         if InstallID:
             self.InstallID = InstallID
         if OrderSubmitStatus:
-            self.OrderSubmitStatus = OrderSubmitStatus
+            self.OrderSubmitStatus = OrderSubmitStatus.encode("GBK")
         if NotifySequence:
             self.NotifySequence = NotifySequence
         if TradingDay:
@@ -2426,11 +2443,11 @@ class ExchangeOrder(Struct):
         if OrderSysID:
             self.OrderSysID = OrderSysID.encode("GBK")
         if OrderSource:
-            self.OrderSource = OrderSource
+            self.OrderSource = OrderSource.encode("GBK")
         if OrderStatus:
-            self.OrderStatus = OrderStatus
+            self.OrderStatus = OrderStatus.encode("GBK")
         if OrderType:
-            self.OrderType = OrderType
+            self.OrderType = OrderType.encode("GBK")
         if VolumeTraded:
             self.VolumeTraded = VolumeTraded
         if VolumeTotal:
@@ -2532,7 +2549,7 @@ class InputOrderAction(Struct):
         if OrderSysID:
             self.OrderSysID = OrderSysID.encode("GBK")
         if ActionFlag:
-            self.ActionFlag = ActionFlag
+            self.ActionFlag = ActionFlag.encode("GBK")
         if LimitPrice:
             self.LimitPrice = LimitPrice
         if VolumeChange:
@@ -2603,7 +2620,7 @@ class OrderAction(Struct):
         if OrderSysID:
             self.OrderSysID = OrderSysID.encode("GBK")
         if ActionFlag:
-            self.ActionFlag = ActionFlag
+            self.ActionFlag = ActionFlag.encode("GBK")
         if LimitPrice:
             self.LimitPrice = LimitPrice
         if VolumeChange:
@@ -2627,7 +2644,7 @@ class OrderAction(Struct):
         if BusinessUnit:
             self.BusinessUnit = BusinessUnit.encode("GBK")
         if OrderActionStatus:
-            self.OrderActionStatus = OrderActionStatus
+            self.OrderActionStatus = OrderActionStatus.encode("GBK")
         if UserID:
             self.UserID = UserID.encode("GBK")
         if StatusMsg:
@@ -2674,7 +2691,7 @@ class ExchangeOrderAction(Struct):
         if OrderSysID:
             self.OrderSysID = OrderSysID.encode("GBK")
         if ActionFlag:
-            self.ActionFlag = ActionFlag
+            self.ActionFlag = ActionFlag.encode("GBK")
         if LimitPrice:
             self.LimitPrice = LimitPrice
         if VolumeChange:
@@ -2698,7 +2715,7 @@ class ExchangeOrderAction(Struct):
         if BusinessUnit:
             self.BusinessUnit = BusinessUnit.encode("GBK")
         if OrderActionStatus:
-            self.OrderActionStatus = OrderActionStatus
+            self.OrderActionStatus = OrderActionStatus.encode("GBK")
         if UserID:
             self.UserID = UserID.encode("GBK")
         if BranchID:
@@ -2774,7 +2791,7 @@ class ExchangeTrade(Struct):
         if TradeID:
             self.TradeID = TradeID.encode("GBK")
         if Direction:
-            self.Direction = Direction
+            self.Direction = Direction.encode("GBK")
         if OrderSysID:
             self.OrderSysID = OrderSysID.encode("GBK")
         if ParticipantID:
@@ -2782,13 +2799,13 @@ class ExchangeTrade(Struct):
         if ClientID:
             self.ClientID = ClientID.encode("GBK")
         if TradingRole:
-            self.TradingRole = TradingRole
+            self.TradingRole = TradingRole.encode("GBK")
         if ExchangeInstID:
             self.ExchangeInstID = ExchangeInstID.encode("GBK")
         if OffsetFlag:
-            self.OffsetFlag = OffsetFlag
+            self.OffsetFlag = OffsetFlag.encode("GBK")
         if HedgeFlag:
-            self.HedgeFlag = HedgeFlag
+            self.HedgeFlag = HedgeFlag.encode("GBK")
         if Price:
             self.Price = Price
         if Volume:
@@ -2798,9 +2815,9 @@ class ExchangeTrade(Struct):
         if TradeTime:
             self.TradeTime = TradeTime.encode("GBK")
         if TradeType:
-            self.TradeType = TradeType
+            self.TradeType = TradeType.encode("GBK")
         if PriceSource:
-            self.PriceSource = PriceSource
+            self.PriceSource = PriceSource.encode("GBK")
         if TraderID:
             self.TraderID = TraderID.encode("GBK")
         if OrderLocalID:
@@ -2812,7 +2829,7 @@ class ExchangeTrade(Struct):
         if SequenceNo:
             self.SequenceNo = SequenceNo
         if TradeSource:
-            self.TradeSource = TradeSource
+            self.TradeSource = TradeSource.encode("GBK")
 
 
 class Trade(Struct):
@@ -2867,7 +2884,7 @@ class Trade(Struct):
         if TradeID:
             self.TradeID = TradeID.encode("GBK")
         if Direction:
-            self.Direction = Direction
+            self.Direction = Direction.encode("GBK")
         if OrderSysID:
             self.OrderSysID = OrderSysID.encode("GBK")
         if ParticipantID:
@@ -2875,13 +2892,13 @@ class Trade(Struct):
         if ClientID:
             self.ClientID = ClientID.encode("GBK")
         if TradingRole:
-            self.TradingRole = TradingRole
+            self.TradingRole = TradingRole.encode("GBK")
         if ExchangeInstID:
             self.ExchangeInstID = ExchangeInstID.encode("GBK")
         if OffsetFlag:
-            self.OffsetFlag = OffsetFlag
+            self.OffsetFlag = OffsetFlag.encode("GBK")
         if HedgeFlag:
-            self.HedgeFlag = HedgeFlag
+            self.HedgeFlag = HedgeFlag.encode("GBK")
         if Price:
             self.Price = Price
         if Volume:
@@ -2891,9 +2908,9 @@ class Trade(Struct):
         if TradeTime:
             self.TradeTime = TradeTime.encode("GBK")
         if TradeType:
-            self.TradeType = TradeType
+            self.TradeType = TradeType.encode("GBK")
         if PriceSource:
-            self.PriceSource = PriceSource
+            self.PriceSource = PriceSource.encode("GBK")
         if TraderID:
             self.TraderID = TraderID.encode("GBK")
         if OrderLocalID:
@@ -2911,7 +2928,7 @@ class Trade(Struct):
         if BrokerOrderSeq:
             self.BrokerOrderSeq = BrokerOrderSeq
         if TradeSource:
-            self.TradeSource = TradeSource
+            self.TradeSource = TradeSource.encode("GBK")
         if InvestUnitID:
             self.InvestUnitID = InvestUnitID.encode("GBK")
 
@@ -2982,11 +2999,11 @@ class QueryMaxOrderVolume(Struct):
         if InstrumentID:
             self.InstrumentID = InstrumentID.encode("GBK")
         if Direction:
-            self.Direction = Direction
+            self.Direction = Direction.encode("GBK")
         if OffsetFlag:
-            self.OffsetFlag = OffsetFlag
+            self.OffsetFlag = OffsetFlag.encode("GBK")
         if HedgeFlag:
-            self.HedgeFlag = HedgeFlag
+            self.HedgeFlag = HedgeFlag.encode("GBK")
         if MaxVolume:
             self.MaxVolume = MaxVolume
         if ExchangeID:
@@ -3115,7 +3132,7 @@ class SyncingInvestor(Struct):
         if InvestorName:
             self.InvestorName = InvestorName.encode("GBK")
         if IdentifiedCardType:
-            self.IdentifiedCardType = IdentifiedCardType
+            self.IdentifiedCardType = IdentifiedCardType.encode("GBK")
         if IdentifiedCardNo:
             self.IdentifiedCardNo = IdentifiedCardNo.encode("GBK")
         if IsActive:
@@ -3157,7 +3174,7 @@ class SyncingTradingCode(Struct):
         if IsActive:
             self.IsActive = IsActive
         if ClientIDType:
-            self.ClientIDType = ClientIDType
+            self.ClientIDType = ClientIDType.encode("GBK")
 
 
 class SyncingInvestorGroup(Struct):
@@ -3389,11 +3406,11 @@ class SyncingInvestorPosition(Struct):
         if InvestorID:
             self.InvestorID = InvestorID.encode("GBK")
         if PosiDirection:
-            self.PosiDirection = PosiDirection
+            self.PosiDirection = PosiDirection.encode("GBK")
         if HedgeFlag:
-            self.HedgeFlag = HedgeFlag
+            self.HedgeFlag = HedgeFlag.encode("GBK")
         if PositionDate:
-            self.PositionDate = PositionDate
+            self.PositionDate = PositionDate.encode("GBK")
         if YdPosition:
             self.YdPosition = YdPosition
         if Position:
@@ -3497,13 +3514,13 @@ class SyncingInstrumentMarginRate(Struct):
         if InstrumentID:
             self.InstrumentID = InstrumentID.encode("GBK")
         if InvestorRange:
-            self.InvestorRange = InvestorRange
+            self.InvestorRange = InvestorRange.encode("GBK")
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
         if InvestorID:
             self.InvestorID = InvestorID.encode("GBK")
         if HedgeFlag:
-            self.HedgeFlag = HedgeFlag
+            self.HedgeFlag = HedgeFlag.encode("GBK")
         if LongMarginRatioByMoney:
             self.LongMarginRatioByMoney = LongMarginRatioByMoney
         if LongMarginRatioByVolume:
@@ -3535,7 +3552,7 @@ class SyncingInstrumentCommissionRate(Struct):
         if InstrumentID:
             self.InstrumentID = InstrumentID.encode("GBK")
         if InvestorRange:
-            self.InvestorRange = InvestorRange
+            self.InvestorRange = InvestorRange.encode("GBK")
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
         if InvestorID:
@@ -3568,13 +3585,13 @@ class SyncingInstrumentTradingRight(Struct):
         if InstrumentID:
             self.InstrumentID = InstrumentID.encode("GBK")
         if InvestorRange:
-            self.InvestorRange = InvestorRange
+            self.InvestorRange = InvestorRange.encode("GBK")
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
         if InvestorID:
             self.InvestorID = InvestorID.encode("GBK")
         if TradingRight:
-            self.TradingRight = TradingRight
+            self.TradingRight = TradingRight.encode("GBK")
 
 
 class QryOrder(Struct):
@@ -3682,7 +3699,7 @@ class QryTradingAccount(Struct):
         if CurrencyID:
             self.CurrencyID = CurrencyID.encode("GBK")
         if BizType:
-            self.BizType = BizType
+            self.BizType = BizType.encode("GBK")
         if AccountID:
             self.AccountID = AccountID.encode("GBK")
 
@@ -3722,7 +3739,7 @@ class QryTradingCode(Struct):
         if ClientID:
             self.ClientID = ClientID.encode("GBK")
         if ClientIDType:
-            self.ClientIDType = ClientIDType
+            self.ClientIDType = ClientIDType.encode("GBK")
         if InvestUnitID:
             self.InvestUnitID = InvestUnitID.encode("GBK")
 
@@ -3757,7 +3774,7 @@ class QryInstrumentMarginRate(Struct):
         if InstrumentID:
             self.InstrumentID = InstrumentID.encode("GBK")
         if HedgeFlag:
-            self.HedgeFlag = HedgeFlag
+            self.HedgeFlag = HedgeFlag.encode("GBK")
         if ExchangeID:
             self.ExchangeID = ExchangeID.encode("GBK")
         if InvestUnitID:
@@ -3985,7 +4002,7 @@ class QryProduct(Struct):
         if ProductID:
             self.ProductID = ProductID.encode("GBK")
         if ProductClass:
-            self.ProductClass = ProductClass
+            self.ProductClass = ProductClass.encode("GBK")
         if ExchangeID:
             self.ExchangeID = ExchangeID.encode("GBK")
 
@@ -4121,7 +4138,7 @@ class QryExchangeMarginRate(Struct):
         if InstrumentID:
             self.InstrumentID = InstrumentID.encode("GBK")
         if HedgeFlag:
-            self.HedgeFlag = HedgeFlag
+            self.HedgeFlag = HedgeFlag.encode("GBK")
         if ExchangeID:
             self.ExchangeID = ExchangeID.encode("GBK")
 
@@ -4140,7 +4157,7 @@ class QryExchangeMarginRateAdjust(Struct):
         if InstrumentID:
             self.InstrumentID = InstrumentID.encode("GBK")
         if HedgeFlag:
-            self.HedgeFlag = HedgeFlag
+            self.HedgeFlag = HedgeFlag.encode("GBK")
 
 
 class QryExchangeRate(Struct):
@@ -4225,7 +4242,7 @@ class OptionInstrMiniMargin(Struct):
         if InstrumentID:
             self.InstrumentID = InstrumentID.encode("GBK")
         if InvestorRange:
-            self.InvestorRange = InvestorRange
+            self.InvestorRange = InvestorRange.encode("GBK")
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
         if InvestorID:
@@ -4233,7 +4250,7 @@ class OptionInstrMiniMargin(Struct):
         if MinMargin:
             self.MinMargin = MinMargin
         if ValueMethod:
-            self.ValueMethod = ValueMethod
+            self.ValueMethod = ValueMethod.encode("GBK")
         if IsRelative:
             self.IsRelative = IsRelative
 
@@ -4260,7 +4277,7 @@ class OptionInstrMarginAdjust(Struct):
         if InstrumentID:
             self.InstrumentID = InstrumentID.encode("GBK")
         if InvestorRange:
-            self.InvestorRange = InvestorRange
+            self.InvestorRange = InvestorRange.encode("GBK")
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
         if InvestorID:
@@ -4308,7 +4325,7 @@ class OptionInstrCommRate(Struct):
         if InstrumentID:
             self.InstrumentID = InstrumentID.encode("GBK")
         if InvestorRange:
-            self.InvestorRange = InvestorRange
+            self.InvestorRange = InvestorRange.encode("GBK")
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
         if InvestorID:
@@ -4359,7 +4376,7 @@ class OptionInstrTradeCost(Struct):
         if InstrumentID:
             self.InstrumentID = InstrumentID.encode("GBK")
         if HedgeFlag:
-            self.HedgeFlag = HedgeFlag
+            self.HedgeFlag = HedgeFlag.encode("GBK")
         if FixedMargin:
             self.FixedMargin = FixedMargin
         if MiniMargin:
@@ -4397,7 +4414,7 @@ class QryOptionInstrTradeCost(Struct):
         if InstrumentID:
             self.InstrumentID = InstrumentID.encode("GBK")
         if HedgeFlag:
-            self.HedgeFlag = HedgeFlag
+            self.HedgeFlag = HedgeFlag.encode("GBK")
         if InputPrice:
             self.InputPrice = InputPrice
         if UnderlyingPrice:
@@ -4492,17 +4509,17 @@ class InputExecOrder(Struct):
         if BusinessUnit:
             self.BusinessUnit = BusinessUnit.encode("GBK")
         if OffsetFlag:
-            self.OffsetFlag = OffsetFlag
+            self.OffsetFlag = OffsetFlag.encode("GBK")
         if HedgeFlag:
-            self.HedgeFlag = HedgeFlag
+            self.HedgeFlag = HedgeFlag.encode("GBK")
         if ActionType:
-            self.ActionType = ActionType
+            self.ActionType = ActionType.encode("GBK")
         if PosiDirection:
-            self.PosiDirection = PosiDirection
+            self.PosiDirection = PosiDirection.encode("GBK")
         if ReservePositionFlag:
-            self.ReservePositionFlag = ReservePositionFlag
+            self.ReservePositionFlag = ReservePositionFlag.encode("GBK")
         if CloseFlag:
-            self.CloseFlag = CloseFlag
+            self.CloseFlag = CloseFlag.encode("GBK")
         if ExchangeID:
             self.ExchangeID = ExchangeID.encode("GBK")
         if InvestUnitID:
@@ -4559,7 +4576,7 @@ class InputExecOrderAction(Struct):
         if ExecOrderSysID:
             self.ExecOrderSysID = ExecOrderSysID.encode("GBK")
         if ActionFlag:
-            self.ActionFlag = ActionFlag
+            self.ActionFlag = ActionFlag.encode("GBK")
         if UserID:
             self.UserID = UserID.encode("GBK")
         if InstrumentID:
@@ -4639,17 +4656,17 @@ class ExecOrder(Struct):
         if BusinessUnit:
             self.BusinessUnit = BusinessUnit.encode("GBK")
         if OffsetFlag:
-            self.OffsetFlag = OffsetFlag
+            self.OffsetFlag = OffsetFlag.encode("GBK")
         if HedgeFlag:
-            self.HedgeFlag = HedgeFlag
+            self.HedgeFlag = HedgeFlag.encode("GBK")
         if ActionType:
-            self.ActionType = ActionType
+            self.ActionType = ActionType.encode("GBK")
         if PosiDirection:
-            self.PosiDirection = PosiDirection
+            self.PosiDirection = PosiDirection.encode("GBK")
         if ReservePositionFlag:
-            self.ReservePositionFlag = ReservePositionFlag
+            self.ReservePositionFlag = ReservePositionFlag.encode("GBK")
         if CloseFlag:
-            self.CloseFlag = CloseFlag
+            self.CloseFlag = CloseFlag.encode("GBK")
         if ExecOrderLocalID:
             self.ExecOrderLocalID = ExecOrderLocalID.encode("GBK")
         if ExchangeID:
@@ -4665,7 +4682,7 @@ class ExecOrder(Struct):
         if InstallID:
             self.InstallID = InstallID
         if OrderSubmitStatus:
-            self.OrderSubmitStatus = OrderSubmitStatus
+            self.OrderSubmitStatus = OrderSubmitStatus.encode("GBK")
         if NotifySequence:
             self.NotifySequence = NotifySequence
         if TradingDay:
@@ -4681,7 +4698,7 @@ class ExecOrder(Struct):
         if CancelTime:
             self.CancelTime = CancelTime.encode("GBK")
         if ExecResult:
-            self.ExecResult = ExecResult
+            self.ExecResult = ExecResult.encode("GBK")
         if ClearingPartID:
             self.ClearingPartID = ClearingPartID.encode("GBK")
         if SequenceNo:
@@ -4765,7 +4782,7 @@ class ExecOrderAction(Struct):
         if ExecOrderSysID:
             self.ExecOrderSysID = ExecOrderSysID.encode("GBK")
         if ActionFlag:
-            self.ActionFlag = ActionFlag
+            self.ActionFlag = ActionFlag.encode("GBK")
         if ActionDate:
             self.ActionDate = ActionDate.encode("GBK")
         if ActionTime:
@@ -4785,11 +4802,11 @@ class ExecOrderAction(Struct):
         if BusinessUnit:
             self.BusinessUnit = BusinessUnit.encode("GBK")
         if OrderActionStatus:
-            self.OrderActionStatus = OrderActionStatus
+            self.OrderActionStatus = OrderActionStatus.encode("GBK")
         if UserID:
             self.UserID = UserID.encode("GBK")
         if ActionType:
-            self.ActionType = ActionType
+            self.ActionType = ActionType.encode("GBK")
         if StatusMsg:
             self.StatusMsg = StatusMsg.encode("GBK")
         if InstrumentID:
@@ -4876,17 +4893,17 @@ class ExchangeExecOrder(Struct):
         if BusinessUnit:
             self.BusinessUnit = BusinessUnit.encode("GBK")
         if OffsetFlag:
-            self.OffsetFlag = OffsetFlag
+            self.OffsetFlag = OffsetFlag.encode("GBK")
         if HedgeFlag:
-            self.HedgeFlag = HedgeFlag
+            self.HedgeFlag = HedgeFlag.encode("GBK")
         if ActionType:
-            self.ActionType = ActionType
+            self.ActionType = ActionType.encode("GBK")
         if PosiDirection:
-            self.PosiDirection = PosiDirection
+            self.PosiDirection = PosiDirection.encode("GBK")
         if ReservePositionFlag:
-            self.ReservePositionFlag = ReservePositionFlag
+            self.ReservePositionFlag = ReservePositionFlag.encode("GBK")
         if CloseFlag:
-            self.CloseFlag = CloseFlag
+            self.CloseFlag = CloseFlag.encode("GBK")
         if ExecOrderLocalID:
             self.ExecOrderLocalID = ExecOrderLocalID.encode("GBK")
         if ExchangeID:
@@ -4902,7 +4919,7 @@ class ExchangeExecOrder(Struct):
         if InstallID:
             self.InstallID = InstallID
         if OrderSubmitStatus:
-            self.OrderSubmitStatus = OrderSubmitStatus
+            self.OrderSubmitStatus = OrderSubmitStatus.encode("GBK")
         if NotifySequence:
             self.NotifySequence = NotifySequence
         if TradingDay:
@@ -4918,7 +4935,7 @@ class ExchangeExecOrder(Struct):
         if CancelTime:
             self.CancelTime = CancelTime.encode("GBK")
         if ExecResult:
-            self.ExecResult = ExecResult
+            self.ExecResult = ExecResult.encode("GBK")
         if ClearingPartID:
             self.ClearingPartID = ClearingPartID.encode("GBK")
         if SequenceNo:
@@ -5002,7 +5019,7 @@ class ExchangeExecOrderAction(Struct):
         if ExecOrderSysID:
             self.ExecOrderSysID = ExecOrderSysID.encode("GBK")
         if ActionFlag:
-            self.ActionFlag = ActionFlag
+            self.ActionFlag = ActionFlag.encode("GBK")
         if ActionDate:
             self.ActionDate = ActionDate.encode("GBK")
         if ActionTime:
@@ -5022,11 +5039,11 @@ class ExchangeExecOrderAction(Struct):
         if BusinessUnit:
             self.BusinessUnit = BusinessUnit.encode("GBK")
         if OrderActionStatus:
-            self.OrderActionStatus = OrderActionStatus
+            self.OrderActionStatus = OrderActionStatus.encode("GBK")
         if UserID:
             self.UserID = UserID.encode("GBK")
         if ActionType:
-            self.ActionType = ActionType
+            self.ActionType = ActionType.encode("GBK")
         if BranchID:
             self.BranchID = BranchID.encode("GBK")
         if IPAddress:
@@ -5105,17 +5122,17 @@ class ErrExecOrder(Struct):
         if BusinessUnit:
             self.BusinessUnit = BusinessUnit.encode("GBK")
         if OffsetFlag:
-            self.OffsetFlag = OffsetFlag
+            self.OffsetFlag = OffsetFlag.encode("GBK")
         if HedgeFlag:
-            self.HedgeFlag = HedgeFlag
+            self.HedgeFlag = HedgeFlag.encode("GBK")
         if ActionType:
-            self.ActionType = ActionType
+            self.ActionType = ActionType.encode("GBK")
         if PosiDirection:
-            self.PosiDirection = PosiDirection
+            self.PosiDirection = PosiDirection.encode("GBK")
         if ReservePositionFlag:
-            self.ReservePositionFlag = ReservePositionFlag
+            self.ReservePositionFlag = ReservePositionFlag.encode("GBK")
         if CloseFlag:
-            self.CloseFlag = CloseFlag
+            self.CloseFlag = CloseFlag.encode("GBK")
         if ExchangeID:
             self.ExchangeID = ExchangeID.encode("GBK")
         if InvestUnitID:
@@ -5192,7 +5209,7 @@ class ErrExecOrderAction(Struct):
         if ExecOrderSysID:
             self.ExecOrderSysID = ExecOrderSysID.encode("GBK")
         if ActionFlag:
-            self.ActionFlag = ActionFlag
+            self.ActionFlag = ActionFlag.encode("GBK")
         if UserID:
             self.UserID = UserID.encode("GBK")
         if InstrumentID:
@@ -5238,15 +5255,15 @@ class OptionInstrTradingRight(Struct):
         if InstrumentID:
             self.InstrumentID = InstrumentID.encode("GBK")
         if InvestorRange:
-            self.InvestorRange = InvestorRange
+            self.InvestorRange = InvestorRange.encode("GBK")
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
         if InvestorID:
             self.InvestorID = InvestorID.encode("GBK")
         if Direction:
-            self.Direction = Direction
+            self.Direction = Direction.encode("GBK")
         if TradingRight:
-            self.TradingRight = TradingRight
+            self.TradingRight = TradingRight.encode("GBK")
 
 
 class QryOptionInstrTradingRight(Struct):
@@ -5266,7 +5283,7 @@ class QryOptionInstrTradingRight(Struct):
         if InstrumentID:
             self.InstrumentID = InstrumentID.encode("GBK")
         if Direction:
-            self.Direction = Direction
+            self.Direction = Direction.encode("GBK")
 
 
 class InputForQuote(Struct):
@@ -5362,7 +5379,7 @@ class ForQuote(Struct):
         if InsertTime:
             self.InsertTime = InsertTime.encode("GBK")
         if ForQuoteStatus:
-            self.ForQuoteStatus = ForQuoteStatus
+            self.ForQuoteStatus = ForQuoteStatus.encode("GBK")
         if FrontID:
             self.FrontID = FrontID
         if SessionID:
@@ -5447,7 +5464,7 @@ class ExchangeForQuote(Struct):
         if InsertTime:
             self.InsertTime = InsertTime.encode("GBK")
         if ForQuoteStatus:
-            self.ForQuoteStatus = ForQuoteStatus
+            self.ForQuoteStatus = ForQuoteStatus.encode("GBK")
         if IPAddress:
             self.IPAddress = IPAddress.encode("GBK")
         if MacAddress:
@@ -5529,13 +5546,13 @@ class InputQuote(Struct):
         if BusinessUnit:
             self.BusinessUnit = BusinessUnit.encode("GBK")
         if AskOffsetFlag:
-            self.AskOffsetFlag = AskOffsetFlag
+            self.AskOffsetFlag = AskOffsetFlag.encode("GBK")
         if BidOffsetFlag:
-            self.BidOffsetFlag = BidOffsetFlag
+            self.BidOffsetFlag = BidOffsetFlag.encode("GBK")
         if AskHedgeFlag:
-            self.AskHedgeFlag = AskHedgeFlag
+            self.AskHedgeFlag = AskHedgeFlag.encode("GBK")
         if BidHedgeFlag:
-            self.BidHedgeFlag = BidHedgeFlag
+            self.BidHedgeFlag = BidHedgeFlag.encode("GBK")
         if AskOrderRef:
             self.AskOrderRef = AskOrderRef.encode("GBK")
         if BidOrderRef:
@@ -5595,7 +5612,7 @@ class InputQuoteAction(Struct):
         if QuoteSysID:
             self.QuoteSysID = QuoteSysID.encode("GBK")
         if ActionFlag:
-            self.ActionFlag = ActionFlag
+            self.ActionFlag = ActionFlag.encode("GBK")
         if UserID:
             self.UserID = UserID.encode("GBK")
         if InstrumentID:
@@ -5689,13 +5706,13 @@ class Quote(Struct):
         if BusinessUnit:
             self.BusinessUnit = BusinessUnit.encode("GBK")
         if AskOffsetFlag:
-            self.AskOffsetFlag = AskOffsetFlag
+            self.AskOffsetFlag = AskOffsetFlag.encode("GBK")
         if BidOffsetFlag:
-            self.BidOffsetFlag = BidOffsetFlag
+            self.BidOffsetFlag = BidOffsetFlag.encode("GBK")
         if AskHedgeFlag:
-            self.AskHedgeFlag = AskHedgeFlag
+            self.AskHedgeFlag = AskHedgeFlag.encode("GBK")
         if BidHedgeFlag:
-            self.BidHedgeFlag = BidHedgeFlag
+            self.BidHedgeFlag = BidHedgeFlag.encode("GBK")
         if QuoteLocalID:
             self.QuoteLocalID = QuoteLocalID.encode("GBK")
         if ExchangeID:
@@ -5713,7 +5730,7 @@ class Quote(Struct):
         if NotifySequence:
             self.NotifySequence = NotifySequence
         if OrderSubmitStatus:
-            self.OrderSubmitStatus = OrderSubmitStatus
+            self.OrderSubmitStatus = OrderSubmitStatus.encode("GBK")
         if TradingDay:
             self.TradingDay = TradingDay.encode("GBK")
         if SettlementID:
@@ -5727,7 +5744,7 @@ class Quote(Struct):
         if CancelTime:
             self.CancelTime = CancelTime.encode("GBK")
         if QuoteStatus:
-            self.QuoteStatus = QuoteStatus
+            self.QuoteStatus = QuoteStatus.encode("GBK")
         if ClearingPartID:
             self.ClearingPartID = ClearingPartID.encode("GBK")
         if SequenceNo:
@@ -5820,7 +5837,7 @@ class QuoteAction(Struct):
         if QuoteSysID:
             self.QuoteSysID = QuoteSysID.encode("GBK")
         if ActionFlag:
-            self.ActionFlag = ActionFlag
+            self.ActionFlag = ActionFlag.encode("GBK")
         if ActionDate:
             self.ActionDate = ActionDate.encode("GBK")
         if ActionTime:
@@ -5840,7 +5857,7 @@ class QuoteAction(Struct):
         if BusinessUnit:
             self.BusinessUnit = BusinessUnit.encode("GBK")
         if OrderActionStatus:
-            self.OrderActionStatus = OrderActionStatus
+            self.OrderActionStatus = OrderActionStatus.encode("GBK")
         if UserID:
             self.UserID = UserID.encode("GBK")
         if StatusMsg:
@@ -5942,13 +5959,13 @@ class ExchangeQuote(Struct):
         if BusinessUnit:
             self.BusinessUnit = BusinessUnit.encode("GBK")
         if AskOffsetFlag:
-            self.AskOffsetFlag = AskOffsetFlag
+            self.AskOffsetFlag = AskOffsetFlag.encode("GBK")
         if BidOffsetFlag:
-            self.BidOffsetFlag = BidOffsetFlag
+            self.BidOffsetFlag = BidOffsetFlag.encode("GBK")
         if AskHedgeFlag:
-            self.AskHedgeFlag = AskHedgeFlag
+            self.AskHedgeFlag = AskHedgeFlag.encode("GBK")
         if BidHedgeFlag:
-            self.BidHedgeFlag = BidHedgeFlag
+            self.BidHedgeFlag = BidHedgeFlag.encode("GBK")
         if QuoteLocalID:
             self.QuoteLocalID = QuoteLocalID.encode("GBK")
         if ExchangeID:
@@ -5966,7 +5983,7 @@ class ExchangeQuote(Struct):
         if NotifySequence:
             self.NotifySequence = NotifySequence
         if OrderSubmitStatus:
-            self.OrderSubmitStatus = OrderSubmitStatus
+            self.OrderSubmitStatus = OrderSubmitStatus.encode("GBK")
         if TradingDay:
             self.TradingDay = TradingDay.encode("GBK")
         if SettlementID:
@@ -5980,7 +5997,7 @@ class ExchangeQuote(Struct):
         if CancelTime:
             self.CancelTime = CancelTime.encode("GBK")
         if QuoteStatus:
-            self.QuoteStatus = QuoteStatus
+            self.QuoteStatus = QuoteStatus.encode("GBK")
         if ClearingPartID:
             self.ClearingPartID = ClearingPartID.encode("GBK")
         if SequenceNo:
@@ -6066,7 +6083,7 @@ class ExchangeQuoteAction(Struct):
         if QuoteSysID:
             self.QuoteSysID = QuoteSysID.encode("GBK")
         if ActionFlag:
-            self.ActionFlag = ActionFlag
+            self.ActionFlag = ActionFlag.encode("GBK")
         if ActionDate:
             self.ActionDate = ActionDate.encode("GBK")
         if ActionTime:
@@ -6086,7 +6103,7 @@ class ExchangeQuoteAction(Struct):
         if BusinessUnit:
             self.BusinessUnit = BusinessUnit.encode("GBK")
         if OrderActionStatus:
-            self.OrderActionStatus = OrderActionStatus
+            self.OrderActionStatus = OrderActionStatus.encode("GBK")
         if UserID:
             self.UserID = UserID.encode("GBK")
         if IPAddress:
@@ -6129,7 +6146,7 @@ class OptionInstrDelta(Struct):
         if InstrumentID:
             self.InstrumentID = InstrumentID.encode("GBK")
         if InvestorRange:
-            self.InvestorRange = InvestorRange
+            self.InvestorRange = InvestorRange.encode("GBK")
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
         if InvestorID:
@@ -6179,7 +6196,7 @@ class StrikeOffset(Struct):
         if InstrumentID:
             self.InstrumentID = InstrumentID.encode("GBK")
         if InvestorRange:
-            self.InvestorRange = InvestorRange
+            self.InvestorRange = InvestorRange.encode("GBK")
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
         if InvestorID:
@@ -6187,7 +6204,7 @@ class StrikeOffset(Struct):
         if Offset:
             self.Offset = Offset
         if OffsetType:
-            self.OffsetType = OffsetType
+            self.OffsetType = OffsetType.encode("GBK")
 
 
 class QryStrikeOffset(Struct):
@@ -6306,7 +6323,7 @@ class BatchOrderAction(Struct):
         if BusinessUnit:
             self.BusinessUnit = BusinessUnit.encode("GBK")
         if OrderActionStatus:
-            self.OrderActionStatus = OrderActionStatus
+            self.OrderActionStatus = OrderActionStatus.encode("GBK")
         if UserID:
             self.UserID = UserID.encode("GBK")
         if StatusMsg:
@@ -6357,7 +6374,7 @@ class ExchangeBatchOrderAction(Struct):
         if BusinessUnit:
             self.BusinessUnit = BusinessUnit.encode("GBK")
         if OrderActionStatus:
-            self.OrderActionStatus = OrderActionStatus
+            self.OrderActionStatus = OrderActionStatus.encode("GBK")
         if UserID:
             self.UserID = UserID.encode("GBK")
         if IPAddress:
@@ -6450,13 +6467,13 @@ class InputCombAction(Struct):
         if UserID:
             self.UserID = UserID.encode("GBK")
         if Direction:
-            self.Direction = Direction
+            self.Direction = Direction.encode("GBK")
         if Volume:
             self.Volume = Volume
         if CombDirection:
-            self.CombDirection = CombDirection
+            self.CombDirection = CombDirection.encode("GBK")
         if HedgeFlag:
-            self.HedgeFlag = HedgeFlag
+            self.HedgeFlag = HedgeFlag.encode("GBK")
         if ExchangeID:
             self.ExchangeID = ExchangeID.encode("GBK")
         if IPAddress:
@@ -6514,13 +6531,13 @@ class CombAction(Struct):
         if UserID:
             self.UserID = UserID.encode("GBK")
         if Direction:
-            self.Direction = Direction
+            self.Direction = Direction.encode("GBK")
         if Volume:
             self.Volume = Volume
         if CombDirection:
-            self.CombDirection = CombDirection
+            self.CombDirection = CombDirection.encode("GBK")
         if HedgeFlag:
-            self.HedgeFlag = HedgeFlag
+            self.HedgeFlag = HedgeFlag.encode("GBK")
         if ActionLocalID:
             self.ActionLocalID = ActionLocalID.encode("GBK")
         if ExchangeID:
@@ -6536,7 +6553,7 @@ class CombAction(Struct):
         if InstallID:
             self.InstallID = InstallID
         if ActionStatus:
-            self.ActionStatus = ActionStatus
+            self.ActionStatus = ActionStatus.encode("GBK")
         if NotifySequence:
             self.NotifySequence = NotifySequence
         if TradingDay:
@@ -6615,13 +6632,13 @@ class ExchangeCombAction(Struct):
     def __init__(self, Direction=None, Volume=None, CombDirection=None, HedgeFlag=None, ActionLocalID=None, ExchangeID=None, ParticipantID=None, ClientID=None, ExchangeInstID=None, TraderID=None, InstallID=None, ActionStatus=None, NotifySequence=None, TradingDay=None, SettlementID=None, SequenceNo=None, IPAddress=None, MacAddress=None, ComTradeID=None, BranchID=None):
         super().__init__()
         if Direction:
-            self.Direction = Direction
+            self.Direction = Direction.encode("GBK")
         if Volume:
             self.Volume = Volume
         if CombDirection:
-            self.CombDirection = CombDirection
+            self.CombDirection = CombDirection.encode("GBK")
         if HedgeFlag:
-            self.HedgeFlag = HedgeFlag
+            self.HedgeFlag = HedgeFlag.encode("GBK")
         if ActionLocalID:
             self.ActionLocalID = ActionLocalID.encode("GBK")
         if ExchangeID:
@@ -6637,7 +6654,7 @@ class ExchangeCombAction(Struct):
         if InstallID:
             self.InstallID = InstallID
         if ActionStatus:
-            self.ActionStatus = ActionStatus
+            self.ActionStatus = ActionStatus.encode("GBK")
         if NotifySequence:
             self.NotifySequence = NotifySequence
         if TradingDay:
@@ -6774,7 +6791,7 @@ class MMOptionInstrCommRate(Struct):
         if InstrumentID:
             self.InstrumentID = InstrumentID.encode("GBK")
         if InvestorRange:
-            self.InvestorRange = InvestorRange
+            self.InvestorRange = InvestorRange.encode("GBK")
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
         if InvestorID:
@@ -6833,7 +6850,7 @@ class MMInstrumentCommissionRate(Struct):
         if InstrumentID:
             self.InstrumentID = InstrumentID.encode("GBK")
         if InvestorRange:
-            self.InvestorRange = InvestorRange
+            self.InvestorRange = InvestorRange.encode("GBK")
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
         if InvestorID:
@@ -6887,13 +6904,13 @@ class InstrumentOrderCommRate(Struct):
         if InstrumentID:
             self.InstrumentID = InstrumentID.encode("GBK")
         if InvestorRange:
-            self.InvestorRange = InvestorRange
+            self.InvestorRange = InvestorRange.encode("GBK")
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
         if InvestorID:
             self.InvestorID = InvestorID.encode("GBK")
         if HedgeFlag:
-            self.HedgeFlag = HedgeFlag
+            self.HedgeFlag = HedgeFlag.encode("GBK")
         if OrderCommByVolume:
             self.OrderCommByVolume = OrderCommByVolume
         if OrderActionCommByVolume:
@@ -6934,7 +6951,7 @@ class TradeParam(Struct):
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
         if TradeParamID:
-            self.TradeParamID = TradeParamID
+            self.TradeParamID = TradeParamID.encode("GBK")
         if TradeParamValue:
             self.TradeParamValue = TradeParamValue.encode("GBK")
         if Memo:
@@ -6959,13 +6976,13 @@ class InstrumentMarginRateUL(Struct):
         if InstrumentID:
             self.InstrumentID = InstrumentID.encode("GBK")
         if InvestorRange:
-            self.InvestorRange = InvestorRange
+            self.InvestorRange = InvestorRange.encode("GBK")
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
         if InvestorID:
             self.InvestorID = InvestorID.encode("GBK")
         if HedgeFlag:
-            self.HedgeFlag = HedgeFlag
+            self.HedgeFlag = HedgeFlag.encode("GBK")
         if LongMarginRatioByMoney:
             self.LongMarginRatioByMoney = LongMarginRatioByMoney
         if LongMarginRatioByVolume:
@@ -6990,7 +7007,7 @@ class FutureLimitPosiParam(Struct):
     def __init__(self, InvestorRange=None, BrokerID=None, InvestorID=None, ProductID=None, SpecOpenVolume=None, ArbiOpenVolume=None, OpenVolume=None):
         super().__init__()
         if InvestorRange:
-            self.InvestorRange = InvestorRange
+            self.InvestorRange = InvestorRange.encode("GBK")
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
         if InvestorID:
@@ -7070,9 +7087,9 @@ class InputOptionSelfClose(Struct):
         if BusinessUnit:
             self.BusinessUnit = BusinessUnit.encode("GBK")
         if HedgeFlag:
-            self.HedgeFlag = HedgeFlag
+            self.HedgeFlag = HedgeFlag.encode("GBK")
         if OptSelfCloseFlag:
-            self.OptSelfCloseFlag = OptSelfCloseFlag
+            self.OptSelfCloseFlag = OptSelfCloseFlag.encode("GBK")
         if ExchangeID:
             self.ExchangeID = ExchangeID.encode("GBK")
         if InvestUnitID:
@@ -7129,7 +7146,7 @@ class InputOptionSelfCloseAction(Struct):
         if OptionSelfCloseSysID:
             self.OptionSelfCloseSysID = OptionSelfCloseSysID.encode("GBK")
         if ActionFlag:
-            self.ActionFlag = ActionFlag
+            self.ActionFlag = ActionFlag.encode("GBK")
         if UserID:
             self.UserID = UserID.encode("GBK")
         if InstrumentID:
@@ -7205,9 +7222,9 @@ class OptionSelfClose(Struct):
         if BusinessUnit:
             self.BusinessUnit = BusinessUnit.encode("GBK")
         if HedgeFlag:
-            self.HedgeFlag = HedgeFlag
+            self.HedgeFlag = HedgeFlag.encode("GBK")
         if OptSelfCloseFlag:
-            self.OptSelfCloseFlag = OptSelfCloseFlag
+            self.OptSelfCloseFlag = OptSelfCloseFlag.encode("GBK")
         if OptionSelfCloseLocalID:
             self.OptionSelfCloseLocalID = OptionSelfCloseLocalID.encode("GBK")
         if ExchangeID:
@@ -7223,7 +7240,7 @@ class OptionSelfClose(Struct):
         if InstallID:
             self.InstallID = InstallID
         if OrderSubmitStatus:
-            self.OrderSubmitStatus = OrderSubmitStatus
+            self.OrderSubmitStatus = OrderSubmitStatus.encode("GBK")
         if NotifySequence:
             self.NotifySequence = NotifySequence
         if TradingDay:
@@ -7239,7 +7256,7 @@ class OptionSelfClose(Struct):
         if CancelTime:
             self.CancelTime = CancelTime.encode("GBK")
         if ExecResult:
-            self.ExecResult = ExecResult
+            self.ExecResult = ExecResult.encode("GBK")
         if ClearingPartID:
             self.ClearingPartID = ClearingPartID.encode("GBK")
         if SequenceNo:
@@ -7322,7 +7339,7 @@ class OptionSelfCloseAction(Struct):
         if OptionSelfCloseSysID:
             self.OptionSelfCloseSysID = OptionSelfCloseSysID.encode("GBK")
         if ActionFlag:
-            self.ActionFlag = ActionFlag
+            self.ActionFlag = ActionFlag.encode("GBK")
         if ActionDate:
             self.ActionDate = ActionDate.encode("GBK")
         if ActionTime:
@@ -7342,7 +7359,7 @@ class OptionSelfCloseAction(Struct):
         if BusinessUnit:
             self.BusinessUnit = BusinessUnit.encode("GBK")
         if OrderActionStatus:
-            self.OrderActionStatus = OrderActionStatus
+            self.OrderActionStatus = OrderActionStatus.encode("GBK")
         if UserID:
             self.UserID = UserID.encode("GBK")
         if StatusMsg:
@@ -7427,9 +7444,9 @@ class ExchangeOptionSelfClose(Struct):
         if BusinessUnit:
             self.BusinessUnit = BusinessUnit.encode("GBK")
         if HedgeFlag:
-            self.HedgeFlag = HedgeFlag
+            self.HedgeFlag = HedgeFlag.encode("GBK")
         if OptSelfCloseFlag:
-            self.OptSelfCloseFlag = OptSelfCloseFlag
+            self.OptSelfCloseFlag = OptSelfCloseFlag.encode("GBK")
         if OptionSelfCloseLocalID:
             self.OptionSelfCloseLocalID = OptionSelfCloseLocalID.encode("GBK")
         if ExchangeID:
@@ -7445,7 +7462,7 @@ class ExchangeOptionSelfClose(Struct):
         if InstallID:
             self.InstallID = InstallID
         if OrderSubmitStatus:
-            self.OrderSubmitStatus = OrderSubmitStatus
+            self.OrderSubmitStatus = OrderSubmitStatus.encode("GBK")
         if NotifySequence:
             self.NotifySequence = NotifySequence
         if TradingDay:
@@ -7461,7 +7478,7 @@ class ExchangeOptionSelfClose(Struct):
         if CancelTime:
             self.CancelTime = CancelTime.encode("GBK")
         if ExecResult:
-            self.ExecResult = ExecResult
+            self.ExecResult = ExecResult.encode("GBK")
         if ClearingPartID:
             self.ClearingPartID = ClearingPartID.encode("GBK")
         if SequenceNo:
@@ -7521,7 +7538,7 @@ class ExchangeOptionSelfCloseAction(Struct):
         if OptionSelfCloseSysID:
             self.OptionSelfCloseSysID = OptionSelfCloseSysID.encode("GBK")
         if ActionFlag:
-            self.ActionFlag = ActionFlag
+            self.ActionFlag = ActionFlag.encode("GBK")
         if ActionDate:
             self.ActionDate = ActionDate.encode("GBK")
         if ActionTime:
@@ -7541,7 +7558,7 @@ class ExchangeOptionSelfCloseAction(Struct):
         if BusinessUnit:
             self.BusinessUnit = BusinessUnit.encode("GBK")
         if OrderActionStatus:
-            self.OrderActionStatus = OrderActionStatus
+            self.OrderActionStatus = OrderActionStatus.encode("GBK")
         if UserID:
             self.UserID = UserID.encode("GBK")
         if BranchID:
@@ -7553,7 +7570,7 @@ class ExchangeOptionSelfCloseAction(Struct):
         if ExchangeInstID:
             self.ExchangeInstID = ExchangeInstID.encode("GBK")
         if OptSelfCloseFlag:
-            self.OptSelfCloseFlag = OptSelfCloseFlag
+            self.OptSelfCloseFlag = OptSelfCloseFlag.encode("GBK")
 
 
 class SyncDelaySwap(Struct):
@@ -8017,13 +8034,13 @@ class InstrumentStatus(Struct):
         if InstrumentID:
             self.InstrumentID = InstrumentID.encode("GBK")
         if InstrumentStatus:
-            self.InstrumentStatus = InstrumentStatus
+            self.InstrumentStatus = InstrumentStatus.encode("GBK")
         if TradingSegmentSN:
             self.TradingSegmentSN = TradingSegmentSN
         if EnterTime:
             self.EnterTime = EnterTime.encode("GBK")
         if EnterReason:
-            self.EnterReason = EnterReason
+            self.EnterReason = EnterReason.encode("GBK")
 
 
 class QryInstrumentStatus(Struct):
@@ -8076,7 +8093,7 @@ class PositionProfitAlgorithm(Struct):
         if AccountID:
             self.AccountID = AccountID.encode("GBK")
         if Algorithm:
-            self.Algorithm = Algorithm
+            self.Algorithm = Algorithm.encode("GBK")
         if Memo:
             self.Memo = Memo.encode("GBK")
         if CurrencyID:
@@ -8096,7 +8113,7 @@ class Discount(Struct):
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
         if InvestorRange:
-            self.InvestorRange = InvestorRange
+            self.InvestorRange = InvestorRange.encode("GBK")
         if InvestorID:
             self.InvestorID = InvestorID.encode("GBK")
         if Discount:
@@ -8201,9 +8218,9 @@ class InvestorPositionDetail(Struct):
         if InvestorID:
             self.InvestorID = InvestorID.encode("GBK")
         if HedgeFlag:
-            self.HedgeFlag = HedgeFlag
+            self.HedgeFlag = HedgeFlag.encode("GBK")
         if Direction:
-            self.Direction = Direction
+            self.Direction = Direction.encode("GBK")
         if OpenDate:
             self.OpenDate = OpenDate.encode("GBK")
         if TradeID:
@@ -8217,7 +8234,7 @@ class InvestorPositionDetail(Struct):
         if SettlementID:
             self.SettlementID = SettlementID
         if TradeType:
-            self.TradeType = TradeType
+            self.TradeType = TradeType.encode("GBK")
         if CombInstrumentID:
             self.CombInstrumentID = CombInstrumentID.encode("GBK")
         if ExchangeID:
@@ -8310,7 +8327,7 @@ class MDTraderOffer(Struct):
         if OrderLocalID:
             self.OrderLocalID = OrderLocalID.encode("GBK")
         if TraderConnectStatus:
-            self.TraderConnectStatus = TraderConnectStatus
+            self.TraderConnectStatus = TraderConnectStatus.encode("GBK")
         if ConnectRequestDate:
             self.ConnectRequestDate = ConnectRequestDate.encode("GBK")
         if ConnectRequestTime:
@@ -8397,7 +8414,7 @@ class UserRight(Struct):
         if UserID:
             self.UserID = UserID.encode("GBK")
         if UserRightType:
-            self.UserRightType = UserRightType
+            self.UserRightType = UserRightType.encode("GBK")
         if IsForbidden:
             self.IsForbidden = IsForbidden
 
@@ -8452,15 +8469,15 @@ class BrokerWithdrawAlgorithm(Struct):
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
         if WithdrawAlgorithm:
-            self.WithdrawAlgorithm = WithdrawAlgorithm
+            self.WithdrawAlgorithm = WithdrawAlgorithm.encode("GBK")
         if UsingRatio:
             self.UsingRatio = UsingRatio
         if IncludeCloseProfit:
-            self.IncludeCloseProfit = IncludeCloseProfit
+            self.IncludeCloseProfit = IncludeCloseProfit.encode("GBK")
         if AllWithoutTrade:
-            self.AllWithoutTrade = AllWithoutTrade
+            self.AllWithoutTrade = AllWithoutTrade.encode("GBK")
         if AvailIncludeCloseProfit:
-            self.AvailIncludeCloseProfit = AvailIncludeCloseProfit
+            self.AvailIncludeCloseProfit = AvailIncludeCloseProfit.encode("GBK")
         if IsBrokerUserEvent:
             self.IsBrokerUserEvent = IsBrokerUserEvent
         if CurrencyID:
@@ -8468,7 +8485,7 @@ class BrokerWithdrawAlgorithm(Struct):
         if FundMortgageRatio:
             self.FundMortgageRatio = FundMortgageRatio
         if BalanceAlgorithm:
-            self.BalanceAlgorithm = BalanceAlgorithm
+            self.BalanceAlgorithm = BalanceAlgorithm.encode("GBK")
 
 
 class TradingAccountPasswordUpdateV1(Struct):
@@ -8561,7 +8578,7 @@ class CombinationLeg(Struct):
         if LegInstrumentID:
             self.LegInstrumentID = LegInstrumentID.encode("GBK")
         if Direction:
-            self.Direction = Direction
+            self.Direction = Direction.encode("GBK")
         if LegMultiple:
             self.LegMultiple = LegMultiple
         if ImplyLevel:
@@ -8579,7 +8596,7 @@ class SyncStatus(Struct):
         if TradingDay:
             self.TradingDay = TradingDay.encode("GBK")
         if DataSyncStatus:
-            self.DataSyncStatus = DataSyncStatus
+            self.DataSyncStatus = DataSyncStatus.encode("GBK")
 
 
 class QryLinkMan(Struct):
@@ -8619,9 +8636,9 @@ class LinkMan(Struct):
         if InvestorID:
             self.InvestorID = InvestorID.encode("GBK")
         if PersonType:
-            self.PersonType = PersonType
+            self.PersonType = PersonType.encode("GBK")
         if IdentifiedCardType:
-            self.IdentifiedCardType = IdentifiedCardType
+            self.IdentifiedCardType = IdentifiedCardType.encode("GBK")
         if IdentifiedCardNo:
             self.IdentifiedCardNo = IdentifiedCardNo.encode("GBK")
         if PersonName:
@@ -8654,7 +8671,7 @@ class QryBrokerUserEvent(Struct):
         if UserID:
             self.UserID = UserID.encode("GBK")
         if UserEventType:
-            self.UserEventType = UserEventType
+            self.UserEventType = UserEventType.encode("GBK")
 
 
 class BrokerUserEvent(Struct):
@@ -8677,7 +8694,7 @@ class BrokerUserEvent(Struct):
         if UserID:
             self.UserID = UserID.encode("GBK")
         if UserEventType:
-            self.UserEventType = UserEventType
+            self.UserEventType = UserEventType.encode("GBK")
         if EventSequenceNo:
             self.EventSequenceNo = EventSequenceNo
         if EventDate:
@@ -8775,9 +8792,9 @@ class InvestorPositionCombineDetail(Struct):
         if InstrumentID:
             self.InstrumentID = InstrumentID.encode("GBK")
         if HedgeFlag:
-            self.HedgeFlag = HedgeFlag
+            self.HedgeFlag = HedgeFlag.encode("GBK")
         if Direction:
-            self.Direction = Direction
+            self.Direction = Direction.encode("GBK")
         if TotalAmt:
             self.TotalAmt = TotalAmt
         if Margin:
@@ -8852,9 +8869,9 @@ class ParkedOrder(Struct):
         if UserID:
             self.UserID = UserID.encode("GBK")
         if OrderPriceType:
-            self.OrderPriceType = OrderPriceType
+            self.OrderPriceType = OrderPriceType.encode("GBK")
         if Direction:
-            self.Direction = Direction
+            self.Direction = Direction.encode("GBK")
         if CombOffsetFlag:
             self.CombOffsetFlag = CombOffsetFlag.encode("GBK")
         if CombHedgeFlag:
@@ -8864,19 +8881,19 @@ class ParkedOrder(Struct):
         if VolumeTotalOriginal:
             self.VolumeTotalOriginal = VolumeTotalOriginal
         if TimeCondition:
-            self.TimeCondition = TimeCondition
+            self.TimeCondition = TimeCondition.encode("GBK")
         if GTDDate:
             self.GTDDate = GTDDate.encode("GBK")
         if VolumeCondition:
-            self.VolumeCondition = VolumeCondition
+            self.VolumeCondition = VolumeCondition.encode("GBK")
         if MinVolume:
             self.MinVolume = MinVolume
         if ContingentCondition:
-            self.ContingentCondition = ContingentCondition
+            self.ContingentCondition = ContingentCondition.encode("GBK")
         if StopPrice:
             self.StopPrice = StopPrice
         if ForceCloseReason:
-            self.ForceCloseReason = ForceCloseReason
+            self.ForceCloseReason = ForceCloseReason.encode("GBK")
         if IsAutoSuspend:
             self.IsAutoSuspend = IsAutoSuspend
         if BusinessUnit:
@@ -8890,9 +8907,9 @@ class ParkedOrder(Struct):
         if ParkedOrderID:
             self.ParkedOrderID = ParkedOrderID.encode("GBK")
         if UserType:
-            self.UserType = UserType
+            self.UserType = UserType.encode("GBK")
         if Status:
-            self.Status = Status
+            self.Status = Status.encode("GBK")
         if ErrorID:
             self.ErrorID = ErrorID
         if ErrorMsg:
@@ -8960,7 +8977,7 @@ class ParkedOrderAction(Struct):
         if OrderSysID:
             self.OrderSysID = OrderSysID.encode("GBK")
         if ActionFlag:
-            self.ActionFlag = ActionFlag
+            self.ActionFlag = ActionFlag.encode("GBK")
         if LimitPrice:
             self.LimitPrice = LimitPrice
         if VolumeChange:
@@ -8972,9 +8989,9 @@ class ParkedOrderAction(Struct):
         if ParkedOrderActionID:
             self.ParkedOrderActionID = ParkedOrderActionID.encode("GBK")
         if UserType:
-            self.UserType = UserType
+            self.UserType = UserType.encode("GBK")
         if Status:
-            self.Status = Status
+            self.Status = Status.encode("GBK")
         if ErrorID:
             self.ErrorID = ErrorID
         if ErrorMsg:
@@ -9088,7 +9105,7 @@ class InvestorWithdrawAlgorithm(Struct):
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
         if InvestorRange:
-            self.InvestorRange = InvestorRange
+            self.InvestorRange = InvestorRange.encode("GBK")
         if InvestorID:
             self.InvestorID = InvestorID.encode("GBK")
         if UsingRatio:
@@ -9220,7 +9237,7 @@ class TradingNotice(Struct):
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
         if InvestorRange:
-            self.InvestorRange = InvestorRange
+            self.InvestorRange = InvestorRange.encode("GBK")
         if InvestorID:
             self.InvestorID = InvestorID.encode("GBK")
         if SequenceSeries:
@@ -9317,9 +9334,9 @@ class ErrOrder(Struct):
         if UserID:
             self.UserID = UserID.encode("GBK")
         if OrderPriceType:
-            self.OrderPriceType = OrderPriceType
+            self.OrderPriceType = OrderPriceType.encode("GBK")
         if Direction:
-            self.Direction = Direction
+            self.Direction = Direction.encode("GBK")
         if CombOffsetFlag:
             self.CombOffsetFlag = CombOffsetFlag.encode("GBK")
         if CombHedgeFlag:
@@ -9329,19 +9346,19 @@ class ErrOrder(Struct):
         if VolumeTotalOriginal:
             self.VolumeTotalOriginal = VolumeTotalOriginal
         if TimeCondition:
-            self.TimeCondition = TimeCondition
+            self.TimeCondition = TimeCondition.encode("GBK")
         if GTDDate:
             self.GTDDate = GTDDate.encode("GBK")
         if VolumeCondition:
-            self.VolumeCondition = VolumeCondition
+            self.VolumeCondition = VolumeCondition.encode("GBK")
         if MinVolume:
             self.MinVolume = MinVolume
         if ContingentCondition:
-            self.ContingentCondition = ContingentCondition
+            self.ContingentCondition = ContingentCondition.encode("GBK")
         if StopPrice:
             self.StopPrice = StopPrice
         if ForceCloseReason:
-            self.ForceCloseReason = ForceCloseReason
+            self.ForceCloseReason = ForceCloseReason.encode("GBK")
         if IsAutoSuspend:
             self.IsAutoSuspend = IsAutoSuspend
         if BusinessUnit:
@@ -9454,9 +9471,9 @@ class ErrorConditionalOrder(Struct):
         if UserID:
             self.UserID = UserID.encode("GBK")
         if OrderPriceType:
-            self.OrderPriceType = OrderPriceType
+            self.OrderPriceType = OrderPriceType.encode("GBK")
         if Direction:
-            self.Direction = Direction
+            self.Direction = Direction.encode("GBK")
         if CombOffsetFlag:
             self.CombOffsetFlag = CombOffsetFlag.encode("GBK")
         if CombHedgeFlag:
@@ -9466,19 +9483,19 @@ class ErrorConditionalOrder(Struct):
         if VolumeTotalOriginal:
             self.VolumeTotalOriginal = VolumeTotalOriginal
         if TimeCondition:
-            self.TimeCondition = TimeCondition
+            self.TimeCondition = TimeCondition.encode("GBK")
         if GTDDate:
             self.GTDDate = GTDDate.encode("GBK")
         if VolumeCondition:
-            self.VolumeCondition = VolumeCondition
+            self.VolumeCondition = VolumeCondition.encode("GBK")
         if MinVolume:
             self.MinVolume = MinVolume
         if ContingentCondition:
-            self.ContingentCondition = ContingentCondition
+            self.ContingentCondition = ContingentCondition.encode("GBK")
         if StopPrice:
             self.StopPrice = StopPrice
         if ForceCloseReason:
-            self.ForceCloseReason = ForceCloseReason
+            self.ForceCloseReason = ForceCloseReason.encode("GBK")
         if IsAutoSuspend:
             self.IsAutoSuspend = IsAutoSuspend
         if BusinessUnit:
@@ -9500,7 +9517,7 @@ class ErrorConditionalOrder(Struct):
         if InstallID:
             self.InstallID = InstallID
         if OrderSubmitStatus:
-            self.OrderSubmitStatus = OrderSubmitStatus
+            self.OrderSubmitStatus = OrderSubmitStatus.encode("GBK")
         if NotifySequence:
             self.NotifySequence = NotifySequence
         if TradingDay:
@@ -9510,11 +9527,11 @@ class ErrorConditionalOrder(Struct):
         if OrderSysID:
             self.OrderSysID = OrderSysID.encode("GBK")
         if OrderSource:
-            self.OrderSource = OrderSource
+            self.OrderSource = OrderSource.encode("GBK")
         if OrderStatus:
-            self.OrderStatus = OrderStatus
+            self.OrderStatus = OrderStatus.encode("GBK")
         if OrderType:
-            self.OrderType = OrderType
+            self.OrderType = OrderType.encode("GBK")
         if VolumeTraded:
             self.VolumeTraded = VolumeTraded
         if VolumeTotal:
@@ -9645,7 +9662,7 @@ class ErrOrderAction(Struct):
         if OrderSysID:
             self.OrderSysID = OrderSysID.encode("GBK")
         if ActionFlag:
-            self.ActionFlag = ActionFlag
+            self.ActionFlag = ActionFlag.encode("GBK")
         if LimitPrice:
             self.LimitPrice = LimitPrice
         if VolumeChange:
@@ -9669,7 +9686,7 @@ class ErrOrderAction(Struct):
         if BusinessUnit:
             self.BusinessUnit = BusinessUnit.encode("GBK")
         if OrderActionStatus:
-            self.OrderActionStatus = OrderActionStatus
+            self.OrderActionStatus = OrderActionStatus.encode("GBK")
         if UserID:
             self.UserID = UserID.encode("GBK")
         if StatusMsg:
@@ -9715,7 +9732,7 @@ class ExchangeSequence(Struct):
         if SequenceNo:
             self.SequenceNo = SequenceNo
         if MarketStatus:
-            self.MarketStatus = MarketStatus
+            self.MarketStatus = MarketStatus.encode("GBK")
 
 
 class QueryMaxOrderVolumeWithPrice(Struct):
@@ -9741,11 +9758,11 @@ class QueryMaxOrderVolumeWithPrice(Struct):
         if InstrumentID:
             self.InstrumentID = InstrumentID.encode("GBK")
         if Direction:
-            self.Direction = Direction
+            self.Direction = Direction.encode("GBK")
         if OffsetFlag:
-            self.OffsetFlag = OffsetFlag
+            self.OffsetFlag = OffsetFlag.encode("GBK")
         if HedgeFlag:
-            self.HedgeFlag = HedgeFlag
+            self.HedgeFlag = HedgeFlag.encode("GBK")
         if MaxVolume:
             self.MaxVolume = MaxVolume
         if Price:
@@ -9795,15 +9812,15 @@ class BrokerTradingParams(Struct):
         if InvestorID:
             self.InvestorID = InvestorID.encode("GBK")
         if MarginPriceType:
-            self.MarginPriceType = MarginPriceType
+            self.MarginPriceType = MarginPriceType.encode("GBK")
         if Algorithm:
-            self.Algorithm = Algorithm
+            self.Algorithm = Algorithm.encode("GBK")
         if AvailIncludeCloseProfit:
-            self.AvailIncludeCloseProfit = AvailIncludeCloseProfit
+            self.AvailIncludeCloseProfit = AvailIncludeCloseProfit.encode("GBK")
         if CurrencyID:
             self.CurrencyID = CurrencyID.encode("GBK")
         if OptionRoyaltyPriceType:
-            self.OptionRoyaltyPriceType = OptionRoyaltyPriceType
+            self.OptionRoyaltyPriceType = OptionRoyaltyPriceType.encode("GBK")
         if AccountID:
             self.AccountID = AccountID.encode("GBK")
 
@@ -9844,11 +9861,11 @@ class BrokerTradingAlgos(Struct):
         if InstrumentID:
             self.InstrumentID = InstrumentID.encode("GBK")
         if HandlePositionAlgoID:
-            self.HandlePositionAlgoID = HandlePositionAlgoID
+            self.HandlePositionAlgoID = HandlePositionAlgoID.encode("GBK")
         if FindMarginRateAlgoID:
-            self.FindMarginRateAlgoID = FindMarginRateAlgoID
+            self.FindMarginRateAlgoID = FindMarginRateAlgoID.encode("GBK")
         if HandleTradingAccountAlgoID:
-            self.HandleTradingAccountAlgoID = HandleTradingAccountAlgoID
+            self.HandleTradingAccountAlgoID = HandleTradingAccountAlgoID.encode("GBK")
 
 
 class QueryBrokerDeposit(Struct):
@@ -9949,7 +9966,7 @@ class CFMMCBrokerKey(Struct):
         if CurrentKey:
             self.CurrentKey = CurrentKey.encode("GBK")
         if KeyKind:
-            self.KeyKind = KeyKind
+            self.KeyKind = KeyKind.encode("GBK")
 
 
 class CFMMCTradingAccountKey(Struct):
@@ -10018,7 +10035,7 @@ class BrokerUserOTPParam(Struct):
         if LastSuccess:
             self.LastSuccess = LastSuccess
         if OTPType:
-            self.OTPType = OTPType
+            self.OTPType = OTPType.encode("GBK")
 
 
 class ManualSyncBrokerUserOTP(Struct):
@@ -10037,7 +10054,7 @@ class ManualSyncBrokerUserOTP(Struct):
         if UserID:
             self.UserID = UserID.encode("GBK")
         if OTPType:
-            self.OTPType = OTPType
+            self.OTPType = OTPType.encode("GBK")
         if FirstOTP:
             self.FirstOTP = FirstOTP.encode("GBK")
         if SecondOTP:
@@ -10132,9 +10149,9 @@ class EWarrantOffset(Struct):
         if InstrumentID:
             self.InstrumentID = InstrumentID.encode("GBK")
         if Direction:
-            self.Direction = Direction
+            self.Direction = Direction.encode("GBK")
         if HedgeFlag:
-            self.HedgeFlag = HedgeFlag
+            self.HedgeFlag = HedgeFlag.encode("GBK")
         if Volume:
             self.Volume = Volume
         if InvestUnitID:
@@ -10183,7 +10200,7 @@ class QryInvestorProductGroupMargin(Struct):
         if ProductGroupID:
             self.ProductGroupID = ProductGroupID.encode("GBK")
         if HedgeFlag:
-            self.HedgeFlag = HedgeFlag
+            self.HedgeFlag = HedgeFlag.encode("GBK")
         if ExchangeID:
             self.ExchangeID = ExchangeID.encode("GBK")
         if InvestUnitID:
@@ -10278,7 +10295,7 @@ class InvestorProductGroupMargin(Struct):
         if ShortExchOffsetAmount:
             self.ShortExchOffsetAmount = ShortExchOffsetAmount
         if HedgeFlag:
-            self.HedgeFlag = HedgeFlag
+            self.HedgeFlag = HedgeFlag.encode("GBK")
         if ExchangeID:
             self.ExchangeID = ExchangeID.encode("GBK")
         if InvestUnitID:
@@ -10495,21 +10512,21 @@ class ReqOpenAccount(Struct):
         if PlateSerial:
             self.PlateSerial = PlateSerial
         if LastFragment:
-            self.LastFragment = LastFragment
+            self.LastFragment = LastFragment.encode("GBK")
         if SessionID:
             self.SessionID = SessionID
         if CustomerName:
             self.CustomerName = CustomerName.encode("GBK")
         if IdCardType:
-            self.IdCardType = IdCardType
+            self.IdCardType = IdCardType.encode("GBK")
         if IdentifiedCardNo:
             self.IdentifiedCardNo = IdentifiedCardNo.encode("GBK")
         if Gender:
-            self.Gender = Gender
+            self.Gender = Gender.encode("GBK")
         if CountryCode:
             self.CountryCode = CountryCode.encode("GBK")
         if CustType:
-            self.CustType = CustType
+            self.CustType = CustType.encode("GBK")
         if Address:
             self.Address = Address.encode("GBK")
         if ZipCode:
@@ -10523,7 +10540,7 @@ class ReqOpenAccount(Struct):
         if EMail:
             self.EMail = EMail.encode("GBK")
         if MoneyAccountStatus:
-            self.MoneyAccountStatus = MoneyAccountStatus
+            self.MoneyAccountStatus = MoneyAccountStatus.encode("GBK")
         if BankAccount:
             self.BankAccount = BankAccount.encode("GBK")
         if BankPassWord:
@@ -10535,27 +10552,27 @@ class ReqOpenAccount(Struct):
         if InstallID:
             self.InstallID = InstallID
         if VerifyCertNoFlag:
-            self.VerifyCertNoFlag = VerifyCertNoFlag
+            self.VerifyCertNoFlag = VerifyCertNoFlag.encode("GBK")
         if CurrencyID:
             self.CurrencyID = CurrencyID.encode("GBK")
         if CashExchangeCode:
-            self.CashExchangeCode = CashExchangeCode
+            self.CashExchangeCode = CashExchangeCode.encode("GBK")
         if Digest:
             self.Digest = Digest.encode("GBK")
         if BankAccType:
-            self.BankAccType = BankAccType
+            self.BankAccType = BankAccType.encode("GBK")
         if DeviceID:
             self.DeviceID = DeviceID.encode("GBK")
         if BankSecuAccType:
-            self.BankSecuAccType = BankSecuAccType
+            self.BankSecuAccType = BankSecuAccType.encode("GBK")
         if BrokerIDByBank:
             self.BrokerIDByBank = BrokerIDByBank.encode("GBK")
         if BankSecuAcc:
             self.BankSecuAcc = BankSecuAcc.encode("GBK")
         if BankPwdFlag:
-            self.BankPwdFlag = BankPwdFlag
+            self.BankPwdFlag = BankPwdFlag.encode("GBK")
         if SecuPwdFlag:
-            self.SecuPwdFlag = SecuPwdFlag
+            self.SecuPwdFlag = SecuPwdFlag.encode("GBK")
         if OperNo:
             self.OperNo = OperNo.encode("GBK")
         if TID:
@@ -10638,21 +10655,21 @@ class ReqCancelAccount(Struct):
         if PlateSerial:
             self.PlateSerial = PlateSerial
         if LastFragment:
-            self.LastFragment = LastFragment
+            self.LastFragment = LastFragment.encode("GBK")
         if SessionID:
             self.SessionID = SessionID
         if CustomerName:
             self.CustomerName = CustomerName.encode("GBK")
         if IdCardType:
-            self.IdCardType = IdCardType
+            self.IdCardType = IdCardType.encode("GBK")
         if IdentifiedCardNo:
             self.IdentifiedCardNo = IdentifiedCardNo.encode("GBK")
         if Gender:
-            self.Gender = Gender
+            self.Gender = Gender.encode("GBK")
         if CountryCode:
             self.CountryCode = CountryCode.encode("GBK")
         if CustType:
-            self.CustType = CustType
+            self.CustType = CustType.encode("GBK")
         if Address:
             self.Address = Address.encode("GBK")
         if ZipCode:
@@ -10666,7 +10683,7 @@ class ReqCancelAccount(Struct):
         if EMail:
             self.EMail = EMail.encode("GBK")
         if MoneyAccountStatus:
-            self.MoneyAccountStatus = MoneyAccountStatus
+            self.MoneyAccountStatus = MoneyAccountStatus.encode("GBK")
         if BankAccount:
             self.BankAccount = BankAccount.encode("GBK")
         if BankPassWord:
@@ -10678,27 +10695,27 @@ class ReqCancelAccount(Struct):
         if InstallID:
             self.InstallID = InstallID
         if VerifyCertNoFlag:
-            self.VerifyCertNoFlag = VerifyCertNoFlag
+            self.VerifyCertNoFlag = VerifyCertNoFlag.encode("GBK")
         if CurrencyID:
             self.CurrencyID = CurrencyID.encode("GBK")
         if CashExchangeCode:
-            self.CashExchangeCode = CashExchangeCode
+            self.CashExchangeCode = CashExchangeCode.encode("GBK")
         if Digest:
             self.Digest = Digest.encode("GBK")
         if BankAccType:
-            self.BankAccType = BankAccType
+            self.BankAccType = BankAccType.encode("GBK")
         if DeviceID:
             self.DeviceID = DeviceID.encode("GBK")
         if BankSecuAccType:
-            self.BankSecuAccType = BankSecuAccType
+            self.BankSecuAccType = BankSecuAccType.encode("GBK")
         if BrokerIDByBank:
             self.BrokerIDByBank = BrokerIDByBank.encode("GBK")
         if BankSecuAcc:
             self.BankSecuAcc = BankSecuAcc.encode("GBK")
         if BankPwdFlag:
-            self.BankPwdFlag = BankPwdFlag
+            self.BankPwdFlag = BankPwdFlag.encode("GBK")
         if SecuPwdFlag:
-            self.SecuPwdFlag = SecuPwdFlag
+            self.SecuPwdFlag = SecuPwdFlag.encode("GBK")
         if OperNo:
             self.OperNo = OperNo.encode("GBK")
         if TID:
@@ -10777,21 +10794,21 @@ class ReqChangeAccount(Struct):
         if PlateSerial:
             self.PlateSerial = PlateSerial
         if LastFragment:
-            self.LastFragment = LastFragment
+            self.LastFragment = LastFragment.encode("GBK")
         if SessionID:
             self.SessionID = SessionID
         if CustomerName:
             self.CustomerName = CustomerName.encode("GBK")
         if IdCardType:
-            self.IdCardType = IdCardType
+            self.IdCardType = IdCardType.encode("GBK")
         if IdentifiedCardNo:
             self.IdentifiedCardNo = IdentifiedCardNo.encode("GBK")
         if Gender:
-            self.Gender = Gender
+            self.Gender = Gender.encode("GBK")
         if CountryCode:
             self.CountryCode = CountryCode.encode("GBK")
         if CustType:
-            self.CustType = CustType
+            self.CustType = CustType.encode("GBK")
         if Address:
             self.Address = Address.encode("GBK")
         if ZipCode:
@@ -10805,7 +10822,7 @@ class ReqChangeAccount(Struct):
         if EMail:
             self.EMail = EMail.encode("GBK")
         if MoneyAccountStatus:
-            self.MoneyAccountStatus = MoneyAccountStatus
+            self.MoneyAccountStatus = MoneyAccountStatus.encode("GBK")
         if BankAccount:
             self.BankAccount = BankAccount.encode("GBK")
         if BankPassWord:
@@ -10819,19 +10836,19 @@ class ReqChangeAccount(Struct):
         if Password:
             self.Password = Password.encode("GBK")
         if BankAccType:
-            self.BankAccType = BankAccType
+            self.BankAccType = BankAccType.encode("GBK")
         if InstallID:
             self.InstallID = InstallID
         if VerifyCertNoFlag:
-            self.VerifyCertNoFlag = VerifyCertNoFlag
+            self.VerifyCertNoFlag = VerifyCertNoFlag.encode("GBK")
         if CurrencyID:
             self.CurrencyID = CurrencyID.encode("GBK")
         if BrokerIDByBank:
             self.BrokerIDByBank = BrokerIDByBank.encode("GBK")
         if BankPwdFlag:
-            self.BankPwdFlag = BankPwdFlag
+            self.BankPwdFlag = BankPwdFlag.encode("GBK")
         if SecuPwdFlag:
-            self.SecuPwdFlag = SecuPwdFlag
+            self.SecuPwdFlag = SecuPwdFlag.encode("GBK")
         if TID:
             self.TID = TID
         if Digest:
@@ -10911,17 +10928,17 @@ class ReqTransfer(Struct):
         if PlateSerial:
             self.PlateSerial = PlateSerial
         if LastFragment:
-            self.LastFragment = LastFragment
+            self.LastFragment = LastFragment.encode("GBK")
         if SessionID:
             self.SessionID = SessionID
         if CustomerName:
             self.CustomerName = CustomerName.encode("GBK")
         if IdCardType:
-            self.IdCardType = IdCardType
+            self.IdCardType = IdCardType.encode("GBK")
         if IdentifiedCardNo:
             self.IdentifiedCardNo = IdentifiedCardNo.encode("GBK")
         if CustType:
-            self.CustType = CustType
+            self.CustType = CustType.encode("GBK")
         if BankAccount:
             self.BankAccount = BankAccount.encode("GBK")
         if BankPassWord:
@@ -10937,7 +10954,7 @@ class ReqTransfer(Struct):
         if UserID:
             self.UserID = UserID.encode("GBK")
         if VerifyCertNoFlag:
-            self.VerifyCertNoFlag = VerifyCertNoFlag
+            self.VerifyCertNoFlag = VerifyCertNoFlag.encode("GBK")
         if CurrencyID:
             self.CurrencyID = CurrencyID.encode("GBK")
         if TradeAmount:
@@ -10945,7 +10962,7 @@ class ReqTransfer(Struct):
         if FutureFetchAmount:
             self.FutureFetchAmount = FutureFetchAmount
         if FeePayFlag:
-            self.FeePayFlag = FeePayFlag
+            self.FeePayFlag = FeePayFlag.encode("GBK")
         if CustFee:
             self.CustFee = CustFee
         if BrokerFee:
@@ -10955,19 +10972,19 @@ class ReqTransfer(Struct):
         if Digest:
             self.Digest = Digest.encode("GBK")
         if BankAccType:
-            self.BankAccType = BankAccType
+            self.BankAccType = BankAccType.encode("GBK")
         if DeviceID:
             self.DeviceID = DeviceID.encode("GBK")
         if BankSecuAccType:
-            self.BankSecuAccType = BankSecuAccType
+            self.BankSecuAccType = BankSecuAccType.encode("GBK")
         if BrokerIDByBank:
             self.BrokerIDByBank = BrokerIDByBank.encode("GBK")
         if BankSecuAcc:
             self.BankSecuAcc = BankSecuAcc.encode("GBK")
         if BankPwdFlag:
-            self.BankPwdFlag = BankPwdFlag
+            self.BankPwdFlag = BankPwdFlag.encode("GBK")
         if SecuPwdFlag:
-            self.SecuPwdFlag = SecuPwdFlag
+            self.SecuPwdFlag = SecuPwdFlag.encode("GBK")
         if OperNo:
             self.OperNo = OperNo.encode("GBK")
         if RequestID:
@@ -10975,7 +10992,7 @@ class ReqTransfer(Struct):
         if TID:
             self.TID = TID
         if TransferStatus:
-            self.TransferStatus = TransferStatus
+            self.TransferStatus = TransferStatus.encode("GBK")
         if LongCustomerName:
             self.LongCustomerName = LongCustomerName.encode("GBK")
 
@@ -11053,17 +11070,17 @@ class RspTransfer(Struct):
         if PlateSerial:
             self.PlateSerial = PlateSerial
         if LastFragment:
-            self.LastFragment = LastFragment
+            self.LastFragment = LastFragment.encode("GBK")
         if SessionID:
             self.SessionID = SessionID
         if CustomerName:
             self.CustomerName = CustomerName.encode("GBK")
         if IdCardType:
-            self.IdCardType = IdCardType
+            self.IdCardType = IdCardType.encode("GBK")
         if IdentifiedCardNo:
             self.IdentifiedCardNo = IdentifiedCardNo.encode("GBK")
         if CustType:
-            self.CustType = CustType
+            self.CustType = CustType.encode("GBK")
         if BankAccount:
             self.BankAccount = BankAccount.encode("GBK")
         if BankPassWord:
@@ -11079,7 +11096,7 @@ class RspTransfer(Struct):
         if UserID:
             self.UserID = UserID.encode("GBK")
         if VerifyCertNoFlag:
-            self.VerifyCertNoFlag = VerifyCertNoFlag
+            self.VerifyCertNoFlag = VerifyCertNoFlag.encode("GBK")
         if CurrencyID:
             self.CurrencyID = CurrencyID.encode("GBK")
         if TradeAmount:
@@ -11087,7 +11104,7 @@ class RspTransfer(Struct):
         if FutureFetchAmount:
             self.FutureFetchAmount = FutureFetchAmount
         if FeePayFlag:
-            self.FeePayFlag = FeePayFlag
+            self.FeePayFlag = FeePayFlag.encode("GBK")
         if CustFee:
             self.CustFee = CustFee
         if BrokerFee:
@@ -11097,19 +11114,19 @@ class RspTransfer(Struct):
         if Digest:
             self.Digest = Digest.encode("GBK")
         if BankAccType:
-            self.BankAccType = BankAccType
+            self.BankAccType = BankAccType.encode("GBK")
         if DeviceID:
             self.DeviceID = DeviceID.encode("GBK")
         if BankSecuAccType:
-            self.BankSecuAccType = BankSecuAccType
+            self.BankSecuAccType = BankSecuAccType.encode("GBK")
         if BrokerIDByBank:
             self.BrokerIDByBank = BrokerIDByBank.encode("GBK")
         if BankSecuAcc:
             self.BankSecuAcc = BankSecuAcc.encode("GBK")
         if BankPwdFlag:
-            self.BankPwdFlag = BankPwdFlag
+            self.BankPwdFlag = BankPwdFlag.encode("GBK")
         if SecuPwdFlag:
-            self.SecuPwdFlag = SecuPwdFlag
+            self.SecuPwdFlag = SecuPwdFlag.encode("GBK")
         if OperNo:
             self.OperNo = OperNo.encode("GBK")
         if RequestID:
@@ -11117,7 +11134,7 @@ class RspTransfer(Struct):
         if TID:
             self.TID = TID
         if TransferStatus:
-            self.TransferStatus = TransferStatus
+            self.TransferStatus = TransferStatus.encode("GBK")
         if ErrorID:
             self.ErrorID = ErrorID
         if ErrorMsg:
@@ -11188,9 +11205,9 @@ class ReqRepeal(Struct):
         if RepealedTimes:
             self.RepealedTimes = RepealedTimes
         if BankRepealFlag:
-            self.BankRepealFlag = BankRepealFlag
+            self.BankRepealFlag = BankRepealFlag.encode("GBK")
         if BrokerRepealFlag:
-            self.BrokerRepealFlag = BrokerRepealFlag
+            self.BrokerRepealFlag = BrokerRepealFlag.encode("GBK")
         if PlateRepealSerial:
             self.PlateRepealSerial = PlateRepealSerial
         if BankRepealSerial:
@@ -11218,17 +11235,17 @@ class ReqRepeal(Struct):
         if PlateSerial:
             self.PlateSerial = PlateSerial
         if LastFragment:
-            self.LastFragment = LastFragment
+            self.LastFragment = LastFragment.encode("GBK")
         if SessionID:
             self.SessionID = SessionID
         if CustomerName:
             self.CustomerName = CustomerName.encode("GBK")
         if IdCardType:
-            self.IdCardType = IdCardType
+            self.IdCardType = IdCardType.encode("GBK")
         if IdentifiedCardNo:
             self.IdentifiedCardNo = IdentifiedCardNo.encode("GBK")
         if CustType:
-            self.CustType = CustType
+            self.CustType = CustType.encode("GBK")
         if BankAccount:
             self.BankAccount = BankAccount.encode("GBK")
         if BankPassWord:
@@ -11244,7 +11261,7 @@ class ReqRepeal(Struct):
         if UserID:
             self.UserID = UserID.encode("GBK")
         if VerifyCertNoFlag:
-            self.VerifyCertNoFlag = VerifyCertNoFlag
+            self.VerifyCertNoFlag = VerifyCertNoFlag.encode("GBK")
         if CurrencyID:
             self.CurrencyID = CurrencyID.encode("GBK")
         if TradeAmount:
@@ -11252,7 +11269,7 @@ class ReqRepeal(Struct):
         if FutureFetchAmount:
             self.FutureFetchAmount = FutureFetchAmount
         if FeePayFlag:
-            self.FeePayFlag = FeePayFlag
+            self.FeePayFlag = FeePayFlag.encode("GBK")
         if CustFee:
             self.CustFee = CustFee
         if BrokerFee:
@@ -11262,19 +11279,19 @@ class ReqRepeal(Struct):
         if Digest:
             self.Digest = Digest.encode("GBK")
         if BankAccType:
-            self.BankAccType = BankAccType
+            self.BankAccType = BankAccType.encode("GBK")
         if DeviceID:
             self.DeviceID = DeviceID.encode("GBK")
         if BankSecuAccType:
-            self.BankSecuAccType = BankSecuAccType
+            self.BankSecuAccType = BankSecuAccType.encode("GBK")
         if BrokerIDByBank:
             self.BrokerIDByBank = BrokerIDByBank.encode("GBK")
         if BankSecuAcc:
             self.BankSecuAcc = BankSecuAcc.encode("GBK")
         if BankPwdFlag:
-            self.BankPwdFlag = BankPwdFlag
+            self.BankPwdFlag = BankPwdFlag.encode("GBK")
         if SecuPwdFlag:
-            self.SecuPwdFlag = SecuPwdFlag
+            self.SecuPwdFlag = SecuPwdFlag.encode("GBK")
         if OperNo:
             self.OperNo = OperNo.encode("GBK")
         if RequestID:
@@ -11282,7 +11299,7 @@ class ReqRepeal(Struct):
         if TID:
             self.TID = TID
         if TransferStatus:
-            self.TransferStatus = TransferStatus
+            self.TransferStatus = TransferStatus.encode("GBK")
         if LongCustomerName:
             self.LongCustomerName = LongCustomerName.encode("GBK")
 
@@ -11351,9 +11368,9 @@ class RspRepeal(Struct):
         if RepealedTimes:
             self.RepealedTimes = RepealedTimes
         if BankRepealFlag:
-            self.BankRepealFlag = BankRepealFlag
+            self.BankRepealFlag = BankRepealFlag.encode("GBK")
         if BrokerRepealFlag:
-            self.BrokerRepealFlag = BrokerRepealFlag
+            self.BrokerRepealFlag = BrokerRepealFlag.encode("GBK")
         if PlateRepealSerial:
             self.PlateRepealSerial = PlateRepealSerial
         if BankRepealSerial:
@@ -11381,17 +11398,17 @@ class RspRepeal(Struct):
         if PlateSerial:
             self.PlateSerial = PlateSerial
         if LastFragment:
-            self.LastFragment = LastFragment
+            self.LastFragment = LastFragment.encode("GBK")
         if SessionID:
             self.SessionID = SessionID
         if CustomerName:
             self.CustomerName = CustomerName.encode("GBK")
         if IdCardType:
-            self.IdCardType = IdCardType
+            self.IdCardType = IdCardType.encode("GBK")
         if IdentifiedCardNo:
             self.IdentifiedCardNo = IdentifiedCardNo.encode("GBK")
         if CustType:
-            self.CustType = CustType
+            self.CustType = CustType.encode("GBK")
         if BankAccount:
             self.BankAccount = BankAccount.encode("GBK")
         if BankPassWord:
@@ -11407,7 +11424,7 @@ class RspRepeal(Struct):
         if UserID:
             self.UserID = UserID.encode("GBK")
         if VerifyCertNoFlag:
-            self.VerifyCertNoFlag = VerifyCertNoFlag
+            self.VerifyCertNoFlag = VerifyCertNoFlag.encode("GBK")
         if CurrencyID:
             self.CurrencyID = CurrencyID.encode("GBK")
         if TradeAmount:
@@ -11415,7 +11432,7 @@ class RspRepeal(Struct):
         if FutureFetchAmount:
             self.FutureFetchAmount = FutureFetchAmount
         if FeePayFlag:
-            self.FeePayFlag = FeePayFlag
+            self.FeePayFlag = FeePayFlag.encode("GBK")
         if CustFee:
             self.CustFee = CustFee
         if BrokerFee:
@@ -11425,19 +11442,19 @@ class RspRepeal(Struct):
         if Digest:
             self.Digest = Digest.encode("GBK")
         if BankAccType:
-            self.BankAccType = BankAccType
+            self.BankAccType = BankAccType.encode("GBK")
         if DeviceID:
             self.DeviceID = DeviceID.encode("GBK")
         if BankSecuAccType:
-            self.BankSecuAccType = BankSecuAccType
+            self.BankSecuAccType = BankSecuAccType.encode("GBK")
         if BrokerIDByBank:
             self.BrokerIDByBank = BrokerIDByBank.encode("GBK")
         if BankSecuAcc:
             self.BankSecuAcc = BankSecuAcc.encode("GBK")
         if BankPwdFlag:
-            self.BankPwdFlag = BankPwdFlag
+            self.BankPwdFlag = BankPwdFlag.encode("GBK")
         if SecuPwdFlag:
-            self.SecuPwdFlag = SecuPwdFlag
+            self.SecuPwdFlag = SecuPwdFlag.encode("GBK")
         if OperNo:
             self.OperNo = OperNo.encode("GBK")
         if RequestID:
@@ -11445,7 +11462,7 @@ class RspRepeal(Struct):
         if TID:
             self.TID = TID
         if TransferStatus:
-            self.TransferStatus = TransferStatus
+            self.TransferStatus = TransferStatus.encode("GBK")
         if ErrorID:
             self.ErrorID = ErrorID
         if ErrorMsg:
@@ -11518,17 +11535,17 @@ class ReqQueryAccount(Struct):
         if PlateSerial:
             self.PlateSerial = PlateSerial
         if LastFragment:
-            self.LastFragment = LastFragment
+            self.LastFragment = LastFragment.encode("GBK")
         if SessionID:
             self.SessionID = SessionID
         if CustomerName:
             self.CustomerName = CustomerName.encode("GBK")
         if IdCardType:
-            self.IdCardType = IdCardType
+            self.IdCardType = IdCardType.encode("GBK")
         if IdentifiedCardNo:
             self.IdentifiedCardNo = IdentifiedCardNo.encode("GBK")
         if CustType:
-            self.CustType = CustType
+            self.CustType = CustType.encode("GBK")
         if BankAccount:
             self.BankAccount = BankAccount.encode("GBK")
         if BankPassWord:
@@ -11544,25 +11561,25 @@ class ReqQueryAccount(Struct):
         if UserID:
             self.UserID = UserID.encode("GBK")
         if VerifyCertNoFlag:
-            self.VerifyCertNoFlag = VerifyCertNoFlag
+            self.VerifyCertNoFlag = VerifyCertNoFlag.encode("GBK")
         if CurrencyID:
             self.CurrencyID = CurrencyID.encode("GBK")
         if Digest:
             self.Digest = Digest.encode("GBK")
         if BankAccType:
-            self.BankAccType = BankAccType
+            self.BankAccType = BankAccType.encode("GBK")
         if DeviceID:
             self.DeviceID = DeviceID.encode("GBK")
         if BankSecuAccType:
-            self.BankSecuAccType = BankSecuAccType
+            self.BankSecuAccType = BankSecuAccType.encode("GBK")
         if BrokerIDByBank:
             self.BrokerIDByBank = BrokerIDByBank.encode("GBK")
         if BankSecuAcc:
             self.BankSecuAcc = BankSecuAcc.encode("GBK")
         if BankPwdFlag:
-            self.BankPwdFlag = BankPwdFlag
+            self.BankPwdFlag = BankPwdFlag.encode("GBK")
         if SecuPwdFlag:
-            self.SecuPwdFlag = SecuPwdFlag
+            self.SecuPwdFlag = SecuPwdFlag.encode("GBK")
         if OperNo:
             self.OperNo = OperNo.encode("GBK")
         if RequestID:
@@ -11639,17 +11656,17 @@ class RspQueryAccount(Struct):
         if PlateSerial:
             self.PlateSerial = PlateSerial
         if LastFragment:
-            self.LastFragment = LastFragment
+            self.LastFragment = LastFragment.encode("GBK")
         if SessionID:
             self.SessionID = SessionID
         if CustomerName:
             self.CustomerName = CustomerName.encode("GBK")
         if IdCardType:
-            self.IdCardType = IdCardType
+            self.IdCardType = IdCardType.encode("GBK")
         if IdentifiedCardNo:
             self.IdentifiedCardNo = IdentifiedCardNo.encode("GBK")
         if CustType:
-            self.CustType = CustType
+            self.CustType = CustType.encode("GBK")
         if BankAccount:
             self.BankAccount = BankAccount.encode("GBK")
         if BankPassWord:
@@ -11665,25 +11682,25 @@ class RspQueryAccount(Struct):
         if UserID:
             self.UserID = UserID.encode("GBK")
         if VerifyCertNoFlag:
-            self.VerifyCertNoFlag = VerifyCertNoFlag
+            self.VerifyCertNoFlag = VerifyCertNoFlag.encode("GBK")
         if CurrencyID:
             self.CurrencyID = CurrencyID.encode("GBK")
         if Digest:
             self.Digest = Digest.encode("GBK")
         if BankAccType:
-            self.BankAccType = BankAccType
+            self.BankAccType = BankAccType.encode("GBK")
         if DeviceID:
             self.DeviceID = DeviceID.encode("GBK")
         if BankSecuAccType:
-            self.BankSecuAccType = BankSecuAccType
+            self.BankSecuAccType = BankSecuAccType.encode("GBK")
         if BrokerIDByBank:
             self.BrokerIDByBank = BrokerIDByBank.encode("GBK")
         if BankSecuAcc:
             self.BankSecuAcc = BankSecuAcc.encode("GBK")
         if BankPwdFlag:
-            self.BankPwdFlag = BankPwdFlag
+            self.BankPwdFlag = BankPwdFlag.encode("GBK")
         if SecuPwdFlag:
-            self.SecuPwdFlag = SecuPwdFlag
+            self.SecuPwdFlag = SecuPwdFlag.encode("GBK")
         if OperNo:
             self.OperNo = OperNo.encode("GBK")
         if RequestID:
@@ -11746,7 +11763,7 @@ class FutureSignIO(Struct):
         if PlateSerial:
             self.PlateSerial = PlateSerial
         if LastFragment:
-            self.LastFragment = LastFragment
+            self.LastFragment = LastFragment.encode("GBK")
         if SessionID:
             self.SessionID = SessionID
         if InstallID:
@@ -11821,7 +11838,7 @@ class RspFutureSignIn(Struct):
         if PlateSerial:
             self.PlateSerial = PlateSerial
         if LastFragment:
-            self.LastFragment = LastFragment
+            self.LastFragment = LastFragment.encode("GBK")
         if SessionID:
             self.SessionID = SessionID
         if InstallID:
@@ -11900,7 +11917,7 @@ class ReqFutureSignOut(Struct):
         if PlateSerial:
             self.PlateSerial = PlateSerial
         if LastFragment:
-            self.LastFragment = LastFragment
+            self.LastFragment = LastFragment.encode("GBK")
         if SessionID:
             self.SessionID = SessionID
         if InstallID:
@@ -11973,7 +11990,7 @@ class RspFutureSignOut(Struct):
         if PlateSerial:
             self.PlateSerial = PlateSerial
         if LastFragment:
-            self.LastFragment = LastFragment
+            self.LastFragment = LastFragment.encode("GBK")
         if SessionID:
             self.SessionID = SessionID
         if InstallID:
@@ -12054,23 +12071,23 @@ class ReqQueryTradeResultBySerial(Struct):
         if PlateSerial:
             self.PlateSerial = PlateSerial
         if LastFragment:
-            self.LastFragment = LastFragment
+            self.LastFragment = LastFragment.encode("GBK")
         if SessionID:
             self.SessionID = SessionID
         if Reference:
             self.Reference = Reference
         if RefrenceIssureType:
-            self.RefrenceIssureType = RefrenceIssureType
+            self.RefrenceIssureType = RefrenceIssureType.encode("GBK")
         if RefrenceIssure:
             self.RefrenceIssure = RefrenceIssure.encode("GBK")
         if CustomerName:
             self.CustomerName = CustomerName.encode("GBK")
         if IdCardType:
-            self.IdCardType = IdCardType
+            self.IdCardType = IdCardType.encode("GBK")
         if IdentifiedCardNo:
             self.IdentifiedCardNo = IdentifiedCardNo.encode("GBK")
         if CustType:
-            self.CustType = CustType
+            self.CustType = CustType.encode("GBK")
         if BankAccount:
             self.BankAccount = BankAccount.encode("GBK")
         if BankPassWord:
@@ -12142,7 +12159,7 @@ class RspQueryTradeResultBySerial(Struct):
         if PlateSerial:
             self.PlateSerial = PlateSerial
         if LastFragment:
-            self.LastFragment = LastFragment
+            self.LastFragment = LastFragment.encode("GBK")
         if SessionID:
             self.SessionID = SessionID
         if ErrorID:
@@ -12152,7 +12169,7 @@ class RspQueryTradeResultBySerial(Struct):
         if Reference:
             self.Reference = Reference
         if RefrenceIssureType:
-            self.RefrenceIssureType = RefrenceIssureType
+            self.RefrenceIssureType = RefrenceIssureType.encode("GBK")
         if RefrenceIssure:
             self.RefrenceIssure = RefrenceIssure.encode("GBK")
         if OriginReturnCode:
@@ -12216,11 +12233,11 @@ class ReqDayEndFileReady(Struct):
         if PlateSerial:
             self.PlateSerial = PlateSerial
         if LastFragment:
-            self.LastFragment = LastFragment
+            self.LastFragment = LastFragment.encode("GBK")
         if SessionID:
             self.SessionID = SessionID
         if FileBusinessCode:
-            self.FileBusinessCode = FileBusinessCode
+            self.FileBusinessCode = FileBusinessCode.encode("GBK")
         if Digest:
             self.Digest = Digest.encode("GBK")
 
@@ -12285,7 +12302,7 @@ class VerifyFuturePassword(Struct):
         if PlateSerial:
             self.PlateSerial = PlateSerial
         if LastFragment:
-            self.LastFragment = LastFragment
+            self.LastFragment = LastFragment.encode("GBK")
         if SessionID:
             self.SessionID = SessionID
         if AccountID:
@@ -12318,11 +12335,11 @@ class VerifyCustInfo(Struct):
         if CustomerName:
             self.CustomerName = CustomerName.encode("GBK")
         if IdCardType:
-            self.IdCardType = IdCardType
+            self.IdCardType = IdCardType.encode("GBK")
         if IdentifiedCardNo:
             self.IdentifiedCardNo = IdentifiedCardNo.encode("GBK")
         if CustType:
-            self.CustType = CustType
+            self.CustType = CustType.encode("GBK")
         if LongCustomerName:
             self.LongCustomerName = LongCustomerName.encode("GBK")
 
@@ -12344,11 +12361,11 @@ class VerifyFuturePasswordAndCustInfo(Struct):
         if CustomerName:
             self.CustomerName = CustomerName.encode("GBK")
         if IdCardType:
-            self.IdCardType = IdCardType
+            self.IdCardType = IdCardType.encode("GBK")
         if IdentifiedCardNo:
             self.IdentifiedCardNo = IdentifiedCardNo.encode("GBK")
         if CustType:
-            self.CustType = CustType
+            self.CustType = CustType.encode("GBK")
         if AccountID:
             self.AccountID = AccountID.encode("GBK")
         if Password:
@@ -12435,7 +12452,7 @@ class ReqSyncKey(Struct):
         if PlateSerial:
             self.PlateSerial = PlateSerial
         if LastFragment:
-            self.LastFragment = LastFragment
+            self.LastFragment = LastFragment.encode("GBK")
         if SessionID:
             self.SessionID = SessionID
         if InstallID:
@@ -12505,7 +12522,7 @@ class RspSyncKey(Struct):
         if PlateSerial:
             self.PlateSerial = PlateSerial
         if LastFragment:
-            self.LastFragment = LastFragment
+            self.LastFragment = LastFragment.encode("GBK")
         if SessionID:
             self.SessionID = SessionID
         if InstallID:
@@ -12598,17 +12615,17 @@ class NotifyQueryAccount(Struct):
         if PlateSerial:
             self.PlateSerial = PlateSerial
         if LastFragment:
-            self.LastFragment = LastFragment
+            self.LastFragment = LastFragment.encode("GBK")
         if SessionID:
             self.SessionID = SessionID
         if CustomerName:
             self.CustomerName = CustomerName.encode("GBK")
         if IdCardType:
-            self.IdCardType = IdCardType
+            self.IdCardType = IdCardType.encode("GBK")
         if IdentifiedCardNo:
             self.IdentifiedCardNo = IdentifiedCardNo.encode("GBK")
         if CustType:
-            self.CustType = CustType
+            self.CustType = CustType.encode("GBK")
         if BankAccount:
             self.BankAccount = BankAccount.encode("GBK")
         if BankPassWord:
@@ -12624,25 +12641,25 @@ class NotifyQueryAccount(Struct):
         if UserID:
             self.UserID = UserID.encode("GBK")
         if VerifyCertNoFlag:
-            self.VerifyCertNoFlag = VerifyCertNoFlag
+            self.VerifyCertNoFlag = VerifyCertNoFlag.encode("GBK")
         if CurrencyID:
             self.CurrencyID = CurrencyID.encode("GBK")
         if Digest:
             self.Digest = Digest.encode("GBK")
         if BankAccType:
-            self.BankAccType = BankAccType
+            self.BankAccType = BankAccType.encode("GBK")
         if DeviceID:
             self.DeviceID = DeviceID.encode("GBK")
         if BankSecuAccType:
-            self.BankSecuAccType = BankSecuAccType
+            self.BankSecuAccType = BankSecuAccType.encode("GBK")
         if BrokerIDByBank:
             self.BrokerIDByBank = BrokerIDByBank.encode("GBK")
         if BankSecuAcc:
             self.BankSecuAcc = BankSecuAcc.encode("GBK")
         if BankPwdFlag:
-            self.BankPwdFlag = BankPwdFlag
+            self.BankPwdFlag = BankPwdFlag.encode("GBK")
         if SecuPwdFlag:
-            self.SecuPwdFlag = SecuPwdFlag
+            self.SecuPwdFlag = SecuPwdFlag.encode("GBK")
         if OperNo:
             self.OperNo = OperNo.encode("GBK")
         if RequestID:
@@ -12712,7 +12729,7 @@ class TransferSerial(Struct):
         if BankBranchID:
             self.BankBranchID = BankBranchID.encode("GBK")
         if BankAccType:
-            self.BankAccType = BankAccType
+            self.BankAccType = BankAccType.encode("GBK")
         if BankAccount:
             self.BankAccount = BankAccount.encode("GBK")
         if BankSerial:
@@ -12722,7 +12739,7 @@ class TransferSerial(Struct):
         if BrokerBranchID:
             self.BrokerBranchID = BrokerBranchID.encode("GBK")
         if FutureAccType:
-            self.FutureAccType = FutureAccType
+            self.FutureAccType = FutureAccType.encode("GBK")
         if AccountID:
             self.AccountID = AccountID.encode("GBK")
         if InvestorID:
@@ -12730,7 +12747,7 @@ class TransferSerial(Struct):
         if FutureSerial:
             self.FutureSerial = FutureSerial
         if IdCardType:
-            self.IdCardType = IdCardType
+            self.IdCardType = IdCardType.encode("GBK")
         if IdentifiedCardNo:
             self.IdentifiedCardNo = IdentifiedCardNo.encode("GBK")
         if CurrencyID:
@@ -12742,7 +12759,7 @@ class TransferSerial(Struct):
         if BrokerFee:
             self.BrokerFee = BrokerFee
         if AvailabilityFlag:
-            self.AvailabilityFlag = AvailabilityFlag
+            self.AvailabilityFlag = AvailabilityFlag.encode("GBK")
         if OperatorCode:
             self.OperatorCode = OperatorCode.encode("GBK")
         if BankNewAccount:
@@ -12825,7 +12842,7 @@ class NotifyFutureSignIn(Struct):
         if PlateSerial:
             self.PlateSerial = PlateSerial
         if LastFragment:
-            self.LastFragment = LastFragment
+            self.LastFragment = LastFragment.encode("GBK")
         if SessionID:
             self.SessionID = SessionID
         if InstallID:
@@ -12906,7 +12923,7 @@ class NotifyFutureSignOut(Struct):
         if PlateSerial:
             self.PlateSerial = PlateSerial
         if LastFragment:
-            self.LastFragment = LastFragment
+            self.LastFragment = LastFragment.encode("GBK")
         if SessionID:
             self.SessionID = SessionID
         if InstallID:
@@ -12982,7 +12999,7 @@ class NotifySyncKey(Struct):
         if PlateSerial:
             self.PlateSerial = PlateSerial
         if LastFragment:
-            self.LastFragment = LastFragment
+            self.LastFragment = LastFragment.encode("GBK")
         if SessionID:
             self.SessionID = SessionID
         if InstallID:
@@ -13069,7 +13086,7 @@ class Accountregister(Struct):
         if AccountID:
             self.AccountID = AccountID.encode("GBK")
         if IdCardType:
-            self.IdCardType = IdCardType
+            self.IdCardType = IdCardType.encode("GBK")
         if IdentifiedCardNo:
             self.IdentifiedCardNo = IdentifiedCardNo.encode("GBK")
         if CustomerName:
@@ -13077,7 +13094,7 @@ class Accountregister(Struct):
         if CurrencyID:
             self.CurrencyID = CurrencyID.encode("GBK")
         if OpenOrDestroy:
-            self.OpenOrDestroy = OpenOrDestroy
+            self.OpenOrDestroy = OpenOrDestroy.encode("GBK")
         if RegDate:
             self.RegDate = RegDate.encode("GBK")
         if OutDate:
@@ -13085,9 +13102,9 @@ class Accountregister(Struct):
         if TID:
             self.TID = TID
         if CustType:
-            self.CustType = CustType
+            self.CustType = CustType.encode("GBK")
         if BankAccType:
-            self.BankAccType = BankAccType
+            self.BankAccType = BankAccType.encode("GBK")
         if LongCustomerName:
             self.LongCustomerName = LongCustomerName.encode("GBK")
 
@@ -13166,21 +13183,21 @@ class OpenAccount(Struct):
         if PlateSerial:
             self.PlateSerial = PlateSerial
         if LastFragment:
-            self.LastFragment = LastFragment
+            self.LastFragment = LastFragment.encode("GBK")
         if SessionID:
             self.SessionID = SessionID
         if CustomerName:
             self.CustomerName = CustomerName.encode("GBK")
         if IdCardType:
-            self.IdCardType = IdCardType
+            self.IdCardType = IdCardType.encode("GBK")
         if IdentifiedCardNo:
             self.IdentifiedCardNo = IdentifiedCardNo.encode("GBK")
         if Gender:
-            self.Gender = Gender
+            self.Gender = Gender.encode("GBK")
         if CountryCode:
             self.CountryCode = CountryCode.encode("GBK")
         if CustType:
-            self.CustType = CustType
+            self.CustType = CustType.encode("GBK")
         if Address:
             self.Address = Address.encode("GBK")
         if ZipCode:
@@ -13194,7 +13211,7 @@ class OpenAccount(Struct):
         if EMail:
             self.EMail = EMail.encode("GBK")
         if MoneyAccountStatus:
-            self.MoneyAccountStatus = MoneyAccountStatus
+            self.MoneyAccountStatus = MoneyAccountStatus.encode("GBK")
         if BankAccount:
             self.BankAccount = BankAccount.encode("GBK")
         if BankPassWord:
@@ -13206,27 +13223,27 @@ class OpenAccount(Struct):
         if InstallID:
             self.InstallID = InstallID
         if VerifyCertNoFlag:
-            self.VerifyCertNoFlag = VerifyCertNoFlag
+            self.VerifyCertNoFlag = VerifyCertNoFlag.encode("GBK")
         if CurrencyID:
             self.CurrencyID = CurrencyID.encode("GBK")
         if CashExchangeCode:
-            self.CashExchangeCode = CashExchangeCode
+            self.CashExchangeCode = CashExchangeCode.encode("GBK")
         if Digest:
             self.Digest = Digest.encode("GBK")
         if BankAccType:
-            self.BankAccType = BankAccType
+            self.BankAccType = BankAccType.encode("GBK")
         if DeviceID:
             self.DeviceID = DeviceID.encode("GBK")
         if BankSecuAccType:
-            self.BankSecuAccType = BankSecuAccType
+            self.BankSecuAccType = BankSecuAccType.encode("GBK")
         if BrokerIDByBank:
             self.BrokerIDByBank = BrokerIDByBank.encode("GBK")
         if BankSecuAcc:
             self.BankSecuAcc = BankSecuAcc.encode("GBK")
         if BankPwdFlag:
-            self.BankPwdFlag = BankPwdFlag
+            self.BankPwdFlag = BankPwdFlag.encode("GBK")
         if SecuPwdFlag:
-            self.SecuPwdFlag = SecuPwdFlag
+            self.SecuPwdFlag = SecuPwdFlag.encode("GBK")
         if OperNo:
             self.OperNo = OperNo.encode("GBK")
         if TID:
@@ -13315,21 +13332,21 @@ class CancelAccount(Struct):
         if PlateSerial:
             self.PlateSerial = PlateSerial
         if LastFragment:
-            self.LastFragment = LastFragment
+            self.LastFragment = LastFragment.encode("GBK")
         if SessionID:
             self.SessionID = SessionID
         if CustomerName:
             self.CustomerName = CustomerName.encode("GBK")
         if IdCardType:
-            self.IdCardType = IdCardType
+            self.IdCardType = IdCardType.encode("GBK")
         if IdentifiedCardNo:
             self.IdentifiedCardNo = IdentifiedCardNo.encode("GBK")
         if Gender:
-            self.Gender = Gender
+            self.Gender = Gender.encode("GBK")
         if CountryCode:
             self.CountryCode = CountryCode.encode("GBK")
         if CustType:
-            self.CustType = CustType
+            self.CustType = CustType.encode("GBK")
         if Address:
             self.Address = Address.encode("GBK")
         if ZipCode:
@@ -13343,7 +13360,7 @@ class CancelAccount(Struct):
         if EMail:
             self.EMail = EMail.encode("GBK")
         if MoneyAccountStatus:
-            self.MoneyAccountStatus = MoneyAccountStatus
+            self.MoneyAccountStatus = MoneyAccountStatus.encode("GBK")
         if BankAccount:
             self.BankAccount = BankAccount.encode("GBK")
         if BankPassWord:
@@ -13355,27 +13372,27 @@ class CancelAccount(Struct):
         if InstallID:
             self.InstallID = InstallID
         if VerifyCertNoFlag:
-            self.VerifyCertNoFlag = VerifyCertNoFlag
+            self.VerifyCertNoFlag = VerifyCertNoFlag.encode("GBK")
         if CurrencyID:
             self.CurrencyID = CurrencyID.encode("GBK")
         if CashExchangeCode:
-            self.CashExchangeCode = CashExchangeCode
+            self.CashExchangeCode = CashExchangeCode.encode("GBK")
         if Digest:
             self.Digest = Digest.encode("GBK")
         if BankAccType:
-            self.BankAccType = BankAccType
+            self.BankAccType = BankAccType.encode("GBK")
         if DeviceID:
             self.DeviceID = DeviceID.encode("GBK")
         if BankSecuAccType:
-            self.BankSecuAccType = BankSecuAccType
+            self.BankSecuAccType = BankSecuAccType.encode("GBK")
         if BrokerIDByBank:
             self.BrokerIDByBank = BrokerIDByBank.encode("GBK")
         if BankSecuAcc:
             self.BankSecuAcc = BankSecuAcc.encode("GBK")
         if BankPwdFlag:
-            self.BankPwdFlag = BankPwdFlag
+            self.BankPwdFlag = BankPwdFlag.encode("GBK")
         if SecuPwdFlag:
-            self.SecuPwdFlag = SecuPwdFlag
+            self.SecuPwdFlag = SecuPwdFlag.encode("GBK")
         if OperNo:
             self.OperNo = OperNo.encode("GBK")
         if TID:
@@ -13460,21 +13477,21 @@ class ChangeAccount(Struct):
         if PlateSerial:
             self.PlateSerial = PlateSerial
         if LastFragment:
-            self.LastFragment = LastFragment
+            self.LastFragment = LastFragment.encode("GBK")
         if SessionID:
             self.SessionID = SessionID
         if CustomerName:
             self.CustomerName = CustomerName.encode("GBK")
         if IdCardType:
-            self.IdCardType = IdCardType
+            self.IdCardType = IdCardType.encode("GBK")
         if IdentifiedCardNo:
             self.IdentifiedCardNo = IdentifiedCardNo.encode("GBK")
         if Gender:
-            self.Gender = Gender
+            self.Gender = Gender.encode("GBK")
         if CountryCode:
             self.CountryCode = CountryCode.encode("GBK")
         if CustType:
-            self.CustType = CustType
+            self.CustType = CustType.encode("GBK")
         if Address:
             self.Address = Address.encode("GBK")
         if ZipCode:
@@ -13488,7 +13505,7 @@ class ChangeAccount(Struct):
         if EMail:
             self.EMail = EMail.encode("GBK")
         if MoneyAccountStatus:
-            self.MoneyAccountStatus = MoneyAccountStatus
+            self.MoneyAccountStatus = MoneyAccountStatus.encode("GBK")
         if BankAccount:
             self.BankAccount = BankAccount.encode("GBK")
         if BankPassWord:
@@ -13502,19 +13519,19 @@ class ChangeAccount(Struct):
         if Password:
             self.Password = Password.encode("GBK")
         if BankAccType:
-            self.BankAccType = BankAccType
+            self.BankAccType = BankAccType.encode("GBK")
         if InstallID:
             self.InstallID = InstallID
         if VerifyCertNoFlag:
-            self.VerifyCertNoFlag = VerifyCertNoFlag
+            self.VerifyCertNoFlag = VerifyCertNoFlag.encode("GBK")
         if CurrencyID:
             self.CurrencyID = CurrencyID.encode("GBK")
         if BrokerIDByBank:
             self.BrokerIDByBank = BrokerIDByBank.encode("GBK")
         if BankPwdFlag:
-            self.BankPwdFlag = BankPwdFlag
+            self.BankPwdFlag = BankPwdFlag.encode("GBK")
         if SecuPwdFlag:
-            self.SecuPwdFlag = SecuPwdFlag
+            self.SecuPwdFlag = SecuPwdFlag.encode("GBK")
         if TID:
             self.TID = TID
         if Digest:
@@ -13638,7 +13655,7 @@ class FensUserInfo(Struct):
         if UserID:
             self.UserID = UserID.encode("GBK")
         if LoginMode:
-            self.LoginMode = LoginMode
+            self.LoginMode = LoginMode.encode("GBK")
 
 
 class CurrTransferIdentity(Struct):
@@ -13824,21 +13841,21 @@ class ReserveOpenAccountConfirm(Struct):
         if PlateSerial:
             self.PlateSerial = PlateSerial
         if LastFragment:
-            self.LastFragment = LastFragment
+            self.LastFragment = LastFragment.encode("GBK")
         if SessionID:
             self.SessionID = SessionID
         if CustomerName:
             self.CustomerName = CustomerName.encode("GBK")
         if IdCardType:
-            self.IdCardType = IdCardType
+            self.IdCardType = IdCardType.encode("GBK")
         if IdentifiedCardNo:
             self.IdentifiedCardNo = IdentifiedCardNo.encode("GBK")
         if Gender:
-            self.Gender = Gender
+            self.Gender = Gender.encode("GBK")
         if CountryCode:
             self.CountryCode = CountryCode.encode("GBK")
         if CustType:
-            self.CustType = CustType
+            self.CustType = CustType.encode("GBK")
         if Address:
             self.Address = Address.encode("GBK")
         if ZipCode:
@@ -13852,7 +13869,7 @@ class ReserveOpenAccountConfirm(Struct):
         if EMail:
             self.EMail = EMail.encode("GBK")
         if MoneyAccountStatus:
-            self.MoneyAccountStatus = MoneyAccountStatus
+            self.MoneyAccountStatus = MoneyAccountStatus.encode("GBK")
         if BankAccount:
             self.BankAccount = BankAccount.encode("GBK")
         if BankPassWord:
@@ -13860,13 +13877,13 @@ class ReserveOpenAccountConfirm(Struct):
         if InstallID:
             self.InstallID = InstallID
         if VerifyCertNoFlag:
-            self.VerifyCertNoFlag = VerifyCertNoFlag
+            self.VerifyCertNoFlag = VerifyCertNoFlag.encode("GBK")
         if CurrencyID:
             self.CurrencyID = CurrencyID.encode("GBK")
         if Digest:
             self.Digest = Digest.encode("GBK")
         if BankAccType:
-            self.BankAccType = BankAccType
+            self.BankAccType = BankAccType.encode("GBK")
         if BrokerIDByBank:
             self.BrokerIDByBank = BrokerIDByBank.encode("GBK")
         if TID:
@@ -13951,21 +13968,21 @@ class ReserveOpenAccount(Struct):
         if PlateSerial:
             self.PlateSerial = PlateSerial
         if LastFragment:
-            self.LastFragment = LastFragment
+            self.LastFragment = LastFragment.encode("GBK")
         if SessionID:
             self.SessionID = SessionID
         if CustomerName:
             self.CustomerName = CustomerName.encode("GBK")
         if IdCardType:
-            self.IdCardType = IdCardType
+            self.IdCardType = IdCardType.encode("GBK")
         if IdentifiedCardNo:
             self.IdentifiedCardNo = IdentifiedCardNo.encode("GBK")
         if Gender:
-            self.Gender = Gender
+            self.Gender = Gender.encode("GBK")
         if CountryCode:
             self.CountryCode = CountryCode.encode("GBK")
         if CustType:
-            self.CustType = CustType
+            self.CustType = CustType.encode("GBK")
         if Address:
             self.Address = Address.encode("GBK")
         if ZipCode:
@@ -13979,7 +13996,7 @@ class ReserveOpenAccount(Struct):
         if EMail:
             self.EMail = EMail.encode("GBK")
         if MoneyAccountStatus:
-            self.MoneyAccountStatus = MoneyAccountStatus
+            self.MoneyAccountStatus = MoneyAccountStatus.encode("GBK")
         if BankAccount:
             self.BankAccount = BankAccount.encode("GBK")
         if BankPassWord:
@@ -13987,19 +14004,19 @@ class ReserveOpenAccount(Struct):
         if InstallID:
             self.InstallID = InstallID
         if VerifyCertNoFlag:
-            self.VerifyCertNoFlag = VerifyCertNoFlag
+            self.VerifyCertNoFlag = VerifyCertNoFlag.encode("GBK")
         if CurrencyID:
             self.CurrencyID = CurrencyID.encode("GBK")
         if Digest:
             self.Digest = Digest.encode("GBK")
         if BankAccType:
-            self.BankAccType = BankAccType
+            self.BankAccType = BankAccType.encode("GBK")
         if BrokerIDByBank:
             self.BrokerIDByBank = BrokerIDByBank.encode("GBK")
         if TID:
             self.TID = TID
         if ReserveOpenAccStas:
-            self.ReserveOpenAccStas = ReserveOpenAccStas
+            self.ReserveOpenAccStas = ReserveOpenAccStas.encode("GBK")
         if ErrorID:
             self.ErrorID = ErrorID
         if ErrorMsg:
@@ -14041,7 +14058,7 @@ class AccountProperty(Struct):
         if IsActive:
             self.IsActive = IsActive
         if AccountSourceType:
-            self.AccountSourceType = AccountSourceType
+            self.AccountSourceType = AccountSourceType.encode("GBK")
         if OpenDate:
             self.OpenDate = OpenDate.encode("GBK")
         if CancelDate:
@@ -14420,7 +14437,7 @@ class DepartmentUser(Struct):
         if UserID:
             self.UserID = UserID.encode("GBK")
         if InvestorRange:
-            self.InvestorRange = InvestorRange
+            self.InvestorRange = InvestorRange.encode("GBK")
         if InvestorID:
             self.InvestorID = InvestorID.encode("GBK")
 

@@ -16,16 +16,12 @@
 #     See the License for the specific language governing permissions and
 #     limitations under the License.
 
+from .ThostFtdcUserApiDataType cimport *
 
-cdef extern from "ThostFtdcUserApiDataType.h":
-    cdef enum THOST_TE_RESUME_TYPE:
-        THOST_TERT_RESTART = 0
-        THOST_TERT_RESUME
-        THOST_TERT_QUICK
-    {% for type in types %}
-        {% if type.array_len is none %}
-    ctypedef {{ type.base_type }} {{ type.name }}  # {{ type.comment }}
-        {% else %}
-    ctypedef {{ type.base_type }} {{ type.name }}[{{ type.array_len }}]  # {{ type.comment }}
-        {% endif %}
-    {% endfor %}
+cdef extern from "ThostFtdcUserApiStruct.h":
+{% for struct in structs%}
+    cdef struct {{ struct.name }}:  # {{ struct.comment }}
+    {% for member in struct.members %}
+        {{ member.type.name }} {{ member.name }}  # {{ member.comment }}
+    {%endfor%}
+{% endfor %}
