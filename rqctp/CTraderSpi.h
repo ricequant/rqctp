@@ -73,7 +73,7 @@ class CTraderSpi: public CThostFtdcTraderSpi {
             PyGIL(TraderSpi__OnRspQryInstrument(api, pInstrument, pRspInfo, nRequestID, bIsLast));
         }
 
-        virtual void OnRspQryInstrumentMargingRate(CThostFtdcInstrumentMarginRateField *pInstrumentMarginRate, CThostFtdcRspInfoField *pRspInfo, int nRequestID, bool bIsLast) {
+        virtual void OnRspQryInstrumentMarginRate(CThostFtdcInstrumentMarginRateField *pInstrumentMarginRate, CThostFtdcRspInfoField *pRspInfo, int nRequestID, bool bIsLast) {
             PyGIL(TraderSpi__OnRspQryInstrumentMarginRate(api, pInstrumentMarginRate, pRspInfo, nRequestID, bIsLast));
         }
 
