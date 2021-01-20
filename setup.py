@@ -18,7 +18,7 @@
 
 import os
 import sys
-import shutil 
+import shutil
 from setuptools import setup, Extension, find_packages
 from Cython.Build import cythonize
 
@@ -34,7 +34,7 @@ if platform in ("linux", "win32"):
         lib_extensions = (".so", ".h")
         extra_compile_args = None
         extra_link_args = ['-Wl,-rpath,$ORIGIN']
-        package_data = {".": ["libthosttraderapi_se.so"]}
+        package_data = {"rqctp": ["libthosttraderapi_se.so"]}
     elif platform == 'win32':
         lib_extensions = (".dll", ".lib", ".h")
         extra_compile_args = ["/GR", "/EHsc"]
@@ -44,7 +44,7 @@ if platform in ("linux", "win32"):
     for name in os.listdir(lib_dir):
         if any([name.endswith(e) for e in lib_extensions]):
             shutil.copy(os.path.join(lib_dir, name), os.path.join(proj_dir, name))
-        
+
     ext_modules = cythonize(module_list=[
         Extension(
             name="rqctp.TraderApi",
