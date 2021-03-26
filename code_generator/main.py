@@ -18,7 +18,7 @@
 
 import os
 import re
-from operator import itemgetter, attrgetter
+from operator import itemgetter
 from typing import List, Iterator, Union, NamedTuple, Optional, Tuple, Dict
 from collections import OrderedDict
 

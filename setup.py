@@ -34,12 +34,17 @@ if platform in ("linux", "win32"):
         lib_extensions = (".so", ".h")
         extra_compile_args = None
         extra_link_args = ['-Wl,-rpath,$ORIGIN']
-        package_data = {"rqctp": ["libthosttraderapi_se.so"]}
+        package_data = {"rqctp": ["libthosttraderapi_se.so", "libthostmduserapi_se.so"]}
     elif platform == 'win32':
         lib_extensions = (".dll", ".lib", ".h")
         extra_compile_args = ["/GR", "/EHsc"]
         extra_link_args = None
-        package_data = {"rqctp": ["thosttraderapi_se.dll", "thosttraderapi_se.lib"]}
+        package_data = {"rqctp": [
+            "thosttraderapi_se.dll", "thosttraderapi_se.lib",
+            "thostmduserapi_se.dll", "thostmduserapi_se.lib",
+        ]}
+    else:
+        raise NotImplementedError
 
     for name in os.listdir(lib_dir):
         if any([name.endswith(e) for e in lib_extensions]):
@@ -48,8 +53,8 @@ if platform in ("linux", "win32"):
     ext_modules = cythonize(module_list=[
         Extension(
             name="rqctp.TraderApi",
-            sources=["rqctp/TraderApi.pyx"],
-            libraries=["thosttraderapi_se"],
+            sources=["rqctp/TraderApi.pyx", "rqctp/MdApi.pyx"],
+            libraries=["thosttraderapi_se", "thostmduserapi_se"],
             language="c++",
             library_dirs=["rqctp/"],
             extra_compile_args=extra_compile_args,
