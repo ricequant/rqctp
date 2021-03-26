@@ -52,14 +52,17 @@ if platform in ("linux", "win32"):
 
     ext_modules = cythonize(module_list=[
         Extension(
-            name="rqctp.TraderApi",
-            sources=["rqctp/TraderApi.pyx", "rqctp/MdApi.pyx"],
-            libraries=["thosttraderapi_se", "thostmduserapi_se"],
+            name=name,
+            sources=sources,
+            libraries=libraries,
             language="c++",
             library_dirs=["rqctp/"],
             extra_compile_args=extra_compile_args,
             extra_link_args=extra_link_args,
-        )
+        ) for name, sources, libraries in [
+            ("rqctp.TraderApi", ["rqctp/TraderApi.pyx"], ["thosttraderapi_se"]),
+            ("rqctp.MdApi", ["rqctp/MdApi.pyx"], ["thostmduserapi_se"])
+        ]
     ], compiler_directives={
         "language_level": 3,
         "binding": True
@@ -69,7 +72,6 @@ else:
     ext_modules = []
     package_data = {}
 
-print(package_data)
 setup(
     name="rqctp",
     version="0.0.2",
