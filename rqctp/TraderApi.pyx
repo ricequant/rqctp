@@ -258,13 +258,13 @@ cdef class TraderApi:
             result = self._api.ReqOrderAction(<CThostFtdcInputOrderActionField *> address, nRequestID)
         return result
 
-    def ReqQueryMaxOrderVolume(self, pQueryMaxOrderVolume, int nRequestID):
+    def ReqQryMaxOrderVolume(self, pQryMaxOrderVolume, int nRequestID):
         cdef int result
         cdef size_t address
         self._ensure_api_not_null()
-        address = ctypes.addressof(pQueryMaxOrderVolume)
+        address = ctypes.addressof(pQryMaxOrderVolume)
         with nogil:
-            result = self._api.ReqQueryMaxOrderVolume(<CThostFtdcQueryMaxOrderVolumeField *> address, nRequestID)
+            result = self._api.ReqQryMaxOrderVolume(<CThostFtdcQryMaxOrderVolumeField *> address, nRequestID)
         return result
 
     def ReqSettlementInfoConfirm(self, pSettlementInfoConfirm, int nRequestID):
@@ -861,6 +861,24 @@ cdef class TraderApi:
             result = self._api.ReqQueryBankAccountMoneyByFuture(<CThostFtdcReqQueryAccountField *> address, nRequestID)
         return result
 
+    def ReqQryClassifiedInstrument(self, pQryClassifiedInstrument, int nRequestID):
+        cdef int result
+        cdef size_t address
+        self._ensure_api_not_null()
+        address = ctypes.addressof(pQryClassifiedInstrument)
+        with nogil:
+            result = self._api.ReqQryClassifiedInstrument(<CThostFtdcQryClassifiedInstrumentField *> address, nRequestID)
+        return result
+
+    def ReqQryCombPromotionParam(self, pQryCombPromotionParam, int nRequestID):
+        cdef int result
+        cdef size_t address
+        self._ensure_api_not_null()
+        address = ctypes.addressof(pQryCombPromotionParam)
+        with nogil:
+            result = self._api.ReqQryCombPromotionParam(<CThostFtdcQryCombPromotionParamField *> address, nRequestID)
+        return result
+
 
 cdef extern int TraderSpi__OnFrontConnected(api) except -1:
     api.OnFrontConnected()
@@ -1001,9 +1019,9 @@ cdef extern int TraderSpi__OnRspOrderAction(api, CThostFtdcInputOrderActionField
     return 0
 
 
-cdef extern int TraderSpi__OnRspQueryMaxOrderVolume(api, CThostFtdcQueryMaxOrderVolumeField *pQueryMaxOrderVolume, CThostFtdcRspInfoField *pRspInfo, int nRequestID, cbool bIsLast) except -1:
-    api.OnRspQueryMaxOrderVolume(
-        None if pQueryMaxOrderVolume is NULL else QueryMaxOrderVolume.from_address(<size_t> pQueryMaxOrderVolume).to_tuple(),
+cdef extern int TraderSpi__OnRspQryMaxOrderVolume(api, CThostFtdcQryMaxOrderVolumeField *pQryMaxOrderVolume, CThostFtdcRspInfoField *pRspInfo, int nRequestID, cbool bIsLast) except -1:
+    api.OnRspQryMaxOrderVolume(
+        None if pQryMaxOrderVolume is NULL else QryMaxOrderVolume.from_address(<size_t> pQryMaxOrderVolume).to_tuple(),
         None if pRspInfo is NULL else RspInfo.from_address(<size_t> pRspInfo).to_tuple(),
         nRequestID,
         bIsLast
@@ -1986,5 +2004,25 @@ cdef extern int TraderSpi__OnRtnCancelAccountByBank(api, CThostFtdcCancelAccount
 cdef extern int TraderSpi__OnRtnChangeAccountByBank(api, CThostFtdcChangeAccountField *pChangeAccount) except -1:
     api.OnRtnChangeAccountByBank(
         None if pChangeAccount is NULL else ChangeAccount.from_address(<size_t> pChangeAccount).to_tuple()
+    )
+    return 0
+
+
+cdef extern int TraderSpi__OnRspQryClassifiedInstrument(api, CThostFtdcInstrumentField *pInstrument, CThostFtdcRspInfoField *pRspInfo, int nRequestID, cbool bIsLast) except -1:
+    api.OnRspQryClassifiedInstrument(
+        None if pInstrument is NULL else Instrument.from_address(<size_t> pInstrument).to_tuple(),
+        None if pRspInfo is NULL else RspInfo.from_address(<size_t> pRspInfo).to_tuple(),
+        nRequestID,
+        bIsLast
+    )
+    return 0
+
+
+cdef extern int TraderSpi__OnRspQryCombPromotionParam(api, CThostFtdcCombPromotionParamField *pCombPromotionParam, CThostFtdcRspInfoField *pRspInfo, int nRequestID, cbool bIsLast) except -1:
+    api.OnRspQryCombPromotionParam(
+        None if pCombPromotionParam is NULL else CombPromotionParam.from_address(<size_t> pCombPromotionParam).to_tuple(),
+        None if pRspInfo is NULL else RspInfo.from_address(<size_t> pRspInfo).to_tuple(),
+        nRequestID,
+        bIsLast
     )
     return 0

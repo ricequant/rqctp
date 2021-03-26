@@ -32,9 +32,10 @@ cdef extern from "ThostFtdcUserApiStruct.h":
         TThostFtdcProtocolInfoType ProtocolInfo  # 协议信息
         TThostFtdcMacAddressType MacAddress  # Mac地址
         TThostFtdcPasswordType OneTimePassword  # 动态密码
-        TThostFtdcIPAddressType ClientIPAddress  # 终端IP地址
+        TThostFtdcOldIPAddressType reserve1  # 保留的无效字段
         TThostFtdcLoginRemarkType LoginRemark  # 登录备注
         TThostFtdcIPPortType ClientIPPort  # 终端IP端口
+        TThostFtdcIPAddressType ClientIPAddress  # 终端IP地址
     cdef struct CThostFtdcRspUserLoginField:  # 用户登录应答
         TThostFtdcDateType TradingDay  # 交易日
         TThostFtdcTimeType LoginTime  # 登录成功时间
@@ -75,6 +76,8 @@ cdef extern from "ThostFtdcUserApiStruct.h":
         TThostFtdcBoolType IsResult  # 是否为认证结果
         TThostFtdcAppIDType AppID  # App代码
         TThostFtdcAppTypeType AppType  # App类型
+        TThostFtdcOldIPAddressType reserve1  # 保留的无效字段
+        TThostFtdcIPAddressType ClientIPAddress  # 终端IP地址
     cdef struct CThostFtdcRspUserLogin2Field:  # 用户登录应答2
         TThostFtdcDateType TradingDay  # 交易日
         TThostFtdcTimeType LoginTime  # 登录成功时间
@@ -170,7 +173,7 @@ cdef extern from "ThostFtdcUserApiStruct.h":
         TThostFtdcExchangeNameType ExchangeName  # 交易所名称
         TThostFtdcExchangePropertyType ExchangeProperty  # 交易所属性
     cdef struct CThostFtdcProductField:  # 产品
-        TThostFtdcInstrumentIDType ProductID  # 产品代码
+        TThostFtdcOldInstrumentIDType reserve1  # 保留的无效字段
         TThostFtdcProductNameType ProductName  # 产品名称
         TThostFtdcExchangeIDType ExchangeID  # 交易所代码
         TThostFtdcProductClassType ProductClass  # 产品类型
@@ -185,14 +188,16 @@ cdef extern from "ThostFtdcUserApiStruct.h":
         TThostFtdcCloseDealTypeType CloseDealType  # 平仓处理类型
         TThostFtdcCurrencyIDType TradeCurrencyID  # 交易币种类型
         TThostFtdcMortgageFundUseRangeType MortgageFundUseRange  # 质押资金可用范围
-        TThostFtdcInstrumentIDType ExchangeProductID  # 交易所产品代码
+        TThostFtdcOldInstrumentIDType reserve2  # 保留的无效字段
         TThostFtdcUnderlyingMultipleType UnderlyingMultiple  # 合约基础商品乘数
+        TThostFtdcInstrumentIDType ProductID  # 产品代码
+        TThostFtdcInstrumentIDType ExchangeProductID  # 交易所产品代码
     cdef struct CThostFtdcInstrumentField:  # 合约
-        TThostFtdcInstrumentIDType InstrumentID  # 合约代码
+        TThostFtdcOldInstrumentIDType reserve1  # 保留的无效字段
         TThostFtdcExchangeIDType ExchangeID  # 交易所代码
         TThostFtdcInstrumentNameType InstrumentName  # 合约名称
-        TThostFtdcExchangeInstIDType ExchangeInstID  # 合约在交易所的代码
-        TThostFtdcInstrumentIDType ProductID  # 产品代码
+        TThostFtdcOldExchangeInstIDType reserve2  # 保留的无效字段
+        TThostFtdcOldInstrumentIDType reserve3  # 保留的无效字段
         TThostFtdcProductClassType ProductClass  # 产品类型
         TThostFtdcYearType DeliveryYear  # 交割年份
         TThostFtdcMonthType DeliveryMonth  # 交割月
@@ -214,11 +219,15 @@ cdef extern from "ThostFtdcUserApiStruct.h":
         TThostFtdcRatioType LongMarginRatio  # 多头保证金率
         TThostFtdcRatioType ShortMarginRatio  # 空头保证金率
         TThostFtdcMaxMarginSideAlgorithmType MaxMarginSideAlgorithm  # 是否使用大额单边保证金算法
-        TThostFtdcInstrumentIDType UnderlyingInstrID  # 基础商品代码
+        TThostFtdcOldInstrumentIDType reserve4  # 保留的无效字段
         TThostFtdcPriceType StrikePrice  # 执行价
         TThostFtdcOptionsTypeType OptionsType  # 期权类型
         TThostFtdcUnderlyingMultipleType UnderlyingMultiple  # 合约基础商品乘数
         TThostFtdcCombinationTypeType CombinationType  # 组合类型
+        TThostFtdcInstrumentIDType InstrumentID  # 合约代码
+        TThostFtdcExchangeInstIDType ExchangeInstID  # 合约在交易所的代码
+        TThostFtdcInstrumentIDType ProductID  # 产品代码
+        TThostFtdcInstrumentIDType UnderlyingInstrID  # 基础商品代码
     cdef struct CThostFtdcBrokerField:  # 经纪公司
         TThostFtdcBrokerIDType BrokerID  # 经纪公司代码
         TThostFtdcBrokerAbbrType BrokerAbbr  # 经纪公司简称
@@ -323,7 +332,7 @@ cdef extern from "ThostFtdcUserApiStruct.h":
         TThostFtdcMoneyType FrozenSwap  # 延时换汇冻结金额
         TThostFtdcMoneyType RemainSwap  # 剩余换汇额度
     cdef struct CThostFtdcInvestorPositionField:  # 投资者持仓
-        TThostFtdcInstrumentIDType InstrumentID  # 合约代码
+        TThostFtdcOldInstrumentIDType reserve1  # 保留的无效字段
         TThostFtdcBrokerIDType BrokerID  # 经纪公司代码
         TThostFtdcInvestorIDType InvestorID  # 投资者代码
         TThostFtdcPosiDirectionType PosiDirection  # 持仓多空方向
@@ -370,8 +379,11 @@ cdef extern from "ThostFtdcUserApiStruct.h":
         TThostFtdcVolumeType YdStrikeFrozen  # 执行冻结的昨仓
         TThostFtdcInvestUnitIDType InvestUnitID  # 投资单元代码
         TThostFtdcMoneyType PositionCostOffset  # 大商所持仓成本差值，只有大商所使用
-    cdef struct CThostFtdcInstrumentMarginRateField:  # 合约保证金率
+        TThostFtdcVolumeType TasPosition  # tas持仓手数
+        TThostFtdcMoneyType TasPositionCost  # tas持仓成本
         TThostFtdcInstrumentIDType InstrumentID  # 合约代码
+    cdef struct CThostFtdcInstrumentMarginRateField:  # 合约保证金率
+        TThostFtdcOldInstrumentIDType reserve1  # 保留的无效字段
         TThostFtdcInvestorRangeType InvestorRange  # 投资者范围
         TThostFtdcBrokerIDType BrokerID  # 经纪公司代码
         TThostFtdcInvestorIDType InvestorID  # 投资者代码
@@ -383,8 +395,9 @@ cdef extern from "ThostFtdcUserApiStruct.h":
         TThostFtdcBoolType IsRelative  # 是否相对交易所收取
         TThostFtdcExchangeIDType ExchangeID  # 交易所代码
         TThostFtdcInvestUnitIDType InvestUnitID  # 投资单元代码
-    cdef struct CThostFtdcInstrumentCommissionRateField:  # 合约手续费率
         TThostFtdcInstrumentIDType InstrumentID  # 合约代码
+    cdef struct CThostFtdcInstrumentCommissionRateField:  # 合约手续费率
+        TThostFtdcOldInstrumentIDType reserve1  # 保留的无效字段
         TThostFtdcInvestorRangeType InvestorRange  # 投资者范围
         TThostFtdcBrokerIDType BrokerID  # 经纪公司代码
         TThostFtdcInvestorIDType InvestorID  # 投资者代码
@@ -397,11 +410,12 @@ cdef extern from "ThostFtdcUserApiStruct.h":
         TThostFtdcExchangeIDType ExchangeID  # 交易所代码
         TThostFtdcBizTypeType BizType  # 业务类型
         TThostFtdcInvestUnitIDType InvestUnitID  # 投资单元代码
+        TThostFtdcInstrumentIDType InstrumentID  # 合约代码
     cdef struct CThostFtdcDepthMarketDataField:  # 深度行情
         TThostFtdcDateType TradingDay  # 交易日
-        TThostFtdcInstrumentIDType InstrumentID  # 合约代码
+        TThostFtdcOldInstrumentIDType reserve1  # 保留的无效字段
         TThostFtdcExchangeIDType ExchangeID  # 交易所代码
-        TThostFtdcExchangeInstIDType ExchangeInstID  # 合约在交易所的代码
+        TThostFtdcOldExchangeInstIDType reserve2  # 保留的无效字段
         TThostFtdcPriceType LastPrice  # 最新价
         TThostFtdcPriceType PreSettlementPrice  # 上次结算价
         TThostFtdcPriceType PreClosePrice  # 昨收盘
@@ -442,12 +456,15 @@ cdef extern from "ThostFtdcUserApiStruct.h":
         TThostFtdcVolumeType AskVolume5  # 申卖量五
         TThostFtdcPriceType AveragePrice  # 当日均价
         TThostFtdcDateType ActionDay  # 业务日期
-    cdef struct CThostFtdcInstrumentTradingRightField:  # 投资者合约交易权限
         TThostFtdcInstrumentIDType InstrumentID  # 合约代码
+        TThostFtdcExchangeInstIDType ExchangeInstID  # 合约在交易所的代码
+    cdef struct CThostFtdcInstrumentTradingRightField:  # 投资者合约交易权限
+        TThostFtdcOldInstrumentIDType reserve1  # 保留的无效字段
         TThostFtdcInvestorRangeType InvestorRange  # 投资者范围
         TThostFtdcBrokerIDType BrokerID  # 经纪公司代码
         TThostFtdcInvestorIDType InvestorID  # 投资者代码
         TThostFtdcTradingRightType TradingRight  # 交易权限
+        TThostFtdcInstrumentIDType InstrumentID  # 合约代码
     cdef struct CThostFtdcBrokerUserField:  # 经纪公司用户
         TThostFtdcBrokerIDType BrokerID  # 经纪公司代码
         TThostFtdcUserIDType UserID  # 用户代码
@@ -498,7 +515,7 @@ cdef extern from "ThostFtdcUserApiStruct.h":
         TThostFtdcAccountIDType AccountID  # 投资者帐号
         TThostFtdcCurrencyIDType CurrencyID  # 币种代码
     cdef struct CThostFtdcInstrumentMarginRateAdjustField:  # 合约保证金率调整
-        TThostFtdcInstrumentIDType InstrumentID  # 合约代码
+        TThostFtdcOldInstrumentIDType reserve1  # 保留的无效字段
         TThostFtdcInvestorRangeType InvestorRange  # 投资者范围
         TThostFtdcBrokerIDType BrokerID  # 经纪公司代码
         TThostFtdcInvestorIDType InvestorID  # 投资者代码
@@ -508,18 +525,20 @@ cdef extern from "ThostFtdcUserApiStruct.h":
         TThostFtdcRatioType ShortMarginRatioByMoney  # 空头保证金率
         TThostFtdcMoneyType ShortMarginRatioByVolume  # 空头保证金费
         TThostFtdcBoolType IsRelative  # 是否相对交易所收取
+        TThostFtdcInstrumentIDType InstrumentID  # 合约代码
     cdef struct CThostFtdcExchangeMarginRateField:  # 交易所保证金率
         TThostFtdcBrokerIDType BrokerID  # 经纪公司代码
-        TThostFtdcInstrumentIDType InstrumentID  # 合约代码
+        TThostFtdcOldInstrumentIDType reserve1  # 保留的无效字段
         TThostFtdcHedgeFlagType HedgeFlag  # 投机套保标志
         TThostFtdcRatioType LongMarginRatioByMoney  # 多头保证金率
         TThostFtdcMoneyType LongMarginRatioByVolume  # 多头保证金费
         TThostFtdcRatioType ShortMarginRatioByMoney  # 空头保证金率
         TThostFtdcMoneyType ShortMarginRatioByVolume  # 空头保证金费
         TThostFtdcExchangeIDType ExchangeID  # 交易所代码
+        TThostFtdcInstrumentIDType InstrumentID  # 合约代码
     cdef struct CThostFtdcExchangeMarginRateAdjustField:  # 交易所保证金率调整
         TThostFtdcBrokerIDType BrokerID  # 经纪公司代码
-        TThostFtdcInstrumentIDType InstrumentID  # 合约代码
+        TThostFtdcOldInstrumentIDType reserve1  # 保留的无效字段
         TThostFtdcHedgeFlagType HedgeFlag  # 投机套保标志
         TThostFtdcRatioType LongMarginRatioByMoney  # 跟随交易所投资者多头保证金率
         TThostFtdcMoneyType LongMarginRatioByVolume  # 跟随交易所投资者多头保证金费
@@ -533,6 +552,7 @@ cdef extern from "ThostFtdcUserApiStruct.h":
         TThostFtdcMoneyType NoLongMarginRatioByVolume  # 不跟随交易所投资者多头保证金费
         TThostFtdcRatioType NoShortMarginRatioByMoney  # 不跟随交易所投资者空头保证金率
         TThostFtdcMoneyType NoShortMarginRatioByVolume  # 不跟随交易所投资者空头保证金费
+        TThostFtdcInstrumentIDType InstrumentID  # 合约代码
     cdef struct CThostFtdcExchangeRateField:  # 汇率
         TThostFtdcBrokerIDType BrokerID  # 经纪公司代码
         TThostFtdcCurrencyIDType FromCurrencyID  # 源币种
@@ -558,7 +578,7 @@ cdef extern from "ThostFtdcUserApiStruct.h":
         TThostFtdcUserIDType UserID  # 用户代码
         TThostFtdcDateType LoginDate  # 登录日期
         TThostFtdcTimeType LoginTime  # 登录时间
-        TThostFtdcIPAddressType IPAddress  # IP地址
+        TThostFtdcOldIPAddressType reserve1  # 保留的无效字段
         TThostFtdcProductInfoType UserProductInfo  # 用户端产品信息
         TThostFtdcProductInfoType InterfaceProductInfo  # 接口端产品信息
         TThostFtdcProtocolInfoType ProtocolInfo  # 协议信息
@@ -575,6 +595,7 @@ cdef extern from "ThostFtdcUserApiStruct.h":
         TThostFtdcBoolType IsQryControl  # 查询时是否需要流控
         TThostFtdcLoginRemarkType LoginRemark  # 登录备注
         TThostFtdcPasswordType Password  # 密码
+        TThostFtdcIPAddressType IPAddress  # IP地址
     cdef struct CThostFtdcLogoutAllField:  # 登录信息
         TThostFtdcFrontIDType FrontID  # 前置编号
         TThostFtdcSessionIDType SessionID  # 会话编号
@@ -592,7 +613,7 @@ cdef extern from "ThostFtdcUserApiStruct.h":
     cdef struct CThostFtdcInputOrderField:  # 输入报单
         TThostFtdcBrokerIDType BrokerID  # 经纪公司代码
         TThostFtdcInvestorIDType InvestorID  # 投资者代码
-        TThostFtdcInstrumentIDType InstrumentID  # 合约代码
+        TThostFtdcOldInstrumentIDType reserve1  # 保留的无效字段
         TThostFtdcOrderRefType OrderRef  # 报单引用
         TThostFtdcUserIDType UserID  # 用户代码
         TThostFtdcOrderPriceTypeType OrderPriceType  # 报单价格条件
@@ -618,12 +639,14 @@ cdef extern from "ThostFtdcUserApiStruct.h":
         TThostFtdcAccountIDType AccountID  # 资金账号
         TThostFtdcCurrencyIDType CurrencyID  # 币种代码
         TThostFtdcClientIDType ClientID  # 交易编码
-        TThostFtdcIPAddressType IPAddress  # IP地址
+        TThostFtdcOldIPAddressType reserve2  # 保留的无效字段
         TThostFtdcMacAddressType MacAddress  # Mac地址
+        TThostFtdcInstrumentIDType InstrumentID  # 合约代码
+        TThostFtdcIPAddressType IPAddress  # IP地址
     cdef struct CThostFtdcOrderField:  # 报单
         TThostFtdcBrokerIDType BrokerID  # 经纪公司代码
         TThostFtdcInvestorIDType InvestorID  # 投资者代码
-        TThostFtdcInstrumentIDType InstrumentID  # 合约代码
+        TThostFtdcOldInstrumentIDType reserve1  # 保留的无效字段
         TThostFtdcOrderRefType OrderRef  # 报单引用
         TThostFtdcUserIDType UserID  # 用户代码
         TThostFtdcOrderPriceTypeType OrderPriceType  # 报单价格条件
@@ -646,7 +669,7 @@ cdef extern from "ThostFtdcUserApiStruct.h":
         TThostFtdcExchangeIDType ExchangeID  # 交易所代码
         TThostFtdcParticipantIDType ParticipantID  # 会员代码
         TThostFtdcClientIDType ClientID  # 客户代码
-        TThostFtdcExchangeInstIDType ExchangeInstID  # 合约在交易所的代码
+        TThostFtdcOldExchangeInstIDType reserve2  # 保留的无效字段
         TThostFtdcTraderIDType TraderID  # 交易所交易员代码
         TThostFtdcInstallIDType InstallID  # 安装编号
         TThostFtdcOrderSubmitStatusType OrderSubmitStatus  # 报单提交状态
@@ -682,8 +705,11 @@ cdef extern from "ThostFtdcUserApiStruct.h":
         TThostFtdcInvestUnitIDType InvestUnitID  # 投资单元代码
         TThostFtdcAccountIDType AccountID  # 资金账号
         TThostFtdcCurrencyIDType CurrencyID  # 币种代码
-        TThostFtdcIPAddressType IPAddress  # IP地址
+        TThostFtdcOldIPAddressType reserve3  # 保留的无效字段
         TThostFtdcMacAddressType MacAddress  # Mac地址
+        TThostFtdcInstrumentIDType InstrumentID  # 合约代码
+        TThostFtdcExchangeInstIDType ExchangeInstID  # 合约在交易所的代码
+        TThostFtdcIPAddressType IPAddress  # IP地址
     cdef struct CThostFtdcExchangeOrderField:  # 交易所报单
         TThostFtdcOrderPriceTypeType OrderPriceType  # 报单价格条件
         TThostFtdcDirectionType Direction  # 买卖方向
@@ -705,7 +731,7 @@ cdef extern from "ThostFtdcUserApiStruct.h":
         TThostFtdcExchangeIDType ExchangeID  # 交易所代码
         TThostFtdcParticipantIDType ParticipantID  # 会员代码
         TThostFtdcClientIDType ClientID  # 客户代码
-        TThostFtdcExchangeInstIDType ExchangeInstID  # 合约在交易所的代码
+        TThostFtdcOldExchangeInstIDType reserve1  # 保留的无效字段
         TThostFtdcTraderIDType TraderID  # 交易所交易员代码
         TThostFtdcInstallIDType InstallID  # 安装编号
         TThostFtdcOrderSubmitStatusType OrderSubmitStatus  # 报单提交状态
@@ -728,8 +754,10 @@ cdef extern from "ThostFtdcUserApiStruct.h":
         TThostFtdcParticipantIDType ClearingPartID  # 结算会员编号
         TThostFtdcSequenceNoType SequenceNo  # 序号
         TThostFtdcBranchIDType BranchID  # 营业部编号
-        TThostFtdcIPAddressType IPAddress  # IP地址
+        TThostFtdcOldIPAddressType reserve2  # 保留的无效字段
         TThostFtdcMacAddressType MacAddress  # Mac地址
+        TThostFtdcExchangeInstIDType ExchangeInstID  # 合约在交易所的代码
+        TThostFtdcIPAddressType IPAddress  # IP地址
     cdef struct CThostFtdcExchangeOrderInsertErrorField:  # 交易所报单插入失败
         TThostFtdcExchangeIDType ExchangeID  # 交易所代码
         TThostFtdcParticipantIDType ParticipantID  # 会员代码
@@ -752,10 +780,12 @@ cdef extern from "ThostFtdcUserApiStruct.h":
         TThostFtdcPriceType LimitPrice  # 价格
         TThostFtdcVolumeType VolumeChange  # 数量变化
         TThostFtdcUserIDType UserID  # 用户代码
-        TThostFtdcInstrumentIDType InstrumentID  # 合约代码
+        TThostFtdcOldInstrumentIDType reserve1  # 保留的无效字段
         TThostFtdcInvestUnitIDType InvestUnitID  # 投资单元代码
-        TThostFtdcIPAddressType IPAddress  # IP地址
+        TThostFtdcOldIPAddressType reserve2  # 保留的无效字段
         TThostFtdcMacAddressType MacAddress  # Mac地址
+        TThostFtdcInstrumentIDType InstrumentID  # 合约代码
+        TThostFtdcIPAddressType IPAddress  # IP地址
     cdef struct CThostFtdcOrderActionField:  # 报单操作
         TThostFtdcBrokerIDType BrokerID  # 经纪公司代码
         TThostFtdcInvestorIDType InvestorID  # 投资者代码
@@ -781,11 +811,13 @@ cdef extern from "ThostFtdcUserApiStruct.h":
         TThostFtdcOrderActionStatusType OrderActionStatus  # 报单操作状态
         TThostFtdcUserIDType UserID  # 用户代码
         TThostFtdcErrorMsgType StatusMsg  # 状态信息
-        TThostFtdcInstrumentIDType InstrumentID  # 合约代码
+        TThostFtdcOldInstrumentIDType reserve1  # 保留的无效字段
         TThostFtdcBranchIDType BranchID  # 营业部编号
         TThostFtdcInvestUnitIDType InvestUnitID  # 投资单元代码
-        TThostFtdcIPAddressType IPAddress  # IP地址
+        TThostFtdcOldIPAddressType reserve2  # 保留的无效字段
         TThostFtdcMacAddressType MacAddress  # Mac地址
+        TThostFtdcInstrumentIDType InstrumentID  # 合约代码
+        TThostFtdcIPAddressType IPAddress  # IP地址
     cdef struct CThostFtdcExchangeOrderActionField:  # 交易所报单操作
         TThostFtdcExchangeIDType ExchangeID  # 交易所代码
         TThostFtdcOrderSysIDType OrderSysID  # 报单编号
@@ -804,8 +836,9 @@ cdef extern from "ThostFtdcUserApiStruct.h":
         TThostFtdcOrderActionStatusType OrderActionStatus  # 报单操作状态
         TThostFtdcUserIDType UserID  # 用户代码
         TThostFtdcBranchIDType BranchID  # 营业部编号
-        TThostFtdcIPAddressType IPAddress  # IP地址
+        TThostFtdcOldIPAddressType reserve1  # 保留的无效字段
         TThostFtdcMacAddressType MacAddress  # Mac地址
+        TThostFtdcIPAddressType IPAddress  # IP地址
     cdef struct CThostFtdcExchangeOrderActionErrorField:  # 交易所报单操作失败
         TThostFtdcExchangeIDType ExchangeID  # 交易所代码
         TThostFtdcOrderSysIDType OrderSysID  # 报单编号
@@ -823,7 +856,7 @@ cdef extern from "ThostFtdcUserApiStruct.h":
         TThostFtdcParticipantIDType ParticipantID  # 会员代码
         TThostFtdcClientIDType ClientID  # 客户代码
         TThostFtdcTradingRoleType TradingRole  # 交易角色
-        TThostFtdcExchangeInstIDType ExchangeInstID  # 合约在交易所的代码
+        TThostFtdcOldExchangeInstIDType reserve1  # 保留的无效字段
         TThostFtdcOffsetFlagType OffsetFlag  # 开平标志
         TThostFtdcHedgeFlagType HedgeFlag  # 投机套保标志
         TThostFtdcPriceType Price  # 价格
@@ -838,10 +871,11 @@ cdef extern from "ThostFtdcUserApiStruct.h":
         TThostFtdcBusinessUnitType BusinessUnit  # 业务单元
         TThostFtdcSequenceNoType SequenceNo  # 序号
         TThostFtdcTradeSourceType TradeSource  # 成交来源
+        TThostFtdcExchangeInstIDType ExchangeInstID  # 合约在交易所的代码
     cdef struct CThostFtdcTradeField:  # 成交
         TThostFtdcBrokerIDType BrokerID  # 经纪公司代码
         TThostFtdcInvestorIDType InvestorID  # 投资者代码
-        TThostFtdcInstrumentIDType InstrumentID  # 合约代码
+        TThostFtdcOldInstrumentIDType reserve1  # 保留的无效字段
         TThostFtdcOrderRefType OrderRef  # 报单引用
         TThostFtdcUserIDType UserID  # 用户代码
         TThostFtdcExchangeIDType ExchangeID  # 交易所代码
@@ -851,7 +885,7 @@ cdef extern from "ThostFtdcUserApiStruct.h":
         TThostFtdcParticipantIDType ParticipantID  # 会员代码
         TThostFtdcClientIDType ClientID  # 客户代码
         TThostFtdcTradingRoleType TradingRole  # 交易角色
-        TThostFtdcExchangeInstIDType ExchangeInstID  # 合约在交易所的代码
+        TThostFtdcOldExchangeInstIDType reserve2  # 保留的无效字段
         TThostFtdcOffsetFlagType OffsetFlag  # 开平标志
         TThostFtdcHedgeFlagType HedgeFlag  # 投机套保标志
         TThostFtdcPriceType Price  # 价格
@@ -870,6 +904,8 @@ cdef extern from "ThostFtdcUserApiStruct.h":
         TThostFtdcSequenceNoType BrokerOrderSeq  # 经纪公司报单编号
         TThostFtdcTradeSourceType TradeSource  # 成交来源
         TThostFtdcInvestUnitIDType InvestUnitID  # 投资单元代码
+        TThostFtdcInstrumentIDType InstrumentID  # 合约代码
+        TThostFtdcExchangeInstIDType ExchangeInstID  # 合约在交易所的代码
     cdef struct CThostFtdcUserSessionField:  # 用户会话
         TThostFtdcFrontIDType FrontID  # 前置编号
         TThostFtdcSessionIDType SessionID  # 会话编号
@@ -877,22 +913,24 @@ cdef extern from "ThostFtdcUserApiStruct.h":
         TThostFtdcUserIDType UserID  # 用户代码
         TThostFtdcDateType LoginDate  # 登录日期
         TThostFtdcTimeType LoginTime  # 登录时间
-        TThostFtdcIPAddressType IPAddress  # IP地址
+        TThostFtdcOldIPAddressType reserve1  # 保留的无效字段
         TThostFtdcProductInfoType UserProductInfo  # 用户端产品信息
         TThostFtdcProductInfoType InterfaceProductInfo  # 接口端产品信息
         TThostFtdcProtocolInfoType ProtocolInfo  # 协议信息
         TThostFtdcMacAddressType MacAddress  # Mac地址
         TThostFtdcLoginRemarkType LoginRemark  # 登录备注
-    cdef struct CThostFtdcQueryMaxOrderVolumeField:  # 查询最大报单数量
+        TThostFtdcIPAddressType IPAddress  # IP地址
+    cdef struct CThostFtdcQryMaxOrderVolumeField:  # 查询最大报单数量
         TThostFtdcBrokerIDType BrokerID  # 经纪公司代码
         TThostFtdcInvestorIDType InvestorID  # 投资者代码
-        TThostFtdcInstrumentIDType InstrumentID  # 合约代码
+        TThostFtdcOldInstrumentIDType reserve1  # 保留的无效字段
         TThostFtdcDirectionType Direction  # 买卖方向
         TThostFtdcOffsetFlagType OffsetFlag  # 开平标志
         TThostFtdcHedgeFlagType HedgeFlag  # 投机套保标志
         TThostFtdcVolumeType MaxVolume  # 最大允许报单数量
         TThostFtdcExchangeIDType ExchangeID  # 交易所代码
         TThostFtdcInvestUnitIDType InvestUnitID  # 投资单元代码
+        TThostFtdcInstrumentIDType InstrumentID  # 合约代码
     cdef struct CThostFtdcSettlementInfoConfirmField:  # 投资者结算结果确认信息
         TThostFtdcBrokerIDType BrokerID  # 经纪公司代码
         TThostFtdcInvestorIDType InvestorID  # 投资者代码
@@ -992,7 +1030,7 @@ cdef extern from "ThostFtdcUserApiStruct.h":
         TThostFtdcMoneyType FrozenSwap  # 延时换汇冻结金额
         TThostFtdcMoneyType RemainSwap  # 剩余换汇额度
     cdef struct CThostFtdcSyncingInvestorPositionField:  # 正在同步中的投资者持仓
-        TThostFtdcInstrumentIDType InstrumentID  # 合约代码
+        TThostFtdcOldInstrumentIDType reserve1  # 保留的无效字段
         TThostFtdcBrokerIDType BrokerID  # 经纪公司代码
         TThostFtdcInvestorIDType InvestorID  # 投资者代码
         TThostFtdcPosiDirectionType PosiDirection  # 持仓多空方向
@@ -1039,8 +1077,11 @@ cdef extern from "ThostFtdcUserApiStruct.h":
         TThostFtdcVolumeType YdStrikeFrozen  # 执行冻结的昨仓
         TThostFtdcInvestUnitIDType InvestUnitID  # 投资单元代码
         TThostFtdcMoneyType PositionCostOffset  # 大商所持仓成本差值，只有大商所使用
-    cdef struct CThostFtdcSyncingInstrumentMarginRateField:  # 正在同步中的合约保证金率
+        TThostFtdcVolumeType TasPosition  # tas持仓手数
+        TThostFtdcMoneyType TasPositionCost  # tas持仓成本
         TThostFtdcInstrumentIDType InstrumentID  # 合约代码
+    cdef struct CThostFtdcSyncingInstrumentMarginRateField:  # 正在同步中的合约保证金率
+        TThostFtdcOldInstrumentIDType reserve1  # 保留的无效字段
         TThostFtdcInvestorRangeType InvestorRange  # 投资者范围
         TThostFtdcBrokerIDType BrokerID  # 经纪公司代码
         TThostFtdcInvestorIDType InvestorID  # 投资者代码
@@ -1050,8 +1091,9 @@ cdef extern from "ThostFtdcUserApiStruct.h":
         TThostFtdcRatioType ShortMarginRatioByMoney  # 空头保证金率
         TThostFtdcMoneyType ShortMarginRatioByVolume  # 空头保证金费
         TThostFtdcBoolType IsRelative  # 是否相对交易所收取
-    cdef struct CThostFtdcSyncingInstrumentCommissionRateField:  # 正在同步中的合约手续费率
         TThostFtdcInstrumentIDType InstrumentID  # 合约代码
+    cdef struct CThostFtdcSyncingInstrumentCommissionRateField:  # 正在同步中的合约手续费率
+        TThostFtdcOldInstrumentIDType reserve1  # 保留的无效字段
         TThostFtdcInvestorRangeType InvestorRange  # 投资者范围
         TThostFtdcBrokerIDType BrokerID  # 经纪公司代码
         TThostFtdcInvestorIDType InvestorID  # 投资者代码
@@ -1061,36 +1103,41 @@ cdef extern from "ThostFtdcUserApiStruct.h":
         TThostFtdcRatioType CloseRatioByVolume  # 平仓手续费
         TThostFtdcRatioType CloseTodayRatioByMoney  # 平今手续费率
         TThostFtdcRatioType CloseTodayRatioByVolume  # 平今手续费
-    cdef struct CThostFtdcSyncingInstrumentTradingRightField:  # 正在同步中的合约交易权限
         TThostFtdcInstrumentIDType InstrumentID  # 合约代码
+    cdef struct CThostFtdcSyncingInstrumentTradingRightField:  # 正在同步中的合约交易权限
+        TThostFtdcOldInstrumentIDType reserve1  # 保留的无效字段
         TThostFtdcInvestorRangeType InvestorRange  # 投资者范围
         TThostFtdcBrokerIDType BrokerID  # 经纪公司代码
         TThostFtdcInvestorIDType InvestorID  # 投资者代码
         TThostFtdcTradingRightType TradingRight  # 交易权限
+        TThostFtdcInstrumentIDType InstrumentID  # 合约代码
     cdef struct CThostFtdcQryOrderField:  # 查询报单
         TThostFtdcBrokerIDType BrokerID  # 经纪公司代码
         TThostFtdcInvestorIDType InvestorID  # 投资者代码
-        TThostFtdcInstrumentIDType InstrumentID  # 合约代码
+        TThostFtdcOldInstrumentIDType reserve1  # 保留的无效字段
         TThostFtdcExchangeIDType ExchangeID  # 交易所代码
         TThostFtdcOrderSysIDType OrderSysID  # 报单编号
         TThostFtdcTimeType InsertTimeStart  # 开始时间
         TThostFtdcTimeType InsertTimeEnd  # 结束时间
         TThostFtdcInvestUnitIDType InvestUnitID  # 投资单元代码
+        TThostFtdcInstrumentIDType InstrumentID  # 合约代码
     cdef struct CThostFtdcQryTradeField:  # 查询成交
         TThostFtdcBrokerIDType BrokerID  # 经纪公司代码
         TThostFtdcInvestorIDType InvestorID  # 投资者代码
-        TThostFtdcInstrumentIDType InstrumentID  # 合约代码
+        TThostFtdcOldInstrumentIDType reserve1  # 保留的无效字段
         TThostFtdcExchangeIDType ExchangeID  # 交易所代码
         TThostFtdcTradeIDType TradeID  # 成交编号
         TThostFtdcTimeType TradeTimeStart  # 开始时间
         TThostFtdcTimeType TradeTimeEnd  # 结束时间
         TThostFtdcInvestUnitIDType InvestUnitID  # 投资单元代码
+        TThostFtdcInstrumentIDType InstrumentID  # 合约代码
     cdef struct CThostFtdcQryInvestorPositionField:  # 查询投资者持仓
         TThostFtdcBrokerIDType BrokerID  # 经纪公司代码
         TThostFtdcInvestorIDType InvestorID  # 投资者代码
-        TThostFtdcInstrumentIDType InstrumentID  # 合约代码
+        TThostFtdcOldInstrumentIDType reserve1  # 保留的无效字段
         TThostFtdcExchangeIDType ExchangeID  # 交易所代码
         TThostFtdcInvestUnitIDType InvestUnitID  # 投资单元代码
+        TThostFtdcInstrumentIDType InstrumentID  # 合约代码
     cdef struct CThostFtdcQryTradingAccountField:  # 查询资金账户
         TThostFtdcBrokerIDType BrokerID  # 经纪公司代码
         TThostFtdcInvestorIDType InvestorID  # 投资者代码
@@ -1112,19 +1159,22 @@ cdef extern from "ThostFtdcUserApiStruct.h":
     cdef struct CThostFtdcQryInstrumentMarginRateField:  # 查询合约保证金率
         TThostFtdcBrokerIDType BrokerID  # 经纪公司代码
         TThostFtdcInvestorIDType InvestorID  # 投资者代码
-        TThostFtdcInstrumentIDType InstrumentID  # 合约代码
+        TThostFtdcOldInstrumentIDType reserve1  # 保留的无效字段
         TThostFtdcHedgeFlagType HedgeFlag  # 投机套保标志
         TThostFtdcExchangeIDType ExchangeID  # 交易所代码
         TThostFtdcInvestUnitIDType InvestUnitID  # 投资单元代码
+        TThostFtdcInstrumentIDType InstrumentID  # 合约代码
     cdef struct CThostFtdcQryInstrumentCommissionRateField:  # 查询手续费率
         TThostFtdcBrokerIDType BrokerID  # 经纪公司代码
         TThostFtdcInvestorIDType InvestorID  # 投资者代码
-        TThostFtdcInstrumentIDType InstrumentID  # 合约代码
+        TThostFtdcOldInstrumentIDType reserve1  # 保留的无效字段
         TThostFtdcExchangeIDType ExchangeID  # 交易所代码
         TThostFtdcInvestUnitIDType InvestUnitID  # 投资单元代码
+        TThostFtdcInstrumentIDType InstrumentID  # 合约代码
     cdef struct CThostFtdcQryInstrumentTradingRightField:  # 查询合约交易权限
         TThostFtdcBrokerIDType BrokerID  # 经纪公司代码
         TThostFtdcInvestorIDType InvestorID  # 投资者代码
+        TThostFtdcOldInstrumentIDType reserve1  # 保留的无效字段
         TThostFtdcInstrumentIDType InstrumentID  # 合约代码
     cdef struct CThostFtdcQryBrokerField:  # 查询经纪公司
         TThostFtdcBrokerIDType BrokerID  # 经纪公司代码
@@ -1148,9 +1198,10 @@ cdef extern from "ThostFtdcUserApiStruct.h":
     cdef struct CThostFtdcQryExchangeOrderField:  # 查询交易所报单
         TThostFtdcParticipantIDType ParticipantID  # 会员代码
         TThostFtdcClientIDType ClientID  # 客户代码
-        TThostFtdcExchangeInstIDType ExchangeInstID  # 合约在交易所的代码
+        TThostFtdcOldExchangeInstIDType reserve1  # 保留的无效字段
         TThostFtdcExchangeIDType ExchangeID  # 交易所代码
         TThostFtdcTraderIDType TraderID  # 交易所交易员代码
+        TThostFtdcExchangeInstIDType ExchangeInstID  # 合约在交易所的代码
     cdef struct CThostFtdcQryOrderActionField:  # 查询报单操作
         TThostFtdcBrokerIDType BrokerID  # 经纪公司代码
         TThostFtdcInvestorIDType InvestorID  # 投资者代码
@@ -1165,17 +1216,22 @@ cdef extern from "ThostFtdcUserApiStruct.h":
     cdef struct CThostFtdcQryExchangeField:  # 查询交易所
         TThostFtdcExchangeIDType ExchangeID  # 交易所代码
     cdef struct CThostFtdcQryProductField:  # 查询产品
-        TThostFtdcInstrumentIDType ProductID  # 产品代码
+        TThostFtdcOldInstrumentIDType reserve1  # 保留的无效字段
         TThostFtdcProductClassType ProductClass  # 产品类型
         TThostFtdcExchangeIDType ExchangeID  # 交易所代码
+        TThostFtdcInstrumentIDType ProductID  # 产品代码
     cdef struct CThostFtdcQryInstrumentField:  # 查询合约
-        TThostFtdcInstrumentIDType InstrumentID  # 合约代码
+        TThostFtdcOldInstrumentIDType reserve1  # 保留的无效字段
         TThostFtdcExchangeIDType ExchangeID  # 交易所代码
+        TThostFtdcOldExchangeInstIDType reserve2  # 保留的无效字段
+        TThostFtdcOldInstrumentIDType reserve3  # 保留的无效字段
+        TThostFtdcInstrumentIDType InstrumentID  # 合约代码
         TThostFtdcExchangeInstIDType ExchangeInstID  # 合约在交易所的代码
         TThostFtdcInstrumentIDType ProductID  # 产品代码
     cdef struct CThostFtdcQryDepthMarketDataField:  # 查询行情
-        TThostFtdcInstrumentIDType InstrumentID  # 合约代码
+        TThostFtdcOldInstrumentIDType reserve1  # 保留的无效字段
         TThostFtdcExchangeIDType ExchangeID  # 交易所代码
+        TThostFtdcInstrumentIDType InstrumentID  # 合约代码
     cdef struct CThostFtdcQryBrokerUserField:  # 查询经纪公司用户
         TThostFtdcBrokerIDType BrokerID  # 经纪公司代码
         TThostFtdcUserIDType UserID  # 用户代码
@@ -1197,13 +1253,15 @@ cdef extern from "ThostFtdcUserApiStruct.h":
         TThostFtdcCurrencyIDType CurrencyID  # 币种代码
     cdef struct CThostFtdcQryExchangeMarginRateField:  # 查询交易所保证金率
         TThostFtdcBrokerIDType BrokerID  # 经纪公司代码
-        TThostFtdcInstrumentIDType InstrumentID  # 合约代码
+        TThostFtdcOldInstrumentIDType reserve1  # 保留的无效字段
         TThostFtdcHedgeFlagType HedgeFlag  # 投机套保标志
         TThostFtdcExchangeIDType ExchangeID  # 交易所代码
+        TThostFtdcInstrumentIDType InstrumentID  # 合约代码
     cdef struct CThostFtdcQryExchangeMarginRateAdjustField:  # 查询交易所调整保证金率
         TThostFtdcBrokerIDType BrokerID  # 经纪公司代码
-        TThostFtdcInstrumentIDType InstrumentID  # 合约代码
+        TThostFtdcOldInstrumentIDType reserve1  # 保留的无效字段
         TThostFtdcHedgeFlagType HedgeFlag  # 投机套保标志
+        TThostFtdcInstrumentIDType InstrumentID  # 合约代码
     cdef struct CThostFtdcQryExchangeRateField:  # 查询汇率
         TThostFtdcBrokerIDType BrokerID  # 经纪公司代码
         TThostFtdcCurrencyIDType FromCurrencyID  # 源币种
@@ -1214,23 +1272,25 @@ cdef extern from "ThostFtdcUserApiStruct.h":
     cdef struct CThostFtdcQryHisOrderField:  # 查询报单
         TThostFtdcBrokerIDType BrokerID  # 经纪公司代码
         TThostFtdcInvestorIDType InvestorID  # 投资者代码
-        TThostFtdcInstrumentIDType InstrumentID  # 合约代码
+        TThostFtdcOldInstrumentIDType reserve1  # 保留的无效字段
         TThostFtdcExchangeIDType ExchangeID  # 交易所代码
         TThostFtdcOrderSysIDType OrderSysID  # 报单编号
         TThostFtdcTimeType InsertTimeStart  # 开始时间
         TThostFtdcTimeType InsertTimeEnd  # 结束时间
         TThostFtdcDateType TradingDay  # 交易日
         TThostFtdcSettlementIDType SettlementID  # 结算编号
-    cdef struct CThostFtdcOptionInstrMiniMarginField:  # 当前期权合约最小保证金
         TThostFtdcInstrumentIDType InstrumentID  # 合约代码
+    cdef struct CThostFtdcOptionInstrMiniMarginField:  # 当前期权合约最小保证金
+        TThostFtdcOldInstrumentIDType reserve1  # 保留的无效字段
         TThostFtdcInvestorRangeType InvestorRange  # 投资者范围
         TThostFtdcBrokerIDType BrokerID  # 经纪公司代码
         TThostFtdcInvestorIDType InvestorID  # 投资者代码
         TThostFtdcMoneyType MinMargin  # 单位（手）期权合约最小保证金
         TThostFtdcValueMethodType ValueMethod  # 取值方式
         TThostFtdcBoolType IsRelative  # 是否跟随交易所收取
-    cdef struct CThostFtdcOptionInstrMarginAdjustField:  # 当前期权合约保证金调整系数
         TThostFtdcInstrumentIDType InstrumentID  # 合约代码
+    cdef struct CThostFtdcOptionInstrMarginAdjustField:  # 当前期权合约保证金调整系数
+        TThostFtdcOldInstrumentIDType reserve1  # 保留的无效字段
         TThostFtdcInvestorRangeType InvestorRange  # 投资者范围
         TThostFtdcBrokerIDType BrokerID  # 经纪公司代码
         TThostFtdcInvestorIDType InvestorID  # 投资者代码
@@ -1243,8 +1303,9 @@ cdef extern from "ThostFtdcUserApiStruct.h":
         TThostFtdcBoolType IsRelative  # 是否跟随交易所收取
         TThostFtdcRatioType MShortMarginRatioByMoney  # 做市商空头保证金调整系数
         TThostFtdcMoneyType MShortMarginRatioByVolume  # 做市商空头保证金调整系数
-    cdef struct CThostFtdcOptionInstrCommRateField:  # 当前期权合约手续费的详细内容
         TThostFtdcInstrumentIDType InstrumentID  # 合约代码
+    cdef struct CThostFtdcOptionInstrCommRateField:  # 当前期权合约手续费的详细内容
+        TThostFtdcOldInstrumentIDType reserve1  # 保留的无效字段
         TThostFtdcInvestorRangeType InvestorRange  # 投资者范围
         TThostFtdcBrokerIDType BrokerID  # 经纪公司代码
         TThostFtdcInvestorIDType InvestorID  # 投资者代码
@@ -1258,10 +1319,11 @@ cdef extern from "ThostFtdcUserApiStruct.h":
         TThostFtdcRatioType StrikeRatioByVolume  # 执行手续费
         TThostFtdcExchangeIDType ExchangeID  # 交易所代码
         TThostFtdcInvestUnitIDType InvestUnitID  # 投资单元代码
+        TThostFtdcInstrumentIDType InstrumentID  # 合约代码
     cdef struct CThostFtdcOptionInstrTradeCostField:  # 期权交易成本
         TThostFtdcBrokerIDType BrokerID  # 经纪公司代码
         TThostFtdcInvestorIDType InvestorID  # 投资者代码
-        TThostFtdcInstrumentIDType InstrumentID  # 合约代码
+        TThostFtdcOldInstrumentIDType reserve1  # 保留的无效字段
         TThostFtdcHedgeFlagType HedgeFlag  # 投机套保标志
         TThostFtdcMoneyType FixedMargin  # 期权合约保证金不变部分
         TThostFtdcMoneyType MiniMargin  # 期权合约最小保证金
@@ -1270,29 +1332,33 @@ cdef extern from "ThostFtdcUserApiStruct.h":
         TThostFtdcMoneyType ExchMiniMargin  # 交易所期权合约最小保证金
         TThostFtdcExchangeIDType ExchangeID  # 交易所代码
         TThostFtdcInvestUnitIDType InvestUnitID  # 投资单元代码
+        TThostFtdcInstrumentIDType InstrumentID  # 合约代码
     cdef struct CThostFtdcQryOptionInstrTradeCostField:  # 期权交易成本查询
         TThostFtdcBrokerIDType BrokerID  # 经纪公司代码
         TThostFtdcInvestorIDType InvestorID  # 投资者代码
-        TThostFtdcInstrumentIDType InstrumentID  # 合约代码
+        TThostFtdcOldInstrumentIDType reserve1  # 保留的无效字段
         TThostFtdcHedgeFlagType HedgeFlag  # 投机套保标志
         TThostFtdcPriceType InputPrice  # 期权合约报价
         TThostFtdcPriceType UnderlyingPrice  # 标的价格,填0则用昨结算价
         TThostFtdcExchangeIDType ExchangeID  # 交易所代码
         TThostFtdcInvestUnitIDType InvestUnitID  # 投资单元代码
+        TThostFtdcInstrumentIDType InstrumentID  # 合约代码
     cdef struct CThostFtdcQryOptionInstrCommRateField:  # 期权手续费率查询
         TThostFtdcBrokerIDType BrokerID  # 经纪公司代码
         TThostFtdcInvestorIDType InvestorID  # 投资者代码
-        TThostFtdcInstrumentIDType InstrumentID  # 合约代码
+        TThostFtdcOldInstrumentIDType reserve1  # 保留的无效字段
         TThostFtdcExchangeIDType ExchangeID  # 交易所代码
         TThostFtdcInvestUnitIDType InvestUnitID  # 投资单元代码
+        TThostFtdcInstrumentIDType InstrumentID  # 合约代码
     cdef struct CThostFtdcIndexPriceField:  # 股指现货指数
         TThostFtdcBrokerIDType BrokerID  # 经纪公司代码
-        TThostFtdcInstrumentIDType InstrumentID  # 合约代码
+        TThostFtdcOldInstrumentIDType reserve1  # 保留的无效字段
         TThostFtdcPriceType ClosePrice  # 指数现货收盘价
+        TThostFtdcInstrumentIDType InstrumentID  # 合约代码
     cdef struct CThostFtdcInputExecOrderField:  # 输入的执行宣告
         TThostFtdcBrokerIDType BrokerID  # 经纪公司代码
         TThostFtdcInvestorIDType InvestorID  # 投资者代码
-        TThostFtdcInstrumentIDType InstrumentID  # 合约代码
+        TThostFtdcOldInstrumentIDType reserve1  # 保留的无效字段
         TThostFtdcOrderRefType ExecOrderRef  # 执行宣告引用
         TThostFtdcUserIDType UserID  # 用户代码
         TThostFtdcVolumeType Volume  # 数量
@@ -1309,8 +1375,10 @@ cdef extern from "ThostFtdcUserApiStruct.h":
         TThostFtdcAccountIDType AccountID  # 资金账号
         TThostFtdcCurrencyIDType CurrencyID  # 币种代码
         TThostFtdcClientIDType ClientID  # 交易编码
-        TThostFtdcIPAddressType IPAddress  # IP地址
+        TThostFtdcOldIPAddressType reserve2  # 保留的无效字段
         TThostFtdcMacAddressType MacAddress  # Mac地址
+        TThostFtdcInstrumentIDType InstrumentID  # 合约代码
+        TThostFtdcIPAddressType IPAddress  # IP地址
     cdef struct CThostFtdcInputExecOrderActionField:  # 输入执行宣告操作
         TThostFtdcBrokerIDType BrokerID  # 经纪公司代码
         TThostFtdcInvestorIDType InvestorID  # 投资者代码
@@ -1323,14 +1391,16 @@ cdef extern from "ThostFtdcUserApiStruct.h":
         TThostFtdcExecOrderSysIDType ExecOrderSysID  # 执行宣告操作编号
         TThostFtdcActionFlagType ActionFlag  # 操作标志
         TThostFtdcUserIDType UserID  # 用户代码
-        TThostFtdcInstrumentIDType InstrumentID  # 合约代码
+        TThostFtdcOldInstrumentIDType reserve1  # 保留的无效字段
         TThostFtdcInvestUnitIDType InvestUnitID  # 投资单元代码
-        TThostFtdcIPAddressType IPAddress  # IP地址
+        TThostFtdcOldIPAddressType reserve2  # 保留的无效字段
         TThostFtdcMacAddressType MacAddress  # Mac地址
+        TThostFtdcInstrumentIDType InstrumentID  # 合约代码
+        TThostFtdcIPAddressType IPAddress  # IP地址
     cdef struct CThostFtdcExecOrderField:  # 执行宣告
         TThostFtdcBrokerIDType BrokerID  # 经纪公司代码
         TThostFtdcInvestorIDType InvestorID  # 投资者代码
-        TThostFtdcInstrumentIDType InstrumentID  # 合约代码
+        TThostFtdcOldInstrumentIDType reserve1  # 保留的无效字段
         TThostFtdcOrderRefType ExecOrderRef  # 执行宣告引用
         TThostFtdcUserIDType UserID  # 用户代码
         TThostFtdcVolumeType Volume  # 数量
@@ -1346,7 +1416,7 @@ cdef extern from "ThostFtdcUserApiStruct.h":
         TThostFtdcExchangeIDType ExchangeID  # 交易所代码
         TThostFtdcParticipantIDType ParticipantID  # 会员代码
         TThostFtdcClientIDType ClientID  # 客户代码
-        TThostFtdcExchangeInstIDType ExchangeInstID  # 合约在交易所的代码
+        TThostFtdcOldExchangeInstIDType reserve2  # 保留的无效字段
         TThostFtdcTraderIDType TraderID  # 交易所交易员代码
         TThostFtdcInstallIDType InstallID  # 安装编号
         TThostFtdcOrderSubmitStatusType OrderSubmitStatus  # 执行宣告提交状态
@@ -1370,8 +1440,11 @@ cdef extern from "ThostFtdcUserApiStruct.h":
         TThostFtdcInvestUnitIDType InvestUnitID  # 投资单元代码
         TThostFtdcAccountIDType AccountID  # 资金账号
         TThostFtdcCurrencyIDType CurrencyID  # 币种代码
-        TThostFtdcIPAddressType IPAddress  # IP地址
+        TThostFtdcOldIPAddressType reserve3  # 保留的无效字段
         TThostFtdcMacAddressType MacAddress  # Mac地址
+        TThostFtdcInstrumentIDType InstrumentID  # 合约代码
+        TThostFtdcExchangeInstIDType ExchangeInstID  # 合约在交易所的代码
+        TThostFtdcIPAddressType IPAddress  # IP地址
     cdef struct CThostFtdcExecOrderActionField:  # 执行宣告操作
         TThostFtdcBrokerIDType BrokerID  # 经纪公司代码
         TThostFtdcInvestorIDType InvestorID  # 投资者代码
@@ -1396,19 +1469,22 @@ cdef extern from "ThostFtdcUserApiStruct.h":
         TThostFtdcUserIDType UserID  # 用户代码
         TThostFtdcActionTypeType ActionType  # 执行类型
         TThostFtdcErrorMsgType StatusMsg  # 状态信息
-        TThostFtdcInstrumentIDType InstrumentID  # 合约代码
+        TThostFtdcOldInstrumentIDType reserve1  # 保留的无效字段
         TThostFtdcBranchIDType BranchID  # 营业部编号
         TThostFtdcInvestUnitIDType InvestUnitID  # 投资单元代码
-        TThostFtdcIPAddressType IPAddress  # IP地址
+        TThostFtdcOldIPAddressType reserve2  # 保留的无效字段
         TThostFtdcMacAddressType MacAddress  # Mac地址
+        TThostFtdcInstrumentIDType InstrumentID  # 合约代码
+        TThostFtdcIPAddressType IPAddress  # IP地址
     cdef struct CThostFtdcQryExecOrderField:  # 执行宣告查询
         TThostFtdcBrokerIDType BrokerID  # 经纪公司代码
         TThostFtdcInvestorIDType InvestorID  # 投资者代码
-        TThostFtdcInstrumentIDType InstrumentID  # 合约代码
+        TThostFtdcOldInstrumentIDType reserve1  # 保留的无效字段
         TThostFtdcExchangeIDType ExchangeID  # 交易所代码
         TThostFtdcExecOrderSysIDType ExecOrderSysID  # 执行宣告编号
         TThostFtdcTimeType InsertTimeStart  # 开始时间
         TThostFtdcTimeType InsertTimeEnd  # 结束时间
+        TThostFtdcInstrumentIDType InstrumentID  # 合约代码
     cdef struct CThostFtdcExchangeExecOrderField:  # 交易所执行宣告信息
         TThostFtdcVolumeType Volume  # 数量
         TThostFtdcRequestIDType RequestID  # 请求编号
@@ -1423,7 +1499,7 @@ cdef extern from "ThostFtdcUserApiStruct.h":
         TThostFtdcExchangeIDType ExchangeID  # 交易所代码
         TThostFtdcParticipantIDType ParticipantID  # 会员代码
         TThostFtdcClientIDType ClientID  # 客户代码
-        TThostFtdcExchangeInstIDType ExchangeInstID  # 合约在交易所的代码
+        TThostFtdcOldExchangeInstIDType reserve1  # 保留的无效字段
         TThostFtdcTraderIDType TraderID  # 交易所交易员代码
         TThostFtdcInstallIDType InstallID  # 安装编号
         TThostFtdcOrderSubmitStatusType OrderSubmitStatus  # 执行宣告提交状态
@@ -1438,14 +1514,17 @@ cdef extern from "ThostFtdcUserApiStruct.h":
         TThostFtdcParticipantIDType ClearingPartID  # 结算会员编号
         TThostFtdcSequenceNoType SequenceNo  # 序号
         TThostFtdcBranchIDType BranchID  # 营业部编号
-        TThostFtdcIPAddressType IPAddress  # IP地址
+        TThostFtdcOldIPAddressType reserve2  # 保留的无效字段
         TThostFtdcMacAddressType MacAddress  # Mac地址
+        TThostFtdcExchangeInstIDType ExchangeInstID  # 合约在交易所的代码
+        TThostFtdcIPAddressType IPAddress  # IP地址
     cdef struct CThostFtdcQryExchangeExecOrderField:  # 交易所执行宣告查询
         TThostFtdcParticipantIDType ParticipantID  # 会员代码
         TThostFtdcClientIDType ClientID  # 客户代码
-        TThostFtdcExchangeInstIDType ExchangeInstID  # 合约在交易所的代码
+        TThostFtdcOldExchangeInstIDType reserve1  # 保留的无效字段
         TThostFtdcExchangeIDType ExchangeID  # 交易所代码
         TThostFtdcTraderIDType TraderID  # 交易所交易员代码
+        TThostFtdcExchangeInstIDType ExchangeInstID  # 合约在交易所的代码
     cdef struct CThostFtdcQryExecOrderActionField:  # 执行宣告操作查询
         TThostFtdcBrokerIDType BrokerID  # 经纪公司代码
         TThostFtdcInvestorIDType InvestorID  # 投资者代码
@@ -1467,10 +1546,12 @@ cdef extern from "ThostFtdcUserApiStruct.h":
         TThostFtdcUserIDType UserID  # 用户代码
         TThostFtdcActionTypeType ActionType  # 执行类型
         TThostFtdcBranchIDType BranchID  # 营业部编号
-        TThostFtdcIPAddressType IPAddress  # IP地址
+        TThostFtdcOldIPAddressType reserve1  # 保留的无效字段
         TThostFtdcMacAddressType MacAddress  # Mac地址
-        TThostFtdcExchangeInstIDType ExchangeInstID  # 合约在交易所的代码
+        TThostFtdcOldExchangeInstIDType reserve2  # 保留的无效字段
         TThostFtdcVolumeType Volume  # 数量
+        TThostFtdcIPAddressType IPAddress  # IP地址
+        TThostFtdcExchangeInstIDType ExchangeInstID  # 合约在交易所的代码
     cdef struct CThostFtdcQryExchangeExecOrderActionField:  # 交易所执行宣告操作查询
         TThostFtdcParticipantIDType ParticipantID  # 会员代码
         TThostFtdcClientIDType ClientID  # 客户代码
@@ -1479,7 +1560,7 @@ cdef extern from "ThostFtdcUserApiStruct.h":
     cdef struct CThostFtdcErrExecOrderField:  # 错误执行宣告
         TThostFtdcBrokerIDType BrokerID  # 经纪公司代码
         TThostFtdcInvestorIDType InvestorID  # 投资者代码
-        TThostFtdcInstrumentIDType InstrumentID  # 合约代码
+        TThostFtdcOldInstrumentIDType reserve1  # 保留的无效字段
         TThostFtdcOrderRefType ExecOrderRef  # 执行宣告引用
         TThostFtdcUserIDType UserID  # 用户代码
         TThostFtdcVolumeType Volume  # 数量
@@ -1496,10 +1577,12 @@ cdef extern from "ThostFtdcUserApiStruct.h":
         TThostFtdcAccountIDType AccountID  # 资金账号
         TThostFtdcCurrencyIDType CurrencyID  # 币种代码
         TThostFtdcClientIDType ClientID  # 交易编码
-        TThostFtdcIPAddressType IPAddress  # IP地址
+        TThostFtdcOldIPAddressType reserve2  # 保留的无效字段
         TThostFtdcMacAddressType MacAddress  # Mac地址
         TThostFtdcErrorIDType ErrorID  # 错误代码
         TThostFtdcErrorMsgType ErrorMsg  # 错误信息
+        TThostFtdcInstrumentIDType InstrumentID  # 合约代码
+        TThostFtdcIPAddressType IPAddress  # IP地址
     cdef struct CThostFtdcQryErrExecOrderField:  # 查询错误执行宣告
         TThostFtdcBrokerIDType BrokerID  # 经纪公司代码
         TThostFtdcInvestorIDType InvestorID  # 投资者代码
@@ -1515,48 +1598,54 @@ cdef extern from "ThostFtdcUserApiStruct.h":
         TThostFtdcExecOrderSysIDType ExecOrderSysID  # 执行宣告操作编号
         TThostFtdcActionFlagType ActionFlag  # 操作标志
         TThostFtdcUserIDType UserID  # 用户代码
-        TThostFtdcInstrumentIDType InstrumentID  # 合约代码
+        TThostFtdcOldInstrumentIDType reserve1  # 保留的无效字段
         TThostFtdcInvestUnitIDType InvestUnitID  # 投资单元代码
-        TThostFtdcIPAddressType IPAddress  # IP地址
+        TThostFtdcOldIPAddressType reserve2  # 保留的无效字段
         TThostFtdcMacAddressType MacAddress  # Mac地址
         TThostFtdcErrorIDType ErrorID  # 错误代码
         TThostFtdcErrorMsgType ErrorMsg  # 错误信息
+        TThostFtdcInstrumentIDType InstrumentID  # 合约代码
+        TThostFtdcIPAddressType IPAddress  # IP地址
     cdef struct CThostFtdcQryErrExecOrderActionField:  # 查询错误执行宣告操作
         TThostFtdcBrokerIDType BrokerID  # 经纪公司代码
         TThostFtdcInvestorIDType InvestorID  # 投资者代码
     cdef struct CThostFtdcOptionInstrTradingRightField:  # 投资者期权合约交易权限
-        TThostFtdcInstrumentIDType InstrumentID  # 合约代码
+        TThostFtdcOldInstrumentIDType reserve1  # 保留的无效字段
         TThostFtdcInvestorRangeType InvestorRange  # 投资者范围
         TThostFtdcBrokerIDType BrokerID  # 经纪公司代码
         TThostFtdcInvestorIDType InvestorID  # 投资者代码
         TThostFtdcDirectionType Direction  # 买卖方向
         TThostFtdcTradingRightType TradingRight  # 交易权限
+        TThostFtdcInstrumentIDType InstrumentID  # 合约代码
     cdef struct CThostFtdcQryOptionInstrTradingRightField:  # 查询期权合约交易权限
         TThostFtdcBrokerIDType BrokerID  # 经纪公司代码
         TThostFtdcInvestorIDType InvestorID  # 投资者代码
-        TThostFtdcInstrumentIDType InstrumentID  # 合约代码
+        TThostFtdcOldInstrumentIDType reserve1  # 保留的无效字段
         TThostFtdcDirectionType Direction  # 买卖方向
+        TThostFtdcInstrumentIDType InstrumentID  # 合约代码
     cdef struct CThostFtdcInputForQuoteField:  # 输入的询价
         TThostFtdcBrokerIDType BrokerID  # 经纪公司代码
         TThostFtdcInvestorIDType InvestorID  # 投资者代码
-        TThostFtdcInstrumentIDType InstrumentID  # 合约代码
+        TThostFtdcOldInstrumentIDType reserve1  # 保留的无效字段
         TThostFtdcOrderRefType ForQuoteRef  # 询价引用
         TThostFtdcUserIDType UserID  # 用户代码
         TThostFtdcExchangeIDType ExchangeID  # 交易所代码
         TThostFtdcInvestUnitIDType InvestUnitID  # 投资单元代码
-        TThostFtdcIPAddressType IPAddress  # IP地址
+        TThostFtdcOldIPAddressType reserve2  # 保留的无效字段
         TThostFtdcMacAddressType MacAddress  # Mac地址
+        TThostFtdcInstrumentIDType InstrumentID  # 合约代码
+        TThostFtdcIPAddressType IPAddress  # IP地址
     cdef struct CThostFtdcForQuoteField:  # 询价
         TThostFtdcBrokerIDType BrokerID  # 经纪公司代码
         TThostFtdcInvestorIDType InvestorID  # 投资者代码
-        TThostFtdcInstrumentIDType InstrumentID  # 合约代码
+        TThostFtdcOldInstrumentIDType reserve1  # 保留的无效字段
         TThostFtdcOrderRefType ForQuoteRef  # 询价引用
         TThostFtdcUserIDType UserID  # 用户代码
         TThostFtdcOrderLocalIDType ForQuoteLocalID  # 本地询价编号
         TThostFtdcExchangeIDType ExchangeID  # 交易所代码
         TThostFtdcParticipantIDType ParticipantID  # 会员代码
         TThostFtdcClientIDType ClientID  # 客户代码
-        TThostFtdcExchangeInstIDType ExchangeInstID  # 合约在交易所的代码
+        TThostFtdcOldExchangeInstIDType reserve2  # 保留的无效字段
         TThostFtdcTraderIDType TraderID  # 交易所交易员代码
         TThostFtdcInstallIDType InstallID  # 安装编号
         TThostFtdcDateType InsertDate  # 报单日期
@@ -1568,39 +1657,46 @@ cdef extern from "ThostFtdcUserApiStruct.h":
         TThostFtdcUserIDType ActiveUserID  # 操作用户代码
         TThostFtdcSequenceNoType BrokerForQutoSeq  # 经纪公司询价编号
         TThostFtdcInvestUnitIDType InvestUnitID  # 投资单元代码
-        TThostFtdcIPAddressType IPAddress  # IP地址
+        TThostFtdcOldIPAddressType reserve3  # 保留的无效字段
         TThostFtdcMacAddressType MacAddress  # Mac地址
+        TThostFtdcInstrumentIDType InstrumentID  # 合约代码
+        TThostFtdcExchangeInstIDType ExchangeInstID  # 合约在交易所的代码
+        TThostFtdcIPAddressType IPAddress  # IP地址
     cdef struct CThostFtdcQryForQuoteField:  # 询价查询
         TThostFtdcBrokerIDType BrokerID  # 经纪公司代码
         TThostFtdcInvestorIDType InvestorID  # 投资者代码
-        TThostFtdcInstrumentIDType InstrumentID  # 合约代码
+        TThostFtdcOldInstrumentIDType reserve1  # 保留的无效字段
         TThostFtdcExchangeIDType ExchangeID  # 交易所代码
         TThostFtdcTimeType InsertTimeStart  # 开始时间
         TThostFtdcTimeType InsertTimeEnd  # 结束时间
         TThostFtdcInvestUnitIDType InvestUnitID  # 投资单元代码
+        TThostFtdcInstrumentIDType InstrumentID  # 合约代码
     cdef struct CThostFtdcExchangeForQuoteField:  # 交易所询价信息
         TThostFtdcOrderLocalIDType ForQuoteLocalID  # 本地询价编号
         TThostFtdcExchangeIDType ExchangeID  # 交易所代码
         TThostFtdcParticipantIDType ParticipantID  # 会员代码
         TThostFtdcClientIDType ClientID  # 客户代码
-        TThostFtdcExchangeInstIDType ExchangeInstID  # 合约在交易所的代码
+        TThostFtdcOldExchangeInstIDType reserve1  # 保留的无效字段
         TThostFtdcTraderIDType TraderID  # 交易所交易员代码
         TThostFtdcInstallIDType InstallID  # 安装编号
         TThostFtdcDateType InsertDate  # 报单日期
         TThostFtdcTimeType InsertTime  # 插入时间
         TThostFtdcForQuoteStatusType ForQuoteStatus  # 询价状态
-        TThostFtdcIPAddressType IPAddress  # IP地址
+        TThostFtdcOldIPAddressType reserve2  # 保留的无效字段
         TThostFtdcMacAddressType MacAddress  # Mac地址
+        TThostFtdcExchangeInstIDType ExchangeInstID  # 合约在交易所的代码
+        TThostFtdcIPAddressType IPAddress  # IP地址
     cdef struct CThostFtdcQryExchangeForQuoteField:  # 交易所询价查询
         TThostFtdcParticipantIDType ParticipantID  # 会员代码
         TThostFtdcClientIDType ClientID  # 客户代码
-        TThostFtdcExchangeInstIDType ExchangeInstID  # 合约在交易所的代码
+        TThostFtdcOldExchangeInstIDType reserve1  # 保留的无效字段
         TThostFtdcExchangeIDType ExchangeID  # 交易所代码
         TThostFtdcTraderIDType TraderID  # 交易所交易员代码
+        TThostFtdcExchangeInstIDType ExchangeInstID  # 合约在交易所的代码
     cdef struct CThostFtdcInputQuoteField:  # 输入的报价
         TThostFtdcBrokerIDType BrokerID  # 经纪公司代码
         TThostFtdcInvestorIDType InvestorID  # 投资者代码
-        TThostFtdcInstrumentIDType InstrumentID  # 合约代码
+        TThostFtdcOldInstrumentIDType reserve1  # 保留的无效字段
         TThostFtdcOrderRefType QuoteRef  # 报价引用
         TThostFtdcUserIDType UserID  # 用户代码
         TThostFtdcPriceType AskPrice  # 卖价格
@@ -1619,8 +1715,10 @@ cdef extern from "ThostFtdcUserApiStruct.h":
         TThostFtdcExchangeIDType ExchangeID  # 交易所代码
         TThostFtdcInvestUnitIDType InvestUnitID  # 投资单元代码
         TThostFtdcClientIDType ClientID  # 交易编码
-        TThostFtdcIPAddressType IPAddress  # IP地址
+        TThostFtdcOldIPAddressType reserve2  # 保留的无效字段
         TThostFtdcMacAddressType MacAddress  # Mac地址
+        TThostFtdcInstrumentIDType InstrumentID  # 合约代码
+        TThostFtdcIPAddressType IPAddress  # IP地址
     cdef struct CThostFtdcInputQuoteActionField:  # 输入报价操作
         TThostFtdcBrokerIDType BrokerID  # 经纪公司代码
         TThostFtdcInvestorIDType InvestorID  # 投资者代码
@@ -1633,15 +1731,17 @@ cdef extern from "ThostFtdcUserApiStruct.h":
         TThostFtdcOrderSysIDType QuoteSysID  # 报价操作编号
         TThostFtdcActionFlagType ActionFlag  # 操作标志
         TThostFtdcUserIDType UserID  # 用户代码
-        TThostFtdcInstrumentIDType InstrumentID  # 合约代码
+        TThostFtdcOldInstrumentIDType reserve1  # 保留的无效字段
         TThostFtdcInvestUnitIDType InvestUnitID  # 投资单元代码
         TThostFtdcClientIDType ClientID  # 交易编码
-        TThostFtdcIPAddressType IPAddress  # IP地址
+        TThostFtdcOldIPAddressType reserve2  # 保留的无效字段
         TThostFtdcMacAddressType MacAddress  # Mac地址
+        TThostFtdcInstrumentIDType InstrumentID  # 合约代码
+        TThostFtdcIPAddressType IPAddress  # IP地址
     cdef struct CThostFtdcQuoteField:  # 报价
         TThostFtdcBrokerIDType BrokerID  # 经纪公司代码
         TThostFtdcInvestorIDType InvestorID  # 投资者代码
-        TThostFtdcInstrumentIDType InstrumentID  # 合约代码
+        TThostFtdcOldInstrumentIDType reserve1  # 保留的无效字段
         TThostFtdcOrderRefType QuoteRef  # 报价引用
         TThostFtdcUserIDType UserID  # 用户代码
         TThostFtdcPriceType AskPrice  # 卖价格
@@ -1658,7 +1758,7 @@ cdef extern from "ThostFtdcUserApiStruct.h":
         TThostFtdcExchangeIDType ExchangeID  # 交易所代码
         TThostFtdcParticipantIDType ParticipantID  # 会员代码
         TThostFtdcClientIDType ClientID  # 客户代码
-        TThostFtdcExchangeInstIDType ExchangeInstID  # 合约在交易所的代码
+        TThostFtdcOldExchangeInstIDType reserve2  # 保留的无效字段
         TThostFtdcTraderIDType TraderID  # 交易所交易员代码
         TThostFtdcInstallIDType InstallID  # 安装编号
         TThostFtdcSequenceNoType NotifySequence  # 报价提示序号
@@ -1687,8 +1787,11 @@ cdef extern from "ThostFtdcUserApiStruct.h":
         TThostFtdcInvestUnitIDType InvestUnitID  # 投资单元代码
         TThostFtdcAccountIDType AccountID  # 资金账号
         TThostFtdcCurrencyIDType CurrencyID  # 币种代码
-        TThostFtdcIPAddressType IPAddress  # IP地址
+        TThostFtdcOldIPAddressType reserve3  # 保留的无效字段
         TThostFtdcMacAddressType MacAddress  # Mac地址
+        TThostFtdcInstrumentIDType InstrumentID  # 合约代码
+        TThostFtdcExchangeInstIDType ExchangeInstID  # 合约在交易所的代码
+        TThostFtdcIPAddressType IPAddress  # IP地址
     cdef struct CThostFtdcQuoteActionField:  # 报价操作
         TThostFtdcBrokerIDType BrokerID  # 经纪公司代码
         TThostFtdcInvestorIDType InvestorID  # 投资者代码
@@ -1712,20 +1815,23 @@ cdef extern from "ThostFtdcUserApiStruct.h":
         TThostFtdcOrderActionStatusType OrderActionStatus  # 报单操作状态
         TThostFtdcUserIDType UserID  # 用户代码
         TThostFtdcErrorMsgType StatusMsg  # 状态信息
-        TThostFtdcInstrumentIDType InstrumentID  # 合约代码
+        TThostFtdcOldInstrumentIDType reserve1  # 保留的无效字段
         TThostFtdcBranchIDType BranchID  # 营业部编号
         TThostFtdcInvestUnitIDType InvestUnitID  # 投资单元代码
-        TThostFtdcIPAddressType IPAddress  # IP地址
+        TThostFtdcOldIPAddressType reserve2  # 保留的无效字段
         TThostFtdcMacAddressType MacAddress  # Mac地址
+        TThostFtdcInstrumentIDType InstrumentID  # 合约代码
+        TThostFtdcIPAddressType IPAddress  # IP地址
     cdef struct CThostFtdcQryQuoteField:  # 报价查询
         TThostFtdcBrokerIDType BrokerID  # 经纪公司代码
         TThostFtdcInvestorIDType InvestorID  # 投资者代码
-        TThostFtdcInstrumentIDType InstrumentID  # 合约代码
+        TThostFtdcOldInstrumentIDType reserve1  # 保留的无效字段
         TThostFtdcExchangeIDType ExchangeID  # 交易所代码
         TThostFtdcOrderSysIDType QuoteSysID  # 报价编号
         TThostFtdcTimeType InsertTimeStart  # 开始时间
         TThostFtdcTimeType InsertTimeEnd  # 结束时间
         TThostFtdcInvestUnitIDType InvestUnitID  # 投资单元代码
+        TThostFtdcInstrumentIDType InstrumentID  # 合约代码
     cdef struct CThostFtdcExchangeQuoteField:  # 交易所报价信息
         TThostFtdcPriceType AskPrice  # 卖价格
         TThostFtdcPriceType BidPrice  # 买价格
@@ -1741,7 +1847,7 @@ cdef extern from "ThostFtdcUserApiStruct.h":
         TThostFtdcExchangeIDType ExchangeID  # 交易所代码
         TThostFtdcParticipantIDType ParticipantID  # 会员代码
         TThostFtdcClientIDType ClientID  # 客户代码
-        TThostFtdcExchangeInstIDType ExchangeInstID  # 合约在交易所的代码
+        TThostFtdcOldExchangeInstIDType reserve1  # 保留的无效字段
         TThostFtdcTraderIDType TraderID  # 交易所交易员代码
         TThostFtdcInstallIDType InstallID  # 安装编号
         TThostFtdcSequenceNoType NotifySequence  # 报价提示序号
@@ -1759,14 +1865,17 @@ cdef extern from "ThostFtdcUserApiStruct.h":
         TThostFtdcOrderSysIDType BidOrderSysID  # 买方报单编号
         TThostFtdcOrderSysIDType ForQuoteSysID  # 应价编号
         TThostFtdcBranchIDType BranchID  # 营业部编号
-        TThostFtdcIPAddressType IPAddress  # IP地址
+        TThostFtdcOldIPAddressType reserve2  # 保留的无效字段
         TThostFtdcMacAddressType MacAddress  # Mac地址
+        TThostFtdcExchangeInstIDType ExchangeInstID  # 合约在交易所的代码
+        TThostFtdcIPAddressType IPAddress  # IP地址
     cdef struct CThostFtdcQryExchangeQuoteField:  # 交易所报价查询
         TThostFtdcParticipantIDType ParticipantID  # 会员代码
         TThostFtdcClientIDType ClientID  # 客户代码
-        TThostFtdcExchangeInstIDType ExchangeInstID  # 合约在交易所的代码
+        TThostFtdcOldExchangeInstIDType reserve1  # 保留的无效字段
         TThostFtdcExchangeIDType ExchangeID  # 交易所代码
         TThostFtdcTraderIDType TraderID  # 交易所交易员代码
+        TThostFtdcExchangeInstIDType ExchangeInstID  # 合约在交易所的代码
     cdef struct CThostFtdcQryQuoteActionField:  # 报价操作查询
         TThostFtdcBrokerIDType BrokerID  # 经纪公司代码
         TThostFtdcInvestorIDType InvestorID  # 投资者代码
@@ -1786,36 +1895,41 @@ cdef extern from "ThostFtdcUserApiStruct.h":
         TThostFtdcBusinessUnitType BusinessUnit  # 业务单元
         TThostFtdcOrderActionStatusType OrderActionStatus  # 报单操作状态
         TThostFtdcUserIDType UserID  # 用户代码
-        TThostFtdcIPAddressType IPAddress  # IP地址
+        TThostFtdcOldIPAddressType reserve1  # 保留的无效字段
         TThostFtdcMacAddressType MacAddress  # Mac地址
+        TThostFtdcIPAddressType IPAddress  # IP地址
     cdef struct CThostFtdcQryExchangeQuoteActionField:  # 交易所报价操作查询
         TThostFtdcParticipantIDType ParticipantID  # 会员代码
         TThostFtdcClientIDType ClientID  # 客户代码
         TThostFtdcExchangeIDType ExchangeID  # 交易所代码
         TThostFtdcTraderIDType TraderID  # 交易所交易员代码
     cdef struct CThostFtdcOptionInstrDeltaField:  # 期权合约delta值
-        TThostFtdcInstrumentIDType InstrumentID  # 合约代码
+        TThostFtdcOldInstrumentIDType reserve1  # 保留的无效字段
         TThostFtdcInvestorRangeType InvestorRange  # 投资者范围
         TThostFtdcBrokerIDType BrokerID  # 经纪公司代码
         TThostFtdcInvestorIDType InvestorID  # 投资者代码
         TThostFtdcRatioType Delta  # Delta值
+        TThostFtdcInstrumentIDType InstrumentID  # 合约代码
     cdef struct CThostFtdcForQuoteRspField:  # 发给做市商的询价请求
         TThostFtdcDateType TradingDay  # 交易日
-        TThostFtdcInstrumentIDType InstrumentID  # 合约代码
+        TThostFtdcOldInstrumentIDType reserve1  # 保留的无效字段
         TThostFtdcOrderSysIDType ForQuoteSysID  # 询价编号
         TThostFtdcTimeType ForQuoteTime  # 询价时间
         TThostFtdcDateType ActionDay  # 业务日期
         TThostFtdcExchangeIDType ExchangeID  # 交易所代码
-    cdef struct CThostFtdcStrikeOffsetField:  # 当前期权合约执行偏移值的详细内容
         TThostFtdcInstrumentIDType InstrumentID  # 合约代码
+    cdef struct CThostFtdcStrikeOffsetField:  # 当前期权合约执行偏移值的详细内容
+        TThostFtdcOldInstrumentIDType reserve1  # 保留的无效字段
         TThostFtdcInvestorRangeType InvestorRange  # 投资者范围
         TThostFtdcBrokerIDType BrokerID  # 经纪公司代码
         TThostFtdcInvestorIDType InvestorID  # 投资者代码
         TThostFtdcMoneyType Offset  # 执行偏移值
         TThostFtdcStrikeOffsetTypeType OffsetType  # 执行偏移类型
+        TThostFtdcInstrumentIDType InstrumentID  # 合约代码
     cdef struct CThostFtdcQryStrikeOffsetField:  # 期权执行偏移值查询
         TThostFtdcBrokerIDType BrokerID  # 经纪公司代码
         TThostFtdcInvestorIDType InvestorID  # 投资者代码
+        TThostFtdcOldInstrumentIDType reserve1  # 保留的无效字段
         TThostFtdcInstrumentIDType InstrumentID  # 合约代码
     cdef struct CThostFtdcInputBatchOrderActionField:  # 输入批量报单操作
         TThostFtdcBrokerIDType BrokerID  # 经纪公司代码
@@ -1827,8 +1941,9 @@ cdef extern from "ThostFtdcUserApiStruct.h":
         TThostFtdcExchangeIDType ExchangeID  # 交易所代码
         TThostFtdcUserIDType UserID  # 用户代码
         TThostFtdcInvestUnitIDType InvestUnitID  # 投资单元代码
-        TThostFtdcIPAddressType IPAddress  # IP地址
+        TThostFtdcOldIPAddressType reserve1  # 保留的无效字段
         TThostFtdcMacAddressType MacAddress  # Mac地址
+        TThostFtdcIPAddressType IPAddress  # IP地址
     cdef struct CThostFtdcBatchOrderActionField:  # 批量报单操作
         TThostFtdcBrokerIDType BrokerID  # 经纪公司代码
         TThostFtdcInvestorIDType InvestorID  # 投资者代码
@@ -1849,8 +1964,9 @@ cdef extern from "ThostFtdcUserApiStruct.h":
         TThostFtdcUserIDType UserID  # 用户代码
         TThostFtdcErrorMsgType StatusMsg  # 状态信息
         TThostFtdcInvestUnitIDType InvestUnitID  # 投资单元代码
-        TThostFtdcIPAddressType IPAddress  # IP地址
+        TThostFtdcOldIPAddressType reserve1  # 保留的无效字段
         TThostFtdcMacAddressType MacAddress  # Mac地址
+        TThostFtdcIPAddressType IPAddress  # IP地址
     cdef struct CThostFtdcExchangeBatchOrderActionField:  # 交易所批量报单操作
         TThostFtdcExchangeIDType ExchangeID  # 交易所代码
         TThostFtdcDateType ActionDate  # 操作日期
@@ -1863,25 +1979,28 @@ cdef extern from "ThostFtdcUserApiStruct.h":
         TThostFtdcBusinessUnitType BusinessUnit  # 业务单元
         TThostFtdcOrderActionStatusType OrderActionStatus  # 报单操作状态
         TThostFtdcUserIDType UserID  # 用户代码
-        TThostFtdcIPAddressType IPAddress  # IP地址
+        TThostFtdcOldIPAddressType reserve1  # 保留的无效字段
         TThostFtdcMacAddressType MacAddress  # Mac地址
+        TThostFtdcIPAddressType IPAddress  # IP地址
     cdef struct CThostFtdcQryBatchOrderActionField:  # 查询批量报单操作
         TThostFtdcBrokerIDType BrokerID  # 经纪公司代码
         TThostFtdcInvestorIDType InvestorID  # 投资者代码
         TThostFtdcExchangeIDType ExchangeID  # 交易所代码
     cdef struct CThostFtdcCombInstrumentGuardField:  # 组合合约安全系数
         TThostFtdcBrokerIDType BrokerID  # 经纪公司代码
-        TThostFtdcInstrumentIDType InstrumentID  # 合约代码
-        TThostFtdcRatioType GuarantRatio  # 合约代码
+        TThostFtdcOldInstrumentIDType reserve1  # 保留的无效字段
+        TThostFtdcRatioType GuarantRatio  # 保留的无效字段
         TThostFtdcExchangeIDType ExchangeID  # 交易所代码
+        TThostFtdcInstrumentIDType InstrumentID  # 合约代码
     cdef struct CThostFtdcQryCombInstrumentGuardField:  # 组合合约安全系数查询
         TThostFtdcBrokerIDType BrokerID  # 经纪公司代码
-        TThostFtdcInstrumentIDType InstrumentID  # 合约代码
+        TThostFtdcOldInstrumentIDType reserve1  # 保留的无效字段
         TThostFtdcExchangeIDType ExchangeID  # 交易所代码
+        TThostFtdcInstrumentIDType InstrumentID  # 合约代码
     cdef struct CThostFtdcInputCombActionField:  # 输入的申请组合
         TThostFtdcBrokerIDType BrokerID  # 经纪公司代码
         TThostFtdcInvestorIDType InvestorID  # 投资者代码
-        TThostFtdcInstrumentIDType InstrumentID  # 合约代码
+        TThostFtdcOldInstrumentIDType reserve1  # 保留的无效字段
         TThostFtdcOrderRefType CombActionRef  # 组合引用
         TThostFtdcUserIDType UserID  # 用户代码
         TThostFtdcDirectionType Direction  # 买卖方向
@@ -1889,13 +2008,17 @@ cdef extern from "ThostFtdcUserApiStruct.h":
         TThostFtdcCombDirectionType CombDirection  # 组合指令方向
         TThostFtdcHedgeFlagType HedgeFlag  # 投机套保标志
         TThostFtdcExchangeIDType ExchangeID  # 交易所代码
-        TThostFtdcIPAddressType IPAddress  # IP地址
+        TThostFtdcOldIPAddressType reserve2  # 保留的无效字段
         TThostFtdcMacAddressType MacAddress  # Mac地址
         TThostFtdcInvestUnitIDType InvestUnitID  # 投资单元代码
+        TThostFtdcFrontIDType FrontID  # 前置编号
+        TThostFtdcSessionIDType SessionID  # 会话编号
+        TThostFtdcInstrumentIDType InstrumentID  # 合约代码
+        TThostFtdcIPAddressType IPAddress  # IP地址
     cdef struct CThostFtdcCombActionField:  # 申请组合
         TThostFtdcBrokerIDType BrokerID  # 经纪公司代码
         TThostFtdcInvestorIDType InvestorID  # 投资者代码
-        TThostFtdcInstrumentIDType InstrumentID  # 合约代码
+        TThostFtdcOldInstrumentIDType reserve1  # 保留的无效字段
         TThostFtdcOrderRefType CombActionRef  # 组合引用
         TThostFtdcUserIDType UserID  # 用户代码
         TThostFtdcDirectionType Direction  # 买卖方向
@@ -1906,7 +2029,7 @@ cdef extern from "ThostFtdcUserApiStruct.h":
         TThostFtdcExchangeIDType ExchangeID  # 交易所代码
         TThostFtdcParticipantIDType ParticipantID  # 会员代码
         TThostFtdcClientIDType ClientID  # 客户代码
-        TThostFtdcExchangeInstIDType ExchangeInstID  # 合约在交易所的代码
+        TThostFtdcOldExchangeInstIDType reserve2  # 保留的无效字段
         TThostFtdcTraderIDType TraderID  # 交易所交易员代码
         TThostFtdcInstallIDType InstallID  # 安装编号
         TThostFtdcOrderActionStatusType ActionStatus  # 组合状态
@@ -1918,17 +2041,21 @@ cdef extern from "ThostFtdcUserApiStruct.h":
         TThostFtdcSessionIDType SessionID  # 会话编号
         TThostFtdcProductInfoType UserProductInfo  # 用户端产品信息
         TThostFtdcErrorMsgType StatusMsg  # 状态信息
-        TThostFtdcIPAddressType IPAddress  # IP地址
+        TThostFtdcOldIPAddressType reserve3  # 保留的无效字段
         TThostFtdcMacAddressType MacAddress  # Mac地址
         TThostFtdcTradeIDType ComTradeID  # 组合编号
         TThostFtdcBranchIDType BranchID  # 营业部编号
         TThostFtdcInvestUnitIDType InvestUnitID  # 投资单元代码
+        TThostFtdcInstrumentIDType InstrumentID  # 合约代码
+        TThostFtdcExchangeInstIDType ExchangeInstID  # 合约在交易所的代码
+        TThostFtdcIPAddressType IPAddress  # IP地址
     cdef struct CThostFtdcQryCombActionField:  # 申请组合查询
         TThostFtdcBrokerIDType BrokerID  # 经纪公司代码
         TThostFtdcInvestorIDType InvestorID  # 投资者代码
-        TThostFtdcInstrumentIDType InstrumentID  # 合约代码
+        TThostFtdcOldInstrumentIDType reserve1  # 保留的无效字段
         TThostFtdcExchangeIDType ExchangeID  # 交易所代码
         TThostFtdcInvestUnitIDType InvestUnitID  # 投资单元代码
+        TThostFtdcInstrumentIDType InstrumentID  # 合约代码
     cdef struct CThostFtdcExchangeCombActionField:  # 交易所申请组合信息
         TThostFtdcDirectionType Direction  # 买卖方向
         TThostFtdcVolumeType Volume  # 数量
@@ -1938,7 +2065,7 @@ cdef extern from "ThostFtdcUserApiStruct.h":
         TThostFtdcExchangeIDType ExchangeID  # 交易所代码
         TThostFtdcParticipantIDType ParticipantID  # 会员代码
         TThostFtdcClientIDType ClientID  # 客户代码
-        TThostFtdcExchangeInstIDType ExchangeInstID  # 合约在交易所的代码
+        TThostFtdcOldExchangeInstIDType reserve1  # 保留的无效字段
         TThostFtdcTraderIDType TraderID  # 交易所交易员代码
         TThostFtdcInstallIDType InstallID  # 安装编号
         TThostFtdcOrderActionStatusType ActionStatus  # 组合状态
@@ -1946,36 +2073,43 @@ cdef extern from "ThostFtdcUserApiStruct.h":
         TThostFtdcDateType TradingDay  # 交易日
         TThostFtdcSettlementIDType SettlementID  # 结算编号
         TThostFtdcSequenceNoType SequenceNo  # 序号
-        TThostFtdcIPAddressType IPAddress  # IP地址
+        TThostFtdcOldIPAddressType reserve2  # 保留的无效字段
         TThostFtdcMacAddressType MacAddress  # Mac地址
         TThostFtdcTradeIDType ComTradeID  # 组合编号
         TThostFtdcBranchIDType BranchID  # 营业部编号
+        TThostFtdcExchangeInstIDType ExchangeInstID  # 合约在交易所的代码
+        TThostFtdcIPAddressType IPAddress  # IP地址
     cdef struct CThostFtdcQryExchangeCombActionField:  # 交易所申请组合查询
         TThostFtdcParticipantIDType ParticipantID  # 会员代码
         TThostFtdcClientIDType ClientID  # 客户代码
-        TThostFtdcExchangeInstIDType ExchangeInstID  # 合约在交易所的代码
+        TThostFtdcOldExchangeInstIDType reserve1  # 保留的无效字段
         TThostFtdcExchangeIDType ExchangeID  # 交易所代码
         TThostFtdcTraderIDType TraderID  # 交易所交易员代码
+        TThostFtdcExchangeInstIDType ExchangeInstID  # 合约在交易所的代码
     cdef struct CThostFtdcProductExchRateField:  # 产品报价汇率
-        TThostFtdcInstrumentIDType ProductID  # 产品代码
+        TThostFtdcOldInstrumentIDType reserve1  # 保留的无效字段
         TThostFtdcCurrencyIDType QuoteCurrencyID  # 报价币种类型
         TThostFtdcExchangeRateType ExchangeRate  # 汇率
         TThostFtdcExchangeIDType ExchangeID  # 交易所代码
-    cdef struct CThostFtdcQryProductExchRateField:  # 产品报价汇率查询
         TThostFtdcInstrumentIDType ProductID  # 产品代码
+    cdef struct CThostFtdcQryProductExchRateField:  # 产品报价汇率查询
+        TThostFtdcOldInstrumentIDType reserve1  # 保留的无效字段
         TThostFtdcExchangeIDType ExchangeID  # 交易所代码
+        TThostFtdcInstrumentIDType ProductID  # 产品代码
     cdef struct CThostFtdcQryForQuoteParamField:  # 查询询价价差参数
         TThostFtdcBrokerIDType BrokerID  # 经纪公司代码
-        TThostFtdcInstrumentIDType InstrumentID  # 合约代码
+        TThostFtdcOldInstrumentIDType reserve1  # 保留的无效字段
         TThostFtdcExchangeIDType ExchangeID  # 交易所代码
+        TThostFtdcInstrumentIDType InstrumentID  # 合约代码
     cdef struct CThostFtdcForQuoteParamField:  # 询价价差参数
         TThostFtdcBrokerIDType BrokerID  # 经纪公司代码
-        TThostFtdcInstrumentIDType InstrumentID  # 合约代码
+        TThostFtdcOldInstrumentIDType reserve1  # 保留的无效字段
         TThostFtdcExchangeIDType ExchangeID  # 交易所代码
         TThostFtdcPriceType LastPrice  # 最新价
         TThostFtdcPriceType PriceInterval  # 价差
-    cdef struct CThostFtdcMMOptionInstrCommRateField:  # 当前做市商期权合约手续费的详细内容
         TThostFtdcInstrumentIDType InstrumentID  # 合约代码
+    cdef struct CThostFtdcMMOptionInstrCommRateField:  # 当前做市商期权合约手续费的详细内容
+        TThostFtdcOldInstrumentIDType reserve1  # 保留的无效字段
         TThostFtdcInvestorRangeType InvestorRange  # 投资者范围
         TThostFtdcBrokerIDType BrokerID  # 经纪公司代码
         TThostFtdcInvestorIDType InvestorID  # 投资者代码
@@ -1987,12 +2121,14 @@ cdef extern from "ThostFtdcUserApiStruct.h":
         TThostFtdcRatioType CloseTodayRatioByVolume  # 平今手续费
         TThostFtdcRatioType StrikeRatioByMoney  # 执行手续费率
         TThostFtdcRatioType StrikeRatioByVolume  # 执行手续费
+        TThostFtdcInstrumentIDType InstrumentID  # 合约代码
     cdef struct CThostFtdcQryMMOptionInstrCommRateField:  # 做市商期权手续费率查询
         TThostFtdcBrokerIDType BrokerID  # 经纪公司代码
         TThostFtdcInvestorIDType InvestorID  # 投资者代码
+        TThostFtdcOldInstrumentIDType reserve1  # 保留的无效字段
         TThostFtdcInstrumentIDType InstrumentID  # 合约代码
     cdef struct CThostFtdcMMInstrumentCommissionRateField:  # 做市商合约手续费率
-        TThostFtdcInstrumentIDType InstrumentID  # 合约代码
+        TThostFtdcOldInstrumentIDType reserve1  # 保留的无效字段
         TThostFtdcInvestorRangeType InvestorRange  # 投资者范围
         TThostFtdcBrokerIDType BrokerID  # 经纪公司代码
         TThostFtdcInvestorIDType InvestorID  # 投资者代码
@@ -2002,12 +2138,14 @@ cdef extern from "ThostFtdcUserApiStruct.h":
         TThostFtdcRatioType CloseRatioByVolume  # 平仓手续费
         TThostFtdcRatioType CloseTodayRatioByMoney  # 平今手续费率
         TThostFtdcRatioType CloseTodayRatioByVolume  # 平今手续费
+        TThostFtdcInstrumentIDType InstrumentID  # 合约代码
     cdef struct CThostFtdcQryMMInstrumentCommissionRateField:  # 查询做市商合约手续费率
         TThostFtdcBrokerIDType BrokerID  # 经纪公司代码
         TThostFtdcInvestorIDType InvestorID  # 投资者代码
+        TThostFtdcOldInstrumentIDType reserve1  # 保留的无效字段
         TThostFtdcInstrumentIDType InstrumentID  # 合约代码
     cdef struct CThostFtdcInstrumentOrderCommRateField:  # 当前报单手续费的详细内容
-        TThostFtdcInstrumentIDType InstrumentID  # 合约代码
+        TThostFtdcOldInstrumentIDType reserve1  # 保留的无效字段
         TThostFtdcInvestorRangeType InvestorRange  # 投资者范围
         TThostFtdcBrokerIDType BrokerID  # 经纪公司代码
         TThostFtdcInvestorIDType InvestorID  # 投资者代码
@@ -2016,9 +2154,11 @@ cdef extern from "ThostFtdcUserApiStruct.h":
         TThostFtdcRatioType OrderActionCommByVolume  # 撤单手续费
         TThostFtdcExchangeIDType ExchangeID  # 交易所代码
         TThostFtdcInvestUnitIDType InvestUnitID  # 投资单元代码
+        TThostFtdcInstrumentIDType InstrumentID  # 合约代码
     cdef struct CThostFtdcQryInstrumentOrderCommRateField:  # 报单手续费率查询
         TThostFtdcBrokerIDType BrokerID  # 经纪公司代码
         TThostFtdcInvestorIDType InvestorID  # 投资者代码
+        TThostFtdcOldInstrumentIDType reserve1  # 保留的无效字段
         TThostFtdcInstrumentIDType InstrumentID  # 合约代码
     cdef struct CThostFtdcTradeParamField:  # 交易参数
         TThostFtdcBrokerIDType BrokerID  # 经纪公司代码
@@ -2026,7 +2166,7 @@ cdef extern from "ThostFtdcUserApiStruct.h":
         TThostFtdcSettlementParamValueType TradeParamValue  # 参数代码值
         TThostFtdcMemoType Memo  # 备注
     cdef struct CThostFtdcInstrumentMarginRateULField:  # 合约保证金率调整
-        TThostFtdcInstrumentIDType InstrumentID  # 合约代码
+        TThostFtdcOldInstrumentIDType reserve1  # 保留的无效字段
         TThostFtdcInvestorRangeType InvestorRange  # 投资者范围
         TThostFtdcBrokerIDType BrokerID  # 经纪公司代码
         TThostFtdcInvestorIDType InvestorID  # 投资者代码
@@ -2035,23 +2175,27 @@ cdef extern from "ThostFtdcUserApiStruct.h":
         TThostFtdcMoneyType LongMarginRatioByVolume  # 多头保证金费
         TThostFtdcRatioType ShortMarginRatioByMoney  # 空头保证金率
         TThostFtdcMoneyType ShortMarginRatioByVolume  # 空头保证金费
+        TThostFtdcInstrumentIDType InstrumentID  # 合约代码
     cdef struct CThostFtdcFutureLimitPosiParamField:  # 期货持仓限制参数
         TThostFtdcInvestorRangeType InvestorRange  # 投资者范围
         TThostFtdcBrokerIDType BrokerID  # 经纪公司代码
         TThostFtdcInvestorIDType InvestorID  # 投资者代码
-        TThostFtdcInstrumentIDType ProductID  # 产品代码
+        TThostFtdcOldInstrumentIDType reserve1  # 保留的无效字段
         TThostFtdcVolumeType SpecOpenVolume  # 当日投机开仓数量限制
         TThostFtdcVolumeType ArbiOpenVolume  # 当日套利开仓数量限制
         TThostFtdcVolumeType OpenVolume  # 当日投机+套利开仓数量限制
+        TThostFtdcInstrumentIDType ProductID  # 产品代码
     cdef struct CThostFtdcLoginForbiddenIPField:  # 禁止登录IP
+        TThostFtdcOldIPAddressType reserve1  # 保留的无效字段
         TThostFtdcIPAddressType IPAddress  # IP地址
     cdef struct CThostFtdcIPListField:  # IP列表
-        TThostFtdcIPAddressType IPAddress  # IP地址
+        TThostFtdcOldIPAddressType reserve1  # 保留的无效字段
         TThostFtdcBoolType IsWhite  # 是否白名单
+        TThostFtdcIPAddressType IPAddress  # IP地址
     cdef struct CThostFtdcInputOptionSelfCloseField:  # 输入的期权自对冲
         TThostFtdcBrokerIDType BrokerID  # 经纪公司代码
         TThostFtdcInvestorIDType InvestorID  # 投资者代码
-        TThostFtdcInstrumentIDType InstrumentID  # 合约代码
+        TThostFtdcOldInstrumentIDType reserve1  # 保留的无效字段
         TThostFtdcOrderRefType OptionSelfCloseRef  # 期权自对冲引用
         TThostFtdcUserIDType UserID  # 用户代码
         TThostFtdcVolumeType Volume  # 数量
@@ -2064,8 +2208,10 @@ cdef extern from "ThostFtdcUserApiStruct.h":
         TThostFtdcAccountIDType AccountID  # 资金账号
         TThostFtdcCurrencyIDType CurrencyID  # 币种代码
         TThostFtdcClientIDType ClientID  # 交易编码
-        TThostFtdcIPAddressType IPAddress  # IP地址
+        TThostFtdcOldIPAddressType reserve2  # 保留的无效字段
         TThostFtdcMacAddressType MacAddress  # Mac地址
+        TThostFtdcInstrumentIDType InstrumentID  # 合约代码
+        TThostFtdcIPAddressType IPAddress  # IP地址
     cdef struct CThostFtdcInputOptionSelfCloseActionField:  # 输入期权自对冲操作
         TThostFtdcBrokerIDType BrokerID  # 经纪公司代码
         TThostFtdcInvestorIDType InvestorID  # 投资者代码
@@ -2078,14 +2224,16 @@ cdef extern from "ThostFtdcUserApiStruct.h":
         TThostFtdcOrderSysIDType OptionSelfCloseSysID  # 期权自对冲操作编号
         TThostFtdcActionFlagType ActionFlag  # 操作标志
         TThostFtdcUserIDType UserID  # 用户代码
-        TThostFtdcInstrumentIDType InstrumentID  # 合约代码
+        TThostFtdcOldInstrumentIDType reserve1  # 保留的无效字段
         TThostFtdcInvestUnitIDType InvestUnitID  # 投资单元代码
-        TThostFtdcIPAddressType IPAddress  # IP地址
+        TThostFtdcOldIPAddressType reserve2  # 保留的无效字段
         TThostFtdcMacAddressType MacAddress  # Mac地址
+        TThostFtdcInstrumentIDType InstrumentID  # 合约代码
+        TThostFtdcIPAddressType IPAddress  # IP地址
     cdef struct CThostFtdcOptionSelfCloseField:  # 期权自对冲
         TThostFtdcBrokerIDType BrokerID  # 经纪公司代码
         TThostFtdcInvestorIDType InvestorID  # 投资者代码
-        TThostFtdcInstrumentIDType InstrumentID  # 合约代码
+        TThostFtdcOldInstrumentIDType reserve1  # 保留的无效字段
         TThostFtdcOrderRefType OptionSelfCloseRef  # 期权自对冲引用
         TThostFtdcUserIDType UserID  # 用户代码
         TThostFtdcVolumeType Volume  # 数量
@@ -2097,7 +2245,7 @@ cdef extern from "ThostFtdcUserApiStruct.h":
         TThostFtdcExchangeIDType ExchangeID  # 交易所代码
         TThostFtdcParticipantIDType ParticipantID  # 会员代码
         TThostFtdcClientIDType ClientID  # 客户代码
-        TThostFtdcExchangeInstIDType ExchangeInstID  # 合约在交易所的代码
+        TThostFtdcOldExchangeInstIDType reserve2  # 保留的无效字段
         TThostFtdcTraderIDType TraderID  # 交易所交易员代码
         TThostFtdcInstallIDType InstallID  # 安装编号
         TThostFtdcOrderSubmitStatusType OrderSubmitStatus  # 期权自对冲提交状态
@@ -2121,8 +2269,11 @@ cdef extern from "ThostFtdcUserApiStruct.h":
         TThostFtdcInvestUnitIDType InvestUnitID  # 投资单元代码
         TThostFtdcAccountIDType AccountID  # 资金账号
         TThostFtdcCurrencyIDType CurrencyID  # 币种代码
-        TThostFtdcIPAddressType IPAddress  # IP地址
+        TThostFtdcOldIPAddressType reserve3  # 保留的无效字段
         TThostFtdcMacAddressType MacAddress  # Mac地址
+        TThostFtdcInstrumentIDType InstrumentID  # 合约代码
+        TThostFtdcExchangeInstIDType ExchangeInstID  # 合约在交易所的代码
+        TThostFtdcIPAddressType IPAddress  # IP地址
     cdef struct CThostFtdcOptionSelfCloseActionField:  # 期权自对冲操作
         TThostFtdcBrokerIDType BrokerID  # 经纪公司代码
         TThostFtdcInvestorIDType InvestorID  # 投资者代码
@@ -2146,19 +2297,22 @@ cdef extern from "ThostFtdcUserApiStruct.h":
         TThostFtdcOrderActionStatusType OrderActionStatus  # 报单操作状态
         TThostFtdcUserIDType UserID  # 用户代码
         TThostFtdcErrorMsgType StatusMsg  # 状态信息
-        TThostFtdcInstrumentIDType InstrumentID  # 合约代码
+        TThostFtdcOldInstrumentIDType reserve1  # 保留的无效字段
         TThostFtdcBranchIDType BranchID  # 营业部编号
         TThostFtdcInvestUnitIDType InvestUnitID  # 投资单元代码
-        TThostFtdcIPAddressType IPAddress  # IP地址
+        TThostFtdcOldIPAddressType reserve2  # 保留的无效字段
         TThostFtdcMacAddressType MacAddress  # Mac地址
+        TThostFtdcInstrumentIDType InstrumentID  # 合约代码
+        TThostFtdcIPAddressType IPAddress  # IP地址
     cdef struct CThostFtdcQryOptionSelfCloseField:  # 期权自对冲查询
         TThostFtdcBrokerIDType BrokerID  # 经纪公司代码
         TThostFtdcInvestorIDType InvestorID  # 投资者代码
-        TThostFtdcInstrumentIDType InstrumentID  # 合约代码
+        TThostFtdcOldInstrumentIDType reserve1  # 保留的无效字段
         TThostFtdcExchangeIDType ExchangeID  # 交易所代码
         TThostFtdcOrderSysIDType OptionSelfCloseSysID  # 期权自对冲编号
         TThostFtdcTimeType InsertTimeStart  # 开始时间
         TThostFtdcTimeType InsertTimeEnd  # 结束时间
+        TThostFtdcInstrumentIDType InstrumentID  # 合约代码
     cdef struct CThostFtdcExchangeOptionSelfCloseField:  # 交易所期权自对冲信息
         TThostFtdcVolumeType Volume  # 数量
         TThostFtdcRequestIDType RequestID  # 请求编号
@@ -2169,7 +2323,7 @@ cdef extern from "ThostFtdcUserApiStruct.h":
         TThostFtdcExchangeIDType ExchangeID  # 交易所代码
         TThostFtdcParticipantIDType ParticipantID  # 会员代码
         TThostFtdcClientIDType ClientID  # 客户代码
-        TThostFtdcExchangeInstIDType ExchangeInstID  # 合约在交易所的代码
+        TThostFtdcOldExchangeInstIDType reserve1  # 保留的无效字段
         TThostFtdcTraderIDType TraderID  # 交易所交易员代码
         TThostFtdcInstallIDType InstallID  # 安装编号
         TThostFtdcOrderSubmitStatusType OrderSubmitStatus  # 期权自对冲提交状态
@@ -2184,8 +2338,10 @@ cdef extern from "ThostFtdcUserApiStruct.h":
         TThostFtdcParticipantIDType ClearingPartID  # 结算会员编号
         TThostFtdcSequenceNoType SequenceNo  # 序号
         TThostFtdcBranchIDType BranchID  # 营业部编号
-        TThostFtdcIPAddressType IPAddress  # IP地址
+        TThostFtdcOldIPAddressType reserve2  # 保留的无效字段
         TThostFtdcMacAddressType MacAddress  # Mac地址
+        TThostFtdcExchangeInstIDType ExchangeInstID  # 合约在交易所的代码
+        TThostFtdcIPAddressType IPAddress  # IP地址
     cdef struct CThostFtdcQryOptionSelfCloseActionField:  # 期权自对冲操作查询
         TThostFtdcBrokerIDType BrokerID  # 经纪公司代码
         TThostFtdcInvestorIDType InvestorID  # 投资者代码
@@ -2206,10 +2362,12 @@ cdef extern from "ThostFtdcUserApiStruct.h":
         TThostFtdcOrderActionStatusType OrderActionStatus  # 报单操作状态
         TThostFtdcUserIDType UserID  # 用户代码
         TThostFtdcBranchIDType BranchID  # 营业部编号
-        TThostFtdcIPAddressType IPAddress  # IP地址
+        TThostFtdcOldIPAddressType reserve1  # 保留的无效字段
         TThostFtdcMacAddressType MacAddress  # Mac地址
-        TThostFtdcExchangeInstIDType ExchangeInstID  # 合约在交易所的代码
+        TThostFtdcOldExchangeInstIDType reserve2  # 保留的无效字段
         TThostFtdcOptSelfCloseFlagType OptSelfCloseFlag  # 期权行权的头寸是否自对冲
+        TThostFtdcIPAddressType IPAddress  # IP地址
+        TThostFtdcExchangeInstIDType ExchangeInstID  # 合约在交易所的代码
     cdef struct CThostFtdcSyncDelaySwapField:  # 延时换汇同步
         TThostFtdcDepositSeqNoType DelaySwapSeqNo  # 换汇流水号
         TThostFtdcBrokerIDType BrokerID  # 经纪公司代码
@@ -2220,6 +2378,8 @@ cdef extern from "ThostFtdcUserApiStruct.h":
         TThostFtdcMoneyType FromRemainSwap  # 源剩余换汇额度(可提冻结)
         TThostFtdcCurrencyIDType ToCurrencyID  # 目标币种
         TThostFtdcMoneyType ToAmount  # 目标金额
+        TThostFtdcBoolType IsManualSwap  # 是否手工换汇
+        TThostFtdcBoolType IsAllRemainSetZero  # 是否将所有外币的剩余换汇额度设置为0
     cdef struct CThostFtdcQrySyncDelaySwapField:  # 查询延时换汇同步
         TThostFtdcBrokerIDType BrokerID  # 经纪公司代码
         TThostFtdcDepositSeqNoType DelaySwapSeqNo  # 延时换汇流水号
@@ -2250,9 +2410,9 @@ cdef extern from "ThostFtdcUserApiStruct.h":
         TThostFtdcLongIndividualNameType LongCustomerName  # 二级代理商姓名
     cdef struct CThostFtdcMarketDataField:  # 市场行情
         TThostFtdcDateType TradingDay  # 交易日
-        TThostFtdcInstrumentIDType InstrumentID  # 合约代码
+        TThostFtdcOldInstrumentIDType reserve1  # 保留的无效字段
         TThostFtdcExchangeIDType ExchangeID  # 交易所代码
-        TThostFtdcExchangeInstIDType ExchangeInstID  # 合约在交易所的代码
+        TThostFtdcOldExchangeInstIDType reserve2  # 保留的无效字段
         TThostFtdcPriceType LastPrice  # 最新价
         TThostFtdcPriceType PreSettlementPrice  # 上次结算价
         TThostFtdcPriceType PreClosePrice  # 昨收盘
@@ -2272,6 +2432,8 @@ cdef extern from "ThostFtdcUserApiStruct.h":
         TThostFtdcTimeType UpdateTime  # 最后修改时间
         TThostFtdcMillisecType UpdateMillisec  # 最后修改毫秒
         TThostFtdcDateType ActionDay  # 业务日期
+        TThostFtdcInstrumentIDType InstrumentID  # 合约代码
+        TThostFtdcExchangeInstIDType ExchangeInstID  # 合约在交易所的代码
     cdef struct CThostFtdcMarketDataBaseField:  # 行情基础属性
         TThostFtdcDateType TradingDay  # 交易日
         TThostFtdcPriceType PreSettlementPrice  # 上次结算价
@@ -2318,25 +2480,30 @@ cdef extern from "ThostFtdcUserApiStruct.h":
         TThostFtdcPriceType AskPrice5  # 申卖价五
         TThostFtdcVolumeType AskVolume5  # 申卖量五
     cdef struct CThostFtdcMarketDataUpdateTimeField:  # 行情更新时间属性
-        TThostFtdcInstrumentIDType InstrumentID  # 合约代码
+        TThostFtdcOldInstrumentIDType reserve1  # 保留的无效字段
         TThostFtdcTimeType UpdateTime  # 最后修改时间
         TThostFtdcMillisecType UpdateMillisec  # 最后修改毫秒
         TThostFtdcDateType ActionDay  # 业务日期
+        TThostFtdcInstrumentIDType InstrumentID  # 合约代码
     cdef struct CThostFtdcMarketDataExchangeField:  # 行情交易所代码属性
         TThostFtdcExchangeIDType ExchangeID  # 交易所代码
     cdef struct CThostFtdcSpecificInstrumentField:  # 指定的合约
+        TThostFtdcOldInstrumentIDType reserve1  # 保留的无效字段
         TThostFtdcInstrumentIDType InstrumentID  # 合约代码
     cdef struct CThostFtdcInstrumentStatusField:  # 合约状态
         TThostFtdcExchangeIDType ExchangeID  # 交易所代码
-        TThostFtdcExchangeInstIDType ExchangeInstID  # 合约在交易所的代码
+        TThostFtdcOldExchangeInstIDType reserve1  # 保留的无效字段
         TThostFtdcSettlementGroupIDType SettlementGroupID  # 结算组代码
-        TThostFtdcInstrumentIDType InstrumentID  # 合约代码
+        TThostFtdcOldInstrumentIDType reserve2  # 保留的无效字段
         TThostFtdcInstrumentStatusType InstrumentStatus  # 合约交易状态
         TThostFtdcTradingSegmentSNType TradingSegmentSN  # 交易阶段编号
         TThostFtdcTimeType EnterTime  # 进入本状态时间
         TThostFtdcInstStatusEnterReasonType EnterReason  # 进入本状态原因
+        TThostFtdcExchangeInstIDType ExchangeInstID  # 合约在交易所的代码
+        TThostFtdcInstrumentIDType InstrumentID  # 合约代码
     cdef struct CThostFtdcQryInstrumentStatusField:  # 查询合约状态
         TThostFtdcExchangeIDType ExchangeID  # 交易所代码
+        TThostFtdcOldExchangeInstIDType reserve1  # 保留的无效字段
         TThostFtdcExchangeInstIDType ExchangeInstID  # 合约在交易所的代码
     cdef struct CThostFtdcInvestorAccountField:  # 投资者账户
         TThostFtdcBrokerIDType BrokerID  # 经纪公司代码
@@ -2365,11 +2532,12 @@ cdef extern from "ThostFtdcUserApiStruct.h":
     cdef struct CThostFtdcQryInvestorPositionDetailField:  # 查询投资者持仓明细
         TThostFtdcBrokerIDType BrokerID  # 经纪公司代码
         TThostFtdcInvestorIDType InvestorID  # 投资者代码
-        TThostFtdcInstrumentIDType InstrumentID  # 合约代码
+        TThostFtdcOldInstrumentIDType reserve1  # 保留的无效字段
         TThostFtdcExchangeIDType ExchangeID  # 交易所代码
         TThostFtdcInvestUnitIDType InvestUnitID  # 投资单元代码
-    cdef struct CThostFtdcInvestorPositionDetailField:  # 投资者持仓明细
         TThostFtdcInstrumentIDType InstrumentID  # 合约代码
+    cdef struct CThostFtdcInvestorPositionDetailField:  # 投资者持仓明细
+        TThostFtdcOldInstrumentIDType reserve1  # 保留的无效字段
         TThostFtdcBrokerIDType BrokerID  # 经纪公司代码
         TThostFtdcInvestorIDType InvestorID  # 投资者代码
         TThostFtdcHedgeFlagType HedgeFlag  # 投机套保标志
@@ -2381,7 +2549,7 @@ cdef extern from "ThostFtdcUserApiStruct.h":
         TThostFtdcDateType TradingDay  # 交易日
         TThostFtdcSettlementIDType SettlementID  # 结算编号
         TThostFtdcTradeTypeType TradeType  # 成交类型
-        TThostFtdcInstrumentIDType CombInstrumentID  # 组合合约代码
+        TThostFtdcOldInstrumentIDType reserve2  # 保留的无效字段
         TThostFtdcExchangeIDType ExchangeID  # 交易所代码
         TThostFtdcMoneyType CloseProfitByDate  # 逐日盯市平仓盈亏
         TThostFtdcMoneyType CloseProfitByTrade  # 逐笔对冲平仓盈亏
@@ -2395,8 +2563,11 @@ cdef extern from "ThostFtdcUserApiStruct.h":
         TThostFtdcPriceType SettlementPrice  # 结算价
         TThostFtdcVolumeType CloseVolume  # 平仓量
         TThostFtdcMoneyType CloseAmount  # 平仓金额
-        TThostFtdcVolumeType TimeFirstVolume  # 按照时间顺序平仓的笔数,大商所专用
+        TThostFtdcVolumeType TimeFirstVolume  # 先开先平剩余数量（DCE）
         TThostFtdcInvestUnitIDType InvestUnitID  # 投资单元代码
+        TThostFtdcSpecPosiTypeType SpecPosiType  # 特殊持仓标志
+        TThostFtdcInstrumentIDType InstrumentID  # 合约代码
+        TThostFtdcInstrumentIDType CombInstrumentID  # 组合合约代码
     cdef struct CThostFtdcTradingAccountPasswordField:  # 资金账户口令域
         TThostFtdcBrokerIDType BrokerID  # 经纪公司代码
         TThostFtdcAccountIDType AccountID  # 投资者帐号
@@ -2467,18 +2638,22 @@ cdef extern from "ThostFtdcUserApiStruct.h":
         TThostFtdcPasswordType NewPassword  # 新的口令
         TThostFtdcCurrencyIDType CurrencyID  # 币种代码
     cdef struct CThostFtdcQryCombinationLegField:  # 查询组合合约分腿
-        TThostFtdcInstrumentIDType CombInstrumentID  # 组合合约代码
+        TThostFtdcOldInstrumentIDType reserve1  # 保留的无效字段
         TThostFtdcLegIDType LegID  # 单腿编号
+        TThostFtdcOldInstrumentIDType reserve2  # 保留的无效字段
+        TThostFtdcInstrumentIDType CombInstrumentID  # 组合合约代码
         TThostFtdcInstrumentIDType LegInstrumentID  # 单腿合约代码
     cdef struct CThostFtdcQrySyncStatusField:  # 查询组合合约分腿
         TThostFtdcDateType TradingDay  # 交易日
     cdef struct CThostFtdcCombinationLegField:  # 组合交易合约的单腿
-        TThostFtdcInstrumentIDType CombInstrumentID  # 组合合约代码
+        TThostFtdcOldInstrumentIDType reserve1  # 保留的无效字段
         TThostFtdcLegIDType LegID  # 单腿编号
-        TThostFtdcInstrumentIDType LegInstrumentID  # 单腿合约代码
+        TThostFtdcOldInstrumentIDType reserve2  # 保留的无效字段
         TThostFtdcDirectionType Direction  # 买卖方向
         TThostFtdcLegMultipleType LegMultiple  # 单腿乘数
         TThostFtdcImplyLevelType ImplyLevel  # 派生层数
+        TThostFtdcInstrumentIDType CombInstrumentID  # 组合合约代码
+        TThostFtdcInstrumentIDType LegInstrumentID  # 单腿合约代码
     cdef struct CThostFtdcSyncStatusField:  # 数据同步状态
         TThostFtdcDateType TradingDay  # 交易日
         TThostFtdcDataSyncStatusType DataSyncStatus  # 数据同步状态
@@ -2511,6 +2686,7 @@ cdef extern from "ThostFtdcUserApiStruct.h":
         TThostFtdcTimeType EventTime  # 事件发生时间
         TThostFtdcUserEventInfoType UserEventInfo  # 用户事件信息
         TThostFtdcInvestorIDType InvestorID  # 投资者代码
+        TThostFtdcOldInstrumentIDType reserve1  # 保留的无效字段
         TThostFtdcInstrumentIDType InstrumentID  # 合约代码
     cdef struct CThostFtdcQryContractBankField:  # 查询签约银行请求
         TThostFtdcBrokerIDType BrokerID  # 经纪公司代码
@@ -2530,7 +2706,7 @@ cdef extern from "ThostFtdcUserApiStruct.h":
         TThostFtdcInvestorIDType InvestorID  # 投资者代码
         TThostFtdcTradeIDType ComTradeID  # 组合编号
         TThostFtdcTradeIDType TradeID  # 撮合编号
-        TThostFtdcInstrumentIDType InstrumentID  # 合约代码
+        TThostFtdcOldInstrumentIDType reserve1  # 保留的无效字段
         TThostFtdcHedgeFlagType HedgeFlag  # 投机套保标志
         TThostFtdcDirectionType Direction  # 买卖
         TThostFtdcVolumeType TotalAmt  # 持仓量
@@ -2540,13 +2716,15 @@ cdef extern from "ThostFtdcUserApiStruct.h":
         TThostFtdcRatioType MarginRateByVolume  # 保证金率(按手数)
         TThostFtdcLegIDType LegID  # 单腿编号
         TThostFtdcLegMultipleType LegMultiple  # 单腿乘数
-        TThostFtdcInstrumentIDType CombInstrumentID  # 组合持仓合约编码
+        TThostFtdcOldInstrumentIDType reserve2  # 保留的无效字段
         TThostFtdcTradeGroupIDType TradeGroupID  # 成交组号
         TThostFtdcInvestUnitIDType InvestUnitID  # 投资单元代码
+        TThostFtdcInstrumentIDType InstrumentID  # 合约代码
+        TThostFtdcInstrumentIDType CombInstrumentID  # 组合持仓合约编码
     cdef struct CThostFtdcParkedOrderField:  # 预埋单
         TThostFtdcBrokerIDType BrokerID  # 经纪公司代码
         TThostFtdcInvestorIDType InvestorID  # 投资者代码
-        TThostFtdcInstrumentIDType InstrumentID  # 合约代码
+        TThostFtdcOldInstrumentIDType reserve1  # 保留的无效字段
         TThostFtdcOrderRefType OrderRef  # 报单引用
         TThostFtdcUserIDType UserID  # 用户代码
         TThostFtdcOrderPriceTypeType OrderPriceType  # 报单价格条件
@@ -2577,8 +2755,10 @@ cdef extern from "ThostFtdcUserApiStruct.h":
         TThostFtdcCurrencyIDType CurrencyID  # 币种代码
         TThostFtdcClientIDType ClientID  # 交易编码
         TThostFtdcInvestUnitIDType InvestUnitID  # 投资单元代码
-        TThostFtdcIPAddressType IPAddress  # IP地址
+        TThostFtdcOldIPAddressType reserve2  # 保留的无效字段
         TThostFtdcMacAddressType MacAddress  # Mac地址
+        TThostFtdcInstrumentIDType InstrumentID  # 合约代码
+        TThostFtdcIPAddressType IPAddress  # IP地址
     cdef struct CThostFtdcParkedOrderActionField:  # 输入预埋单操作
         TThostFtdcBrokerIDType BrokerID  # 经纪公司代码
         TThostFtdcInvestorIDType InvestorID  # 投资者代码
@@ -2593,27 +2773,31 @@ cdef extern from "ThostFtdcUserApiStruct.h":
         TThostFtdcPriceType LimitPrice  # 价格
         TThostFtdcVolumeType VolumeChange  # 数量变化
         TThostFtdcUserIDType UserID  # 用户代码
-        TThostFtdcInstrumentIDType InstrumentID  # 合约代码
+        TThostFtdcOldInstrumentIDType reserve1  # 保留的无效字段
         TThostFtdcParkedOrderActionIDType ParkedOrderActionID  # 预埋撤单单编号
         TThostFtdcUserTypeType UserType  # 用户类型
         TThostFtdcParkedOrderStatusType Status  # 预埋撤单状态
         TThostFtdcErrorIDType ErrorID  # 错误代码
         TThostFtdcErrorMsgType ErrorMsg  # 错误信息
         TThostFtdcInvestUnitIDType InvestUnitID  # 投资单元代码
-        TThostFtdcIPAddressType IPAddress  # IP地址
+        TThostFtdcOldIPAddressType reserve2  # 保留的无效字段
         TThostFtdcMacAddressType MacAddress  # Mac地址
+        TThostFtdcInstrumentIDType InstrumentID  # 合约代码
+        TThostFtdcIPAddressType IPAddress  # IP地址
     cdef struct CThostFtdcQryParkedOrderField:  # 查询预埋单
         TThostFtdcBrokerIDType BrokerID  # 经纪公司代码
         TThostFtdcInvestorIDType InvestorID  # 投资者代码
-        TThostFtdcInstrumentIDType InstrumentID  # 合约代码
+        TThostFtdcOldInstrumentIDType reserve1  # 保留的无效字段
         TThostFtdcExchangeIDType ExchangeID  # 交易所代码
         TThostFtdcInvestUnitIDType InvestUnitID  # 投资单元代码
+        TThostFtdcInstrumentIDType InstrumentID  # 合约代码
     cdef struct CThostFtdcQryParkedOrderActionField:  # 查询预埋撤单
         TThostFtdcBrokerIDType BrokerID  # 经纪公司代码
         TThostFtdcInvestorIDType InvestorID  # 投资者代码
-        TThostFtdcInstrumentIDType InstrumentID  # 合约代码
+        TThostFtdcOldInstrumentIDType reserve1  # 保留的无效字段
         TThostFtdcExchangeIDType ExchangeID  # 交易所代码
         TThostFtdcInvestUnitIDType InvestUnitID  # 投资单元代码
+        TThostFtdcInstrumentIDType InstrumentID  # 合约代码
     cdef struct CThostFtdcRemoveParkedOrderField:  # 删除预埋单
         TThostFtdcBrokerIDType BrokerID  # 经纪公司代码
         TThostFtdcInvestorIDType InvestorID  # 投资者代码
@@ -2634,9 +2818,10 @@ cdef extern from "ThostFtdcUserApiStruct.h":
     cdef struct CThostFtdcQryInvestorPositionCombineDetailField:  # 查询组合持仓明细
         TThostFtdcBrokerIDType BrokerID  # 经纪公司代码
         TThostFtdcInvestorIDType InvestorID  # 投资者代码
-        TThostFtdcInstrumentIDType CombInstrumentID  # 组合持仓合约编码
+        TThostFtdcOldInstrumentIDType reserve1  # 保留的无效字段
         TThostFtdcExchangeIDType ExchangeID  # 交易所代码
         TThostFtdcInvestUnitIDType InvestUnitID  # 投资单元代码
+        TThostFtdcInstrumentIDType CombInstrumentID  # 组合持仓合约编码
     cdef struct CThostFtdcMarketDataAveragePriceField:  # 成交均价
         TThostFtdcPriceType AveragePrice  # 当日均价
     cdef struct CThostFtdcVerifyInvestorPasswordField:  # 校验投资者密码
@@ -2646,9 +2831,11 @@ cdef extern from "ThostFtdcUserApiStruct.h":
     cdef struct CThostFtdcUserIPField:  # 用户IP
         TThostFtdcBrokerIDType BrokerID  # 经纪公司代码
         TThostFtdcUserIDType UserID  # 用户代码
+        TThostFtdcOldIPAddressType reserve1  # 保留的无效字段
+        TThostFtdcOldIPAddressType reserve2  # 保留的无效字段
+        TThostFtdcMacAddressType MacAddress  # Mac地址
         TThostFtdcIPAddressType IPAddress  # IP地址
         TThostFtdcIPAddressType IPMask  # IP地址掩码
-        TThostFtdcMacAddressType MacAddress  # Mac地址
     cdef struct CThostFtdcTradingNoticeInfoField:  # 用户事件通知信息
         TThostFtdcBrokerIDType BrokerID  # 经纪公司代码
         TThostFtdcInvestorIDType InvestorID  # 投资者代码
@@ -2677,7 +2864,7 @@ cdef extern from "ThostFtdcUserApiStruct.h":
     cdef struct CThostFtdcErrOrderField:  # 错误报单
         TThostFtdcBrokerIDType BrokerID  # 经纪公司代码
         TThostFtdcInvestorIDType InvestorID  # 投资者代码
-        TThostFtdcInstrumentIDType InstrumentID  # 合约代码
+        TThostFtdcOldInstrumentIDType reserve1  # 保留的无效字段
         TThostFtdcOrderRefType OrderRef  # 报单引用
         TThostFtdcUserIDType UserID  # 用户代码
         TThostFtdcOrderPriceTypeType OrderPriceType  # 报单价格条件
@@ -2705,12 +2892,14 @@ cdef extern from "ThostFtdcUserApiStruct.h":
         TThostFtdcAccountIDType AccountID  # 资金账号
         TThostFtdcCurrencyIDType CurrencyID  # 币种代码
         TThostFtdcClientIDType ClientID  # 交易编码
-        TThostFtdcIPAddressType IPAddress  # IP地址
+        TThostFtdcOldIPAddressType reserve2  # 保留的无效字段
         TThostFtdcMacAddressType MacAddress  # Mac地址
+        TThostFtdcInstrumentIDType InstrumentID  # 合约代码
+        TThostFtdcIPAddressType IPAddress  # IP地址
     cdef struct CThostFtdcErrorConditionalOrderField:  # 查询错误报单操作
         TThostFtdcBrokerIDType BrokerID  # 经纪公司代码
         TThostFtdcInvestorIDType InvestorID  # 投资者代码
-        TThostFtdcInstrumentIDType InstrumentID  # 合约代码
+        TThostFtdcOldInstrumentIDType reserve1  # 保留的无效字段
         TThostFtdcOrderRefType OrderRef  # 报单引用
         TThostFtdcUserIDType UserID  # 用户代码
         TThostFtdcOrderPriceTypeType OrderPriceType  # 报单价格条件
@@ -2733,7 +2922,7 @@ cdef extern from "ThostFtdcUserApiStruct.h":
         TThostFtdcExchangeIDType ExchangeID  # 交易所代码
         TThostFtdcParticipantIDType ParticipantID  # 会员代码
         TThostFtdcClientIDType ClientID  # 客户代码
-        TThostFtdcExchangeInstIDType ExchangeInstID  # 合约在交易所的代码
+        TThostFtdcOldExchangeInstIDType reserve2  # 保留的无效字段
         TThostFtdcTraderIDType TraderID  # 交易所交易员代码
         TThostFtdcInstallIDType InstallID  # 安装编号
         TThostFtdcOrderSubmitStatusType OrderSubmitStatus  # 报单提交状态
@@ -2771,8 +2960,11 @@ cdef extern from "ThostFtdcUserApiStruct.h":
         TThostFtdcInvestUnitIDType InvestUnitID  # 投资单元代码
         TThostFtdcAccountIDType AccountID  # 资金账号
         TThostFtdcCurrencyIDType CurrencyID  # 币种代码
-        TThostFtdcIPAddressType IPAddress  # IP地址
+        TThostFtdcOldIPAddressType reserve3  # 保留的无效字段
         TThostFtdcMacAddressType MacAddress  # Mac地址
+        TThostFtdcInstrumentIDType InstrumentID  # 合约代码
+        TThostFtdcExchangeInstIDType ExchangeInstID  # 合约在交易所的代码
+        TThostFtdcIPAddressType IPAddress  # IP地址
     cdef struct CThostFtdcQryErrOrderActionField:  # 查询错误报单操作
         TThostFtdcBrokerIDType BrokerID  # 经纪公司代码
         TThostFtdcInvestorIDType InvestorID  # 投资者代码
@@ -2801,23 +2993,25 @@ cdef extern from "ThostFtdcUserApiStruct.h":
         TThostFtdcOrderActionStatusType OrderActionStatus  # 报单操作状态
         TThostFtdcUserIDType UserID  # 用户代码
         TThostFtdcErrorMsgType StatusMsg  # 状态信息
-        TThostFtdcInstrumentIDType InstrumentID  # 合约代码
+        TThostFtdcOldInstrumentIDType reserve1  # 保留的无效字段
         TThostFtdcBranchIDType BranchID  # 营业部编号
         TThostFtdcInvestUnitIDType InvestUnitID  # 投资单元代码
-        TThostFtdcIPAddressType IPAddress  # IP地址
+        TThostFtdcOldIPAddressType reserve2  # 保留的无效字段
         TThostFtdcMacAddressType MacAddress  # Mac地址
         TThostFtdcErrorIDType ErrorID  # 错误代码
         TThostFtdcErrorMsgType ErrorMsg  # 错误信息
+        TThostFtdcInstrumentIDType InstrumentID  # 合约代码
+        TThostFtdcIPAddressType IPAddress  # IP地址
     cdef struct CThostFtdcQryExchangeSequenceField:  # 查询交易所状态
         TThostFtdcExchangeIDType ExchangeID  # 交易所代码
     cdef struct CThostFtdcExchangeSequenceField:  # 交易所状态
         TThostFtdcExchangeIDType ExchangeID  # 交易所代码
         TThostFtdcSequenceNoType SequenceNo  # 序号
         TThostFtdcInstrumentStatusType MarketStatus  # 合约交易状态
-    cdef struct CThostFtdcQueryMaxOrderVolumeWithPriceField:  # 根据价格查询最大报单数量
+    cdef struct CThostFtdcQryMaxOrderVolumeWithPriceField:  # 根据价格查询最大报单数量
         TThostFtdcBrokerIDType BrokerID  # 经纪公司代码
         TThostFtdcInvestorIDType InvestorID  # 投资者代码
-        TThostFtdcInstrumentIDType InstrumentID  # 合约代码
+        TThostFtdcOldInstrumentIDType reserve1  # 保留的无效字段
         TThostFtdcDirectionType Direction  # 买卖方向
         TThostFtdcOffsetFlagType OffsetFlag  # 开平标志
         TThostFtdcHedgeFlagType HedgeFlag  # 投机套保标志
@@ -2825,6 +3019,7 @@ cdef extern from "ThostFtdcUserApiStruct.h":
         TThostFtdcPriceType Price  # 报单价格
         TThostFtdcExchangeIDType ExchangeID  # 交易所代码
         TThostFtdcInvestUnitIDType InvestUnitID  # 投资单元代码
+        TThostFtdcInstrumentIDType InstrumentID  # 合约代码
     cdef struct CThostFtdcQryBrokerTradingParamsField:  # 查询经纪公司交易参数
         TThostFtdcBrokerIDType BrokerID  # 经纪公司代码
         TThostFtdcInvestorIDType InvestorID  # 投资者代码
@@ -2842,14 +3037,16 @@ cdef extern from "ThostFtdcUserApiStruct.h":
     cdef struct CThostFtdcQryBrokerTradingAlgosField:  # 查询经纪公司交易算法
         TThostFtdcBrokerIDType BrokerID  # 经纪公司代码
         TThostFtdcExchangeIDType ExchangeID  # 交易所代码
+        TThostFtdcOldInstrumentIDType reserve1  # 保留的无效字段
         TThostFtdcInstrumentIDType InstrumentID  # 合约代码
     cdef struct CThostFtdcBrokerTradingAlgosField:  # 经纪公司交易算法
         TThostFtdcBrokerIDType BrokerID  # 经纪公司代码
         TThostFtdcExchangeIDType ExchangeID  # 交易所代码
-        TThostFtdcInstrumentIDType InstrumentID  # 合约代码
+        TThostFtdcOldInstrumentIDType reserve1  # 保留的无效字段
         TThostFtdcHandlePositionAlgoIDType HandlePositionAlgoID  # 持仓处理算法编号
         TThostFtdcFindMarginRateAlgoIDType FindMarginRateAlgoID  # 寻找保证金率算法编号
         TThostFtdcHandleTradingAccountAlgoIDType HandleTradingAccountAlgoID  # 资金处理算法编号
+        TThostFtdcInstrumentIDType InstrumentID  # 合约代码
     cdef struct CThostFtdcQueryBrokerDepositField:  # 查询经纪公司资金
         TThostFtdcBrokerIDType BrokerID  # 经纪公司代码
         TThostFtdcExchangeIDType ExchangeID  # 交易所代码
@@ -2920,26 +3117,29 @@ cdef extern from "ThostFtdcUserApiStruct.h":
         TThostFtdcBrokerIDType BrokerID  # 经纪公司代码
         TThostFtdcInvestorIDType InvestorID  # 投资者代码
         TThostFtdcExchangeIDType ExchangeID  # 交易所代码
-        TThostFtdcInstrumentIDType InstrumentID  # 合约代码
+        TThostFtdcOldInstrumentIDType reserve1  # 保留的无效字段
         TThostFtdcDirectionType Direction  # 买卖方向
         TThostFtdcHedgeFlagType HedgeFlag  # 投机套保标志
         TThostFtdcVolumeType Volume  # 数量
         TThostFtdcInvestUnitIDType InvestUnitID  # 投资单元代码
+        TThostFtdcInstrumentIDType InstrumentID  # 合约代码
     cdef struct CThostFtdcQryEWarrantOffsetField:  # 查询仓单折抵信息
         TThostFtdcBrokerIDType BrokerID  # 经纪公司代码
         TThostFtdcInvestorIDType InvestorID  # 投资者代码
         TThostFtdcExchangeIDType ExchangeID  # 交易所代码
-        TThostFtdcInstrumentIDType InstrumentID  # 合约代码
+        TThostFtdcOldInstrumentIDType reserve1  # 保留的无效字段
         TThostFtdcInvestUnitIDType InvestUnitID  # 投资单元代码
+        TThostFtdcInstrumentIDType InstrumentID  # 合约代码
     cdef struct CThostFtdcQryInvestorProductGroupMarginField:  # 查询投资者品种跨品种保证金
         TThostFtdcBrokerIDType BrokerID  # 经纪公司代码
         TThostFtdcInvestorIDType InvestorID  # 投资者代码
-        TThostFtdcInstrumentIDType ProductGroupID  # 品种跨品种标示
+        TThostFtdcOldInstrumentIDType reserve1  # 保留的无效字段
         TThostFtdcHedgeFlagType HedgeFlag  # 投机套保标志
         TThostFtdcExchangeIDType ExchangeID  # 交易所代码
         TThostFtdcInvestUnitIDType InvestUnitID  # 投资单元代码
-    cdef struct CThostFtdcInvestorProductGroupMarginField:  # 投资者品种跨品种保证金
         TThostFtdcInstrumentIDType ProductGroupID  # 品种跨品种标示
+    cdef struct CThostFtdcInvestorProductGroupMarginField:  # 投资者品种跨品种保证金
+        TThostFtdcOldInstrumentIDType reserve1  # 保留的无效字段
         TThostFtdcBrokerIDType BrokerID  # 经纪公司代码
         TThostFtdcInvestorIDType InvestorID  # 投资者代码
         TThostFtdcDateType TradingDay  # 交易日
@@ -2968,6 +3168,7 @@ cdef extern from "ThostFtdcUserApiStruct.h":
         TThostFtdcHedgeFlagType HedgeFlag  # 投机套保标志
         TThostFtdcExchangeIDType ExchangeID  # 交易所代码
         TThostFtdcInvestUnitIDType InvestUnitID  # 投资单元代码
+        TThostFtdcInstrumentIDType ProductGroupID  # 品种跨品种标示
     cdef struct CThostFtdcQueryCFMMCTradingAccountTokenField:  # 查询监控中心用户令牌
         TThostFtdcBrokerIDType BrokerID  # 经纪公司代码
         TThostFtdcInvestorIDType InvestorID  # 投资者代码
@@ -2979,11 +3180,14 @@ cdef extern from "ThostFtdcUserApiStruct.h":
         TThostFtdcSequenceNoType KeyID  # 密钥编号
         TThostFtdcCFMMCTokenType Token  # 动态令牌
     cdef struct CThostFtdcQryProductGroupField:  # 查询产品组
-        TThostFtdcInstrumentIDType ProductID  # 产品代码
+        TThostFtdcOldInstrumentIDType reserve1  # 保留的无效字段
         TThostFtdcExchangeIDType ExchangeID  # 交易所代码
+        TThostFtdcInstrumentIDType ProductID  # 产品代码
     cdef struct CThostFtdcProductGroupField:  # 投资者品种跨品种保证金产品组
-        TThostFtdcInstrumentIDType ProductID  # 产品代码
+        TThostFtdcOldInstrumentIDType reserve1  # 保留的无效字段
         TThostFtdcExchangeIDType ExchangeID  # 交易所代码
+        TThostFtdcOldInstrumentIDType reserve2  # 保留的无效字段
+        TThostFtdcInstrumentIDType ProductID  # 产品代码
         TThostFtdcInstrumentIDType ProductGroupID  # 产品组代码
     cdef struct CThostFtdcBulletinField:  # 交易所公告
         TThostFtdcExchangeIDType ExchangeID  # 交易所代码
@@ -3004,6 +3208,22 @@ cdef extern from "ThostFtdcUserApiStruct.h":
         TThostFtdcSequenceNoType SequenceNo  # 序列号
         TThostFtdcNewsTypeType NewsType  # 公告类型
         TThostFtdcNewsUrgencyType NewsUrgency  # 紧急程度
+    cdef struct CThostFtdcMulticastInstrumentField:  # MulticastInstrument
+        TThostFtdcInstallIDType TopicID  # 主题号
+        TThostFtdcOldInstrumentIDType reserve1  # 保留的无效字段
+        TThostFtdcInstallIDType InstrumentNo  # 合约编号
+        TThostFtdcPriceType CodePrice  # 基准价
+        TThostFtdcVolumeMultipleType VolumeMultiple  # 合约数量乘数
+        TThostFtdcPriceType PriceTick  # 最小变动价位
+        TThostFtdcInstrumentIDType InstrumentID  # 合约代码
+    cdef struct CThostFtdcQryMulticastInstrumentField:  # QryMulticastInstrument
+        TThostFtdcInstallIDType TopicID  # 主题号
+        TThostFtdcOldInstrumentIDType reserve1  # 保留的无效字段
+        TThostFtdcInstrumentIDType InstrumentID  # 合约代码
+    cdef struct CThostFtdcAppIDAuthAssignField:  # App客户端权限分配
+        TThostFtdcBrokerIDType BrokerID  # 经纪公司代码
+        TThostFtdcAppIDType AppID  # App代码
+        TThostFtdcDRIdentityIDType DRIdentityID  # 交易中心代码
     cdef struct CThostFtdcReqOpenAccountField:  # 转帐开户请求
         TThostFtdcTradeCodeType TradeCode  # 业务功能码
         TThostFtdcBankIDType BankID  # 银行代码
@@ -4015,22 +4235,21 @@ cdef extern from "ThostFtdcUserApiStruct.h":
     cdef struct CThostFtdcLoginForbiddenUserField:  # 禁止登录用户
         TThostFtdcBrokerIDType BrokerID  # 经纪公司代码
         TThostFtdcUserIDType UserID  # 用户代码
+        TThostFtdcOldIPAddressType reserve1  # 保留的无效字段
         TThostFtdcIPAddressType IPAddress  # IP地址
     cdef struct CThostFtdcQryLoginForbiddenUserField:  # 查询禁止登录用户
         TThostFtdcBrokerIDType BrokerID  # 经纪公司代码
         TThostFtdcUserIDType UserID  # 用户代码
-    cdef struct CThostFtdcMulticastGroupInfoField:  # UDP组播组信息
-        TThostFtdcIPAddressType GroupIP  # 组播组IP地址
-        TThostFtdcIPPortType GroupPort  # 组播组IP端口
-        TThostFtdcIPAddressType SourceIP  # 源地址
     cdef struct CThostFtdcTradingAccountReserveField:  # 资金账户基本准备金
         TThostFtdcBrokerIDType BrokerID  # 经纪公司代码
         TThostFtdcAccountIDType AccountID  # 投资者帐号
         TThostFtdcMoneyType Reserve  # 基本准备金
         TThostFtdcCurrencyIDType CurrencyID  # 币种代码
     cdef struct CThostFtdcQryLoginForbiddenIPField:  # 查询禁止登录IP
+        TThostFtdcOldIPAddressType reserve1  # 保留的无效字段
         TThostFtdcIPAddressType IPAddress  # IP地址
     cdef struct CThostFtdcQryIPListField:  # 查询IP列表
+        TThostFtdcOldIPAddressType reserve1  # 保留的无效字段
         TThostFtdcIPAddressType IPAddress  # IP地址
     cdef struct CThostFtdcQryUserRightsAssignField:  # 查询用户下单权限分配表
         TThostFtdcBrokerIDType BrokerID  # 应用单元代码
@@ -4140,15 +4359,6 @@ cdef extern from "ThostFtdcUserApiStruct.h":
     cdef struct CThostFtdcQrySecAgentTradeInfoField:  # 查询二级代理商信息
         TThostFtdcBrokerIDType BrokerID  # 经纪公司代码
         TThostFtdcAccountIDType BrokerSecAgentID  # 境外中介机构资金帐号
-    cdef struct CThostFtdcUserSystemInfoField:  # 用户系统信息
-        TThostFtdcBrokerIDType BrokerID  # 经纪公司代码
-        TThostFtdcUserIDType UserID  # 用户代码
-        TThostFtdcSystemInfoLenType ClientSystemInfoLen  # 用户端系统内部信息长度
-        TThostFtdcClientSystemInfoType ClientSystemInfo  # 用户端系统内部信息
-        TThostFtdcIPAddressType ClientPublicIP  # 用户公网IP
-        TThostFtdcIPPortType ClientIPPort  # 终端IP端口
-        TThostFtdcTimeType ClientLoginTime  # 登录成功时间
-        TThostFtdcAppIDType ClientAppID  # App代码
     cdef struct CThostFtdcReqUserAuthMethodField:  # 用户发出获取安全安全登陆方法请求
         TThostFtdcDateType TradingDay  # 交易日
         TThostFtdcBrokerIDType BrokerID  # 经纪公司代码
@@ -4179,10 +4389,11 @@ cdef extern from "ThostFtdcUserApiStruct.h":
         TThostFtdcProductInfoType InterfaceProductInfo  # 接口端产品信息
         TThostFtdcProtocolInfoType ProtocolInfo  # 协议信息
         TThostFtdcMacAddressType MacAddress  # Mac地址
-        TThostFtdcIPAddressType ClientIPAddress  # 终端IP地址
+        TThostFtdcOldIPAddressType reserve1  # 保留的无效字段
         TThostFtdcLoginRemarkType LoginRemark  # 登录备注
         TThostFtdcPasswordType Captcha  # 图形验证码的文字内容
         TThostFtdcIPPortType ClientIPPort  # 终端IP端口
+        TThostFtdcIPAddressType ClientIPAddress  # 终端IP地址
     cdef struct CThostFtdcReqUserLoginWithTextField:  # 用户发出带短信验证码的登录请求请求
         TThostFtdcDateType TradingDay  # 交易日
         TThostFtdcBrokerIDType BrokerID  # 经纪公司代码
@@ -4192,10 +4403,11 @@ cdef extern from "ThostFtdcUserApiStruct.h":
         TThostFtdcProductInfoType InterfaceProductInfo  # 接口端产品信息
         TThostFtdcProtocolInfoType ProtocolInfo  # 协议信息
         TThostFtdcMacAddressType MacAddress  # Mac地址
-        TThostFtdcIPAddressType ClientIPAddress  # 终端IP地址
+        TThostFtdcOldIPAddressType reserve1  # 保留的无效字段
         TThostFtdcLoginRemarkType LoginRemark  # 登录备注
         TThostFtdcPasswordType Text  # 短信验证码文字内容
         TThostFtdcIPPortType ClientIPPort  # 终端IP端口
+        TThostFtdcIPAddressType ClientIPAddress  # 终端IP地址
     cdef struct CThostFtdcReqUserLoginWithOTPField:  # 用户发出带动态验证码的登录请求请求
         TThostFtdcDateType TradingDay  # 交易日
         TThostFtdcBrokerIDType BrokerID  # 经纪公司代码
@@ -4205,10 +4417,11 @@ cdef extern from "ThostFtdcUserApiStruct.h":
         TThostFtdcProductInfoType InterfaceProductInfo  # 接口端产品信息
         TThostFtdcProtocolInfoType ProtocolInfo  # 协议信息
         TThostFtdcMacAddressType MacAddress  # Mac地址
-        TThostFtdcIPAddressType ClientIPAddress  # 终端IP地址
+        TThostFtdcOldIPAddressType reserve1  # 保留的无效字段
         TThostFtdcLoginRemarkType LoginRemark  # 登录备注
         TThostFtdcPasswordType OTPPassword  # OTP密码
         TThostFtdcIPPortType ClientIPPort  # 终端IP端口
+        TThostFtdcIPAddressType ClientIPAddress  # 终端IP地址
     cdef struct CThostFtdcReqApiHandshakeField:  # api握手请求
         TThostFtdcCryptoKeyVersionType CryptoKeyVersion  # api与front通信密钥版本号
     cdef struct CThostFtdcRspApiHandshakeField:  # front发给api的握手回复
@@ -4225,3 +4438,50 @@ cdef extern from "ThostFtdcUserApiStruct.h":
         TThostFtdcInvestorIDType InvestorID  # 投资者代码
     cdef struct CThostFtdcQueryFreqField:  # 查询频率，每秒查询比数
         TThostFtdcQueryFreqType QueryFreq  # 查询频率
+    cdef struct CThostFtdcAuthForbiddenIPField:  # 禁止认证IP
+        TThostFtdcOldIPAddressType reserve1  # 保留的无效字段
+        TThostFtdcIPAddressType IPAddress  # IP地址
+    cdef struct CThostFtdcQryAuthForbiddenIPField:  # 查询禁止认证IP
+        TThostFtdcOldIPAddressType reserve1  # 保留的无效字段
+        TThostFtdcIPAddressType IPAddress  # IP地址
+    cdef struct CThostFtdcSyncDelaySwapFrozenField:  # 换汇可提冻结
+        TThostFtdcDepositSeqNoType DelaySwapSeqNo  # 换汇流水号
+        TThostFtdcBrokerIDType BrokerID  # 经纪公司代码
+        TThostFtdcInvestorIDType InvestorID  # 投资者代码
+        TThostFtdcCurrencyIDType FromCurrencyID  # 源币种
+        TThostFtdcMoneyType FromRemainSwap  # 源剩余换汇额度(可提冻结)
+        TThostFtdcBoolType IsManualSwap  # 是否手工换汇
+    cdef struct CThostFtdcUserSystemInfoField:  # 用户系统信息
+        TThostFtdcBrokerIDType BrokerID  # 经纪公司代码
+        TThostFtdcUserIDType UserID  # 用户代码
+        TThostFtdcSystemInfoLenType ClientSystemInfoLen  # 用户端系统内部信息长度
+        TThostFtdcClientSystemInfoType ClientSystemInfo  # 用户端系统内部信息
+        TThostFtdcOldIPAddressType reserve1  # 保留的无效字段
+        TThostFtdcIPPortType ClientIPPort  # 终端IP端口
+        TThostFtdcTimeType ClientLoginTime  # 登录成功时间
+        TThostFtdcAppIDType ClientAppID  # App代码
+        TThostFtdcIPAddressType ClientPublicIP  # 用户公网IP
+    cdef struct CThostFtdcAuthUserIDField:  # 终端用户绑定信息
+        TThostFtdcBrokerIDType BrokerID  # 经纪公司代码
+        TThostFtdcAppIDType AppID  # App代码
+        TThostFtdcUserIDType UserID  # 用户代码
+        TThostFtdcAuthTypeType AuthType  # 校验类型
+    cdef struct CThostFtdcAuthIPField:  # 用户IP绑定信息
+        TThostFtdcBrokerIDType BrokerID  # 经纪公司代码
+        TThostFtdcAppIDType AppID  # App代码
+        TThostFtdcIPAddressType IPAddress  # 用户代码
+    cdef struct CThostFtdcQryClassifiedInstrumentField:  # 查询分类合约
+        TThostFtdcInstrumentIDType InstrumentID  # 合约代码
+        TThostFtdcExchangeIDType ExchangeID  # 交易所代码
+        TThostFtdcExchangeInstIDType ExchangeInstID  # 合约在交易所的代码
+        TThostFtdcInstrumentIDType ProductID  # 产品代码
+        TThostFtdcTradingTypeType TradingType  # 合约交易状态
+        TThostFtdcClassTypeType ClassType  # 合约分类类型
+    cdef struct CThostFtdcQryCombPromotionParamField:  # 查询组合优惠比例
+        TThostFtdcExchangeIDType ExchangeID  # 交易所代码
+        TThostFtdcInstrumentIDType InstrumentID  # 合约代码
+    cdef struct CThostFtdcCombPromotionParamField:  # 组合优惠比例
+        TThostFtdcExchangeIDType ExchangeID  # 交易所代码
+        TThostFtdcInstrumentIDType InstrumentID  # 合约代码
+        TThostFtdcCombHedgeFlagType CombHedgeFlag  # 投机套保标志
+        TThostFtdcDiscountRatioType Xparameter  # 期权组合保证金比例

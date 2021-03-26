@@ -50,6 +50,8 @@ class IdCardType:  # 证件类型
     AccountsPermits = 'J'  # 人行开户许可证
     FrgPrmtRdCard = 'K'  # 外国人永久居留证
     CptMngPrdLetter = 'L'  # 资管产品备案函
+    UniformSocialCreditCode = 'N'  # 统一社会信用代码
+    CorporationCertNo = 'O'  # 机构成立证明文件
     OtherCard = 'x'  # 其他证件
 
 
@@ -216,6 +218,19 @@ class ProductClass:  # 产品类型
     Spot = '4'  # 即期
     EFP = '5'  # 期转现
     SpotOption = '6'  # 现货期权
+    TAS = '7'  # TAS合约
+    MI = 'I'  # 金属指数
+
+
+class APIProductClass:  # 产品类型
+    FutureSingle = '1'  # 期货单一合约
+    OptionSingle = '2'  # 期权单一合约
+    Futures = '3'  # 可交易期货(含期货组合和期货单一合约)
+    Options = '4'  # 可交易期权(含期权组合和期权单一合约)
+    TradingComb = '5'  # 可下单组合（目前包含DCE和ZCE的期货组合）
+    UnTradingComb = '6'  # 可申请的组合（dce可以申请的组合合约 包含dce可以交易的合约）
+    AllTrading = '7'  # 所有可以交易合约
+    All = '8'  # 所有合约（包含不能交易合约 慎用）
 
 
 class InstLifePhase:  # 合约生命周期状态
@@ -385,6 +400,11 @@ class TradeType:  # 成交类型
     EFPDerived = '3'  # 期转现衍生成交
     CombinationDerived = '4'  # 组合衍生成交
     BlockTrade = '5'  # 大宗交易成交
+
+
+class SpecPosiType:  # 特殊持仓明细标识
+    Common = '#'  # 普通持仓明细
+    Tas = '0'  # TAS合约成交产生的标的合约持仓明细
 
 
 class PriceSource:  # 成交价来源
@@ -814,6 +834,8 @@ class UserEventType:  # 用户事件类型
     TradingError = '4'  # 交易失败
     UpdatePassword = '5'  # 修改密码
     Authenticate = '6'  # 客户端认证
+    SubmitSysInfo = '7'  # 终端信息上报
+    Transfer = '8'  # 转账
     Other = '9'  # 其他
 
 
@@ -1984,7 +2006,11 @@ class CombinationType:  # 组合类型
     STD = '3'  # 跨式组合
     STG = '4'  # 宽跨式组合
     PRT = '5'  # 备兑组合
-    CLD = '6'  # 时间价差组合
+    CAS = '6'  # 时间价差组合
+    OPL = '7'  # 期权对锁组合
+    BFO = '8'  # 买备兑组合
+    BLS = '9'  # 买入期权垂直价差组合
+    BES = 'a'  # 卖出期权垂直价差组合
 
 
 class DceCombinationType:  # 组合类型
@@ -2082,6 +2108,7 @@ class CFFEXUploadFileName:  # 中金所结算文件名
 class CombDirection:  # 组合指令方向
     Comb = '0'  # 申请组合
     UnComb = '1'  # 申请拆分
+    DelComb = '2'  # 操作员删组合单
 
 
 class StrikeOffsetType:  # 行权偏移类型
@@ -2135,3 +2162,21 @@ class OTCTradeType:  # OTC成交类型
 class MatchType:  # 期现风险匹配方式
     DV01 = '1'  # 基点价值
     ParValue = '2'  # 面值
+
+
+class AuthType:  # 用户终端认证方式
+    WHITE = '0'  # 白名单校验
+    BLACK = '1'  # 黑名单校验
+
+
+class ClassType:  # 合约分类方式
+    ALL = '0'  # 所有合约
+    FUTURE = '1'  # 期货、即期、期转现、Tas、金属指数合约
+    OPTION = '2'  # 期货、现货期权合约
+    COMB = '3'  # 组合合约
+
+
+class TradingType:  # 合约交易状态分类方式
+    ALL = '0'  # 所有状态
+    TRADE = '1'  # 交易
+    UNTRADE = '2'  # 非交易
