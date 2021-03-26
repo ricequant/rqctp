@@ -4,9 +4,9 @@
 
 static inline int MdSpi__OnFrontConnected(PyObject *);
 static inline int MdSpi__OnFrontDisconnected(PyObject *, int);
-static inline int MdSpi__OnRspUserLogin(PyObject *, CTHostFtdcRspUserLoginField *, CThostFtdcRspInfoField *, int, bool);
-static inline int MdSpi__OnRspSubMarketData(CThostFtdcSpecificInstrumentField *, CThostFtdcRspInfoField *, int, bool);
-static inline int MdSpi__OnRtnDepthMarketData(CThostFtdcDepthMarketDataField *);
+static inline int MdSpi__OnRspUserLogin(PyObject *, CThostFtdcRspUserLoginField *, CThostFtdcRspInfoField *, int, bool);
+static inline int MdSpi__OnRspSubMarketData(PyObject *, CThostFtdcSpecificInstrumentField *, CThostFtdcRspInfoField *, int, bool);
+static inline int MdSpi__OnRtnDepthMarketData(PyObject *, CThostFtdcDepthMarketDataField *);
 
 
 #define PyGIL(func) \
@@ -45,5 +45,4 @@ class CMdSpi: public CThostFtdcMdSpi {
 private:
     PyObject *api;
 
-
-}
+};
