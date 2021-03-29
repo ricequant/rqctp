@@ -94,10 +94,6 @@ cdef class TraderApi:
                 result = self._api.Join()
             return result
 
-    def RegisterFront(self, char *pszFrontAddress):
-        self._ensure_api_not_null()
-        self._api.RegisterFront(pszFrontAddress)
-
     def SubscribePrivateTopic(self, THOST_TE_RESUME_TYPE nResumeType):
         self._ensure_api_not_null()
         self._api.SubscribePrivateTopic(nResumeType)

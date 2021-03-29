@@ -27,10 +27,10 @@ cdef extern from "ThostFtdcTraderApi.h":
         void Release() nogil
         void Init() nogil
         int Join() nogil
-        void RegisterFront(char *pszFrontAddress) nogil except +
         void RegisterSpi(CTraderSpi *pSpi) nogil except +
         void SubscribePrivateTopic(THOST_TE_RESUME_TYPE nResumeType) nogil except +
         void SubscribePublicTopic(THOST_TE_RESUME_TYPE nResumeType) nogil except +
+        void RegisterFront(char *pszFrontAddress) nogil except +
         void RegisterNameServer(char *pszNsAddress) nogil except +
         void RegisterFensUserInfo(CThostFtdcFensUserInfoField *pFensUserInfo) nogil except +
         int ReqAuthenticate(CThostFtdcReqAuthenticateField *pReqAuthenticateField, int nRequestID) nogil except +

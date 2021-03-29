@@ -77,10 +77,6 @@ cdef class TraderApi:
                 result = self._api.Join()
             return result
 
-    def RegisterFront(self, char *pszFrontAddress):
-        self._ensure_api_not_null()
-        self._api.RegisterFront(pszFrontAddress)
-
     def SubscribePrivateTopic(self, THOST_TE_RESUME_TYPE nResumeType):
         self._ensure_api_not_null()
         self._api.SubscribePrivateTopic(nResumeType)
@@ -88,6 +84,14 @@ cdef class TraderApi:
     def SubscribePublicTopic(self, THOST_TE_RESUME_TYPE nResumeType):
         self._ensure_api_not_null()
         self._api.SubscribePublicTopic(nResumeType)
+
+    def RegisterFront(self, char *pszFrontAddress):
+
+        if self._api is NULL:
+            raise MemoryError()
+        with nogil:
+            self._api.RegisterFront(pszFrontAddress)
+        return
 
     def RegisterNameServer(self, char *pszNsAddress):
 

@@ -267,7 +267,7 @@ def parse_api_header(raw_lines: List[str], structs: Dict) -> Tuple[List[Method],
                 name, return_type, params = itemgetter("name", "return_type", "params")(
                     re.match(RE_API_METHOD, l).groupdict()
                 )
-                if name in ("Init", "Release", "Join", "RegisterFront", "SubscribePrivateTopic", "SubscribePublicTopic", "RegisterSpi"):
+                if name in ("Init", "Release", "Join", "SubscribePrivateTopic", "SubscribePublicTopic", "RegisterSpi"):
                     continue
                 yield Method(
                     name=name, return_type=return_type, params=list(_parse_params(params)), comments=comments.copy()
