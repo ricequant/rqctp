@@ -26,6 +26,10 @@ static inline int TraderSpi__OnRspUserLogin(PyObject *, CThostFtdcRspUserLoginFi
 static inline int TraderSpi__OnRtnTrade(PyObject *, CThostFtdcTradeField *);
 static inline int TraderSpi__OnRspQrySettlementInfo(PyObject *, CThostFtdcSettlementInfoField *, CThostFtdcRspInfoField *, int, bool);
 static inline int TraderSpi__OnRspAuthenticate(PyObject *, CThostFtdcRspAuthenticateField *, CThostFtdcRspInfoField *, int, bool);
+static inline int TraderSpi__OnRspQryInstrument(PyObject *, CThostFtdcInstrumentField *, CThostFtdcRspInfoField *, int, bool);
+static inline int TraderSpi__OnRspQryInstrumentMarginRate(PyObject *, CThostFtdcInstrumentMarginRateField *, CThostFtdcRspInfoField *, int, bool);
+static inline int TraderSpi__OnRspQryInstrumentCommissionRate(PyObject *, CThostFtdcInstrumentCommissionRateField *, CThostFtdcRspInfoField *, int, bool);
+
 
 
 #define PyGIL(func) \
@@ -64,6 +68,18 @@ class CTraderSpi: public CThostFtdcTraderSpi {
         virtual void OnRspAuthenticate(CThostFtdcRspAuthenticateField *pRspAuthenticateField, CThostFtdcRspInfoField *pRspInfo, int nRequestID, bool bIsLast) {
             PyGIL(TraderSpi__OnRspAuthenticate(api, pRspAuthenticateField, pRspInfo, nRequestID, bIsLast));
         };
+
+        virtual void OnRspQryInstrument(CThostFtdcInstrumentField * pInstrument, CThostFtdcRspInfoField *pRspInfo, int nRequestID, bool bIsLast) {
+            PyGIL(TraderSpi__OnRspQryInstrument(api, pInstrument, pRspInfo, nRequestID, bIsLast));
+        }
+
+        virtual void OnRspQryInstrumentMarginRate(CThostFtdcInstrumentMarginRateField *pInstrumentMarginRate, CThostFtdcRspInfoField *pRspInfo, int nRequestID, bool bIsLast) {
+            PyGIL(TraderSpi__OnRspQryInstrumentMarginRate(api, pInstrumentMarginRate, pRspInfo, nRequestID, bIsLast));
+        }
+
+        virtual void OnRspQryInstrumentCommissionRate(CThostFtdcInstrumentCommissionRateField *pInstrumentCommissionRate, CThostFtdcRspInfoField *pRspInfo, int nRequestID, bool bIsLast) {
+            PyGIL(TraderSpi__OnRspQryInstrumentCommissionRate(api, pInstrumentCommissionRate, pRspInfo, nRequestID, bIsLast));
+        }
 
     private:
         PyObject *api;
