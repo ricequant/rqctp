@@ -86,22 +86,28 @@ cdef class TraderApi:
         self._ensure_api_not_null()
         self._api.SubscribePublicTopic(nResumeType)
 
-    def RegisterFront(self, char *pszFrontAddress):
+    def RegisterFront(self, pszFrontAddress):
+        cdef char *address_pszFrontAddress
         if self._api is NULL:
             raise MemoryError()
         try:
+            b_pszFrontAddress = pszFrontAddress.encode("GBK")
+            address_pszFrontAddress = b_pszFrontAddress
             with nogil:
-                self._api.RegisterFront(pszFrontAddress)
+                self._api.RegisterFront(address_pszFrontAddress)
         finally:
             pass
         return
 
-    def RegisterNameServer(self, char *pszNsAddress):
+    def RegisterNameServer(self, pszNsAddress):
+        cdef char *address_pszNsAddress
         if self._api is NULL:
             raise MemoryError()
         try:
+            b_pszNsAddress = pszNsAddress.encode("GBK")
+            address_pszNsAddress = b_pszNsAddress
             with nogil:
-                self._api.RegisterNameServer(pszNsAddress)
+                self._api.RegisterNameServer(address_pszNsAddress)
         finally:
             pass
         return

@@ -114,7 +114,7 @@ cdef class {{ trader_md }}Api:
     def {{ method.name }}(self
         {%- for p in method.params -%}
         {%- if not (loop.last and loop.index == 2 and loop.previtem.type.array and p.name == "nCount") -%}
-        , {% if p.type.primitive_base and not p.type.array%}{{ p.type.base }} {% if p.type.pointer %}*{% endif %}{% endif %}{{ p.name }}
+        , {% if p.type.primitive_base and not p.type.pointer %}{{ p.type.base }} {% if p.type.pointer %}*{% endif %}{% endif %}{{ p.name }}
         {%- endif -%}
         {%- endfor -%}
     ):
@@ -124,18 +124,27 @@ cdef class {{ trader_md }}Api:
         {% for p in method.params %}
         {% if not p.type.primitive_base %}
         cdef size_t address_{{ p.name }} = ctypes.addressof({{ p.name }})
-        {% elif p.type.array %}
+        {% elif p.type.base == "char" and p.type.pointer %}
+        {% if p.type.array %}
         cdef int nCount = len({{ p.name }})
         cdef char **address_{{ p.name }} = <char **>malloc(nCount * sizeof(char *))
+        {% else %}
+        cdef char *address_{{ p.name }}
+        {% endif %}
         {% endif %}
         {% endfor %}
         if self._api is NULL:
             raise MemoryError()
         try:
-            {% for p in method.params %}{% if p.type.primitive_base and p.type.array%}
+            {% for p in method.params %}{% if p.type.primitive_base and p.type.pointer %}
+            {% if p.type.array %}
             {{ p.name }} = [i.encode("GBK") for i in {{ p.name }}]
             for i in range(nCount):
                 address_{{ p.name }}[i] = {{ p.name }}[i]
+            {% else %}
+            b_{{ p.name }} = {{ p.name }}.encode("GBK")
+            address_{{ p.name }} = b_{{ p.name }}
+            {% endif %}
             {% endif %}{% endfor %}
             with nogil:
                 {% if method.return_type == "int" %}
@@ -145,7 +154,7 @@ cdef class {{ trader_md }}Api:
                 {%- endif -%}
                     {%- for p in method.params -%}
                     {%- if p.type.primitive_base -%}
-                    {%- if p.type.array -%}
+                    {%- if p.type.pointer -%}
                     address_{{ p.name }}
                     {%- else -%}
                     {{ p.name }}

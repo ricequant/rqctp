@@ -22,6 +22,3 @@ from .TraderApi import TraderApi as CTraderApi
 class TraderApi(CTraderApi):
     def __init__(self, pszFlowPath: str = ""):
         super().__init__(pszFlowPath.encode("GBK"))
-
-    def RegisterFront(self, pszFrontAddress: str):
-        return super().RegisterFront(pszFrontAddress.encode("GBK"))
