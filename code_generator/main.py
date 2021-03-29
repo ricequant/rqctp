@@ -18,12 +18,12 @@
 
 import os
 import re
-from operator import itemgetter, attrgetter
+from operator import itemgetter
 from typing import List, Iterator, Union, NamedTuple, Optional, Tuple, Dict
 from collections import OrderedDict
 
 RE_CONST = r"THOST_FTDC_([\d\w]+)_(?P<name>[\d\w]+)"
-RE_API_METHOD = r"virtual (?P<return_type>[\w]+) (?P<name>[\d\w]+)\((?P<params>[\d\w\s\*,]*)\) = 0;"
+RE_API_METHOD = r"virtual (?P<return_type>[\w]+) (?P<name>[\d\w]+)\((?P<params>[\d\w\s\*\[\],]*)\) = 0;"
 RE_SPI_METHOD = r"virtual void (?P<name>[\d\w]+)\((?P<params>[\d\w\s\*,]*)\)( )?{};"
 
 
@@ -81,14 +81,20 @@ class StructType(NamedTuple):
         return re.match(r"CThostFtdc(?P<name>[\d\w]+)Field", self.name).group("name")
 
 
+class ParameterType(NamedTuple):
+    base: str
+    pointer: bool
+    array: bool
+    primitive_base: bool
+
+
 class Parameter(NamedTuple):
     name: str
-    type: str
-    pointer: bool
+    type: ParameterType
 
     @property
     def type_py_class_name(self):
-        return re.match(r"CThostFtdc(?P<name>[\d\w]+)Field", self.type).group("name")
+        return re.match(r"CThostFtdc(?P<name>[\d\w]+)Field", self.type.base).group("name")
 
 
 class Method(NamedTuple):
@@ -96,14 +102,6 @@ class Method(NamedTuple):
     return_type: str
     params: List[Parameter]
     comments: List[str]
-
-
-class ApiMethod(NamedTuple):
-    name : str
-    return_type: str
-    first_param: Parameter
-    req_id_in_params: bool
-    comments: str
 
 
 def is_comment(line: str):
@@ -214,14 +212,17 @@ def parse_struct_header(raw_lines: List[str], type_dict: dict):
     lines = line_gen(raw_lines)
     comment = None
     while True:
-        line = next(lines)
+        try:
+            line = next(lines)
+        except StopIteration:
+            break
         if is_comment(line):
             comment = parse_comment(line)
         elif line.startswith("struct "):
             yield parse_struct_def(line, lines, comment, type_dict)
 
 
-def parse_trader_api_header(raw_lines: List[str], struct_dict: Dict[str, StructType]):
+def parse_api_header(raw_lines: List[str], structs: Dict) -> Tuple[List[Method], List[Method]]:
     def _parse_params(params: str):
         if params:
             for param in (params.split(",") if "," in params else [params]):
@@ -230,7 +231,7 @@ def parse_trader_api_header(raw_lines: List[str], struct_dict: Dict[str, StructT
     def _parse_param(param: str):
         param = param.strip()
         param_elements = param.split(" ")
-        pointer = False
+        pointer = array = False
         if "*" in param_elements:
             param_elements.remove("*")
             pointer = True
@@ -238,7 +239,22 @@ def parse_trader_api_header(raw_lines: List[str], struct_dict: Dict[str, StructT
         if param_name.startswith("*"):
             param_name = param_name.split("*")[1]
             pointer = True
-        return Parameter(name=param_name, type=param_type, pointer=pointer)
+        if param_name.endswith("[]"):
+            if param_type != "char":
+                raise NotImplementedError(param)
+            param_name = param_name.split("[]")[0]
+            array = True
+
+        if param_type in ("int", "char", "bool"):
+            primitive_base = True
+        else:
+            if param_type not in structs:
+                raise NotImplementedError(param_type)
+            primitive_base = False
+
+        return Parameter(name=param_name, type=ParameterType(
+            base=param_type, pointer=pointer, array=array, primitive_base=primitive_base
+        ))
 
     def _parse_api(line_iter: Iterator[str]):
         assert next(line_iter) == "{"
@@ -247,7 +263,7 @@ def parse_trader_api_header(raw_lines: List[str], struct_dict: Dict[str, StructT
         while True:
             l = next(line_iter)
             if l == "protected:":
-                assert next(line_iter) == "~CThostFtdcTraderApi(){};"
+                assert next(line_iter) in ["~CThostFtdcTraderApi(){};", "~CThostFtdcMdApi(){};"]
                 assert next(line_iter) == "};"
                 break
             elif l.startswith("///"):
@@ -256,20 +272,11 @@ def parse_trader_api_header(raw_lines: List[str], struct_dict: Dict[str, StructT
                 name, return_type, params = itemgetter("name", "return_type", "params")(
                     re.match(RE_API_METHOD, l).groupdict()
                 )
-                if name in ("Init", "Release", "Join", "RegisterFront", "SubscribePrivateTopic", "SubscribePublicTopic", "RegisterSpi"):
+                if name in ("Init", "Release", "Join", "SubscribePrivateTopic", "SubscribePublicTopic", "RegisterSpi"):
                     continue
-                req_id_in_params = False
-                if "," in params:
-                    assert len(params.split(",")) == 2
-                    first, second = params.split(",")
-                    assert second.strip() == "int nRequestID"
-                    req_id_in_params = True
-                    first_param= _parse_param(first)
-                else:
-                    first_param = _parse_param(params)
-                yield ApiMethod(
-                    name=name, return_type=return_type, first_param=first_param, req_id_in_params=req_id_in_params,
-                    comments="\n".join(comments)
+                params = list(_parse_params(params))
+                yield Method(
+                    name=name, return_type=return_type, params=params, comments=comments.copy()
                 )
                 comments.clear()
             elif l.startswith("static") or l.startswith("virtual const"):
@@ -289,7 +296,7 @@ def parse_trader_api_header(raw_lines: List[str], struct_dict: Dict[str, StructT
                 comments.append(l.split("///")[1])
             elif re.match(RE_SPI_METHOD, l):
                 name, params = itemgetter("name", "params")(re.match(RE_SPI_METHOD, l).groupdict())
-                yield Method(name=name, return_type="void", params=list(_parse_params(params)), comments=comments)
+                yield Method(name=name, return_type="void", params=list(_parse_params(params)), comments=comments.copy())
                 comments.clear()
             else:
                 raise RuntimeError(f"Bad line: {l}")
@@ -302,14 +309,14 @@ def parse_trader_api_header(raw_lines: List[str], struct_dict: Dict[str, StructT
             line = next(lines)
         except StopIteration:
             break
-        if line == "class TRADER_API_EXPORT CThostFtdcTraderApi":
+        if line in ["class TRADER_API_EXPORT CThostFtdcTraderApi", "class MD_API_EXPORT CThostFtdcMdApi"]:
             api_methods = list(_parse_api(lines))
-        elif line == "class CThostFtdcTraderSpi":
+        elif line in ["class CThostFtdcTraderSpi", "class CThostFtdcMdSpi"]:
             spi_methods = list(_parse_spi(lines))
         else:
             pass
     if not (api_methods and spi_methods):
-        raise RuntimeError("{} not found".format("api" if api is None else "spi"))
+        raise RuntimeError("{} not found".format("api" if api_methods is None else "spi"))
     return api_methods, spi_methods
 
 
@@ -317,8 +324,10 @@ class PyCodeGenerator(object):
     def __init__(self, api_path):
         self._types: OrderedDict[str, Union[CustomType, EnumType]] = OrderedDict()
         self._structs = OrderedDict()
-        self._spi_methods = None
-        self._api_methods = None
+        self._trader_api_methods = None
+        self._trader_spi_methods = None
+        self._md_api_methods = None
+        self._md_spi_methods = None
 
         with open(os.path.join(api_path, "ThostFtdcUserApiDataType.h"), encoding="GBK") as f:
             for type_obj in parse_data_type_header(f.readlines()):
@@ -329,7 +338,10 @@ class PyCodeGenerator(object):
                 self._structs[struct_obj.name] = struct_obj
 
         with open(os.path.join(api_path, "ThostFtdcTraderApi.h"), encoding="GBK") as f:
-            self._api_methods, self._spi_methods = parse_trader_api_header(f.readlines(), self._structs)
+            self._trader_api_methods, self._trader_spi_methods = parse_api_header(f.readlines(), self._structs)
+
+        with open(os.path.join(api_path, "ThostFtdcMdApi.h"), encoding="GBK") as f:
+            self._md_api_methods, self._md_spi_methods = parse_api_header(f.readlines(), self._structs)
 
     def write(self, py_path):
         from jinja2 import Environment, FileSystemLoader
@@ -366,14 +378,21 @@ class PyCodeGenerator(object):
             template = env.get_template("consts.py.jinja")
             f.write(template.render(enum_types=[t for t in self._types.values() if t.enum_values]))
 
-        with open(os.path.join(py_path, "ThostFtdcTraderApi.pxd"), "w+", encoding="utf-8") as f:
-            template = env.get_template("ThostFtdcTraderApi.pxd.jinja")
-            f.write(template.render(methods=self._api_methods))
+        for trader_md, api_methods, spi_methods in [
+            ("Trader", self._trader_api_methods, self._trader_spi_methods),
+            ("Md", self._md_api_methods, self._md_spi_methods),
+        ]:
+            with open(os.path.join(py_path, f"ThostFtdc{trader_md}Api.pxd"), "w+", encoding="utf-8") as f:
+                template = env.get_template(f"ThostFtdcApi.pxd.jinja")
+                f.write(template.render(methods=api_methods, trader_md=trader_md))
 
-        with open(os.path.join(py_path, "TraderApi.pyx"), "w+", encoding="utf-8") as f:
-            template = env.get_template("TraderApi.pyx.jinja")
-            f.write(template.render(api_methods=self._api_methods, spi_methods=self._spi_methods))
-        
+            with open(os.path.join(py_path, f"{trader_md}Api.pyx"), "w+", encoding="utf-8") as f:
+                template = env.get_template("Api.pyx.jinja")
+                f.write(template.render(api_methods=api_methods, spi_methods=spi_methods, trader_md=trader_md))
+
+            with open(os.path.join(py_path, f"C{trader_md}Spi.h"), "w+", encoding="utf-8") as f:
+                template = env.get_template("CSpi.h.jinja")
+                f.write(template.render(spi_methods=spi_methods, trader_md=trader_md))
 
 
 if __name__ == "__main__":

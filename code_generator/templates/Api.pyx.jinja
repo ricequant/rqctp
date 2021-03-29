@@ -1,0 +1,177 @@
+{% macro spi_parameters(params) %}
+    {% if params %}
+
+    {% for p in params %}
+    {% if p.type.pointer %}
+        None if {{ p.name }} is NULL else {{ p.type_py_class_name }}.from_address(<size_t> {{ p.name }}).to_tuple()
+    {%- else %}
+        {{ p.name }}
+    {%- endif %}
+        {% if not loop.last -%}
+        ,
+        {% endif %}
+    {% endfor %}
+
+{{ '    ' -}}
+    {% endif %}
+{% endmacro %}
+# -*- coding: utf-8 -*-
+#
+# Copyright 2019 Ricequant, Inc
+#
+# * Commercial Usage: please contact public@ricequant.com
+# * Non-Commercial Usage:
+#     Licensed under the Apache License, Version 2.0 (the "License");
+#     you may not use this file except in compliance with the License.
+#     You may obtain a copy of the License at
+#
+#         http://www.apache.org/licenses/LICENSE-2.0
+#
+#     Unless required by applicable law or agreed to in writing, software
+#     distributed under the License is distributed on an "AS IS" BASIS,
+#     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+#     See the License for the specific language governing permissions and
+#     limitations under the License.
+
+from cpython cimport PyObject
+from libc.string cimport const_char
+from libc.stdlib cimport malloc, free
+from libcpp cimport bool as cbool
+
+from .ThostFtdc{{ trader_md }}Api cimport C{{ trader_md }}Api, C{{ trader_md }}Spi, CreateFtdc{{ trader_md }}Api
+from .ThostFtdcUserApiStruct cimport *
+
+import ctypes
+
+from .structs import *
+
+
+cdef class {{ trader_md }}Api:
+    cdef C{{ trader_md }}Api *_api
+    cdef C{{ trader_md }}Spi *_spi
+
+    def __cinit__(self):
+        self._api = NULL
+        self._spi = NULL
+
+    {% if trader_md == "Trader" %}
+    def __init__(self, const_char *pszFlowPath):
+        self._api = CreateFtdc{{ trader_md }}Api(pszFlowPath)
+    {% else %}
+    def __init__(self, const_char *pszFlowPath, cbool bIsUsingUdp, cbool bIsMulticast):
+        self._api = CreateFtdcMdApi(pszFlowPath, bIsUsingUdp, bIsMulticast)
+    {% endif %}
+        if self._api is NULL:
+            raise MemoryError()
+        self._spi = new C{{ trader_md }}Spi(<PyObject *>self)
+        if self._spi is NULL:
+            raise MemoryError()
+        self._api.RegisterSpi(self._spi)
+
+    def __dealloc__(self):
+        if self._api is not NULL:
+            self._api.RegisterSpi(NULL)
+            self._api.Release()
+            self._api = NULL
+            self._spi = NULL
+
+    def _ensure_api_not_null(self):
+        if self._api is NULL:
+            raise MemoryError()
+
+    def Release(self):
+        if self._api is not NULL:
+            self._api.RegisterSpi(NULL)
+            self._api.Release()
+            self._api = NULL
+            self._spi = NULL
+
+    def Init(self):
+        self._ensure_api_not_null()
+        self._api.Init()
+
+    def Join(self):
+        cdef int result
+        self._ensure_api_not_null()
+        if self._spi is not NULL:
+
+            print("before api join")
+            with nogil:
+                result = self._api.Join()
+            return result
+
+    {% if trader_md == "Trader" %}
+    def SubscribePrivateTopic(self, THOST_TE_RESUME_TYPE nResumeType):
+        self._ensure_api_not_null()
+        self._api.SubscribePrivateTopic(nResumeType)
+
+    def SubscribePublicTopic(self, THOST_TE_RESUME_TYPE nResumeType):
+        self._ensure_api_not_null()
+        self._api.SubscribePublicTopic(nResumeType)
+    {% endif %}
+    {% for method in api_methods %}
+
+    def {{ method.name }}(self
+        {%- for p in method.params -%}
+        {%- if not (loop.last and loop.index == 2 and loop.previtem.type.array and p.name == "nCount") -%}
+        , {% if p.type.primitive_base and not p.type.array%}{{ p.type.base }} {% if p.type.pointer %}*{% endif %}{% endif %}{{ p.name }}
+        {%- endif -%}
+        {%- endfor -%}
+    ):
+        {% if method.return_type == "int" %}
+        cdef int result
+        {% endif %}
+        {% for p in method.params %}
+        {% if not p.type.primitive_base %}
+        cdef size_t address_{{ p.name }} = ctypes.addressof({{ p.name }})
+        {% elif p.type.array %}
+        cdef int nCount = len({{ p.name }})
+        cdef char **address_{{ p.name }} = <char **>malloc(nCount * sizeof(char *))
+        {% endif %}
+        {% endfor %}
+        if self._api is NULL:
+            raise MemoryError()
+        try:
+            {% for p in method.params %}{% if p.type.primitive_base and p.type.array%}
+            {{ p.name }} = [i.encode("GBK") for i in {{ p.name }}]
+            for i in range(nCount):
+                address_{{ p.name }}[i] = {{ p.name }}[i]
+            {% endif %}{% endfor %}
+            with nogil:
+                {% if method.return_type == "int" %}
+                result = self._api.{{ method.name }}(
+                {%- else %}
+                self._api.{{ method.name }}(
+                {%- endif -%}
+                    {%- for p in method.params -%}
+                    {%- if p.type.primitive_base -%}
+                    {%- if p.type.array -%}
+                    address_{{ p.name }}
+                    {%- else -%}
+                    {{ p.name }}
+                    {%- endif -%}
+                    {%- else -%}
+                    <{{ p.type.base }} *> address_{{ p.name }}
+                    {%- endif -%}
+                    {%- if not loop.last %}, {% endif -%}
+                    {%- endfor -%}
+                )
+        finally:
+            {% set ns = namespace(need_pass=True) %}
+            {% for p in method.params %}{% if p.type.primitive_base and p.type.array%}
+            free(address_{{ p.name }})
+            {% set ns.need_pass = false %}
+            {% endif %}{% endfor %}
+            {% if ns.need_pass %}
+            pass
+            {% endif %}
+        return{% if method.return_type == "int" %} result{% endif %}
+
+    {% endfor %}
+{% for method in spi_methods %}
+
+
+cdef extern int {{ trader_md }}Spi__{{ method.name }}(api{% for p in method.params %}, {% if p.type.base == "bool" %}c{% endif %}{{ p.type.base }} {% if p.type.pointer %}*{% endif %}{{ p.name }}{% endfor %}) except -1:
+    api.{{ method.name }}({{ spi_parameters(method.params) }})
+    return 0
+{% endfor %}

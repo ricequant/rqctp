@@ -18,6 +18,7 @@
 
 from cpython cimport PyObject
 from libc.string cimport const_char
+from libcpp cimport bool as cbool
 
 from .ThostFtdcUserApiStruct cimport *
 
@@ -27,10 +28,10 @@ cdef extern from "ThostFtdcTraderApi.h":
         void Release() nogil
         void Init() nogil
         int Join() nogil
-        void RegisterFront(char *pszFrontAddress) nogil except +
         void RegisterSpi(CTraderSpi *pSpi) nogil except +
         void SubscribePrivateTopic(THOST_TE_RESUME_TYPE nResumeType) nogil except +
         void SubscribePublicTopic(THOST_TE_RESUME_TYPE nResumeType) nogil except +
+        void RegisterFront(char *pszFrontAddress) nogil except +
         void RegisterNameServer(char *pszNsAddress) nogil except +
         void RegisterFensUserInfo(CThostFtdcFensUserInfoField *pFensUserInfo) nogil except +
         int ReqAuthenticate(CThostFtdcReqAuthenticateField *pReqAuthenticateField, int nRequestID) nogil except +
@@ -50,7 +51,7 @@ cdef extern from "ThostFtdcTraderApi.h":
         int ReqParkedOrderInsert(CThostFtdcParkedOrderField *pParkedOrder, int nRequestID) nogil except +
         int ReqParkedOrderAction(CThostFtdcParkedOrderActionField *pParkedOrderAction, int nRequestID) nogil except +
         int ReqOrderAction(CThostFtdcInputOrderActionField *pInputOrderAction, int nRequestID) nogil except +
-        int ReqQueryMaxOrderVolume(CThostFtdcQueryMaxOrderVolumeField *pQueryMaxOrderVolume, int nRequestID) nogil except +
+        int ReqQryMaxOrderVolume(CThostFtdcQryMaxOrderVolumeField *pQryMaxOrderVolume, int nRequestID) nogil except +
         int ReqSettlementInfoConfirm(CThostFtdcSettlementInfoConfirmField *pSettlementInfoConfirm, int nRequestID) nogil except +
         int ReqRemoveParkedOrder(CThostFtdcRemoveParkedOrderField *pRemoveParkedOrder, int nRequestID) nogil except +
         int ReqRemoveParkedOrderAction(CThostFtdcRemoveParkedOrderActionField *pRemoveParkedOrderAction, int nRequestID) nogil except +
@@ -117,6 +118,8 @@ cdef extern from "ThostFtdcTraderApi.h":
         int ReqFromBankToFutureByFuture(CThostFtdcReqTransferField *pReqTransfer, int nRequestID) nogil except +
         int ReqFromFutureToBankByFuture(CThostFtdcReqTransferField *pReqTransfer, int nRequestID) nogil except +
         int ReqQueryBankAccountMoneyByFuture(CThostFtdcReqQueryAccountField *pReqQueryAccount, int nRequestID) nogil except +
+        int ReqQryClassifiedInstrument(CThostFtdcQryClassifiedInstrumentField *pQryClassifiedInstrument, int nRequestID) nogil except +
+        int ReqQryCombPromotionParam(CThostFtdcQryCombPromotionParamField *pQryCombPromotionParam, int nRequestID) nogil except +
 
 
 cdef extern from "ThostFtdcTraderApi.h" namespace "CThostFtdcTraderApi":
