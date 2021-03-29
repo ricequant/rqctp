@@ -23,7 +23,7 @@ from typing import List, Iterator, Union, NamedTuple, Optional, Tuple, Dict
 from collections import OrderedDict
 
 RE_CONST = r"THOST_FTDC_([\d\w]+)_(?P<name>[\d\w]+)"
-RE_API_METHOD = r"virtual (?P<return_type>[\w]+) (?P<name>[\d\w]+)\((?P<params>[\d\w\s\*,]*)\) = 0;"
+RE_API_METHOD = r"virtual (?P<return_type>[\w]+) (?P<name>[\d\w]+)\((?P<params>[\d\w\s\*\[\],]*)\) = 0;"
 RE_SPI_METHOD = r"virtual void (?P<name>[\d\w]+)\((?P<params>[\d\w\s\*,]*)\)( )?{};"
 
 
@@ -231,7 +231,7 @@ def parse_api_header(raw_lines: List[str], structs: Dict) -> Tuple[List[Method],
     def _parse_param(param: str):
         param = param.strip()
         param_elements = param.split(" ")
-        pointer = False
+        pointer = array = False
         if "*" in param_elements:
             param_elements.remove("*")
             pointer = True
@@ -239,6 +239,11 @@ def parse_api_header(raw_lines: List[str], structs: Dict) -> Tuple[List[Method],
         if param_name.startswith("*"):
             param_name = param_name.split("*")[1]
             pointer = True
+        if param_name.endswith("[]"):
+            if param_type != "char":
+                raise NotImplementedError(param)
+            param_name = param_name.split("[]")[0]
+            array = True
 
         if param_type in ("int", "char", "bool"):
             primitive_base = True
@@ -248,7 +253,7 @@ def parse_api_header(raw_lines: List[str], structs: Dict) -> Tuple[List[Method],
             primitive_base = False
 
         return Parameter(name=param_name, type=ParameterType(
-            base=param_type, pointer=pointer, array=False, primitive_base=primitive_base
+            base=param_type, pointer=pointer, array=array, primitive_base=primitive_base
         ))
 
     def _parse_api(line_iter: Iterator[str]):
@@ -258,7 +263,7 @@ def parse_api_header(raw_lines: List[str], structs: Dict) -> Tuple[List[Method],
         while True:
             l = next(line_iter)
             if l == "protected:":
-                assert next(line_iter) == "~CThostFtdcTraderApi(){};"
+                assert next(line_iter) in ["~CThostFtdcTraderApi(){};", "~CThostFtdcMdApi(){};"]
                 assert next(line_iter) == "};"
                 break
             elif l.startswith("///"):
@@ -269,8 +274,9 @@ def parse_api_header(raw_lines: List[str], structs: Dict) -> Tuple[List[Method],
                 )
                 if name in ("Init", "Release", "Join", "SubscribePrivateTopic", "SubscribePublicTopic", "RegisterSpi"):
                     continue
+                params = list(_parse_params(params))
                 yield Method(
-                    name=name, return_type=return_type, params=list(_parse_params(params)), comments=comments.copy()
+                    name=name, return_type=return_type, params=params, comments=comments.copy()
                 )
                 comments.clear()
             elif l.startswith("static") or l.startswith("virtual const"):
@@ -303,9 +309,9 @@ def parse_api_header(raw_lines: List[str], structs: Dict) -> Tuple[List[Method],
             line = next(lines)
         except StopIteration:
             break
-        if line == "class TRADER_API_EXPORT CThostFtdcTraderApi":
+        if line in ["class TRADER_API_EXPORT CThostFtdcTraderApi", "class MD_API_EXPORT CThostFtdcMdApi"]:
             api_methods = list(_parse_api(lines))
-        elif line == "class CThostFtdcTraderSpi":
+        elif line in ["class CThostFtdcTraderSpi", "class CThostFtdcMdSpi"]:
             spi_methods = list(_parse_spi(lines))
         else:
             pass
@@ -321,7 +327,7 @@ class PyCodeGenerator(object):
         self._trader_api_methods = None
         self._trader_spi_methods = None
         self._md_api_methods = None
-        self._md_api_methods = None
+        self._md_spi_methods = None
 
         with open(os.path.join(api_path, "ThostFtdcUserApiDataType.h"), encoding="GBK") as f:
             for type_obj in parse_data_type_header(f.readlines()):
@@ -332,7 +338,10 @@ class PyCodeGenerator(object):
                 self._structs[struct_obj.name] = struct_obj
 
         with open(os.path.join(api_path, "ThostFtdcTraderApi.h"), encoding="GBK") as f:
-            self._api_methods, self._spi_methods = parse_api_header(f.readlines(), self._structs)
+            self._trader_api_methods, self._trader_spi_methods = parse_api_header(f.readlines(), self._structs)
+
+        with open(os.path.join(api_path, "ThostFtdcMdApi.h"), encoding="GBK") as f:
+            self._md_api_methods, self._md_spi_methods = parse_api_header(f.readlines(), self._structs)
 
     def write(self, py_path):
         from jinja2 import Environment, FileSystemLoader
@@ -369,14 +378,18 @@ class PyCodeGenerator(object):
             template = env.get_template("consts.py.jinja")
             f.write(template.render(enum_types=[t for t in self._types.values() if t.enum_values]))
 
-        with open(os.path.join(py_path, "ThostFtdcTraderApi.pxd"), "w+", encoding="utf-8") as f:
-            template = env.get_template("ThostFtdcTraderApi.pxd.jinja")
-            f.write(template.render(methods=self._api_methods))
+        for trader_md, api_methods, spi_methods in [
+            ("Trader", self._trader_api_methods, self._trader_spi_methods),
+            ("Md", self._md_api_methods, self._md_spi_methods),
+        ]:
+            with open(os.path.join(py_path, f"ThostFtdc{trader_md}Api.pxd"), "w+", encoding="utf-8") as f:
+                template = env.get_template(f"ThostFtdcApi.pxd.jinja")
+                f.write(template.render(methods=api_methods, trader_md=trader_md))
 
-        with open(os.path.join(py_path, "TraderApi.pyx"), "w+", encoding="utf-8") as f:
-            template = env.get_template("TraderApi.pyx.jinja")
-            f.write(template.render(api_methods=self._api_methods, spi_methods=self._spi_methods))
-        
+            with open(os.path.join(py_path, f"{trader_md}Api.pyx"), "w+", encoding="utf-8") as f:
+                template = env.get_template("Api.pyx.jinja")
+                f.write(template.render(api_methods=api_methods, spi_methods=spi_methods, trader_md=trader_md))
+
 
 if __name__ == "__main__":
     PyCodeGenerator("ctp").write("rqctp")

@@ -18,6 +18,7 @@
 
 from cpython cimport PyObject
 from libc.string cimport const_char
+from libcpp cimport bool as cbool
 
 from .ThostFtdcUserApiStruct cimport *
 

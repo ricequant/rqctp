@@ -1,15 +1,3 @@
-{% macro parameter(param) %}
-    {% if param.type == "CThostFtdcTraderSpi" %}
-        {% set type = "CTraderSpi" %}
-    {% else %}
-        {% set type = param.type %}
-    {% endif %}
-    {% if param.pointer -%}
-        {{ type }} *{{ param.name }}
-    {%- else -%}
-        {{ type }} {{ param.name }}
-    {%- endif %}
-{% endmacro %}
 # -*- coding: utf-8 -*-
 #
 # Copyright 2019 Ricequant, Inc
@@ -30,32 +18,37 @@
 
 from cpython cimport PyObject
 from libc.string cimport const_char
+from libcpp cimport bool as cbool
 
 from .ThostFtdcUserApiStruct cimport *
 
 
-cdef extern from "ThostFtdcTraderApi.h":
-    cdef cppclass CTraderApi "CThostFtdcTraderApi":
+cdef extern from "ThostFtdc{{ trader_md }}Api.h":
+    cdef cppclass C{{ trader_md }}Api "CThostFtdc{{ trader_md }}Api":
         void Release() nogil
         void Init() nogil
         int Join() nogil
-        void RegisterSpi(CTraderSpi *pSpi) nogil except +
+        void RegisterSpi(C{{ trader_md }}Spi *pSpi) nogil except +
         void SubscribePrivateTopic(THOST_TE_RESUME_TYPE nResumeType) nogil except +
         void SubscribePublicTopic(THOST_TE_RESUME_TYPE nResumeType) nogil except +
         {% for method in methods %}
         {{ method.return_type }} {{ method.name }}(
             {%- for p in method.params -%}
-            {{ p.type.base }} {% if p.type.pointer %}*{% endif %}{{ p.name }}{% if not loop.last %}, {% endif %}
+            {{ p.type.base }} {% if p.type.pointer %}*{% endif %}{{ p.name }}{% if p.type.array %}[]{% endif %}{% if not loop.last %}, {% endif %}
             {%- endfor -%}
         ) nogil except +
         {% endfor %}
 
 
-cdef extern from "ThostFtdcTraderApi.h" namespace "CThostFtdcTraderApi":
+cdef extern from "ThostFtdc{{ trader_md }}Api.h" namespace "CThostFtdc{{ trader_md }}Api":
+    {% if trader_md == "Trader" %}
     CTraderApi *CreateFtdcTraderApi(const_char *pszFlowPath) nogil except +
+    {% else %}
+    CMdApi *CreateFtdcMdApi(const_char *pszFlowPath, cbool bIsUsingUdp, cbool bIsMulticast) nogil except +
+    {% endif %}
     const_char *GetApiVersion() nogil
 
 
-cdef extern from "CTraderSpi.h":
-    cdef cppclass CTraderSpi:
-        CTraderSpi(PyObject *obj)
+cdef extern from "C{{ trader_md }}Spi.h":
+    cdef cppclass C{{ trader_md }}Spi:
+        C{{ trader_md }}Spi(PyObject *obj)
