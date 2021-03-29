@@ -67,11 +67,14 @@ cdef class MdApi:
             result = self._api.ReqUserLogin(<CThostFtdcReqUserLoginField *> address, nRequestID)
         return result
 
-    def SubscribeMarketData(self, ppInstrumentID, int cCount):
-        cdef int result
+    def SubscribeMarketData(self, ppInstrumentID):
+        cdef int result, cCount
         cdef char **cppInstrumentId
 
         self._ensure_api_not_null()
+
+        cCount = len(ppInstrumentID)
+        ppInstrumentID = [i.encode("GBK") for i in ppInstrumentID]
         cppInstrumentId = <char **>malloc(cCount * sizeof(char *))
         try:
             for i in range(cCount):
@@ -107,7 +110,7 @@ cdef extern int MdSpi__OnRspUserLogin(api, CThostFtdcRspUserLoginField *pRspUser
 
 
 cdef extern int MdSpi__OnRspSubMarketData(api, CThostFtdcSpecificInstrumentField *pSpecificInstrument, CThostFtdcRspInfoField *pRspInfo, int nRequestID, cbool bIsLast) except -1:
-    api.OnRspSubMarketdata(
+    api.OnRspSubMarketData(
         None if pSpecificInstrument is NULL else SpecificInstrument.from_address(<size_t> pSpecificInstrument).to_tuple(),
         None if pRspInfo is NULL else RspInfo.from_address(<size_t> pRspInfo).to_tuple(),
         nRequestID,
@@ -116,6 +119,6 @@ cdef extern int MdSpi__OnRspSubMarketData(api, CThostFtdcSpecificInstrumentField
 
 
 cdef extern int MdSpi__OnRtnDepthMarketData(api, CThostFtdcDepthMarketDataField *pDepthMarketData):
-    api.OnRthDepthMarketData(
+    api.OnRtnDepthMarketData(
         None if pDepthMarketData is NULL else DepthMarketData.from_address(<size_t> pDepthMarketData).to_tuple(),
     )
