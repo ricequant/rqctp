@@ -74,7 +74,7 @@ else:
 
 setup(
     name="rqctp",
-    version="0.0.2",
+    version="0.0.3a1",
     ext_modules=ext_modules,
     packages=find_packages(exclude=[]),
     package_data=package_data
