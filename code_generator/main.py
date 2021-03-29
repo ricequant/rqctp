@@ -390,6 +390,10 @@ class PyCodeGenerator(object):
                 template = env.get_template("Api.pyx.jinja")
                 f.write(template.render(api_methods=api_methods, spi_methods=spi_methods, trader_md=trader_md))
 
+            with open(os.path.join(py_path, f"C{trader_md}Spi.h"), "w+", encoding="utf-8") as f:
+                template = env.get_template("CSpi.h.jinja")
+                f.write(template.render(spi_methods=spi_methods, trader_md=trader_md))
+
 
 if __name__ == "__main__":
     PyCodeGenerator("ctp").write("rqctp")
