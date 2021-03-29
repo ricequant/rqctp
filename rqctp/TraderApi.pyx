@@ -89,794 +89,881 @@ cdef class TraderApi:
         self._ensure_api_not_null()
         self._api.SubscribePublicTopic(nResumeType)
 
-    def RegisterNameServer(self, pszNsAddress):
-        cdef size_t address
-        self._ensure_api_not_null()
-        address = ctypes.addressof(pszNsAddress)
+    def RegisterNameServer(self, char *pszNsAddress):
+
+        if self._api is NULL:
+            raise MemoryError()
         with nogil:
-            self._api.RegisterNameServer(<char *> address)
+            self._api.RegisterNameServer(pszNsAddress)
         return
 
     def RegisterFensUserInfo(self, pFensUserInfo):
-        cdef size_t address
-        self._ensure_api_not_null()
-        address = ctypes.addressof(pFensUserInfo)
+        cdef size_t address_pFensUserInfo = ctypes.addressof(pFensUserInfo)
+
+        if self._api is NULL:
+            raise MemoryError()
         with nogil:
-            self._api.RegisterFensUserInfo(<CThostFtdcFensUserInfoField *> address)
+            self._api.RegisterFensUserInfo(<CThostFtdcFensUserInfoField *> address_pFensUserInfo)
         return
 
     def ReqAuthenticate(self, pReqAuthenticateField, int nRequestID):
         cdef int result
-        cdef size_t address
-        self._ensure_api_not_null()
-        address = ctypes.addressof(pReqAuthenticateField)
+        cdef size_t address_pReqAuthenticateField = ctypes.addressof(pReqAuthenticateField)
+
+        if self._api is NULL:
+            raise MemoryError()
         with nogil:
-            result = self._api.ReqAuthenticate(<CThostFtdcReqAuthenticateField *> address, nRequestID)
+            result = self._api.ReqAuthenticate(<CThostFtdcReqAuthenticateField *> address_pReqAuthenticateField, nRequestID)
         return result
 
     def RegisterUserSystemInfo(self, pUserSystemInfo):
         cdef int result
-        cdef size_t address
-        self._ensure_api_not_null()
-        address = ctypes.addressof(pUserSystemInfo)
+        cdef size_t address_pUserSystemInfo = ctypes.addressof(pUserSystemInfo)
+
+        if self._api is NULL:
+            raise MemoryError()
         with nogil:
-            result = self._api.RegisterUserSystemInfo(<CThostFtdcUserSystemInfoField *> address)
+            result = self._api.RegisterUserSystemInfo(<CThostFtdcUserSystemInfoField *> address_pUserSystemInfo)
         return result
 
     def SubmitUserSystemInfo(self, pUserSystemInfo):
         cdef int result
-        cdef size_t address
-        self._ensure_api_not_null()
-        address = ctypes.addressof(pUserSystemInfo)
+        cdef size_t address_pUserSystemInfo = ctypes.addressof(pUserSystemInfo)
+
+        if self._api is NULL:
+            raise MemoryError()
         with nogil:
-            result = self._api.SubmitUserSystemInfo(<CThostFtdcUserSystemInfoField *> address)
+            result = self._api.SubmitUserSystemInfo(<CThostFtdcUserSystemInfoField *> address_pUserSystemInfo)
         return result
 
     def ReqUserLogin(self, pReqUserLoginField, int nRequestID):
         cdef int result
-        cdef size_t address
-        self._ensure_api_not_null()
-        address = ctypes.addressof(pReqUserLoginField)
+        cdef size_t address_pReqUserLoginField = ctypes.addressof(pReqUserLoginField)
+
+        if self._api is NULL:
+            raise MemoryError()
         with nogil:
-            result = self._api.ReqUserLogin(<CThostFtdcReqUserLoginField *> address, nRequestID)
+            result = self._api.ReqUserLogin(<CThostFtdcReqUserLoginField *> address_pReqUserLoginField, nRequestID)
         return result
 
     def ReqUserLogout(self, pUserLogout, int nRequestID):
         cdef int result
-        cdef size_t address
-        self._ensure_api_not_null()
-        address = ctypes.addressof(pUserLogout)
+        cdef size_t address_pUserLogout = ctypes.addressof(pUserLogout)
+
+        if self._api is NULL:
+            raise MemoryError()
         with nogil:
-            result = self._api.ReqUserLogout(<CThostFtdcUserLogoutField *> address, nRequestID)
+            result = self._api.ReqUserLogout(<CThostFtdcUserLogoutField *> address_pUserLogout, nRequestID)
         return result
 
     def ReqUserPasswordUpdate(self, pUserPasswordUpdate, int nRequestID):
         cdef int result
-        cdef size_t address
-        self._ensure_api_not_null()
-        address = ctypes.addressof(pUserPasswordUpdate)
+        cdef size_t address_pUserPasswordUpdate = ctypes.addressof(pUserPasswordUpdate)
+
+        if self._api is NULL:
+            raise MemoryError()
         with nogil:
-            result = self._api.ReqUserPasswordUpdate(<CThostFtdcUserPasswordUpdateField *> address, nRequestID)
+            result = self._api.ReqUserPasswordUpdate(<CThostFtdcUserPasswordUpdateField *> address_pUserPasswordUpdate, nRequestID)
         return result
 
     def ReqTradingAccountPasswordUpdate(self, pTradingAccountPasswordUpdate, int nRequestID):
         cdef int result
-        cdef size_t address
-        self._ensure_api_not_null()
-        address = ctypes.addressof(pTradingAccountPasswordUpdate)
+        cdef size_t address_pTradingAccountPasswordUpdate = ctypes.addressof(pTradingAccountPasswordUpdate)
+
+        if self._api is NULL:
+            raise MemoryError()
         with nogil:
-            result = self._api.ReqTradingAccountPasswordUpdate(<CThostFtdcTradingAccountPasswordUpdateField *> address, nRequestID)
+            result = self._api.ReqTradingAccountPasswordUpdate(<CThostFtdcTradingAccountPasswordUpdateField *> address_pTradingAccountPasswordUpdate, nRequestID)
         return result
 
     def ReqUserAuthMethod(self, pReqUserAuthMethod, int nRequestID):
         cdef int result
-        cdef size_t address
-        self._ensure_api_not_null()
-        address = ctypes.addressof(pReqUserAuthMethod)
+        cdef size_t address_pReqUserAuthMethod = ctypes.addressof(pReqUserAuthMethod)
+
+        if self._api is NULL:
+            raise MemoryError()
         with nogil:
-            result = self._api.ReqUserAuthMethod(<CThostFtdcReqUserAuthMethodField *> address, nRequestID)
+            result = self._api.ReqUserAuthMethod(<CThostFtdcReqUserAuthMethodField *> address_pReqUserAuthMethod, nRequestID)
         return result
 
     def ReqGenUserCaptcha(self, pReqGenUserCaptcha, int nRequestID):
         cdef int result
-        cdef size_t address
-        self._ensure_api_not_null()
-        address = ctypes.addressof(pReqGenUserCaptcha)
+        cdef size_t address_pReqGenUserCaptcha = ctypes.addressof(pReqGenUserCaptcha)
+
+        if self._api is NULL:
+            raise MemoryError()
         with nogil:
-            result = self._api.ReqGenUserCaptcha(<CThostFtdcReqGenUserCaptchaField *> address, nRequestID)
+            result = self._api.ReqGenUserCaptcha(<CThostFtdcReqGenUserCaptchaField *> address_pReqGenUserCaptcha, nRequestID)
         return result
 
     def ReqGenUserText(self, pReqGenUserText, int nRequestID):
         cdef int result
-        cdef size_t address
-        self._ensure_api_not_null()
-        address = ctypes.addressof(pReqGenUserText)
+        cdef size_t address_pReqGenUserText = ctypes.addressof(pReqGenUserText)
+
+        if self._api is NULL:
+            raise MemoryError()
         with nogil:
-            result = self._api.ReqGenUserText(<CThostFtdcReqGenUserTextField *> address, nRequestID)
+            result = self._api.ReqGenUserText(<CThostFtdcReqGenUserTextField *> address_pReqGenUserText, nRequestID)
         return result
 
     def ReqUserLoginWithCaptcha(self, pReqUserLoginWithCaptcha, int nRequestID):
         cdef int result
-        cdef size_t address
-        self._ensure_api_not_null()
-        address = ctypes.addressof(pReqUserLoginWithCaptcha)
+        cdef size_t address_pReqUserLoginWithCaptcha = ctypes.addressof(pReqUserLoginWithCaptcha)
+
+        if self._api is NULL:
+            raise MemoryError()
         with nogil:
-            result = self._api.ReqUserLoginWithCaptcha(<CThostFtdcReqUserLoginWithCaptchaField *> address, nRequestID)
+            result = self._api.ReqUserLoginWithCaptcha(<CThostFtdcReqUserLoginWithCaptchaField *> address_pReqUserLoginWithCaptcha, nRequestID)
         return result
 
     def ReqUserLoginWithText(self, pReqUserLoginWithText, int nRequestID):
         cdef int result
-        cdef size_t address
-        self._ensure_api_not_null()
-        address = ctypes.addressof(pReqUserLoginWithText)
+        cdef size_t address_pReqUserLoginWithText = ctypes.addressof(pReqUserLoginWithText)
+
+        if self._api is NULL:
+            raise MemoryError()
         with nogil:
-            result = self._api.ReqUserLoginWithText(<CThostFtdcReqUserLoginWithTextField *> address, nRequestID)
+            result = self._api.ReqUserLoginWithText(<CThostFtdcReqUserLoginWithTextField *> address_pReqUserLoginWithText, nRequestID)
         return result
 
     def ReqUserLoginWithOTP(self, pReqUserLoginWithOTP, int nRequestID):
         cdef int result
-        cdef size_t address
-        self._ensure_api_not_null()
-        address = ctypes.addressof(pReqUserLoginWithOTP)
+        cdef size_t address_pReqUserLoginWithOTP = ctypes.addressof(pReqUserLoginWithOTP)
+
+        if self._api is NULL:
+            raise MemoryError()
         with nogil:
-            result = self._api.ReqUserLoginWithOTP(<CThostFtdcReqUserLoginWithOTPField *> address, nRequestID)
+            result = self._api.ReqUserLoginWithOTP(<CThostFtdcReqUserLoginWithOTPField *> address_pReqUserLoginWithOTP, nRequestID)
         return result
 
     def ReqOrderInsert(self, pInputOrder, int nRequestID):
         cdef int result
-        cdef size_t address
-        self._ensure_api_not_null()
-        address = ctypes.addressof(pInputOrder)
+        cdef size_t address_pInputOrder = ctypes.addressof(pInputOrder)
+
+        if self._api is NULL:
+            raise MemoryError()
         with nogil:
-            result = self._api.ReqOrderInsert(<CThostFtdcInputOrderField *> address, nRequestID)
+            result = self._api.ReqOrderInsert(<CThostFtdcInputOrderField *> address_pInputOrder, nRequestID)
         return result
 
     def ReqParkedOrderInsert(self, pParkedOrder, int nRequestID):
         cdef int result
-        cdef size_t address
-        self._ensure_api_not_null()
-        address = ctypes.addressof(pParkedOrder)
+        cdef size_t address_pParkedOrder = ctypes.addressof(pParkedOrder)
+
+        if self._api is NULL:
+            raise MemoryError()
         with nogil:
-            result = self._api.ReqParkedOrderInsert(<CThostFtdcParkedOrderField *> address, nRequestID)
+            result = self._api.ReqParkedOrderInsert(<CThostFtdcParkedOrderField *> address_pParkedOrder, nRequestID)
         return result
 
     def ReqParkedOrderAction(self, pParkedOrderAction, int nRequestID):
         cdef int result
-        cdef size_t address
-        self._ensure_api_not_null()
-        address = ctypes.addressof(pParkedOrderAction)
+        cdef size_t address_pParkedOrderAction = ctypes.addressof(pParkedOrderAction)
+
+        if self._api is NULL:
+            raise MemoryError()
         with nogil:
-            result = self._api.ReqParkedOrderAction(<CThostFtdcParkedOrderActionField *> address, nRequestID)
+            result = self._api.ReqParkedOrderAction(<CThostFtdcParkedOrderActionField *> address_pParkedOrderAction, nRequestID)
         return result
 
     def ReqOrderAction(self, pInputOrderAction, int nRequestID):
         cdef int result
-        cdef size_t address
-        self._ensure_api_not_null()
-        address = ctypes.addressof(pInputOrderAction)
+        cdef size_t address_pInputOrderAction = ctypes.addressof(pInputOrderAction)
+
+        if self._api is NULL:
+            raise MemoryError()
         with nogil:
-            result = self._api.ReqOrderAction(<CThostFtdcInputOrderActionField *> address, nRequestID)
+            result = self._api.ReqOrderAction(<CThostFtdcInputOrderActionField *> address_pInputOrderAction, nRequestID)
         return result
 
     def ReqQryMaxOrderVolume(self, pQryMaxOrderVolume, int nRequestID):
         cdef int result
-        cdef size_t address
-        self._ensure_api_not_null()
-        address = ctypes.addressof(pQryMaxOrderVolume)
+        cdef size_t address_pQryMaxOrderVolume = ctypes.addressof(pQryMaxOrderVolume)
+
+        if self._api is NULL:
+            raise MemoryError()
         with nogil:
-            result = self._api.ReqQryMaxOrderVolume(<CThostFtdcQryMaxOrderVolumeField *> address, nRequestID)
+            result = self._api.ReqQryMaxOrderVolume(<CThostFtdcQryMaxOrderVolumeField *> address_pQryMaxOrderVolume, nRequestID)
         return result
 
     def ReqSettlementInfoConfirm(self, pSettlementInfoConfirm, int nRequestID):
         cdef int result
-        cdef size_t address
-        self._ensure_api_not_null()
-        address = ctypes.addressof(pSettlementInfoConfirm)
+        cdef size_t address_pSettlementInfoConfirm = ctypes.addressof(pSettlementInfoConfirm)
+
+        if self._api is NULL:
+            raise MemoryError()
         with nogil:
-            result = self._api.ReqSettlementInfoConfirm(<CThostFtdcSettlementInfoConfirmField *> address, nRequestID)
+            result = self._api.ReqSettlementInfoConfirm(<CThostFtdcSettlementInfoConfirmField *> address_pSettlementInfoConfirm, nRequestID)
         return result
 
     def ReqRemoveParkedOrder(self, pRemoveParkedOrder, int nRequestID):
         cdef int result
-        cdef size_t address
-        self._ensure_api_not_null()
-        address = ctypes.addressof(pRemoveParkedOrder)
+        cdef size_t address_pRemoveParkedOrder = ctypes.addressof(pRemoveParkedOrder)
+
+        if self._api is NULL:
+            raise MemoryError()
         with nogil:
-            result = self._api.ReqRemoveParkedOrder(<CThostFtdcRemoveParkedOrderField *> address, nRequestID)
+            result = self._api.ReqRemoveParkedOrder(<CThostFtdcRemoveParkedOrderField *> address_pRemoveParkedOrder, nRequestID)
         return result
 
     def ReqRemoveParkedOrderAction(self, pRemoveParkedOrderAction, int nRequestID):
         cdef int result
-        cdef size_t address
-        self._ensure_api_not_null()
-        address = ctypes.addressof(pRemoveParkedOrderAction)
+        cdef size_t address_pRemoveParkedOrderAction = ctypes.addressof(pRemoveParkedOrderAction)
+
+        if self._api is NULL:
+            raise MemoryError()
         with nogil:
-            result = self._api.ReqRemoveParkedOrderAction(<CThostFtdcRemoveParkedOrderActionField *> address, nRequestID)
+            result = self._api.ReqRemoveParkedOrderAction(<CThostFtdcRemoveParkedOrderActionField *> address_pRemoveParkedOrderAction, nRequestID)
         return result
 
     def ReqExecOrderInsert(self, pInputExecOrder, int nRequestID):
         cdef int result
-        cdef size_t address
-        self._ensure_api_not_null()
-        address = ctypes.addressof(pInputExecOrder)
+        cdef size_t address_pInputExecOrder = ctypes.addressof(pInputExecOrder)
+
+        if self._api is NULL:
+            raise MemoryError()
         with nogil:
-            result = self._api.ReqExecOrderInsert(<CThostFtdcInputExecOrderField *> address, nRequestID)
+            result = self._api.ReqExecOrderInsert(<CThostFtdcInputExecOrderField *> address_pInputExecOrder, nRequestID)
         return result
 
     def ReqExecOrderAction(self, pInputExecOrderAction, int nRequestID):
         cdef int result
-        cdef size_t address
-        self._ensure_api_not_null()
-        address = ctypes.addressof(pInputExecOrderAction)
+        cdef size_t address_pInputExecOrderAction = ctypes.addressof(pInputExecOrderAction)
+
+        if self._api is NULL:
+            raise MemoryError()
         with nogil:
-            result = self._api.ReqExecOrderAction(<CThostFtdcInputExecOrderActionField *> address, nRequestID)
+            result = self._api.ReqExecOrderAction(<CThostFtdcInputExecOrderActionField *> address_pInputExecOrderAction, nRequestID)
         return result
 
     def ReqForQuoteInsert(self, pInputForQuote, int nRequestID):
         cdef int result
-        cdef size_t address
-        self._ensure_api_not_null()
-        address = ctypes.addressof(pInputForQuote)
+        cdef size_t address_pInputForQuote = ctypes.addressof(pInputForQuote)
+
+        if self._api is NULL:
+            raise MemoryError()
         with nogil:
-            result = self._api.ReqForQuoteInsert(<CThostFtdcInputForQuoteField *> address, nRequestID)
+            result = self._api.ReqForQuoteInsert(<CThostFtdcInputForQuoteField *> address_pInputForQuote, nRequestID)
         return result
 
     def ReqQuoteInsert(self, pInputQuote, int nRequestID):
         cdef int result
-        cdef size_t address
-        self._ensure_api_not_null()
-        address = ctypes.addressof(pInputQuote)
+        cdef size_t address_pInputQuote = ctypes.addressof(pInputQuote)
+
+        if self._api is NULL:
+            raise MemoryError()
         with nogil:
-            result = self._api.ReqQuoteInsert(<CThostFtdcInputQuoteField *> address, nRequestID)
+            result = self._api.ReqQuoteInsert(<CThostFtdcInputQuoteField *> address_pInputQuote, nRequestID)
         return result
 
     def ReqQuoteAction(self, pInputQuoteAction, int nRequestID):
         cdef int result
-        cdef size_t address
-        self._ensure_api_not_null()
-        address = ctypes.addressof(pInputQuoteAction)
+        cdef size_t address_pInputQuoteAction = ctypes.addressof(pInputQuoteAction)
+
+        if self._api is NULL:
+            raise MemoryError()
         with nogil:
-            result = self._api.ReqQuoteAction(<CThostFtdcInputQuoteActionField *> address, nRequestID)
+            result = self._api.ReqQuoteAction(<CThostFtdcInputQuoteActionField *> address_pInputQuoteAction, nRequestID)
         return result
 
     def ReqBatchOrderAction(self, pInputBatchOrderAction, int nRequestID):
         cdef int result
-        cdef size_t address
-        self._ensure_api_not_null()
-        address = ctypes.addressof(pInputBatchOrderAction)
+        cdef size_t address_pInputBatchOrderAction = ctypes.addressof(pInputBatchOrderAction)
+
+        if self._api is NULL:
+            raise MemoryError()
         with nogil:
-            result = self._api.ReqBatchOrderAction(<CThostFtdcInputBatchOrderActionField *> address, nRequestID)
+            result = self._api.ReqBatchOrderAction(<CThostFtdcInputBatchOrderActionField *> address_pInputBatchOrderAction, nRequestID)
         return result
 
     def ReqOptionSelfCloseInsert(self, pInputOptionSelfClose, int nRequestID):
         cdef int result
-        cdef size_t address
-        self._ensure_api_not_null()
-        address = ctypes.addressof(pInputOptionSelfClose)
+        cdef size_t address_pInputOptionSelfClose = ctypes.addressof(pInputOptionSelfClose)
+
+        if self._api is NULL:
+            raise MemoryError()
         with nogil:
-            result = self._api.ReqOptionSelfCloseInsert(<CThostFtdcInputOptionSelfCloseField *> address, nRequestID)
+            result = self._api.ReqOptionSelfCloseInsert(<CThostFtdcInputOptionSelfCloseField *> address_pInputOptionSelfClose, nRequestID)
         return result
 
     def ReqOptionSelfCloseAction(self, pInputOptionSelfCloseAction, int nRequestID):
         cdef int result
-        cdef size_t address
-        self._ensure_api_not_null()
-        address = ctypes.addressof(pInputOptionSelfCloseAction)
+        cdef size_t address_pInputOptionSelfCloseAction = ctypes.addressof(pInputOptionSelfCloseAction)
+
+        if self._api is NULL:
+            raise MemoryError()
         with nogil:
-            result = self._api.ReqOptionSelfCloseAction(<CThostFtdcInputOptionSelfCloseActionField *> address, nRequestID)
+            result = self._api.ReqOptionSelfCloseAction(<CThostFtdcInputOptionSelfCloseActionField *> address_pInputOptionSelfCloseAction, nRequestID)
         return result
 
     def ReqCombActionInsert(self, pInputCombAction, int nRequestID):
         cdef int result
-        cdef size_t address
-        self._ensure_api_not_null()
-        address = ctypes.addressof(pInputCombAction)
+        cdef size_t address_pInputCombAction = ctypes.addressof(pInputCombAction)
+
+        if self._api is NULL:
+            raise MemoryError()
         with nogil:
-            result = self._api.ReqCombActionInsert(<CThostFtdcInputCombActionField *> address, nRequestID)
+            result = self._api.ReqCombActionInsert(<CThostFtdcInputCombActionField *> address_pInputCombAction, nRequestID)
         return result
 
     def ReqQryOrder(self, pQryOrder, int nRequestID):
         cdef int result
-        cdef size_t address
-        self._ensure_api_not_null()
-        address = ctypes.addressof(pQryOrder)
+        cdef size_t address_pQryOrder = ctypes.addressof(pQryOrder)
+
+        if self._api is NULL:
+            raise MemoryError()
         with nogil:
-            result = self._api.ReqQryOrder(<CThostFtdcQryOrderField *> address, nRequestID)
+            result = self._api.ReqQryOrder(<CThostFtdcQryOrderField *> address_pQryOrder, nRequestID)
         return result
 
     def ReqQryTrade(self, pQryTrade, int nRequestID):
         cdef int result
-        cdef size_t address
-        self._ensure_api_not_null()
-        address = ctypes.addressof(pQryTrade)
+        cdef size_t address_pQryTrade = ctypes.addressof(pQryTrade)
+
+        if self._api is NULL:
+            raise MemoryError()
         with nogil:
-            result = self._api.ReqQryTrade(<CThostFtdcQryTradeField *> address, nRequestID)
+            result = self._api.ReqQryTrade(<CThostFtdcQryTradeField *> address_pQryTrade, nRequestID)
         return result
 
     def ReqQryInvestorPosition(self, pQryInvestorPosition, int nRequestID):
         cdef int result
-        cdef size_t address
-        self._ensure_api_not_null()
-        address = ctypes.addressof(pQryInvestorPosition)
+        cdef size_t address_pQryInvestorPosition = ctypes.addressof(pQryInvestorPosition)
+
+        if self._api is NULL:
+            raise MemoryError()
         with nogil:
-            result = self._api.ReqQryInvestorPosition(<CThostFtdcQryInvestorPositionField *> address, nRequestID)
+            result = self._api.ReqQryInvestorPosition(<CThostFtdcQryInvestorPositionField *> address_pQryInvestorPosition, nRequestID)
         return result
 
     def ReqQryTradingAccount(self, pQryTradingAccount, int nRequestID):
         cdef int result
-        cdef size_t address
-        self._ensure_api_not_null()
-        address = ctypes.addressof(pQryTradingAccount)
+        cdef size_t address_pQryTradingAccount = ctypes.addressof(pQryTradingAccount)
+
+        if self._api is NULL:
+            raise MemoryError()
         with nogil:
-            result = self._api.ReqQryTradingAccount(<CThostFtdcQryTradingAccountField *> address, nRequestID)
+            result = self._api.ReqQryTradingAccount(<CThostFtdcQryTradingAccountField *> address_pQryTradingAccount, nRequestID)
         return result
 
     def ReqQryInvestor(self, pQryInvestor, int nRequestID):
         cdef int result
-        cdef size_t address
-        self._ensure_api_not_null()
-        address = ctypes.addressof(pQryInvestor)
+        cdef size_t address_pQryInvestor = ctypes.addressof(pQryInvestor)
+
+        if self._api is NULL:
+            raise MemoryError()
         with nogil:
-            result = self._api.ReqQryInvestor(<CThostFtdcQryInvestorField *> address, nRequestID)
+            result = self._api.ReqQryInvestor(<CThostFtdcQryInvestorField *> address_pQryInvestor, nRequestID)
         return result
 
     def ReqQryTradingCode(self, pQryTradingCode, int nRequestID):
         cdef int result
-        cdef size_t address
-        self._ensure_api_not_null()
-        address = ctypes.addressof(pQryTradingCode)
+        cdef size_t address_pQryTradingCode = ctypes.addressof(pQryTradingCode)
+
+        if self._api is NULL:
+            raise MemoryError()
         with nogil:
-            result = self._api.ReqQryTradingCode(<CThostFtdcQryTradingCodeField *> address, nRequestID)
+            result = self._api.ReqQryTradingCode(<CThostFtdcQryTradingCodeField *> address_pQryTradingCode, nRequestID)
         return result
 
     def ReqQryInstrumentMarginRate(self, pQryInstrumentMarginRate, int nRequestID):
         cdef int result
-        cdef size_t address
-        self._ensure_api_not_null()
-        address = ctypes.addressof(pQryInstrumentMarginRate)
+        cdef size_t address_pQryInstrumentMarginRate = ctypes.addressof(pQryInstrumentMarginRate)
+
+        if self._api is NULL:
+            raise MemoryError()
         with nogil:
-            result = self._api.ReqQryInstrumentMarginRate(<CThostFtdcQryInstrumentMarginRateField *> address, nRequestID)
+            result = self._api.ReqQryInstrumentMarginRate(<CThostFtdcQryInstrumentMarginRateField *> address_pQryInstrumentMarginRate, nRequestID)
         return result
 
     def ReqQryInstrumentCommissionRate(self, pQryInstrumentCommissionRate, int nRequestID):
         cdef int result
-        cdef size_t address
-        self._ensure_api_not_null()
-        address = ctypes.addressof(pQryInstrumentCommissionRate)
+        cdef size_t address_pQryInstrumentCommissionRate = ctypes.addressof(pQryInstrumentCommissionRate)
+
+        if self._api is NULL:
+            raise MemoryError()
         with nogil:
-            result = self._api.ReqQryInstrumentCommissionRate(<CThostFtdcQryInstrumentCommissionRateField *> address, nRequestID)
+            result = self._api.ReqQryInstrumentCommissionRate(<CThostFtdcQryInstrumentCommissionRateField *> address_pQryInstrumentCommissionRate, nRequestID)
         return result
 
     def ReqQryExchange(self, pQryExchange, int nRequestID):
         cdef int result
-        cdef size_t address
-        self._ensure_api_not_null()
-        address = ctypes.addressof(pQryExchange)
+        cdef size_t address_pQryExchange = ctypes.addressof(pQryExchange)
+
+        if self._api is NULL:
+            raise MemoryError()
         with nogil:
-            result = self._api.ReqQryExchange(<CThostFtdcQryExchangeField *> address, nRequestID)
+            result = self._api.ReqQryExchange(<CThostFtdcQryExchangeField *> address_pQryExchange, nRequestID)
         return result
 
     def ReqQryProduct(self, pQryProduct, int nRequestID):
         cdef int result
-        cdef size_t address
-        self._ensure_api_not_null()
-        address = ctypes.addressof(pQryProduct)
+        cdef size_t address_pQryProduct = ctypes.addressof(pQryProduct)
+
+        if self._api is NULL:
+            raise MemoryError()
         with nogil:
-            result = self._api.ReqQryProduct(<CThostFtdcQryProductField *> address, nRequestID)
+            result = self._api.ReqQryProduct(<CThostFtdcQryProductField *> address_pQryProduct, nRequestID)
         return result
 
     def ReqQryInstrument(self, pQryInstrument, int nRequestID):
         cdef int result
-        cdef size_t address
-        self._ensure_api_not_null()
-        address = ctypes.addressof(pQryInstrument)
+        cdef size_t address_pQryInstrument = ctypes.addressof(pQryInstrument)
+
+        if self._api is NULL:
+            raise MemoryError()
         with nogil:
-            result = self._api.ReqQryInstrument(<CThostFtdcQryInstrumentField *> address, nRequestID)
+            result = self._api.ReqQryInstrument(<CThostFtdcQryInstrumentField *> address_pQryInstrument, nRequestID)
         return result
 
     def ReqQryDepthMarketData(self, pQryDepthMarketData, int nRequestID):
         cdef int result
-        cdef size_t address
-        self._ensure_api_not_null()
-        address = ctypes.addressof(pQryDepthMarketData)
+        cdef size_t address_pQryDepthMarketData = ctypes.addressof(pQryDepthMarketData)
+
+        if self._api is NULL:
+            raise MemoryError()
         with nogil:
-            result = self._api.ReqQryDepthMarketData(<CThostFtdcQryDepthMarketDataField *> address, nRequestID)
+            result = self._api.ReqQryDepthMarketData(<CThostFtdcQryDepthMarketDataField *> address_pQryDepthMarketData, nRequestID)
         return result
 
     def ReqQrySettlementInfo(self, pQrySettlementInfo, int nRequestID):
         cdef int result
-        cdef size_t address
-        self._ensure_api_not_null()
-        address = ctypes.addressof(pQrySettlementInfo)
+        cdef size_t address_pQrySettlementInfo = ctypes.addressof(pQrySettlementInfo)
+
+        if self._api is NULL:
+            raise MemoryError()
         with nogil:
-            result = self._api.ReqQrySettlementInfo(<CThostFtdcQrySettlementInfoField *> address, nRequestID)
+            result = self._api.ReqQrySettlementInfo(<CThostFtdcQrySettlementInfoField *> address_pQrySettlementInfo, nRequestID)
         return result
 
     def ReqQryTransferBank(self, pQryTransferBank, int nRequestID):
         cdef int result
-        cdef size_t address
-        self._ensure_api_not_null()
-        address = ctypes.addressof(pQryTransferBank)
+        cdef size_t address_pQryTransferBank = ctypes.addressof(pQryTransferBank)
+
+        if self._api is NULL:
+            raise MemoryError()
         with nogil:
-            result = self._api.ReqQryTransferBank(<CThostFtdcQryTransferBankField *> address, nRequestID)
+            result = self._api.ReqQryTransferBank(<CThostFtdcQryTransferBankField *> address_pQryTransferBank, nRequestID)
         return result
 
     def ReqQryInvestorPositionDetail(self, pQryInvestorPositionDetail, int nRequestID):
         cdef int result
-        cdef size_t address
-        self._ensure_api_not_null()
-        address = ctypes.addressof(pQryInvestorPositionDetail)
+        cdef size_t address_pQryInvestorPositionDetail = ctypes.addressof(pQryInvestorPositionDetail)
+
+        if self._api is NULL:
+            raise MemoryError()
         with nogil:
-            result = self._api.ReqQryInvestorPositionDetail(<CThostFtdcQryInvestorPositionDetailField *> address, nRequestID)
+            result = self._api.ReqQryInvestorPositionDetail(<CThostFtdcQryInvestorPositionDetailField *> address_pQryInvestorPositionDetail, nRequestID)
         return result
 
     def ReqQryNotice(self, pQryNotice, int nRequestID):
         cdef int result
-        cdef size_t address
-        self._ensure_api_not_null()
-        address = ctypes.addressof(pQryNotice)
+        cdef size_t address_pQryNotice = ctypes.addressof(pQryNotice)
+
+        if self._api is NULL:
+            raise MemoryError()
         with nogil:
-            result = self._api.ReqQryNotice(<CThostFtdcQryNoticeField *> address, nRequestID)
+            result = self._api.ReqQryNotice(<CThostFtdcQryNoticeField *> address_pQryNotice, nRequestID)
         return result
 
     def ReqQrySettlementInfoConfirm(self, pQrySettlementInfoConfirm, int nRequestID):
         cdef int result
-        cdef size_t address
-        self._ensure_api_not_null()
-        address = ctypes.addressof(pQrySettlementInfoConfirm)
+        cdef size_t address_pQrySettlementInfoConfirm = ctypes.addressof(pQrySettlementInfoConfirm)
+
+        if self._api is NULL:
+            raise MemoryError()
         with nogil:
-            result = self._api.ReqQrySettlementInfoConfirm(<CThostFtdcQrySettlementInfoConfirmField *> address, nRequestID)
+            result = self._api.ReqQrySettlementInfoConfirm(<CThostFtdcQrySettlementInfoConfirmField *> address_pQrySettlementInfoConfirm, nRequestID)
         return result
 
     def ReqQryInvestorPositionCombineDetail(self, pQryInvestorPositionCombineDetail, int nRequestID):
         cdef int result
-        cdef size_t address
-        self._ensure_api_not_null()
-        address = ctypes.addressof(pQryInvestorPositionCombineDetail)
+        cdef size_t address_pQryInvestorPositionCombineDetail = ctypes.addressof(pQryInvestorPositionCombineDetail)
+
+        if self._api is NULL:
+            raise MemoryError()
         with nogil:
-            result = self._api.ReqQryInvestorPositionCombineDetail(<CThostFtdcQryInvestorPositionCombineDetailField *> address, nRequestID)
+            result = self._api.ReqQryInvestorPositionCombineDetail(<CThostFtdcQryInvestorPositionCombineDetailField *> address_pQryInvestorPositionCombineDetail, nRequestID)
         return result
 
     def ReqQryCFMMCTradingAccountKey(self, pQryCFMMCTradingAccountKey, int nRequestID):
         cdef int result
-        cdef size_t address
-        self._ensure_api_not_null()
-        address = ctypes.addressof(pQryCFMMCTradingAccountKey)
+        cdef size_t address_pQryCFMMCTradingAccountKey = ctypes.addressof(pQryCFMMCTradingAccountKey)
+
+        if self._api is NULL:
+            raise MemoryError()
         with nogil:
-            result = self._api.ReqQryCFMMCTradingAccountKey(<CThostFtdcQryCFMMCTradingAccountKeyField *> address, nRequestID)
+            result = self._api.ReqQryCFMMCTradingAccountKey(<CThostFtdcQryCFMMCTradingAccountKeyField *> address_pQryCFMMCTradingAccountKey, nRequestID)
         return result
 
     def ReqQryEWarrantOffset(self, pQryEWarrantOffset, int nRequestID):
         cdef int result
-        cdef size_t address
-        self._ensure_api_not_null()
-        address = ctypes.addressof(pQryEWarrantOffset)
+        cdef size_t address_pQryEWarrantOffset = ctypes.addressof(pQryEWarrantOffset)
+
+        if self._api is NULL:
+            raise MemoryError()
         with nogil:
-            result = self._api.ReqQryEWarrantOffset(<CThostFtdcQryEWarrantOffsetField *> address, nRequestID)
+            result = self._api.ReqQryEWarrantOffset(<CThostFtdcQryEWarrantOffsetField *> address_pQryEWarrantOffset, nRequestID)
         return result
 
     def ReqQryInvestorProductGroupMargin(self, pQryInvestorProductGroupMargin, int nRequestID):
         cdef int result
-        cdef size_t address
-        self._ensure_api_not_null()
-        address = ctypes.addressof(pQryInvestorProductGroupMargin)
+        cdef size_t address_pQryInvestorProductGroupMargin = ctypes.addressof(pQryInvestorProductGroupMargin)
+
+        if self._api is NULL:
+            raise MemoryError()
         with nogil:
-            result = self._api.ReqQryInvestorProductGroupMargin(<CThostFtdcQryInvestorProductGroupMarginField *> address, nRequestID)
+            result = self._api.ReqQryInvestorProductGroupMargin(<CThostFtdcQryInvestorProductGroupMarginField *> address_pQryInvestorProductGroupMargin, nRequestID)
         return result
 
     def ReqQryExchangeMarginRate(self, pQryExchangeMarginRate, int nRequestID):
         cdef int result
-        cdef size_t address
-        self._ensure_api_not_null()
-        address = ctypes.addressof(pQryExchangeMarginRate)
+        cdef size_t address_pQryExchangeMarginRate = ctypes.addressof(pQryExchangeMarginRate)
+
+        if self._api is NULL:
+            raise MemoryError()
         with nogil:
-            result = self._api.ReqQryExchangeMarginRate(<CThostFtdcQryExchangeMarginRateField *> address, nRequestID)
+            result = self._api.ReqQryExchangeMarginRate(<CThostFtdcQryExchangeMarginRateField *> address_pQryExchangeMarginRate, nRequestID)
         return result
 
     def ReqQryExchangeMarginRateAdjust(self, pQryExchangeMarginRateAdjust, int nRequestID):
         cdef int result
-        cdef size_t address
-        self._ensure_api_not_null()
-        address = ctypes.addressof(pQryExchangeMarginRateAdjust)
+        cdef size_t address_pQryExchangeMarginRateAdjust = ctypes.addressof(pQryExchangeMarginRateAdjust)
+
+        if self._api is NULL:
+            raise MemoryError()
         with nogil:
-            result = self._api.ReqQryExchangeMarginRateAdjust(<CThostFtdcQryExchangeMarginRateAdjustField *> address, nRequestID)
+            result = self._api.ReqQryExchangeMarginRateAdjust(<CThostFtdcQryExchangeMarginRateAdjustField *> address_pQryExchangeMarginRateAdjust, nRequestID)
         return result
 
     def ReqQryExchangeRate(self, pQryExchangeRate, int nRequestID):
         cdef int result
-        cdef size_t address
-        self._ensure_api_not_null()
-        address = ctypes.addressof(pQryExchangeRate)
+        cdef size_t address_pQryExchangeRate = ctypes.addressof(pQryExchangeRate)
+
+        if self._api is NULL:
+            raise MemoryError()
         with nogil:
-            result = self._api.ReqQryExchangeRate(<CThostFtdcQryExchangeRateField *> address, nRequestID)
+            result = self._api.ReqQryExchangeRate(<CThostFtdcQryExchangeRateField *> address_pQryExchangeRate, nRequestID)
         return result
 
     def ReqQrySecAgentACIDMap(self, pQrySecAgentACIDMap, int nRequestID):
         cdef int result
-        cdef size_t address
-        self._ensure_api_not_null()
-        address = ctypes.addressof(pQrySecAgentACIDMap)
+        cdef size_t address_pQrySecAgentACIDMap = ctypes.addressof(pQrySecAgentACIDMap)
+
+        if self._api is NULL:
+            raise MemoryError()
         with nogil:
-            result = self._api.ReqQrySecAgentACIDMap(<CThostFtdcQrySecAgentACIDMapField *> address, nRequestID)
+            result = self._api.ReqQrySecAgentACIDMap(<CThostFtdcQrySecAgentACIDMapField *> address_pQrySecAgentACIDMap, nRequestID)
         return result
 
     def ReqQryProductExchRate(self, pQryProductExchRate, int nRequestID):
         cdef int result
-        cdef size_t address
-        self._ensure_api_not_null()
-        address = ctypes.addressof(pQryProductExchRate)
+        cdef size_t address_pQryProductExchRate = ctypes.addressof(pQryProductExchRate)
+
+        if self._api is NULL:
+            raise MemoryError()
         with nogil:
-            result = self._api.ReqQryProductExchRate(<CThostFtdcQryProductExchRateField *> address, nRequestID)
+            result = self._api.ReqQryProductExchRate(<CThostFtdcQryProductExchRateField *> address_pQryProductExchRate, nRequestID)
         return result
 
     def ReqQryProductGroup(self, pQryProductGroup, int nRequestID):
         cdef int result
-        cdef size_t address
-        self._ensure_api_not_null()
-        address = ctypes.addressof(pQryProductGroup)
+        cdef size_t address_pQryProductGroup = ctypes.addressof(pQryProductGroup)
+
+        if self._api is NULL:
+            raise MemoryError()
         with nogil:
-            result = self._api.ReqQryProductGroup(<CThostFtdcQryProductGroupField *> address, nRequestID)
+            result = self._api.ReqQryProductGroup(<CThostFtdcQryProductGroupField *> address_pQryProductGroup, nRequestID)
         return result
 
     def ReqQryMMInstrumentCommissionRate(self, pQryMMInstrumentCommissionRate, int nRequestID):
         cdef int result
-        cdef size_t address
-        self._ensure_api_not_null()
-        address = ctypes.addressof(pQryMMInstrumentCommissionRate)
+        cdef size_t address_pQryMMInstrumentCommissionRate = ctypes.addressof(pQryMMInstrumentCommissionRate)
+
+        if self._api is NULL:
+            raise MemoryError()
         with nogil:
-            result = self._api.ReqQryMMInstrumentCommissionRate(<CThostFtdcQryMMInstrumentCommissionRateField *> address, nRequestID)
+            result = self._api.ReqQryMMInstrumentCommissionRate(<CThostFtdcQryMMInstrumentCommissionRateField *> address_pQryMMInstrumentCommissionRate, nRequestID)
         return result
 
     def ReqQryMMOptionInstrCommRate(self, pQryMMOptionInstrCommRate, int nRequestID):
         cdef int result
-        cdef size_t address
-        self._ensure_api_not_null()
-        address = ctypes.addressof(pQryMMOptionInstrCommRate)
+        cdef size_t address_pQryMMOptionInstrCommRate = ctypes.addressof(pQryMMOptionInstrCommRate)
+
+        if self._api is NULL:
+            raise MemoryError()
         with nogil:
-            result = self._api.ReqQryMMOptionInstrCommRate(<CThostFtdcQryMMOptionInstrCommRateField *> address, nRequestID)
+            result = self._api.ReqQryMMOptionInstrCommRate(<CThostFtdcQryMMOptionInstrCommRateField *> address_pQryMMOptionInstrCommRate, nRequestID)
         return result
 
     def ReqQryInstrumentOrderCommRate(self, pQryInstrumentOrderCommRate, int nRequestID):
         cdef int result
-        cdef size_t address
-        self._ensure_api_not_null()
-        address = ctypes.addressof(pQryInstrumentOrderCommRate)
+        cdef size_t address_pQryInstrumentOrderCommRate = ctypes.addressof(pQryInstrumentOrderCommRate)
+
+        if self._api is NULL:
+            raise MemoryError()
         with nogil:
-            result = self._api.ReqQryInstrumentOrderCommRate(<CThostFtdcQryInstrumentOrderCommRateField *> address, nRequestID)
+            result = self._api.ReqQryInstrumentOrderCommRate(<CThostFtdcQryInstrumentOrderCommRateField *> address_pQryInstrumentOrderCommRate, nRequestID)
         return result
 
     def ReqQrySecAgentTradingAccount(self, pQryTradingAccount, int nRequestID):
         cdef int result
-        cdef size_t address
-        self._ensure_api_not_null()
-        address = ctypes.addressof(pQryTradingAccount)
+        cdef size_t address_pQryTradingAccount = ctypes.addressof(pQryTradingAccount)
+
+        if self._api is NULL:
+            raise MemoryError()
         with nogil:
-            result = self._api.ReqQrySecAgentTradingAccount(<CThostFtdcQryTradingAccountField *> address, nRequestID)
+            result = self._api.ReqQrySecAgentTradingAccount(<CThostFtdcQryTradingAccountField *> address_pQryTradingAccount, nRequestID)
         return result
 
     def ReqQrySecAgentCheckMode(self, pQrySecAgentCheckMode, int nRequestID):
         cdef int result
-        cdef size_t address
-        self._ensure_api_not_null()
-        address = ctypes.addressof(pQrySecAgentCheckMode)
+        cdef size_t address_pQrySecAgentCheckMode = ctypes.addressof(pQrySecAgentCheckMode)
+
+        if self._api is NULL:
+            raise MemoryError()
         with nogil:
-            result = self._api.ReqQrySecAgentCheckMode(<CThostFtdcQrySecAgentCheckModeField *> address, nRequestID)
+            result = self._api.ReqQrySecAgentCheckMode(<CThostFtdcQrySecAgentCheckModeField *> address_pQrySecAgentCheckMode, nRequestID)
         return result
 
     def ReqQrySecAgentTradeInfo(self, pQrySecAgentTradeInfo, int nRequestID):
         cdef int result
-        cdef size_t address
-        self._ensure_api_not_null()
-        address = ctypes.addressof(pQrySecAgentTradeInfo)
+        cdef size_t address_pQrySecAgentTradeInfo = ctypes.addressof(pQrySecAgentTradeInfo)
+
+        if self._api is NULL:
+            raise MemoryError()
         with nogil:
-            result = self._api.ReqQrySecAgentTradeInfo(<CThostFtdcQrySecAgentTradeInfoField *> address, nRequestID)
+            result = self._api.ReqQrySecAgentTradeInfo(<CThostFtdcQrySecAgentTradeInfoField *> address_pQrySecAgentTradeInfo, nRequestID)
         return result
 
     def ReqQryOptionInstrTradeCost(self, pQryOptionInstrTradeCost, int nRequestID):
         cdef int result
-        cdef size_t address
-        self._ensure_api_not_null()
-        address = ctypes.addressof(pQryOptionInstrTradeCost)
+        cdef size_t address_pQryOptionInstrTradeCost = ctypes.addressof(pQryOptionInstrTradeCost)
+
+        if self._api is NULL:
+            raise MemoryError()
         with nogil:
-            result = self._api.ReqQryOptionInstrTradeCost(<CThostFtdcQryOptionInstrTradeCostField *> address, nRequestID)
+            result = self._api.ReqQryOptionInstrTradeCost(<CThostFtdcQryOptionInstrTradeCostField *> address_pQryOptionInstrTradeCost, nRequestID)
         return result
 
     def ReqQryOptionInstrCommRate(self, pQryOptionInstrCommRate, int nRequestID):
         cdef int result
-        cdef size_t address
-        self._ensure_api_not_null()
-        address = ctypes.addressof(pQryOptionInstrCommRate)
+        cdef size_t address_pQryOptionInstrCommRate = ctypes.addressof(pQryOptionInstrCommRate)
+
+        if self._api is NULL:
+            raise MemoryError()
         with nogil:
-            result = self._api.ReqQryOptionInstrCommRate(<CThostFtdcQryOptionInstrCommRateField *> address, nRequestID)
+            result = self._api.ReqQryOptionInstrCommRate(<CThostFtdcQryOptionInstrCommRateField *> address_pQryOptionInstrCommRate, nRequestID)
         return result
 
     def ReqQryExecOrder(self, pQryExecOrder, int nRequestID):
         cdef int result
-        cdef size_t address
-        self._ensure_api_not_null()
-        address = ctypes.addressof(pQryExecOrder)
+        cdef size_t address_pQryExecOrder = ctypes.addressof(pQryExecOrder)
+
+        if self._api is NULL:
+            raise MemoryError()
         with nogil:
-            result = self._api.ReqQryExecOrder(<CThostFtdcQryExecOrderField *> address, nRequestID)
+            result = self._api.ReqQryExecOrder(<CThostFtdcQryExecOrderField *> address_pQryExecOrder, nRequestID)
         return result
 
     def ReqQryForQuote(self, pQryForQuote, int nRequestID):
         cdef int result
-        cdef size_t address
-        self._ensure_api_not_null()
-        address = ctypes.addressof(pQryForQuote)
+        cdef size_t address_pQryForQuote = ctypes.addressof(pQryForQuote)
+
+        if self._api is NULL:
+            raise MemoryError()
         with nogil:
-            result = self._api.ReqQryForQuote(<CThostFtdcQryForQuoteField *> address, nRequestID)
+            result = self._api.ReqQryForQuote(<CThostFtdcQryForQuoteField *> address_pQryForQuote, nRequestID)
         return result
 
     def ReqQryQuote(self, pQryQuote, int nRequestID):
         cdef int result
-        cdef size_t address
-        self._ensure_api_not_null()
-        address = ctypes.addressof(pQryQuote)
+        cdef size_t address_pQryQuote = ctypes.addressof(pQryQuote)
+
+        if self._api is NULL:
+            raise MemoryError()
         with nogil:
-            result = self._api.ReqQryQuote(<CThostFtdcQryQuoteField *> address, nRequestID)
+            result = self._api.ReqQryQuote(<CThostFtdcQryQuoteField *> address_pQryQuote, nRequestID)
         return result
 
     def ReqQryOptionSelfClose(self, pQryOptionSelfClose, int nRequestID):
         cdef int result
-        cdef size_t address
-        self._ensure_api_not_null()
-        address = ctypes.addressof(pQryOptionSelfClose)
+        cdef size_t address_pQryOptionSelfClose = ctypes.addressof(pQryOptionSelfClose)
+
+        if self._api is NULL:
+            raise MemoryError()
         with nogil:
-            result = self._api.ReqQryOptionSelfClose(<CThostFtdcQryOptionSelfCloseField *> address, nRequestID)
+            result = self._api.ReqQryOptionSelfClose(<CThostFtdcQryOptionSelfCloseField *> address_pQryOptionSelfClose, nRequestID)
         return result
 
     def ReqQryInvestUnit(self, pQryInvestUnit, int nRequestID):
         cdef int result
-        cdef size_t address
-        self._ensure_api_not_null()
-        address = ctypes.addressof(pQryInvestUnit)
+        cdef size_t address_pQryInvestUnit = ctypes.addressof(pQryInvestUnit)
+
+        if self._api is NULL:
+            raise MemoryError()
         with nogil:
-            result = self._api.ReqQryInvestUnit(<CThostFtdcQryInvestUnitField *> address, nRequestID)
+            result = self._api.ReqQryInvestUnit(<CThostFtdcQryInvestUnitField *> address_pQryInvestUnit, nRequestID)
         return result
 
     def ReqQryCombInstrumentGuard(self, pQryCombInstrumentGuard, int nRequestID):
         cdef int result
-        cdef size_t address
-        self._ensure_api_not_null()
-        address = ctypes.addressof(pQryCombInstrumentGuard)
+        cdef size_t address_pQryCombInstrumentGuard = ctypes.addressof(pQryCombInstrumentGuard)
+
+        if self._api is NULL:
+            raise MemoryError()
         with nogil:
-            result = self._api.ReqQryCombInstrumentGuard(<CThostFtdcQryCombInstrumentGuardField *> address, nRequestID)
+            result = self._api.ReqQryCombInstrumentGuard(<CThostFtdcQryCombInstrumentGuardField *> address_pQryCombInstrumentGuard, nRequestID)
         return result
 
     def ReqQryCombAction(self, pQryCombAction, int nRequestID):
         cdef int result
-        cdef size_t address
-        self._ensure_api_not_null()
-        address = ctypes.addressof(pQryCombAction)
+        cdef size_t address_pQryCombAction = ctypes.addressof(pQryCombAction)
+
+        if self._api is NULL:
+            raise MemoryError()
         with nogil:
-            result = self._api.ReqQryCombAction(<CThostFtdcQryCombActionField *> address, nRequestID)
+            result = self._api.ReqQryCombAction(<CThostFtdcQryCombActionField *> address_pQryCombAction, nRequestID)
         return result
 
     def ReqQryTransferSerial(self, pQryTransferSerial, int nRequestID):
         cdef int result
-        cdef size_t address
-        self._ensure_api_not_null()
-        address = ctypes.addressof(pQryTransferSerial)
+        cdef size_t address_pQryTransferSerial = ctypes.addressof(pQryTransferSerial)
+
+        if self._api is NULL:
+            raise MemoryError()
         with nogil:
-            result = self._api.ReqQryTransferSerial(<CThostFtdcQryTransferSerialField *> address, nRequestID)
+            result = self._api.ReqQryTransferSerial(<CThostFtdcQryTransferSerialField *> address_pQryTransferSerial, nRequestID)
         return result
 
     def ReqQryAccountregister(self, pQryAccountregister, int nRequestID):
         cdef int result
-        cdef size_t address
-        self._ensure_api_not_null()
-        address = ctypes.addressof(pQryAccountregister)
+        cdef size_t address_pQryAccountregister = ctypes.addressof(pQryAccountregister)
+
+        if self._api is NULL:
+            raise MemoryError()
         with nogil:
-            result = self._api.ReqQryAccountregister(<CThostFtdcQryAccountregisterField *> address, nRequestID)
+            result = self._api.ReqQryAccountregister(<CThostFtdcQryAccountregisterField *> address_pQryAccountregister, nRequestID)
         return result
 
     def ReqQryContractBank(self, pQryContractBank, int nRequestID):
         cdef int result
-        cdef size_t address
-        self._ensure_api_not_null()
-        address = ctypes.addressof(pQryContractBank)
+        cdef size_t address_pQryContractBank = ctypes.addressof(pQryContractBank)
+
+        if self._api is NULL:
+            raise MemoryError()
         with nogil:
-            result = self._api.ReqQryContractBank(<CThostFtdcQryContractBankField *> address, nRequestID)
+            result = self._api.ReqQryContractBank(<CThostFtdcQryContractBankField *> address_pQryContractBank, nRequestID)
         return result
 
     def ReqQryParkedOrder(self, pQryParkedOrder, int nRequestID):
         cdef int result
-        cdef size_t address
-        self._ensure_api_not_null()
-        address = ctypes.addressof(pQryParkedOrder)
+        cdef size_t address_pQryParkedOrder = ctypes.addressof(pQryParkedOrder)
+
+        if self._api is NULL:
+            raise MemoryError()
         with nogil:
-            result = self._api.ReqQryParkedOrder(<CThostFtdcQryParkedOrderField *> address, nRequestID)
+            result = self._api.ReqQryParkedOrder(<CThostFtdcQryParkedOrderField *> address_pQryParkedOrder, nRequestID)
         return result
 
     def ReqQryParkedOrderAction(self, pQryParkedOrderAction, int nRequestID):
         cdef int result
-        cdef size_t address
-        self._ensure_api_not_null()
-        address = ctypes.addressof(pQryParkedOrderAction)
+        cdef size_t address_pQryParkedOrderAction = ctypes.addressof(pQryParkedOrderAction)
+
+        if self._api is NULL:
+            raise MemoryError()
         with nogil:
-            result = self._api.ReqQryParkedOrderAction(<CThostFtdcQryParkedOrderActionField *> address, nRequestID)
+            result = self._api.ReqQryParkedOrderAction(<CThostFtdcQryParkedOrderActionField *> address_pQryParkedOrderAction, nRequestID)
         return result
 
     def ReqQryTradingNotice(self, pQryTradingNotice, int nRequestID):
         cdef int result
-        cdef size_t address
-        self._ensure_api_not_null()
-        address = ctypes.addressof(pQryTradingNotice)
+        cdef size_t address_pQryTradingNotice = ctypes.addressof(pQryTradingNotice)
+
+        if self._api is NULL:
+            raise MemoryError()
         with nogil:
-            result = self._api.ReqQryTradingNotice(<CThostFtdcQryTradingNoticeField *> address, nRequestID)
+            result = self._api.ReqQryTradingNotice(<CThostFtdcQryTradingNoticeField *> address_pQryTradingNotice, nRequestID)
         return result
 
     def ReqQryBrokerTradingParams(self, pQryBrokerTradingParams, int nRequestID):
         cdef int result
-        cdef size_t address
-        self._ensure_api_not_null()
-        address = ctypes.addressof(pQryBrokerTradingParams)
+        cdef size_t address_pQryBrokerTradingParams = ctypes.addressof(pQryBrokerTradingParams)
+
+        if self._api is NULL:
+            raise MemoryError()
         with nogil:
-            result = self._api.ReqQryBrokerTradingParams(<CThostFtdcQryBrokerTradingParamsField *> address, nRequestID)
+            result = self._api.ReqQryBrokerTradingParams(<CThostFtdcQryBrokerTradingParamsField *> address_pQryBrokerTradingParams, nRequestID)
         return result
 
     def ReqQryBrokerTradingAlgos(self, pQryBrokerTradingAlgos, int nRequestID):
         cdef int result
-        cdef size_t address
-        self._ensure_api_not_null()
-        address = ctypes.addressof(pQryBrokerTradingAlgos)
+        cdef size_t address_pQryBrokerTradingAlgos = ctypes.addressof(pQryBrokerTradingAlgos)
+
+        if self._api is NULL:
+            raise MemoryError()
         with nogil:
-            result = self._api.ReqQryBrokerTradingAlgos(<CThostFtdcQryBrokerTradingAlgosField *> address, nRequestID)
+            result = self._api.ReqQryBrokerTradingAlgos(<CThostFtdcQryBrokerTradingAlgosField *> address_pQryBrokerTradingAlgos, nRequestID)
         return result
 
     def ReqQueryCFMMCTradingAccountToken(self, pQueryCFMMCTradingAccountToken, int nRequestID):
         cdef int result
-        cdef size_t address
-        self._ensure_api_not_null()
-        address = ctypes.addressof(pQueryCFMMCTradingAccountToken)
+        cdef size_t address_pQueryCFMMCTradingAccountToken = ctypes.addressof(pQueryCFMMCTradingAccountToken)
+
+        if self._api is NULL:
+            raise MemoryError()
         with nogil:
-            result = self._api.ReqQueryCFMMCTradingAccountToken(<CThostFtdcQueryCFMMCTradingAccountTokenField *> address, nRequestID)
+            result = self._api.ReqQueryCFMMCTradingAccountToken(<CThostFtdcQueryCFMMCTradingAccountTokenField *> address_pQueryCFMMCTradingAccountToken, nRequestID)
         return result
 
     def ReqFromBankToFutureByFuture(self, pReqTransfer, int nRequestID):
         cdef int result
-        cdef size_t address
-        self._ensure_api_not_null()
-        address = ctypes.addressof(pReqTransfer)
+        cdef size_t address_pReqTransfer = ctypes.addressof(pReqTransfer)
+
+        if self._api is NULL:
+            raise MemoryError()
         with nogil:
-            result = self._api.ReqFromBankToFutureByFuture(<CThostFtdcReqTransferField *> address, nRequestID)
+            result = self._api.ReqFromBankToFutureByFuture(<CThostFtdcReqTransferField *> address_pReqTransfer, nRequestID)
         return result
 
     def ReqFromFutureToBankByFuture(self, pReqTransfer, int nRequestID):
         cdef int result
-        cdef size_t address
-        self._ensure_api_not_null()
-        address = ctypes.addressof(pReqTransfer)
+        cdef size_t address_pReqTransfer = ctypes.addressof(pReqTransfer)
+
+        if self._api is NULL:
+            raise MemoryError()
         with nogil:
-            result = self._api.ReqFromFutureToBankByFuture(<CThostFtdcReqTransferField *> address, nRequestID)
+            result = self._api.ReqFromFutureToBankByFuture(<CThostFtdcReqTransferField *> address_pReqTransfer, nRequestID)
         return result
 
     def ReqQueryBankAccountMoneyByFuture(self, pReqQueryAccount, int nRequestID):
         cdef int result
-        cdef size_t address
-        self._ensure_api_not_null()
-        address = ctypes.addressof(pReqQueryAccount)
+        cdef size_t address_pReqQueryAccount = ctypes.addressof(pReqQueryAccount)
+
+        if self._api is NULL:
+            raise MemoryError()
         with nogil:
-            result = self._api.ReqQueryBankAccountMoneyByFuture(<CThostFtdcReqQueryAccountField *> address, nRequestID)
+            result = self._api.ReqQueryBankAccountMoneyByFuture(<CThostFtdcReqQueryAccountField *> address_pReqQueryAccount, nRequestID)
         return result
 
     def ReqQryClassifiedInstrument(self, pQryClassifiedInstrument, int nRequestID):
         cdef int result
-        cdef size_t address
-        self._ensure_api_not_null()
-        address = ctypes.addressof(pQryClassifiedInstrument)
+        cdef size_t address_pQryClassifiedInstrument = ctypes.addressof(pQryClassifiedInstrument)
+
+        if self._api is NULL:
+            raise MemoryError()
         with nogil:
-            result = self._api.ReqQryClassifiedInstrument(<CThostFtdcQryClassifiedInstrumentField *> address, nRequestID)
+            result = self._api.ReqQryClassifiedInstrument(<CThostFtdcQryClassifiedInstrumentField *> address_pQryClassifiedInstrument, nRequestID)
         return result
 
     def ReqQryCombPromotionParam(self, pQryCombPromotionParam, int nRequestID):
         cdef int result
-        cdef size_t address
-        self._ensure_api_not_null()
-        address = ctypes.addressof(pQryCombPromotionParam)
+        cdef size_t address_pQryCombPromotionParam = ctypes.addressof(pQryCombPromotionParam)
+
+        if self._api is NULL:
+            raise MemoryError()
         with nogil:
-            result = self._api.ReqQryCombPromotionParam(<CThostFtdcQryCombPromotionParamField *> address, nRequestID)
+            result = self._api.ReqQryCombPromotionParam(<CThostFtdcQryCombPromotionParamField *> address_pQryCombPromotionParam, nRequestID)
         return result
 
 

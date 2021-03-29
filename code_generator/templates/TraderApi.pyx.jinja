@@ -1,8 +1,8 @@
-{% macro parameters(params) %}
+{% macro spi_parameters(params) %}
     {% if params %}
 
     {% for p in params %}
-    {% if p.pointer %}
+    {% if p.type.pointer %}
         None if {{ p.name }} is NULL else {{ p.type_py_class_name }}.from_address(<size_t> {{ p.name }}).to_tuple()
     {%- else %}
         {{ p.name }}
@@ -107,26 +107,37 @@ cdef class TraderApi:
         self._api.SubscribePublicTopic(nResumeType)
     {% for method in api_methods %}
 
-    def {{ method.name }}(self, {{ method.first_param.name }}{%if method.req_id_in_params %}, int nRequestID{% endif %}):
+    def {{ method.name }}(self
+        {%- for p in method.params -%}
+        , {% if p.type.primitive_base %}{{ p.type.base }} {% if p.type.pointer %}*{% endif %}{% endif %}{{ p.name }}
+        {%- endfor -%}
+    ):
         {% if method.return_type == "int" %}
         cdef int result
         {% endif %}
-        cdef size_t address
-        self._ensure_api_not_null()
-        address = ctypes.addressof({{ method.first_param.name }})
+        {% for p in method.params %}{% if not p.type.primitive_base %}
+        cdef size_t address_{{ p.name }} = ctypes.addressof({{ p.name }})
+        {% endif %}{% endfor %}
+
+        if self._api is NULL:
+            raise MemoryError()
         with nogil:
             {% if method.return_type == "int" %}
-            result = self._api.{{ method.name }}(<{{ method.first_param.type }} *> address{% if method.req_id_in_params %}, nRequestID{% endif %})
-            {% else %}
-            self._api.{{ method.name }}(<{{ method.first_param.type }} *> address{% if method.req_id_in_params %}, nRequestID{% endif %})
-            {% endif %}
+            result = self._api.{{ method.name }}(
+            {%- else %}
+            self._api.{{ method.name }}(
+            {%- endif -%}
+                {%- for p in method.params -%}
+                {%- if not p.type.primitive_base %}<{{ p.type.base }} *> address_{{ p.name }}{% else %}{{ p.name }}{% endif %}{% if not loop.last %}, {% endif %}
+                {%- endfor -%}
+            )
         return{% if method.return_type == "int" %} result{% endif %}
 
     {% endfor %}
 {% for method in spi_methods %}
 
 
-cdef extern int TraderSpi__{{ method.name }}(api{% for p in method.params %}, {% if p.type == "bool" %}c{% endif %}{{ p.type }} {% if p.pointer %}*{% endif %}{{ p.name }}{% endfor %}) except -1:
-    api.{{ method.name }}({{ parameters(method.params) }})
+cdef extern int TraderSpi__{{ method.name }}(api{% for p in method.params %}, {% if p.type.base == "bool" %}c{% endif %}{{ p.type.base }} {% if p.type.pointer %}*{% endif %}{{ p.name }}{% endfor %}) except -1:
+    api.{{ method.name }}({{ spi_parameters(method.params) }})
     return 0
 {% endfor %}

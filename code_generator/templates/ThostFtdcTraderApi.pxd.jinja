@@ -44,7 +44,11 @@ cdef extern from "ThostFtdcTraderApi.h":
         void SubscribePrivateTopic(THOST_TE_RESUME_TYPE nResumeType) nogil except +
         void SubscribePublicTopic(THOST_TE_RESUME_TYPE nResumeType) nogil except +
         {% for method in methods %}
-        {{ method.return_type }} {{ method.name }}({{ parameter(method.first_param) }}{% if method.req_id_in_params %}, int nRequestID{% endif %}) nogil except +
+        {{ method.return_type }} {{ method.name }}(
+            {%- for p in method.params -%}
+            {{ p.type.base }} {% if p.type.pointer %}*{% endif %}{{ p.name }}{% if not loop.last %}, {% endif %}
+            {%- endfor -%}
+        ) nogil except +
         {% endfor %}
 
 
