@@ -47,9 +47,10 @@ class ReqUserLogin(Struct):
         ProtocolInfo: str = None,
         MacAddress: str = None,
         OneTimePassword: str = None,
-        ClientIPAddress: str = None,
+        reserve1: str = None,
         LoginRemark: str = None,
         ClientIPPort: int = None,
+        ClientIPAddress: str = None,
     ):
         """
         用户登录请求
@@ -62,9 +63,10 @@ class ReqUserLogin(Struct):
         :param ProtocolInfo: 协议信息
         :param MacAddress: Mac地址
         :param OneTimePassword: 动态密码
-        :param ClientIPAddress: 终端IP地址
+        :param reserve1: 保留的无效字段
         :param LoginRemark: 登录备注
         :param ClientIPPort: 终端IP端口
+        :param ClientIPAddress: 终端IP地址
         """
         super().__init__()
         ...
@@ -86,6 +88,8 @@ class RspUserLogin(Struct):
         CZCETime: str = None,
         FFEXTime: str = None,
         INETime: str = None,
+        SysVersion: str = None,
+        GFEXTime: str = None,
     ):
         """
         用户登录应答
@@ -102,6 +106,8 @@ class RspUserLogin(Struct):
         :param CZCETime: 郑商所时间
         :param FFEXTime: 中金所时间
         :param INETime: 能源中心时间
+        :param SysVersion: 后台版本信息
+        :param GFEXTime: 广期所时间
         """
         super().__init__()
         ...
@@ -189,6 +195,8 @@ class AuthenticationInfo(Struct):
         IsResult: int = None,
         AppID: str = None,
         AppType: str = None,
+        reserve1: str = None,
+        ClientIPAddress: str = None,
     ):
         """
         客户端认证信息
@@ -199,6 +207,8 @@ class AuthenticationInfo(Struct):
         :param IsResult: 是否为认证结果
         :param AppID: App代码
         :param AppType: App类型
+        :param reserve1: 保留的无效字段
+        :param ClientIPAddress: 终端IP地址
         """
         super().__init__()
         ...
@@ -503,7 +513,7 @@ class Exchange(Struct):
 class Product(Struct):
     def __init__(
         self,
-        ProductID: str = None,
+        reserve1: str = None,
         ProductName: str = None,
         ExchangeID: str = None,
         ProductClass: str = None,
@@ -518,12 +528,16 @@ class Product(Struct):
         CloseDealType: str = None,
         TradeCurrencyID: str = None,
         MortgageFundUseRange: str = None,
-        ExchangeProductID: str = None,
+        reserve2: str = None,
         UnderlyingMultiple: float = None,
+        ProductID: str = None,
+        ExchangeProductID: str = None,
+        OpenLimitControlLevel: str = None,
+        OrderFreqControlLevel: str = None,
     ):
         """
         产品
-        :param ProductID: 产品代码
+        :param reserve1: 保留的无效字段
         :param ProductName: 产品名称
         :param ExchangeID: 交易所代码
         :param ProductClass: 产品类型
@@ -538,8 +552,12 @@ class Product(Struct):
         :param CloseDealType: 平仓处理类型
         :param TradeCurrencyID: 交易币种类型
         :param MortgageFundUseRange: 质押资金可用范围
-        :param ExchangeProductID: 交易所产品代码
+        :param reserve2: 保留的无效字段
         :param UnderlyingMultiple: 合约基础商品乘数
+        :param ProductID: 产品代码
+        :param ExchangeProductID: 交易所产品代码
+        :param OpenLimitControlLevel: 开仓量限制粒度
+        :param OrderFreqControlLevel: 报单频率控制粒度
         """
         super().__init__()
         ...
@@ -548,11 +566,11 @@ class Product(Struct):
 class Instrument(Struct):
     def __init__(
         self,
-        InstrumentID: str = None,
+        reserve1: str = None,
         ExchangeID: str = None,
         InstrumentName: str = None,
-        ExchangeInstID: str = None,
-        ProductID: str = None,
+        reserve2: str = None,
+        reserve3: str = None,
         ProductClass: str = None,
         DeliveryYear: int = None,
         DeliveryMonth: int = None,
@@ -574,19 +592,23 @@ class Instrument(Struct):
         LongMarginRatio: float = None,
         ShortMarginRatio: float = None,
         MaxMarginSideAlgorithm: str = None,
-        UnderlyingInstrID: str = None,
+        reserve4: str = None,
         StrikePrice: float = None,
         OptionsType: str = None,
         UnderlyingMultiple: float = None,
         CombinationType: str = None,
+        InstrumentID: str = None,
+        ExchangeInstID: str = None,
+        ProductID: str = None,
+        UnderlyingInstrID: str = None,
     ):
         """
         合约
-        :param InstrumentID: 合约代码
+        :param reserve1: 保留的无效字段
         :param ExchangeID: 交易所代码
         :param InstrumentName: 合约名称
-        :param ExchangeInstID: 合约在交易所的代码
-        :param ProductID: 产品代码
+        :param reserve2: 保留的无效字段
+        :param reserve3: 保留的无效字段
         :param ProductClass: 产品类型
         :param DeliveryYear: 交割年份
         :param DeliveryMonth: 交割月
@@ -608,11 +630,15 @@ class Instrument(Struct):
         :param LongMarginRatio: 多头保证金率
         :param ShortMarginRatio: 空头保证金率
         :param MaxMarginSideAlgorithm: 是否使用大额单边保证金算法
-        :param UnderlyingInstrID: 基础商品代码
+        :param reserve4: 保留的无效字段
         :param StrikePrice: 执行价
         :param OptionsType: 期权类型
         :param UnderlyingMultiple: 合约基础商品乘数
         :param CombinationType: 组合类型
+        :param InstrumentID: 合约代码
+        :param ExchangeInstID: 合约在交易所的代码
+        :param ProductID: 产品代码
+        :param UnderlyingInstrID: 基础商品代码
         """
         super().__init__()
         ...
@@ -646,6 +672,7 @@ class Trader(Struct):
         Password: str = None,
         InstallCount: int = None,
         BrokerID: str = None,
+        OrderCancelAlg: str = None,
     ):
         """
         交易所交易员
@@ -655,6 +682,7 @@ class Trader(Struct):
         :param Password: 密码
         :param InstallCount: 安装数量
         :param BrokerID: 经纪公司代码
+        :param OrderCancelAlg: 撤单时选择席位算法
         """
         super().__init__()
         ...
@@ -676,6 +704,8 @@ class Investor(Struct):
         Mobile: str = None,
         CommModelID: str = None,
         MarginModelID: str = None,
+        IsOrderFreq: str = None,
+        IsOpenVolLimit: str = None,
     ):
         """
         投资者
@@ -692,6 +722,8 @@ class Investor(Struct):
         :param Mobile: 手机
         :param CommModelID: 手续费率模板代码
         :param MarginModelID: 保证金率模板代码
+        :param IsOrderFreq: 是否频率控制
+        :param IsOpenVolLimit: 是否开仓限制
         """
         super().__init__()
         ...
@@ -908,7 +940,7 @@ class TradingAccount(Struct):
 class InvestorPosition(Struct):
     def __init__(
         self,
-        InstrumentID: str = None,
+        reserve1: str = None,
         BrokerID: str = None,
         InvestorID: str = None,
         PosiDirection: str = None,
@@ -955,10 +987,13 @@ class InvestorPosition(Struct):
         YdStrikeFrozen: int = None,
         InvestUnitID: str = None,
         PositionCostOffset: float = None,
+        TasPosition: int = None,
+        TasPositionCost: float = None,
+        InstrumentID: str = None,
     ):
         """
         投资者持仓
-        :param InstrumentID: 合约代码
+        :param reserve1: 保留的无效字段
         :param BrokerID: 经纪公司代码
         :param InvestorID: 投资者代码
         :param PosiDirection: 持仓多空方向
@@ -1004,7 +1039,10 @@ class InvestorPosition(Struct):
         :param ExchangeID: 交易所代码
         :param YdStrikeFrozen: 执行冻结的昨仓
         :param InvestUnitID: 投资单元代码
-        :param PositionCostOffset: 大商所持仓成本差值，只有大商所使用
+        :param PositionCostOffset: 持仓成本差值
+        :param TasPosition: tas持仓手数
+        :param TasPositionCost: tas持仓成本
+        :param InstrumentID: 合约代码
         """
         super().__init__()
         ...
@@ -1013,7 +1051,7 @@ class InvestorPosition(Struct):
 class InstrumentMarginRate(Struct):
     def __init__(
         self,
-        InstrumentID: str = None,
+        reserve1: str = None,
         InvestorRange: str = None,
         BrokerID: str = None,
         InvestorID: str = None,
@@ -1025,10 +1063,11 @@ class InstrumentMarginRate(Struct):
         IsRelative: int = None,
         ExchangeID: str = None,
         InvestUnitID: str = None,
+        InstrumentID: str = None,
     ):
         """
         合约保证金率
-        :param InstrumentID: 合约代码
+        :param reserve1: 保留的无效字段
         :param InvestorRange: 投资者范围
         :param BrokerID: 经纪公司代码
         :param InvestorID: 投资者代码
@@ -1040,6 +1079,7 @@ class InstrumentMarginRate(Struct):
         :param IsRelative: 是否相对交易所收取
         :param ExchangeID: 交易所代码
         :param InvestUnitID: 投资单元代码
+        :param InstrumentID: 合约代码
         """
         super().__init__()
         ...
@@ -1048,7 +1088,7 @@ class InstrumentMarginRate(Struct):
 class InstrumentCommissionRate(Struct):
     def __init__(
         self,
-        InstrumentID: str = None,
+        reserve1: str = None,
         InvestorRange: str = None,
         BrokerID: str = None,
         InvestorID: str = None,
@@ -1061,10 +1101,11 @@ class InstrumentCommissionRate(Struct):
         ExchangeID: str = None,
         BizType: str = None,
         InvestUnitID: str = None,
+        InstrumentID: str = None,
     ):
         """
         合约手续费率
-        :param InstrumentID: 合约代码
+        :param reserve1: 保留的无效字段
         :param InvestorRange: 投资者范围
         :param BrokerID: 经纪公司代码
         :param InvestorID: 投资者代码
@@ -1077,6 +1118,7 @@ class InstrumentCommissionRate(Struct):
         :param ExchangeID: 交易所代码
         :param BizType: 业务类型
         :param InvestUnitID: 投资单元代码
+        :param InstrumentID: 合约代码
         """
         super().__init__()
         ...
@@ -1086,9 +1128,9 @@ class DepthMarketData(Struct):
     def __init__(
         self,
         TradingDay: str = None,
-        InstrumentID: str = None,
+        reserve1: str = None,
         ExchangeID: str = None,
-        ExchangeInstID: str = None,
+        reserve2: str = None,
         LastPrice: float = None,
         PreSettlementPrice: float = None,
         PreClosePrice: float = None,
@@ -1129,13 +1171,17 @@ class DepthMarketData(Struct):
         AskVolume5: int = None,
         AveragePrice: float = None,
         ActionDay: str = None,
+        InstrumentID: str = None,
+        ExchangeInstID: str = None,
+        BandingUpperPrice: float = None,
+        BandingLowerPrice: float = None,
     ):
         """
         深度行情
         :param TradingDay: 交易日
-        :param InstrumentID: 合约代码
+        :param reserve1: 保留的无效字段
         :param ExchangeID: 交易所代码
-        :param ExchangeInstID: 合约在交易所的代码
+        :param reserve2: 保留的无效字段
         :param LastPrice: 最新价
         :param PreSettlementPrice: 上次结算价
         :param PreClosePrice: 昨收盘
@@ -1176,6 +1222,10 @@ class DepthMarketData(Struct):
         :param AskVolume5: 申卖量五
         :param AveragePrice: 当日均价
         :param ActionDay: 业务日期
+        :param InstrumentID: 合约代码
+        :param ExchangeInstID: 合约在交易所的代码
+        :param BandingUpperPrice: 上带价
+        :param BandingLowerPrice: 下带价
         """
         super().__init__()
         ...
@@ -1184,19 +1234,21 @@ class DepthMarketData(Struct):
 class InstrumentTradingRight(Struct):
     def __init__(
         self,
-        InstrumentID: str = None,
+        reserve1: str = None,
         InvestorRange: str = None,
         BrokerID: str = None,
         InvestorID: str = None,
         TradingRight: str = None,
+        InstrumentID: str = None,
     ):
         """
         投资者合约交易权限
-        :param InstrumentID: 合约代码
+        :param reserve1: 保留的无效字段
         :param InvestorRange: 投资者范围
         :param BrokerID: 经纪公司代码
         :param InvestorID: 投资者代码
         :param TradingRight: 交易权限
+        :param InstrumentID: 合约代码
         """
         super().__init__()
         ...
@@ -1291,6 +1343,7 @@ class TraderOffer(Struct):
         BrokerID: str = None,
         MaxTradeID: str = None,
         MaxOrderMessageReference: str = None,
+        OrderCancelAlg: str = None,
     ):
         """
         交易所交易员报盘机
@@ -1313,6 +1366,7 @@ class TraderOffer(Struct):
         :param BrokerID: 经纪公司代码
         :param MaxTradeID: 本席位最大成交编号
         :param MaxOrderMessageReference: 本席位最大报单备拷
+        :param OrderCancelAlg: 撤单时选择席位算法
         """
         super().__init__()
         ...
@@ -1348,7 +1402,7 @@ class SettlementInfo(Struct):
 class InstrumentMarginRateAdjust(Struct):
     def __init__(
         self,
-        InstrumentID: str = None,
+        reserve1: str = None,
         InvestorRange: str = None,
         BrokerID: str = None,
         InvestorID: str = None,
@@ -1358,10 +1412,11 @@ class InstrumentMarginRateAdjust(Struct):
         ShortMarginRatioByMoney: float = None,
         ShortMarginRatioByVolume: float = None,
         IsRelative: int = None,
+        InstrumentID: str = None,
     ):
         """
         合约保证金率调整
-        :param InstrumentID: 合约代码
+        :param reserve1: 保留的无效字段
         :param InvestorRange: 投资者范围
         :param BrokerID: 经纪公司代码
         :param InvestorID: 投资者代码
@@ -1371,6 +1426,7 @@ class InstrumentMarginRateAdjust(Struct):
         :param ShortMarginRatioByMoney: 空头保证金率
         :param ShortMarginRatioByVolume: 空头保证金费
         :param IsRelative: 是否相对交易所收取
+        :param InstrumentID: 合约代码
         """
         super().__init__()
         ...
@@ -1380,24 +1436,26 @@ class ExchangeMarginRate(Struct):
     def __init__(
         self,
         BrokerID: str = None,
-        InstrumentID: str = None,
+        reserve1: str = None,
         HedgeFlag: str = None,
         LongMarginRatioByMoney: float = None,
         LongMarginRatioByVolume: float = None,
         ShortMarginRatioByMoney: float = None,
         ShortMarginRatioByVolume: float = None,
         ExchangeID: str = None,
+        InstrumentID: str = None,
     ):
         """
         交易所保证金率
         :param BrokerID: 经纪公司代码
-        :param InstrumentID: 合约代码
+        :param reserve1: 保留的无效字段
         :param HedgeFlag: 投机套保标志
         :param LongMarginRatioByMoney: 多头保证金率
         :param LongMarginRatioByVolume: 多头保证金费
         :param ShortMarginRatioByMoney: 空头保证金率
         :param ShortMarginRatioByVolume: 空头保证金费
         :param ExchangeID: 交易所代码
+        :param InstrumentID: 合约代码
         """
         super().__init__()
         ...
@@ -1407,7 +1465,7 @@ class ExchangeMarginRateAdjust(Struct):
     def __init__(
         self,
         BrokerID: str = None,
-        InstrumentID: str = None,
+        reserve1: str = None,
         HedgeFlag: str = None,
         LongMarginRatioByMoney: float = None,
         LongMarginRatioByVolume: float = None,
@@ -1421,11 +1479,12 @@ class ExchangeMarginRateAdjust(Struct):
         NoLongMarginRatioByVolume: float = None,
         NoShortMarginRatioByMoney: float = None,
         NoShortMarginRatioByVolume: float = None,
+        InstrumentID: str = None,
     ):
         """
         交易所保证金率调整
         :param BrokerID: 经纪公司代码
-        :param InstrumentID: 合约代码
+        :param reserve1: 保留的无效字段
         :param HedgeFlag: 投机套保标志
         :param LongMarginRatioByMoney: 跟随交易所投资者多头保证金率
         :param LongMarginRatioByVolume: 跟随交易所投资者多头保证金费
@@ -1439,6 +1498,7 @@ class ExchangeMarginRateAdjust(Struct):
         :param NoLongMarginRatioByVolume: 不跟随交易所投资者多头保证金费
         :param NoShortMarginRatioByMoney: 不跟随交易所投资者空头保证金率
         :param NoShortMarginRatioByVolume: 不跟随交易所投资者空头保证金费
+        :param InstrumentID: 合约代码
         """
         super().__init__()
         ...
@@ -1490,10 +1550,10 @@ class CurrentTime(Struct):
     ):
         """
         当前时间
-        :param CurrDate: 当前日期
+        :param CurrDate: 当前交易日
         :param CurrTime: 当前时间
         :param CurrMillisec: 当前时间（毫秒）
-        :param ActionDay: 业务日期
+        :param ActionDay: 自然日期
         """
         super().__init__()
         ...
@@ -1525,7 +1585,7 @@ class LoginInfo(Struct):
         UserID: str = None,
         LoginDate: str = None,
         LoginTime: str = None,
-        IPAddress: str = None,
+        reserve1: str = None,
         UserProductInfo: str = None,
         InterfaceProductInfo: str = None,
         ProtocolInfo: str = None,
@@ -1542,6 +1602,7 @@ class LoginInfo(Struct):
         IsQryControl: int = None,
         LoginRemark: str = None,
         Password: str = None,
+        IPAddress: str = None,
     ):
         """
         登录信息
@@ -1551,7 +1612,7 @@ class LoginInfo(Struct):
         :param UserID: 用户代码
         :param LoginDate: 登录日期
         :param LoginTime: 登录时间
-        :param IPAddress: IP地址
+        :param reserve1: 保留的无效字段
         :param UserProductInfo: 用户端产品信息
         :param InterfaceProductInfo: 接口端产品信息
         :param ProtocolInfo: 协议信息
@@ -1568,6 +1629,7 @@ class LoginInfo(Struct):
         :param IsQryControl: 查询时是否需要流控
         :param LoginRemark: 登录备注
         :param Password: 密码
+        :param IPAddress: IP地址
         """
         super().__init__()
         ...
@@ -1633,7 +1695,7 @@ class InputOrder(Struct):
         self,
         BrokerID: str = None,
         InvestorID: str = None,
-        InstrumentID: str = None,
+        reserve1: str = None,
         OrderRef: str = None,
         UserID: str = None,
         OrderPriceType: str = None,
@@ -1659,14 +1721,16 @@ class InputOrder(Struct):
         AccountID: str = None,
         CurrencyID: str = None,
         ClientID: str = None,
-        IPAddress: str = None,
+        reserve2: str = None,
         MacAddress: str = None,
+        InstrumentID: str = None,
+        IPAddress: str = None,
     ):
         """
         输入报单
         :param BrokerID: 经纪公司代码
         :param InvestorID: 投资者代码
-        :param InstrumentID: 合约代码
+        :param reserve1: 保留的无效字段
         :param OrderRef: 报单引用
         :param UserID: 用户代码
         :param OrderPriceType: 报单价格条件
@@ -1692,8 +1756,10 @@ class InputOrder(Struct):
         :param AccountID: 资金账号
         :param CurrencyID: 币种代码
         :param ClientID: 交易编码
-        :param IPAddress: IP地址
+        :param reserve2: 保留的无效字段
         :param MacAddress: Mac地址
+        :param InstrumentID: 合约代码
+        :param IPAddress: IP地址
         """
         super().__init__()
         ...
@@ -1704,7 +1770,7 @@ class Order(Struct):
         self,
         BrokerID: str = None,
         InvestorID: str = None,
-        InstrumentID: str = None,
+        reserve1: str = None,
         OrderRef: str = None,
         UserID: str = None,
         OrderPriceType: str = None,
@@ -1727,7 +1793,7 @@ class Order(Struct):
         ExchangeID: str = None,
         ParticipantID: str = None,
         ClientID: str = None,
-        ExchangeInstID: str = None,
+        reserve2: str = None,
         TraderID: str = None,
         InstallID: int = None,
         OrderSubmitStatus: str = None,
@@ -1763,14 +1829,17 @@ class Order(Struct):
         InvestUnitID: str = None,
         AccountID: str = None,
         CurrencyID: str = None,
-        IPAddress: str = None,
+        reserve3: str = None,
         MacAddress: str = None,
+        InstrumentID: str = None,
+        ExchangeInstID: str = None,
+        IPAddress: str = None,
     ):
         """
         报单
         :param BrokerID: 经纪公司代码
         :param InvestorID: 投资者代码
-        :param InstrumentID: 合约代码
+        :param reserve1: 保留的无效字段
         :param OrderRef: 报单引用
         :param UserID: 用户代码
         :param OrderPriceType: 报单价格条件
@@ -1793,7 +1862,7 @@ class Order(Struct):
         :param ExchangeID: 交易所代码
         :param ParticipantID: 会员代码
         :param ClientID: 客户代码
-        :param ExchangeInstID: 合约在交易所的代码
+        :param reserve2: 保留的无效字段
         :param TraderID: 交易所交易员代码
         :param InstallID: 安装编号
         :param OrderSubmitStatus: 报单提交状态
@@ -1829,8 +1898,11 @@ class Order(Struct):
         :param InvestUnitID: 投资单元代码
         :param AccountID: 资金账号
         :param CurrencyID: 币种代码
-        :param IPAddress: IP地址
+        :param reserve3: 保留的无效字段
         :param MacAddress: Mac地址
+        :param InstrumentID: 合约代码
+        :param ExchangeInstID: 合约在交易所的代码
+        :param IPAddress: IP地址
         """
         super().__init__()
         ...
@@ -1859,7 +1931,7 @@ class ExchangeOrder(Struct):
         ExchangeID: str = None,
         ParticipantID: str = None,
         ClientID: str = None,
-        ExchangeInstID: str = None,
+        reserve1: str = None,
         TraderID: str = None,
         InstallID: int = None,
         OrderSubmitStatus: str = None,
@@ -1882,8 +1954,10 @@ class ExchangeOrder(Struct):
         ClearingPartID: str = None,
         SequenceNo: int = None,
         BranchID: str = None,
-        IPAddress: str = None,
+        reserve2: str = None,
         MacAddress: str = None,
+        ExchangeInstID: str = None,
+        IPAddress: str = None,
     ):
         """
         交易所报单
@@ -1907,7 +1981,7 @@ class ExchangeOrder(Struct):
         :param ExchangeID: 交易所代码
         :param ParticipantID: 会员代码
         :param ClientID: 客户代码
-        :param ExchangeInstID: 合约在交易所的代码
+        :param reserve1: 保留的无效字段
         :param TraderID: 交易所交易员代码
         :param InstallID: 安装编号
         :param OrderSubmitStatus: 报单提交状态
@@ -1930,8 +2004,10 @@ class ExchangeOrder(Struct):
         :param ClearingPartID: 结算会员编号
         :param SequenceNo: 序号
         :param BranchID: 营业部编号
-        :param IPAddress: IP地址
+        :param reserve2: 保留的无效字段
         :param MacAddress: Mac地址
+        :param ExchangeInstID: 合约在交易所的代码
+        :param IPAddress: IP地址
         """
         super().__init__()
         ...
@@ -1978,10 +2054,12 @@ class InputOrderAction(Struct):
         LimitPrice: float = None,
         VolumeChange: int = None,
         UserID: str = None,
-        InstrumentID: str = None,
+        reserve1: str = None,
         InvestUnitID: str = None,
-        IPAddress: str = None,
+        reserve2: str = None,
         MacAddress: str = None,
+        InstrumentID: str = None,
+        IPAddress: str = None,
     ):
         """
         输入报单操作
@@ -1998,10 +2076,12 @@ class InputOrderAction(Struct):
         :param LimitPrice: 价格
         :param VolumeChange: 数量变化
         :param UserID: 用户代码
-        :param InstrumentID: 合约代码
+        :param reserve1: 保留的无效字段
         :param InvestUnitID: 投资单元代码
-        :param IPAddress: IP地址
+        :param reserve2: 保留的无效字段
         :param MacAddress: Mac地址
+        :param InstrumentID: 合约代码
+        :param IPAddress: IP地址
         """
         super().__init__()
         ...
@@ -2034,11 +2114,13 @@ class OrderAction(Struct):
         OrderActionStatus: str = None,
         UserID: str = None,
         StatusMsg: str = None,
-        InstrumentID: str = None,
+        reserve1: str = None,
         BranchID: str = None,
         InvestUnitID: str = None,
-        IPAddress: str = None,
+        reserve2: str = None,
         MacAddress: str = None,
+        InstrumentID: str = None,
+        IPAddress: str = None,
     ):
         """
         报单操作
@@ -2066,11 +2148,13 @@ class OrderAction(Struct):
         :param OrderActionStatus: 报单操作状态
         :param UserID: 用户代码
         :param StatusMsg: 状态信息
-        :param InstrumentID: 合约代码
+        :param reserve1: 保留的无效字段
         :param BranchID: 营业部编号
         :param InvestUnitID: 投资单元代码
-        :param IPAddress: IP地址
+        :param reserve2: 保留的无效字段
         :param MacAddress: Mac地址
+        :param InstrumentID: 合约代码
+        :param IPAddress: IP地址
         """
         super().__init__()
         ...
@@ -2096,8 +2180,9 @@ class ExchangeOrderAction(Struct):
         OrderActionStatus: str = None,
         UserID: str = None,
         BranchID: str = None,
-        IPAddress: str = None,
+        reserve1: str = None,
         MacAddress: str = None,
+        IPAddress: str = None,
     ):
         """
         交易所报单操作
@@ -2118,8 +2203,9 @@ class ExchangeOrderAction(Struct):
         :param OrderActionStatus: 报单操作状态
         :param UserID: 用户代码
         :param BranchID: 营业部编号
-        :param IPAddress: IP地址
+        :param reserve1: 保留的无效字段
         :param MacAddress: Mac地址
+        :param IPAddress: IP地址
         """
         super().__init__()
         ...
@@ -2162,7 +2248,7 @@ class ExchangeTrade(Struct):
         ParticipantID: str = None,
         ClientID: str = None,
         TradingRole: str = None,
-        ExchangeInstID: str = None,
+        reserve1: str = None,
         OffsetFlag: str = None,
         HedgeFlag: str = None,
         Price: float = None,
@@ -2177,6 +2263,7 @@ class ExchangeTrade(Struct):
         BusinessUnit: str = None,
         SequenceNo: int = None,
         TradeSource: str = None,
+        ExchangeInstID: str = None,
     ):
         """
         交易所成交
@@ -2187,7 +2274,7 @@ class ExchangeTrade(Struct):
         :param ParticipantID: 会员代码
         :param ClientID: 客户代码
         :param TradingRole: 交易角色
-        :param ExchangeInstID: 合约在交易所的代码
+        :param reserve1: 保留的无效字段
         :param OffsetFlag: 开平标志
         :param HedgeFlag: 投机套保标志
         :param Price: 价格
@@ -2202,6 +2289,7 @@ class ExchangeTrade(Struct):
         :param BusinessUnit: 业务单元
         :param SequenceNo: 序号
         :param TradeSource: 成交来源
+        :param ExchangeInstID: 合约在交易所的代码
         """
         super().__init__()
         ...
@@ -2212,7 +2300,7 @@ class Trade(Struct):
         self,
         BrokerID: str = None,
         InvestorID: str = None,
-        InstrumentID: str = None,
+        reserve1: str = None,
         OrderRef: str = None,
         UserID: str = None,
         ExchangeID: str = None,
@@ -2222,7 +2310,7 @@ class Trade(Struct):
         ParticipantID: str = None,
         ClientID: str = None,
         TradingRole: str = None,
-        ExchangeInstID: str = None,
+        reserve2: str = None,
         OffsetFlag: str = None,
         HedgeFlag: str = None,
         Price: float = None,
@@ -2241,12 +2329,14 @@ class Trade(Struct):
         BrokerOrderSeq: int = None,
         TradeSource: str = None,
         InvestUnitID: str = None,
+        InstrumentID: str = None,
+        ExchangeInstID: str = None,
     ):
         """
         成交
         :param BrokerID: 经纪公司代码
         :param InvestorID: 投资者代码
-        :param InstrumentID: 合约代码
+        :param reserve1: 保留的无效字段
         :param OrderRef: 报单引用
         :param UserID: 用户代码
         :param ExchangeID: 交易所代码
@@ -2256,7 +2346,7 @@ class Trade(Struct):
         :param ParticipantID: 会员代码
         :param ClientID: 客户代码
         :param TradingRole: 交易角色
-        :param ExchangeInstID: 合约在交易所的代码
+        :param reserve2: 保留的无效字段
         :param OffsetFlag: 开平标志
         :param HedgeFlag: 投机套保标志
         :param Price: 价格
@@ -2275,6 +2365,8 @@ class Trade(Struct):
         :param BrokerOrderSeq: 经纪公司报单编号
         :param TradeSource: 成交来源
         :param InvestUnitID: 投资单元代码
+        :param InstrumentID: 合约代码
+        :param ExchangeInstID: 合约在交易所的代码
         """
         super().__init__()
         ...
@@ -2289,12 +2381,13 @@ class UserSession(Struct):
         UserID: str = None,
         LoginDate: str = None,
         LoginTime: str = None,
-        IPAddress: str = None,
+        reserve1: str = None,
         UserProductInfo: str = None,
         InterfaceProductInfo: str = None,
         ProtocolInfo: str = None,
         MacAddress: str = None,
         LoginRemark: str = None,
+        IPAddress: str = None,
     ):
         """
         用户会话
@@ -2304,41 +2397,44 @@ class UserSession(Struct):
         :param UserID: 用户代码
         :param LoginDate: 登录日期
         :param LoginTime: 登录时间
-        :param IPAddress: IP地址
+        :param reserve1: 保留的无效字段
         :param UserProductInfo: 用户端产品信息
         :param InterfaceProductInfo: 接口端产品信息
         :param ProtocolInfo: 协议信息
         :param MacAddress: Mac地址
         :param LoginRemark: 登录备注
+        :param IPAddress: IP地址
         """
         super().__init__()
         ...
 
 
-class QueryMaxOrderVolume(Struct):
+class QryMaxOrderVolume(Struct):
     def __init__(
         self,
         BrokerID: str = None,
         InvestorID: str = None,
-        InstrumentID: str = None,
+        reserve1: str = None,
         Direction: str = None,
         OffsetFlag: str = None,
         HedgeFlag: str = None,
         MaxVolume: int = None,
         ExchangeID: str = None,
         InvestUnitID: str = None,
+        InstrumentID: str = None,
     ):
         """
         查询最大报单数量
         :param BrokerID: 经纪公司代码
         :param InvestorID: 投资者代码
-        :param InstrumentID: 合约代码
+        :param reserve1: 保留的无效字段
         :param Direction: 买卖方向
         :param OffsetFlag: 开平标志
         :param HedgeFlag: 投机套保标志
         :param MaxVolume: 最大允许报单数量
         :param ExchangeID: 交易所代码
         :param InvestUnitID: 投资单元代码
+        :param InstrumentID: 合约代码
         """
         super().__init__()
         ...
@@ -2378,6 +2474,8 @@ class SyncDeposit(Struct):
         Deposit: float = None,
         IsForce: int = None,
         CurrencyID: str = None,
+        IsFromSopt: int = None,
+        TradingPassword: str = None,
     ):
         """
         出入金同步
@@ -2387,6 +2485,8 @@ class SyncDeposit(Struct):
         :param Deposit: 入金金额
         :param IsForce: 是否强制进行
         :param CurrencyID: 币种代码
+        :param IsFromSopt: 是否是个股期权内转
+        :param TradingPassword: 资金密码
         """
         super().__init__()
         ...
@@ -2444,6 +2544,8 @@ class SyncingInvestor(Struct):
         Mobile: str = None,
         CommModelID: str = None,
         MarginModelID: str = None,
+        IsOrderFreq: str = None,
+        IsOpenVolLimit: str = None,
     ):
         """
         正在同步中的投资者
@@ -2460,6 +2562,8 @@ class SyncingInvestor(Struct):
         :param Mobile: 手机
         :param CommModelID: 手续费率模板代码
         :param MarginModelID: 保证金率模板代码
+        :param IsOrderFreq: 是否频率控制
+        :param IsOpenVolLimit: 是否开仓限制
         """
         super().__init__()
         ...
@@ -2615,7 +2719,7 @@ class SyncingTradingAccount(Struct):
 class SyncingInvestorPosition(Struct):
     def __init__(
         self,
-        InstrumentID: str = None,
+        reserve1: str = None,
         BrokerID: str = None,
         InvestorID: str = None,
         PosiDirection: str = None,
@@ -2662,10 +2766,13 @@ class SyncingInvestorPosition(Struct):
         YdStrikeFrozen: int = None,
         InvestUnitID: str = None,
         PositionCostOffset: float = None,
+        TasPosition: int = None,
+        TasPositionCost: float = None,
+        InstrumentID: str = None,
     ):
         """
         正在同步中的投资者持仓
-        :param InstrumentID: 合约代码
+        :param reserve1: 保留的无效字段
         :param BrokerID: 经纪公司代码
         :param InvestorID: 投资者代码
         :param PosiDirection: 持仓多空方向
@@ -2711,7 +2818,10 @@ class SyncingInvestorPosition(Struct):
         :param ExchangeID: 交易所代码
         :param YdStrikeFrozen: 执行冻结的昨仓
         :param InvestUnitID: 投资单元代码
-        :param PositionCostOffset: 大商所持仓成本差值，只有大商所使用
+        :param PositionCostOffset: 持仓成本差值
+        :param TasPosition: tas持仓手数
+        :param TasPositionCost: tas持仓成本
+        :param InstrumentID: 合约代码
         """
         super().__init__()
         ...
@@ -2720,7 +2830,7 @@ class SyncingInvestorPosition(Struct):
 class SyncingInstrumentMarginRate(Struct):
     def __init__(
         self,
-        InstrumentID: str = None,
+        reserve1: str = None,
         InvestorRange: str = None,
         BrokerID: str = None,
         InvestorID: str = None,
@@ -2730,10 +2840,11 @@ class SyncingInstrumentMarginRate(Struct):
         ShortMarginRatioByMoney: float = None,
         ShortMarginRatioByVolume: float = None,
         IsRelative: int = None,
+        InstrumentID: str = None,
     ):
         """
         正在同步中的合约保证金率
-        :param InstrumentID: 合约代码
+        :param reserve1: 保留的无效字段
         :param InvestorRange: 投资者范围
         :param BrokerID: 经纪公司代码
         :param InvestorID: 投资者代码
@@ -2743,6 +2854,7 @@ class SyncingInstrumentMarginRate(Struct):
         :param ShortMarginRatioByMoney: 空头保证金率
         :param ShortMarginRatioByVolume: 空头保证金费
         :param IsRelative: 是否相对交易所收取
+        :param InstrumentID: 合约代码
         """
         super().__init__()
         ...
@@ -2751,7 +2863,7 @@ class SyncingInstrumentMarginRate(Struct):
 class SyncingInstrumentCommissionRate(Struct):
     def __init__(
         self,
-        InstrumentID: str = None,
+        reserve1: str = None,
         InvestorRange: str = None,
         BrokerID: str = None,
         InvestorID: str = None,
@@ -2761,10 +2873,11 @@ class SyncingInstrumentCommissionRate(Struct):
         CloseRatioByVolume: float = None,
         CloseTodayRatioByMoney: float = None,
         CloseTodayRatioByVolume: float = None,
+        InstrumentID: str = None,
     ):
         """
         正在同步中的合约手续费率
-        :param InstrumentID: 合约代码
+        :param reserve1: 保留的无效字段
         :param InvestorRange: 投资者范围
         :param BrokerID: 经纪公司代码
         :param InvestorID: 投资者代码
@@ -2774,6 +2887,7 @@ class SyncingInstrumentCommissionRate(Struct):
         :param CloseRatioByVolume: 平仓手续费
         :param CloseTodayRatioByMoney: 平今手续费率
         :param CloseTodayRatioByVolume: 平今手续费
+        :param InstrumentID: 合约代码
         """
         super().__init__()
         ...
@@ -2782,19 +2896,21 @@ class SyncingInstrumentCommissionRate(Struct):
 class SyncingInstrumentTradingRight(Struct):
     def __init__(
         self,
-        InstrumentID: str = None,
+        reserve1: str = None,
         InvestorRange: str = None,
         BrokerID: str = None,
         InvestorID: str = None,
         TradingRight: str = None,
+        InstrumentID: str = None,
     ):
         """
         正在同步中的合约交易权限
-        :param InstrumentID: 合约代码
+        :param reserve1: 保留的无效字段
         :param InvestorRange: 投资者范围
         :param BrokerID: 经纪公司代码
         :param InvestorID: 投资者代码
         :param TradingRight: 交易权限
+        :param InstrumentID: 合约代码
         """
         super().__init__()
         ...
@@ -2805,23 +2921,25 @@ class QryOrder(Struct):
         self,
         BrokerID: str = None,
         InvestorID: str = None,
-        InstrumentID: str = None,
+        reserve1: str = None,
         ExchangeID: str = None,
         OrderSysID: str = None,
         InsertTimeStart: str = None,
         InsertTimeEnd: str = None,
         InvestUnitID: str = None,
+        InstrumentID: str = None,
     ):
         """
         查询报单
         :param BrokerID: 经纪公司代码
         :param InvestorID: 投资者代码
-        :param InstrumentID: 合约代码
+        :param reserve1: 保留的无效字段
         :param ExchangeID: 交易所代码
         :param OrderSysID: 报单编号
         :param InsertTimeStart: 开始时间
         :param InsertTimeEnd: 结束时间
         :param InvestUnitID: 投资单元代码
+        :param InstrumentID: 合约代码
         """
         super().__init__()
         ...
@@ -2832,23 +2950,25 @@ class QryTrade(Struct):
         self,
         BrokerID: str = None,
         InvestorID: str = None,
-        InstrumentID: str = None,
+        reserve1: str = None,
         ExchangeID: str = None,
         TradeID: str = None,
         TradeTimeStart: str = None,
         TradeTimeEnd: str = None,
         InvestUnitID: str = None,
+        InstrumentID: str = None,
     ):
         """
         查询成交
         :param BrokerID: 经纪公司代码
         :param InvestorID: 投资者代码
-        :param InstrumentID: 合约代码
+        :param reserve1: 保留的无效字段
         :param ExchangeID: 交易所代码
         :param TradeID: 成交编号
         :param TradeTimeStart: 开始时间
         :param TradeTimeEnd: 结束时间
         :param InvestUnitID: 投资单元代码
+        :param InstrumentID: 合约代码
         """
         super().__init__()
         ...
@@ -2859,17 +2979,19 @@ class QryInvestorPosition(Struct):
         self,
         BrokerID: str = None,
         InvestorID: str = None,
-        InstrumentID: str = None,
+        reserve1: str = None,
         ExchangeID: str = None,
         InvestUnitID: str = None,
+        InstrumentID: str = None,
     ):
         """
         查询投资者持仓
         :param BrokerID: 经纪公司代码
         :param InvestorID: 投资者代码
-        :param InstrumentID: 合约代码
+        :param reserve1: 保留的无效字段
         :param ExchangeID: 交易所代码
         :param InvestUnitID: 投资单元代码
+        :param InstrumentID: 合约代码
         """
         super().__init__()
         ...
@@ -2952,19 +3074,21 @@ class QryInstrumentMarginRate(Struct):
         self,
         BrokerID: str = None,
         InvestorID: str = None,
-        InstrumentID: str = None,
+        reserve1: str = None,
         HedgeFlag: str = None,
         ExchangeID: str = None,
         InvestUnitID: str = None,
+        InstrumentID: str = None,
     ):
         """
         查询合约保证金率
         :param BrokerID: 经纪公司代码
         :param InvestorID: 投资者代码
-        :param InstrumentID: 合约代码
+        :param reserve1: 保留的无效字段
         :param HedgeFlag: 投机套保标志
         :param ExchangeID: 交易所代码
         :param InvestUnitID: 投资单元代码
+        :param InstrumentID: 合约代码
         """
         super().__init__()
         ...
@@ -2975,17 +3099,19 @@ class QryInstrumentCommissionRate(Struct):
         self,
         BrokerID: str = None,
         InvestorID: str = None,
-        InstrumentID: str = None,
+        reserve1: str = None,
         ExchangeID: str = None,
         InvestUnitID: str = None,
+        InstrumentID: str = None,
     ):
         """
         查询手续费率
         :param BrokerID: 经纪公司代码
         :param InvestorID: 投资者代码
-        :param InstrumentID: 合约代码
+        :param reserve1: 保留的无效字段
         :param ExchangeID: 交易所代码
         :param InvestUnitID: 投资单元代码
+        :param InstrumentID: 合约代码
         """
         super().__init__()
         ...
@@ -2996,12 +3122,14 @@ class QryInstrumentTradingRight(Struct):
         self,
         BrokerID: str = None,
         InvestorID: str = None,
+        reserve1: str = None,
         InstrumentID: str = None,
     ):
         """
         查询合约交易权限
         :param BrokerID: 经纪公司代码
         :param InvestorID: 投资者代码
+        :param reserve1: 保留的无效字段
         :param InstrumentID: 合约代码
         """
         super().__init__()
@@ -3105,17 +3233,19 @@ class QryExchangeOrder(Struct):
         self,
         ParticipantID: str = None,
         ClientID: str = None,
-        ExchangeInstID: str = None,
+        reserve1: str = None,
         ExchangeID: str = None,
         TraderID: str = None,
+        ExchangeInstID: str = None,
     ):
         """
         查询交易所报单
         :param ParticipantID: 会员代码
         :param ClientID: 客户代码
-        :param ExchangeInstID: 合约在交易所的代码
+        :param reserve1: 保留的无效字段
         :param ExchangeID: 交易所代码
         :param TraderID: 交易所交易员代码
+        :param ExchangeInstID: 合约在交易所的代码
         """
         super().__init__()
         ...
@@ -3186,15 +3316,17 @@ class QryExchange(Struct):
 class QryProduct(Struct):
     def __init__(
         self,
-        ProductID: str = None,
+        reserve1: str = None,
         ProductClass: str = None,
         ExchangeID: str = None,
+        ProductID: str = None,
     ):
         """
         查询产品
-        :param ProductID: 产品代码
+        :param reserve1: 保留的无效字段
         :param ProductClass: 产品类型
         :param ExchangeID: 交易所代码
+        :param ProductID: 产品代码
         """
         super().__init__()
         ...
@@ -3203,15 +3335,21 @@ class QryProduct(Struct):
 class QryInstrument(Struct):
     def __init__(
         self,
-        InstrumentID: str = None,
+        reserve1: str = None,
         ExchangeID: str = None,
+        reserve2: str = None,
+        reserve3: str = None,
+        InstrumentID: str = None,
         ExchangeInstID: str = None,
         ProductID: str = None,
     ):
         """
         查询合约
-        :param InstrumentID: 合约代码
+        :param reserve1: 保留的无效字段
         :param ExchangeID: 交易所代码
+        :param reserve2: 保留的无效字段
+        :param reserve3: 保留的无效字段
+        :param InstrumentID: 合约代码
         :param ExchangeInstID: 合约在交易所的代码
         :param ProductID: 产品代码
         """
@@ -3222,13 +3360,15 @@ class QryInstrument(Struct):
 class QryDepthMarketData(Struct):
     def __init__(
         self,
-        InstrumentID: str = None,
+        reserve1: str = None,
         ExchangeID: str = None,
+        InstrumentID: str = None,
     ):
         """
         查询行情
-        :param InstrumentID: 合约代码
+        :param reserve1: 保留的无效字段
         :param ExchangeID: 交易所代码
+        :param InstrumentID: 合约代码
         """
         super().__init__()
         ...
@@ -3321,16 +3461,18 @@ class QryExchangeMarginRate(Struct):
     def __init__(
         self,
         BrokerID: str = None,
-        InstrumentID: str = None,
+        reserve1: str = None,
         HedgeFlag: str = None,
         ExchangeID: str = None,
+        InstrumentID: str = None,
     ):
         """
         查询交易所保证金率
         :param BrokerID: 经纪公司代码
-        :param InstrumentID: 合约代码
+        :param reserve1: 保留的无效字段
         :param HedgeFlag: 投机套保标志
         :param ExchangeID: 交易所代码
+        :param InstrumentID: 合约代码
         """
         super().__init__()
         ...
@@ -3340,14 +3482,16 @@ class QryExchangeMarginRateAdjust(Struct):
     def __init__(
         self,
         BrokerID: str = None,
-        InstrumentID: str = None,
+        reserve1: str = None,
         HedgeFlag: str = None,
+        InstrumentID: str = None,
     ):
         """
         查询交易所调整保证金率
         :param BrokerID: 经纪公司代码
-        :param InstrumentID: 合约代码
+        :param reserve1: 保留的无效字段
         :param HedgeFlag: 投机套保标志
+        :param InstrumentID: 合约代码
         """
         super().__init__()
         ...
@@ -3390,25 +3534,27 @@ class QryHisOrder(Struct):
         self,
         BrokerID: str = None,
         InvestorID: str = None,
-        InstrumentID: str = None,
+        reserve1: str = None,
         ExchangeID: str = None,
         OrderSysID: str = None,
         InsertTimeStart: str = None,
         InsertTimeEnd: str = None,
         TradingDay: str = None,
         SettlementID: int = None,
+        InstrumentID: str = None,
     ):
         """
         查询报单
         :param BrokerID: 经纪公司代码
         :param InvestorID: 投资者代码
-        :param InstrumentID: 合约代码
+        :param reserve1: 保留的无效字段
         :param ExchangeID: 交易所代码
         :param OrderSysID: 报单编号
         :param InsertTimeStart: 开始时间
         :param InsertTimeEnd: 结束时间
         :param TradingDay: 交易日
         :param SettlementID: 结算编号
+        :param InstrumentID: 合约代码
         """
         super().__init__()
         ...
@@ -3417,23 +3563,25 @@ class QryHisOrder(Struct):
 class OptionInstrMiniMargin(Struct):
     def __init__(
         self,
-        InstrumentID: str = None,
+        reserve1: str = None,
         InvestorRange: str = None,
         BrokerID: str = None,
         InvestorID: str = None,
         MinMargin: float = None,
         ValueMethod: str = None,
         IsRelative: int = None,
+        InstrumentID: str = None,
     ):
         """
         当前期权合约最小保证金
-        :param InstrumentID: 合约代码
+        :param reserve1: 保留的无效字段
         :param InvestorRange: 投资者范围
         :param BrokerID: 经纪公司代码
         :param InvestorID: 投资者代码
         :param MinMargin: 单位（手）期权合约最小保证金
         :param ValueMethod: 取值方式
         :param IsRelative: 是否跟随交易所收取
+        :param InstrumentID: 合约代码
         """
         super().__init__()
         ...
@@ -3442,7 +3590,7 @@ class OptionInstrMiniMargin(Struct):
 class OptionInstrMarginAdjust(Struct):
     def __init__(
         self,
-        InstrumentID: str = None,
+        reserve1: str = None,
         InvestorRange: str = None,
         BrokerID: str = None,
         InvestorID: str = None,
@@ -3455,10 +3603,11 @@ class OptionInstrMarginAdjust(Struct):
         IsRelative: int = None,
         MShortMarginRatioByMoney: float = None,
         MShortMarginRatioByVolume: float = None,
+        InstrumentID: str = None,
     ):
         """
         当前期权合约保证金调整系数
-        :param InstrumentID: 合约代码
+        :param reserve1: 保留的无效字段
         :param InvestorRange: 投资者范围
         :param BrokerID: 经纪公司代码
         :param InvestorID: 投资者代码
@@ -3471,6 +3620,7 @@ class OptionInstrMarginAdjust(Struct):
         :param IsRelative: 是否跟随交易所收取
         :param MShortMarginRatioByMoney: 做市商空头保证金调整系数
         :param MShortMarginRatioByVolume: 做市商空头保证金调整系数
+        :param InstrumentID: 合约代码
         """
         super().__init__()
         ...
@@ -3479,7 +3629,7 @@ class OptionInstrMarginAdjust(Struct):
 class OptionInstrCommRate(Struct):
     def __init__(
         self,
-        InstrumentID: str = None,
+        reserve1: str = None,
         InvestorRange: str = None,
         BrokerID: str = None,
         InvestorID: str = None,
@@ -3493,10 +3643,11 @@ class OptionInstrCommRate(Struct):
         StrikeRatioByVolume: float = None,
         ExchangeID: str = None,
         InvestUnitID: str = None,
+        InstrumentID: str = None,
     ):
         """
         当前期权合约手续费的详细内容
-        :param InstrumentID: 合约代码
+        :param reserve1: 保留的无效字段
         :param InvestorRange: 投资者范围
         :param BrokerID: 经纪公司代码
         :param InvestorID: 投资者代码
@@ -3510,6 +3661,7 @@ class OptionInstrCommRate(Struct):
         :param StrikeRatioByVolume: 执行手续费
         :param ExchangeID: 交易所代码
         :param InvestUnitID: 投资单元代码
+        :param InstrumentID: 合约代码
         """
         super().__init__()
         ...
@@ -3520,7 +3672,7 @@ class OptionInstrTradeCost(Struct):
         self,
         BrokerID: str = None,
         InvestorID: str = None,
-        InstrumentID: str = None,
+        reserve1: str = None,
         HedgeFlag: str = None,
         FixedMargin: float = None,
         MiniMargin: float = None,
@@ -3529,12 +3681,13 @@ class OptionInstrTradeCost(Struct):
         ExchMiniMargin: float = None,
         ExchangeID: str = None,
         InvestUnitID: str = None,
+        InstrumentID: str = None,
     ):
         """
         期权交易成本
         :param BrokerID: 经纪公司代码
         :param InvestorID: 投资者代码
-        :param InstrumentID: 合约代码
+        :param reserve1: 保留的无效字段
         :param HedgeFlag: 投机套保标志
         :param FixedMargin: 期权合约保证金不变部分
         :param MiniMargin: 期权合约最小保证金
@@ -3543,6 +3696,7 @@ class OptionInstrTradeCost(Struct):
         :param ExchMiniMargin: 交易所期权合约最小保证金
         :param ExchangeID: 交易所代码
         :param InvestUnitID: 投资单元代码
+        :param InstrumentID: 合约代码
         """
         super().__init__()
         ...
@@ -3553,23 +3707,25 @@ class QryOptionInstrTradeCost(Struct):
         self,
         BrokerID: str = None,
         InvestorID: str = None,
-        InstrumentID: str = None,
+        reserve1: str = None,
         HedgeFlag: str = None,
         InputPrice: float = None,
         UnderlyingPrice: float = None,
         ExchangeID: str = None,
         InvestUnitID: str = None,
+        InstrumentID: str = None,
     ):
         """
         期权交易成本查询
         :param BrokerID: 经纪公司代码
         :param InvestorID: 投资者代码
-        :param InstrumentID: 合约代码
+        :param reserve1: 保留的无效字段
         :param HedgeFlag: 投机套保标志
         :param InputPrice: 期权合约报价
         :param UnderlyingPrice: 标的价格,填0则用昨结算价
         :param ExchangeID: 交易所代码
         :param InvestUnitID: 投资单元代码
+        :param InstrumentID: 合约代码
         """
         super().__init__()
         ...
@@ -3580,17 +3736,19 @@ class QryOptionInstrCommRate(Struct):
         self,
         BrokerID: str = None,
         InvestorID: str = None,
-        InstrumentID: str = None,
+        reserve1: str = None,
         ExchangeID: str = None,
         InvestUnitID: str = None,
+        InstrumentID: str = None,
     ):
         """
         期权手续费率查询
         :param BrokerID: 经纪公司代码
         :param InvestorID: 投资者代码
-        :param InstrumentID: 合约代码
+        :param reserve1: 保留的无效字段
         :param ExchangeID: 交易所代码
         :param InvestUnitID: 投资单元代码
+        :param InstrumentID: 合约代码
         """
         super().__init__()
         ...
@@ -3600,14 +3758,16 @@ class IndexPrice(Struct):
     def __init__(
         self,
         BrokerID: str = None,
-        InstrumentID: str = None,
+        reserve1: str = None,
         ClosePrice: float = None,
+        InstrumentID: str = None,
     ):
         """
         股指现货指数
         :param BrokerID: 经纪公司代码
-        :param InstrumentID: 合约代码
+        :param reserve1: 保留的无效字段
         :param ClosePrice: 指数现货收盘价
+        :param InstrumentID: 合约代码
         """
         super().__init__()
         ...
@@ -3618,7 +3778,7 @@ class InputExecOrder(Struct):
         self,
         BrokerID: str = None,
         InvestorID: str = None,
-        InstrumentID: str = None,
+        reserve1: str = None,
         ExecOrderRef: str = None,
         UserID: str = None,
         Volume: int = None,
@@ -3635,14 +3795,16 @@ class InputExecOrder(Struct):
         AccountID: str = None,
         CurrencyID: str = None,
         ClientID: str = None,
-        IPAddress: str = None,
+        reserve2: str = None,
         MacAddress: str = None,
+        InstrumentID: str = None,
+        IPAddress: str = None,
     ):
         """
         输入的执行宣告
         :param BrokerID: 经纪公司代码
         :param InvestorID: 投资者代码
-        :param InstrumentID: 合约代码
+        :param reserve1: 保留的无效字段
         :param ExecOrderRef: 执行宣告引用
         :param UserID: 用户代码
         :param Volume: 数量
@@ -3659,8 +3821,10 @@ class InputExecOrder(Struct):
         :param AccountID: 资金账号
         :param CurrencyID: 币种代码
         :param ClientID: 交易编码
-        :param IPAddress: IP地址
+        :param reserve2: 保留的无效字段
         :param MacAddress: Mac地址
+        :param InstrumentID: 合约代码
+        :param IPAddress: IP地址
         """
         super().__init__()
         ...
@@ -3680,10 +3844,12 @@ class InputExecOrderAction(Struct):
         ExecOrderSysID: str = None,
         ActionFlag: str = None,
         UserID: str = None,
-        InstrumentID: str = None,
+        reserve1: str = None,
         InvestUnitID: str = None,
-        IPAddress: str = None,
+        reserve2: str = None,
         MacAddress: str = None,
+        InstrumentID: str = None,
+        IPAddress: str = None,
     ):
         """
         输入执行宣告操作
@@ -3698,10 +3864,12 @@ class InputExecOrderAction(Struct):
         :param ExecOrderSysID: 执行宣告操作编号
         :param ActionFlag: 操作标志
         :param UserID: 用户代码
-        :param InstrumentID: 合约代码
+        :param reserve1: 保留的无效字段
         :param InvestUnitID: 投资单元代码
-        :param IPAddress: IP地址
+        :param reserve2: 保留的无效字段
         :param MacAddress: Mac地址
+        :param InstrumentID: 合约代码
+        :param IPAddress: IP地址
         """
         super().__init__()
         ...
@@ -3712,7 +3880,7 @@ class ExecOrder(Struct):
         self,
         BrokerID: str = None,
         InvestorID: str = None,
-        InstrumentID: str = None,
+        reserve1: str = None,
         ExecOrderRef: str = None,
         UserID: str = None,
         Volume: int = None,
@@ -3728,7 +3896,7 @@ class ExecOrder(Struct):
         ExchangeID: str = None,
         ParticipantID: str = None,
         ClientID: str = None,
-        ExchangeInstID: str = None,
+        reserve2: str = None,
         TraderID: str = None,
         InstallID: int = None,
         OrderSubmitStatus: str = None,
@@ -3752,14 +3920,17 @@ class ExecOrder(Struct):
         InvestUnitID: str = None,
         AccountID: str = None,
         CurrencyID: str = None,
-        IPAddress: str = None,
+        reserve3: str = None,
         MacAddress: str = None,
+        InstrumentID: str = None,
+        ExchangeInstID: str = None,
+        IPAddress: str = None,
     ):
         """
         执行宣告
         :param BrokerID: 经纪公司代码
         :param InvestorID: 投资者代码
-        :param InstrumentID: 合约代码
+        :param reserve1: 保留的无效字段
         :param ExecOrderRef: 执行宣告引用
         :param UserID: 用户代码
         :param Volume: 数量
@@ -3775,7 +3946,7 @@ class ExecOrder(Struct):
         :param ExchangeID: 交易所代码
         :param ParticipantID: 会员代码
         :param ClientID: 客户代码
-        :param ExchangeInstID: 合约在交易所的代码
+        :param reserve2: 保留的无效字段
         :param TraderID: 交易所交易员代码
         :param InstallID: 安装编号
         :param OrderSubmitStatus: 执行宣告提交状态
@@ -3799,8 +3970,11 @@ class ExecOrder(Struct):
         :param InvestUnitID: 投资单元代码
         :param AccountID: 资金账号
         :param CurrencyID: 币种代码
-        :param IPAddress: IP地址
+        :param reserve3: 保留的无效字段
         :param MacAddress: Mac地址
+        :param InstrumentID: 合约代码
+        :param ExchangeInstID: 合约在交易所的代码
+        :param IPAddress: IP地址
         """
         super().__init__()
         ...
@@ -3832,11 +4006,13 @@ class ExecOrderAction(Struct):
         UserID: str = None,
         ActionType: str = None,
         StatusMsg: str = None,
-        InstrumentID: str = None,
+        reserve1: str = None,
         BranchID: str = None,
         InvestUnitID: str = None,
-        IPAddress: str = None,
+        reserve2: str = None,
         MacAddress: str = None,
+        InstrumentID: str = None,
+        IPAddress: str = None,
     ):
         """
         执行宣告操作
@@ -3863,11 +4039,13 @@ class ExecOrderAction(Struct):
         :param UserID: 用户代码
         :param ActionType: 执行类型
         :param StatusMsg: 状态信息
-        :param InstrumentID: 合约代码
+        :param reserve1: 保留的无效字段
         :param BranchID: 营业部编号
         :param InvestUnitID: 投资单元代码
-        :param IPAddress: IP地址
+        :param reserve2: 保留的无效字段
         :param MacAddress: Mac地址
+        :param InstrumentID: 合约代码
+        :param IPAddress: IP地址
         """
         super().__init__()
         ...
@@ -3878,21 +4056,23 @@ class QryExecOrder(Struct):
         self,
         BrokerID: str = None,
         InvestorID: str = None,
-        InstrumentID: str = None,
+        reserve1: str = None,
         ExchangeID: str = None,
         ExecOrderSysID: str = None,
         InsertTimeStart: str = None,
         InsertTimeEnd: str = None,
+        InstrumentID: str = None,
     ):
         """
         执行宣告查询
         :param BrokerID: 经纪公司代码
         :param InvestorID: 投资者代码
-        :param InstrumentID: 合约代码
+        :param reserve1: 保留的无效字段
         :param ExchangeID: 交易所代码
         :param ExecOrderSysID: 执行宣告编号
         :param InsertTimeStart: 开始时间
         :param InsertTimeEnd: 结束时间
+        :param InstrumentID: 合约代码
         """
         super().__init__()
         ...
@@ -3914,7 +4094,7 @@ class ExchangeExecOrder(Struct):
         ExchangeID: str = None,
         ParticipantID: str = None,
         ClientID: str = None,
-        ExchangeInstID: str = None,
+        reserve1: str = None,
         TraderID: str = None,
         InstallID: int = None,
         OrderSubmitStatus: str = None,
@@ -3929,8 +4109,10 @@ class ExchangeExecOrder(Struct):
         ClearingPartID: str = None,
         SequenceNo: int = None,
         BranchID: str = None,
-        IPAddress: str = None,
+        reserve2: str = None,
         MacAddress: str = None,
+        ExchangeInstID: str = None,
+        IPAddress: str = None,
     ):
         """
         交易所执行宣告信息
@@ -3947,7 +4129,7 @@ class ExchangeExecOrder(Struct):
         :param ExchangeID: 交易所代码
         :param ParticipantID: 会员代码
         :param ClientID: 客户代码
-        :param ExchangeInstID: 合约在交易所的代码
+        :param reserve1: 保留的无效字段
         :param TraderID: 交易所交易员代码
         :param InstallID: 安装编号
         :param OrderSubmitStatus: 执行宣告提交状态
@@ -3962,8 +4144,10 @@ class ExchangeExecOrder(Struct):
         :param ClearingPartID: 结算会员编号
         :param SequenceNo: 序号
         :param BranchID: 营业部编号
-        :param IPAddress: IP地址
+        :param reserve2: 保留的无效字段
         :param MacAddress: Mac地址
+        :param ExchangeInstID: 合约在交易所的代码
+        :param IPAddress: IP地址
         """
         super().__init__()
         ...
@@ -3974,17 +4158,19 @@ class QryExchangeExecOrder(Struct):
         self,
         ParticipantID: str = None,
         ClientID: str = None,
-        ExchangeInstID: str = None,
+        reserve1: str = None,
         ExchangeID: str = None,
         TraderID: str = None,
+        ExchangeInstID: str = None,
     ):
         """
         交易所执行宣告查询
         :param ParticipantID: 会员代码
         :param ClientID: 客户代码
-        :param ExchangeInstID: 合约在交易所的代码
+        :param reserve1: 保留的无效字段
         :param ExchangeID: 交易所代码
         :param TraderID: 交易所交易员代码
+        :param ExchangeInstID: 合约在交易所的代码
         """
         super().__init__()
         ...
@@ -4026,10 +4212,12 @@ class ExchangeExecOrderAction(Struct):
         UserID: str = None,
         ActionType: str = None,
         BranchID: str = None,
-        IPAddress: str = None,
+        reserve1: str = None,
         MacAddress: str = None,
-        ExchangeInstID: str = None,
+        reserve2: str = None,
         Volume: int = None,
+        IPAddress: str = None,
+        ExchangeInstID: str = None,
     ):
         """
         交易所执行宣告操作
@@ -4049,10 +4237,12 @@ class ExchangeExecOrderAction(Struct):
         :param UserID: 用户代码
         :param ActionType: 执行类型
         :param BranchID: 营业部编号
-        :param IPAddress: IP地址
+        :param reserve1: 保留的无效字段
         :param MacAddress: Mac地址
-        :param ExchangeInstID: 合约在交易所的代码
+        :param reserve2: 保留的无效字段
         :param Volume: 数量
+        :param IPAddress: IP地址
+        :param ExchangeInstID: 合约在交易所的代码
         """
         super().__init__()
         ...
@@ -4082,7 +4272,7 @@ class ErrExecOrder(Struct):
         self,
         BrokerID: str = None,
         InvestorID: str = None,
-        InstrumentID: str = None,
+        reserve1: str = None,
         ExecOrderRef: str = None,
         UserID: str = None,
         Volume: int = None,
@@ -4099,16 +4289,18 @@ class ErrExecOrder(Struct):
         AccountID: str = None,
         CurrencyID: str = None,
         ClientID: str = None,
-        IPAddress: str = None,
+        reserve2: str = None,
         MacAddress: str = None,
         ErrorID: int = None,
         ErrorMsg: str = None,
+        InstrumentID: str = None,
+        IPAddress: str = None,
     ):
         """
         错误执行宣告
         :param BrokerID: 经纪公司代码
         :param InvestorID: 投资者代码
-        :param InstrumentID: 合约代码
+        :param reserve1: 保留的无效字段
         :param ExecOrderRef: 执行宣告引用
         :param UserID: 用户代码
         :param Volume: 数量
@@ -4125,10 +4317,12 @@ class ErrExecOrder(Struct):
         :param AccountID: 资金账号
         :param CurrencyID: 币种代码
         :param ClientID: 交易编码
-        :param IPAddress: IP地址
+        :param reserve2: 保留的无效字段
         :param MacAddress: Mac地址
         :param ErrorID: 错误代码
         :param ErrorMsg: 错误信息
+        :param InstrumentID: 合约代码
+        :param IPAddress: IP地址
         """
         super().__init__()
         ...
@@ -4163,12 +4357,14 @@ class ErrExecOrderAction(Struct):
         ExecOrderSysID: str = None,
         ActionFlag: str = None,
         UserID: str = None,
-        InstrumentID: str = None,
+        reserve1: str = None,
         InvestUnitID: str = None,
-        IPAddress: str = None,
+        reserve2: str = None,
         MacAddress: str = None,
         ErrorID: int = None,
         ErrorMsg: str = None,
+        InstrumentID: str = None,
+        IPAddress: str = None,
     ):
         """
         错误执行宣告操作
@@ -4183,12 +4379,14 @@ class ErrExecOrderAction(Struct):
         :param ExecOrderSysID: 执行宣告操作编号
         :param ActionFlag: 操作标志
         :param UserID: 用户代码
-        :param InstrumentID: 合约代码
+        :param reserve1: 保留的无效字段
         :param InvestUnitID: 投资单元代码
-        :param IPAddress: IP地址
+        :param reserve2: 保留的无效字段
         :param MacAddress: Mac地址
         :param ErrorID: 错误代码
         :param ErrorMsg: 错误信息
+        :param InstrumentID: 合约代码
+        :param IPAddress: IP地址
         """
         super().__init__()
         ...
@@ -4212,21 +4410,23 @@ class QryErrExecOrderAction(Struct):
 class OptionInstrTradingRight(Struct):
     def __init__(
         self,
-        InstrumentID: str = None,
+        reserve1: str = None,
         InvestorRange: str = None,
         BrokerID: str = None,
         InvestorID: str = None,
         Direction: str = None,
         TradingRight: str = None,
+        InstrumentID: str = None,
     ):
         """
         投资者期权合约交易权限
-        :param InstrumentID: 合约代码
+        :param reserve1: 保留的无效字段
         :param InvestorRange: 投资者范围
         :param BrokerID: 经纪公司代码
         :param InvestorID: 投资者代码
         :param Direction: 买卖方向
         :param TradingRight: 交易权限
+        :param InstrumentID: 合约代码
         """
         super().__init__()
         ...
@@ -4237,15 +4437,17 @@ class QryOptionInstrTradingRight(Struct):
         self,
         BrokerID: str = None,
         InvestorID: str = None,
-        InstrumentID: str = None,
+        reserve1: str = None,
         Direction: str = None,
+        InstrumentID: str = None,
     ):
         """
         查询期权合约交易权限
         :param BrokerID: 经纪公司代码
         :param InvestorID: 投资者代码
-        :param InstrumentID: 合约代码
+        :param reserve1: 保留的无效字段
         :param Direction: 买卖方向
+        :param InstrumentID: 合约代码
         """
         super().__init__()
         ...
@@ -4256,25 +4458,29 @@ class InputForQuote(Struct):
         self,
         BrokerID: str = None,
         InvestorID: str = None,
-        InstrumentID: str = None,
+        reserve1: str = None,
         ForQuoteRef: str = None,
         UserID: str = None,
         ExchangeID: str = None,
         InvestUnitID: str = None,
-        IPAddress: str = None,
+        reserve2: str = None,
         MacAddress: str = None,
+        InstrumentID: str = None,
+        IPAddress: str = None,
     ):
         """
         输入的询价
         :param BrokerID: 经纪公司代码
         :param InvestorID: 投资者代码
-        :param InstrumentID: 合约代码
+        :param reserve1: 保留的无效字段
         :param ForQuoteRef: 询价引用
         :param UserID: 用户代码
         :param ExchangeID: 交易所代码
         :param InvestUnitID: 投资单元代码
-        :param IPAddress: IP地址
+        :param reserve2: 保留的无效字段
         :param MacAddress: Mac地址
+        :param InstrumentID: 合约代码
+        :param IPAddress: IP地址
         """
         super().__init__()
         ...
@@ -4285,14 +4491,14 @@ class ForQuote(Struct):
         self,
         BrokerID: str = None,
         InvestorID: str = None,
-        InstrumentID: str = None,
+        reserve1: str = None,
         ForQuoteRef: str = None,
         UserID: str = None,
         ForQuoteLocalID: str = None,
         ExchangeID: str = None,
         ParticipantID: str = None,
         ClientID: str = None,
-        ExchangeInstID: str = None,
+        reserve2: str = None,
         TraderID: str = None,
         InstallID: int = None,
         InsertDate: str = None,
@@ -4304,21 +4510,24 @@ class ForQuote(Struct):
         ActiveUserID: str = None,
         BrokerForQutoSeq: int = None,
         InvestUnitID: str = None,
-        IPAddress: str = None,
+        reserve3: str = None,
         MacAddress: str = None,
+        InstrumentID: str = None,
+        ExchangeInstID: str = None,
+        IPAddress: str = None,
     ):
         """
         询价
         :param BrokerID: 经纪公司代码
         :param InvestorID: 投资者代码
-        :param InstrumentID: 合约代码
+        :param reserve1: 保留的无效字段
         :param ForQuoteRef: 询价引用
         :param UserID: 用户代码
         :param ForQuoteLocalID: 本地询价编号
         :param ExchangeID: 交易所代码
         :param ParticipantID: 会员代码
         :param ClientID: 客户代码
-        :param ExchangeInstID: 合约在交易所的代码
+        :param reserve2: 保留的无效字段
         :param TraderID: 交易所交易员代码
         :param InstallID: 安装编号
         :param InsertDate: 报单日期
@@ -4330,8 +4539,11 @@ class ForQuote(Struct):
         :param ActiveUserID: 操作用户代码
         :param BrokerForQutoSeq: 经纪公司询价编号
         :param InvestUnitID: 投资单元代码
-        :param IPAddress: IP地址
+        :param reserve3: 保留的无效字段
         :param MacAddress: Mac地址
+        :param InstrumentID: 合约代码
+        :param ExchangeInstID: 合约在交易所的代码
+        :param IPAddress: IP地址
         """
         super().__init__()
         ...
@@ -4342,21 +4554,23 @@ class QryForQuote(Struct):
         self,
         BrokerID: str = None,
         InvestorID: str = None,
-        InstrumentID: str = None,
+        reserve1: str = None,
         ExchangeID: str = None,
         InsertTimeStart: str = None,
         InsertTimeEnd: str = None,
         InvestUnitID: str = None,
+        InstrumentID: str = None,
     ):
         """
         询价查询
         :param BrokerID: 经纪公司代码
         :param InvestorID: 投资者代码
-        :param InstrumentID: 合约代码
+        :param reserve1: 保留的无效字段
         :param ExchangeID: 交易所代码
         :param InsertTimeStart: 开始时间
         :param InsertTimeEnd: 结束时间
         :param InvestUnitID: 投资单元代码
+        :param InstrumentID: 合约代码
         """
         super().__init__()
         ...
@@ -4369,14 +4583,16 @@ class ExchangeForQuote(Struct):
         ExchangeID: str = None,
         ParticipantID: str = None,
         ClientID: str = None,
-        ExchangeInstID: str = None,
+        reserve1: str = None,
         TraderID: str = None,
         InstallID: int = None,
         InsertDate: str = None,
         InsertTime: str = None,
         ForQuoteStatus: str = None,
-        IPAddress: str = None,
+        reserve2: str = None,
         MacAddress: str = None,
+        ExchangeInstID: str = None,
+        IPAddress: str = None,
     ):
         """
         交易所询价信息
@@ -4384,14 +4600,16 @@ class ExchangeForQuote(Struct):
         :param ExchangeID: 交易所代码
         :param ParticipantID: 会员代码
         :param ClientID: 客户代码
-        :param ExchangeInstID: 合约在交易所的代码
+        :param reserve1: 保留的无效字段
         :param TraderID: 交易所交易员代码
         :param InstallID: 安装编号
         :param InsertDate: 报单日期
         :param InsertTime: 插入时间
         :param ForQuoteStatus: 询价状态
-        :param IPAddress: IP地址
+        :param reserve2: 保留的无效字段
         :param MacAddress: Mac地址
+        :param ExchangeInstID: 合约在交易所的代码
+        :param IPAddress: IP地址
         """
         super().__init__()
         ...
@@ -4402,17 +4620,19 @@ class QryExchangeForQuote(Struct):
         self,
         ParticipantID: str = None,
         ClientID: str = None,
-        ExchangeInstID: str = None,
+        reserve1: str = None,
         ExchangeID: str = None,
         TraderID: str = None,
+        ExchangeInstID: str = None,
     ):
         """
         交易所询价查询
         :param ParticipantID: 会员代码
         :param ClientID: 客户代码
-        :param ExchangeInstID: 合约在交易所的代码
+        :param reserve1: 保留的无效字段
         :param ExchangeID: 交易所代码
         :param TraderID: 交易所交易员代码
+        :param ExchangeInstID: 合约在交易所的代码
         """
         super().__init__()
         ...
@@ -4423,7 +4643,7 @@ class InputQuote(Struct):
         self,
         BrokerID: str = None,
         InvestorID: str = None,
-        InstrumentID: str = None,
+        reserve1: str = None,
         QuoteRef: str = None,
         UserID: str = None,
         AskPrice: float = None,
@@ -4442,14 +4662,17 @@ class InputQuote(Struct):
         ExchangeID: str = None,
         InvestUnitID: str = None,
         ClientID: str = None,
-        IPAddress: str = None,
+        reserve2: str = None,
         MacAddress: str = None,
+        InstrumentID: str = None,
+        IPAddress: str = None,
+        ReplaceSysID: str = None,
     ):
         """
         输入的报价
         :param BrokerID: 经纪公司代码
         :param InvestorID: 投资者代码
-        :param InstrumentID: 合约代码
+        :param reserve1: 保留的无效字段
         :param QuoteRef: 报价引用
         :param UserID: 用户代码
         :param AskPrice: 卖价格
@@ -4468,8 +4691,11 @@ class InputQuote(Struct):
         :param ExchangeID: 交易所代码
         :param InvestUnitID: 投资单元代码
         :param ClientID: 交易编码
-        :param IPAddress: IP地址
+        :param reserve2: 保留的无效字段
         :param MacAddress: Mac地址
+        :param InstrumentID: 合约代码
+        :param IPAddress: IP地址
+        :param ReplaceSysID: 被顶单编号
         """
         super().__init__()
         ...
@@ -4489,11 +4715,13 @@ class InputQuoteAction(Struct):
         QuoteSysID: str = None,
         ActionFlag: str = None,
         UserID: str = None,
-        InstrumentID: str = None,
+        reserve1: str = None,
         InvestUnitID: str = None,
         ClientID: str = None,
-        IPAddress: str = None,
+        reserve2: str = None,
         MacAddress: str = None,
+        InstrumentID: str = None,
+        IPAddress: str = None,
     ):
         """
         输入报价操作
@@ -4508,11 +4736,13 @@ class InputQuoteAction(Struct):
         :param QuoteSysID: 报价操作编号
         :param ActionFlag: 操作标志
         :param UserID: 用户代码
-        :param InstrumentID: 合约代码
+        :param reserve1: 保留的无效字段
         :param InvestUnitID: 投资单元代码
         :param ClientID: 交易编码
-        :param IPAddress: IP地址
+        :param reserve2: 保留的无效字段
         :param MacAddress: Mac地址
+        :param InstrumentID: 合约代码
+        :param IPAddress: IP地址
         """
         super().__init__()
         ...
@@ -4523,7 +4753,7 @@ class Quote(Struct):
         self,
         BrokerID: str = None,
         InvestorID: str = None,
-        InstrumentID: str = None,
+        reserve1: str = None,
         QuoteRef: str = None,
         UserID: str = None,
         AskPrice: float = None,
@@ -4540,7 +4770,7 @@ class Quote(Struct):
         ExchangeID: str = None,
         ParticipantID: str = None,
         ClientID: str = None,
-        ExchangeInstID: str = None,
+        reserve2: str = None,
         TraderID: str = None,
         InstallID: int = None,
         NotifySequence: int = None,
@@ -4569,14 +4799,18 @@ class Quote(Struct):
         InvestUnitID: str = None,
         AccountID: str = None,
         CurrencyID: str = None,
-        IPAddress: str = None,
+        reserve3: str = None,
         MacAddress: str = None,
+        InstrumentID: str = None,
+        ExchangeInstID: str = None,
+        IPAddress: str = None,
+        ReplaceSysID: str = None,
     ):
         """
         报价
         :param BrokerID: 经纪公司代码
         :param InvestorID: 投资者代码
-        :param InstrumentID: 合约代码
+        :param reserve1: 保留的无效字段
         :param QuoteRef: 报价引用
         :param UserID: 用户代码
         :param AskPrice: 卖价格
@@ -4593,7 +4827,7 @@ class Quote(Struct):
         :param ExchangeID: 交易所代码
         :param ParticipantID: 会员代码
         :param ClientID: 客户代码
-        :param ExchangeInstID: 合约在交易所的代码
+        :param reserve2: 保留的无效字段
         :param TraderID: 交易所交易员代码
         :param InstallID: 安装编号
         :param NotifySequence: 报价提示序号
@@ -4622,8 +4856,12 @@ class Quote(Struct):
         :param InvestUnitID: 投资单元代码
         :param AccountID: 资金账号
         :param CurrencyID: 币种代码
-        :param IPAddress: IP地址
+        :param reserve3: 保留的无效字段
         :param MacAddress: Mac地址
+        :param InstrumentID: 合约代码
+        :param ExchangeInstID: 合约在交易所的代码
+        :param IPAddress: IP地址
+        :param ReplaceSysID: 被顶单编号
         """
         super().__init__()
         ...
@@ -4654,11 +4892,13 @@ class QuoteAction(Struct):
         OrderActionStatus: str = None,
         UserID: str = None,
         StatusMsg: str = None,
-        InstrumentID: str = None,
+        reserve1: str = None,
         BranchID: str = None,
         InvestUnitID: str = None,
-        IPAddress: str = None,
+        reserve2: str = None,
         MacAddress: str = None,
+        InstrumentID: str = None,
+        IPAddress: str = None,
     ):
         """
         报价操作
@@ -4684,11 +4924,13 @@ class QuoteAction(Struct):
         :param OrderActionStatus: 报单操作状态
         :param UserID: 用户代码
         :param StatusMsg: 状态信息
-        :param InstrumentID: 合约代码
+        :param reserve1: 保留的无效字段
         :param BranchID: 营业部编号
         :param InvestUnitID: 投资单元代码
-        :param IPAddress: IP地址
+        :param reserve2: 保留的无效字段
         :param MacAddress: Mac地址
+        :param InstrumentID: 合约代码
+        :param IPAddress: IP地址
         """
         super().__init__()
         ...
@@ -4699,23 +4941,25 @@ class QryQuote(Struct):
         self,
         BrokerID: str = None,
         InvestorID: str = None,
-        InstrumentID: str = None,
+        reserve1: str = None,
         ExchangeID: str = None,
         QuoteSysID: str = None,
         InsertTimeStart: str = None,
         InsertTimeEnd: str = None,
         InvestUnitID: str = None,
+        InstrumentID: str = None,
     ):
         """
         报价查询
         :param BrokerID: 经纪公司代码
         :param InvestorID: 投资者代码
-        :param InstrumentID: 合约代码
+        :param reserve1: 保留的无效字段
         :param ExchangeID: 交易所代码
         :param QuoteSysID: 报价编号
         :param InsertTimeStart: 开始时间
         :param InsertTimeEnd: 结束时间
         :param InvestUnitID: 投资单元代码
+        :param InstrumentID: 合约代码
         """
         super().__init__()
         ...
@@ -4738,7 +4982,7 @@ class ExchangeQuote(Struct):
         ExchangeID: str = None,
         ParticipantID: str = None,
         ClientID: str = None,
-        ExchangeInstID: str = None,
+        reserve1: str = None,
         TraderID: str = None,
         InstallID: int = None,
         NotifySequence: int = None,
@@ -4756,8 +5000,10 @@ class ExchangeQuote(Struct):
         BidOrderSysID: str = None,
         ForQuoteSysID: str = None,
         BranchID: str = None,
-        IPAddress: str = None,
+        reserve2: str = None,
         MacAddress: str = None,
+        ExchangeInstID: str = None,
+        IPAddress: str = None,
     ):
         """
         交易所报价信息
@@ -4775,7 +5021,7 @@ class ExchangeQuote(Struct):
         :param ExchangeID: 交易所代码
         :param ParticipantID: 会员代码
         :param ClientID: 客户代码
-        :param ExchangeInstID: 合约在交易所的代码
+        :param reserve1: 保留的无效字段
         :param TraderID: 交易所交易员代码
         :param InstallID: 安装编号
         :param NotifySequence: 报价提示序号
@@ -4793,8 +5039,10 @@ class ExchangeQuote(Struct):
         :param BidOrderSysID: 买方报单编号
         :param ForQuoteSysID: 应价编号
         :param BranchID: 营业部编号
-        :param IPAddress: IP地址
+        :param reserve2: 保留的无效字段
         :param MacAddress: Mac地址
+        :param ExchangeInstID: 合约在交易所的代码
+        :param IPAddress: IP地址
         """
         super().__init__()
         ...
@@ -4805,17 +5053,19 @@ class QryExchangeQuote(Struct):
         self,
         ParticipantID: str = None,
         ClientID: str = None,
-        ExchangeInstID: str = None,
+        reserve1: str = None,
         ExchangeID: str = None,
         TraderID: str = None,
+        ExchangeInstID: str = None,
     ):
         """
         交易所报价查询
         :param ParticipantID: 会员代码
         :param ClientID: 客户代码
-        :param ExchangeInstID: 合约在交易所的代码
+        :param reserve1: 保留的无效字段
         :param ExchangeID: 交易所代码
         :param TraderID: 交易所交易员代码
+        :param ExchangeInstID: 合约在交易所的代码
         """
         super().__init__()
         ...
@@ -4855,8 +5105,9 @@ class ExchangeQuoteAction(Struct):
         BusinessUnit: str = None,
         OrderActionStatus: str = None,
         UserID: str = None,
-        IPAddress: str = None,
+        reserve1: str = None,
         MacAddress: str = None,
+        IPAddress: str = None,
     ):
         """
         交易所报价操作
@@ -4874,8 +5125,9 @@ class ExchangeQuoteAction(Struct):
         :param BusinessUnit: 业务单元
         :param OrderActionStatus: 报单操作状态
         :param UserID: 用户代码
-        :param IPAddress: IP地址
+        :param reserve1: 保留的无效字段
         :param MacAddress: Mac地址
+        :param IPAddress: IP地址
         """
         super().__init__()
         ...
@@ -4903,19 +5155,21 @@ class QryExchangeQuoteAction(Struct):
 class OptionInstrDelta(Struct):
     def __init__(
         self,
-        InstrumentID: str = None,
+        reserve1: str = None,
         InvestorRange: str = None,
         BrokerID: str = None,
         InvestorID: str = None,
         Delta: float = None,
+        InstrumentID: str = None,
     ):
         """
         期权合约delta值
-        :param InstrumentID: 合约代码
+        :param reserve1: 保留的无效字段
         :param InvestorRange: 投资者范围
         :param BrokerID: 经纪公司代码
         :param InvestorID: 投资者代码
         :param Delta: Delta值
+        :param InstrumentID: 合约代码
         """
         super().__init__()
         ...
@@ -4925,20 +5179,22 @@ class ForQuoteRsp(Struct):
     def __init__(
         self,
         TradingDay: str = None,
-        InstrumentID: str = None,
+        reserve1: str = None,
         ForQuoteSysID: str = None,
         ForQuoteTime: str = None,
         ActionDay: str = None,
         ExchangeID: str = None,
+        InstrumentID: str = None,
     ):
         """
         发给做市商的询价请求
         :param TradingDay: 交易日
-        :param InstrumentID: 合约代码
+        :param reserve1: 保留的无效字段
         :param ForQuoteSysID: 询价编号
         :param ForQuoteTime: 询价时间
         :param ActionDay: 业务日期
         :param ExchangeID: 交易所代码
+        :param InstrumentID: 合约代码
         """
         super().__init__()
         ...
@@ -4947,21 +5203,23 @@ class ForQuoteRsp(Struct):
 class StrikeOffset(Struct):
     def __init__(
         self,
-        InstrumentID: str = None,
+        reserve1: str = None,
         InvestorRange: str = None,
         BrokerID: str = None,
         InvestorID: str = None,
         Offset: float = None,
         OffsetType: str = None,
+        InstrumentID: str = None,
     ):
         """
         当前期权合约执行偏移值的详细内容
-        :param InstrumentID: 合约代码
+        :param reserve1: 保留的无效字段
         :param InvestorRange: 投资者范围
         :param BrokerID: 经纪公司代码
         :param InvestorID: 投资者代码
         :param Offset: 执行偏移值
         :param OffsetType: 执行偏移类型
+        :param InstrumentID: 合约代码
         """
         super().__init__()
         ...
@@ -4972,12 +5230,14 @@ class QryStrikeOffset(Struct):
         self,
         BrokerID: str = None,
         InvestorID: str = None,
+        reserve1: str = None,
         InstrumentID: str = None,
     ):
         """
         期权执行偏移值查询
         :param BrokerID: 经纪公司代码
         :param InvestorID: 投资者代码
+        :param reserve1: 保留的无效字段
         :param InstrumentID: 合约代码
         """
         super().__init__()
@@ -4996,8 +5256,9 @@ class InputBatchOrderAction(Struct):
         ExchangeID: str = None,
         UserID: str = None,
         InvestUnitID: str = None,
-        IPAddress: str = None,
+        reserve1: str = None,
         MacAddress: str = None,
+        IPAddress: str = None,
     ):
         """
         输入批量报单操作
@@ -5010,8 +5271,9 @@ class InputBatchOrderAction(Struct):
         :param ExchangeID: 交易所代码
         :param UserID: 用户代码
         :param InvestUnitID: 投资单元代码
-        :param IPAddress: IP地址
+        :param reserve1: 保留的无效字段
         :param MacAddress: Mac地址
+        :param IPAddress: IP地址
         """
         super().__init__()
         ...
@@ -5039,8 +5301,9 @@ class BatchOrderAction(Struct):
         UserID: str = None,
         StatusMsg: str = None,
         InvestUnitID: str = None,
-        IPAddress: str = None,
+        reserve1: str = None,
         MacAddress: str = None,
+        IPAddress: str = None,
     ):
         """
         批量报单操作
@@ -5063,8 +5326,9 @@ class BatchOrderAction(Struct):
         :param UserID: 用户代码
         :param StatusMsg: 状态信息
         :param InvestUnitID: 投资单元代码
-        :param IPAddress: IP地址
+        :param reserve1: 保留的无效字段
         :param MacAddress: Mac地址
+        :param IPAddress: IP地址
         """
         super().__init__()
         ...
@@ -5084,8 +5348,9 @@ class ExchangeBatchOrderAction(Struct):
         BusinessUnit: str = None,
         OrderActionStatus: str = None,
         UserID: str = None,
-        IPAddress: str = None,
+        reserve1: str = None,
         MacAddress: str = None,
+        IPAddress: str = None,
     ):
         """
         交易所批量报单操作
@@ -5100,8 +5365,9 @@ class ExchangeBatchOrderAction(Struct):
         :param BusinessUnit: 业务单元
         :param OrderActionStatus: 报单操作状态
         :param UserID: 用户代码
-        :param IPAddress: IP地址
+        :param reserve1: 保留的无效字段
         :param MacAddress: Mac地址
+        :param IPAddress: IP地址
         """
         super().__init__()
         ...
@@ -5128,16 +5394,18 @@ class CombInstrumentGuard(Struct):
     def __init__(
         self,
         BrokerID: str = None,
-        InstrumentID: str = None,
+        reserve1: str = None,
         GuarantRatio: float = None,
         ExchangeID: str = None,
+        InstrumentID: str = None,
     ):
         """
         组合合约安全系数
         :param BrokerID: 经纪公司代码
-        :param InstrumentID: 合约代码
-        :param GuarantRatio: 合约代码
+        :param reserve1: 保留的无效字段
+        :param GuarantRatio: 保留的无效字段
         :param ExchangeID: 交易所代码
+        :param InstrumentID: 合约代码
         """
         super().__init__()
         ...
@@ -5147,14 +5415,16 @@ class QryCombInstrumentGuard(Struct):
     def __init__(
         self,
         BrokerID: str = None,
-        InstrumentID: str = None,
+        reserve1: str = None,
         ExchangeID: str = None,
+        InstrumentID: str = None,
     ):
         """
         组合合约安全系数查询
         :param BrokerID: 经纪公司代码
-        :param InstrumentID: 合约代码
+        :param reserve1: 保留的无效字段
         :param ExchangeID: 交易所代码
+        :param InstrumentID: 合约代码
         """
         super().__init__()
         ...
@@ -5165,7 +5435,7 @@ class InputCombAction(Struct):
         self,
         BrokerID: str = None,
         InvestorID: str = None,
-        InstrumentID: str = None,
+        reserve1: str = None,
         CombActionRef: str = None,
         UserID: str = None,
         Direction: str = None,
@@ -5173,15 +5443,19 @@ class InputCombAction(Struct):
         CombDirection: str = None,
         HedgeFlag: str = None,
         ExchangeID: str = None,
-        IPAddress: str = None,
+        reserve2: str = None,
         MacAddress: str = None,
         InvestUnitID: str = None,
+        FrontID: int = None,
+        SessionID: int = None,
+        InstrumentID: str = None,
+        IPAddress: str = None,
     ):
         """
         输入的申请组合
         :param BrokerID: 经纪公司代码
         :param InvestorID: 投资者代码
-        :param InstrumentID: 合约代码
+        :param reserve1: 保留的无效字段
         :param CombActionRef: 组合引用
         :param UserID: 用户代码
         :param Direction: 买卖方向
@@ -5189,9 +5463,13 @@ class InputCombAction(Struct):
         :param CombDirection: 组合指令方向
         :param HedgeFlag: 投机套保标志
         :param ExchangeID: 交易所代码
-        :param IPAddress: IP地址
+        :param reserve2: 保留的无效字段
         :param MacAddress: Mac地址
         :param InvestUnitID: 投资单元代码
+        :param FrontID: 前置编号
+        :param SessionID: 会话编号
+        :param InstrumentID: 合约代码
+        :param IPAddress: IP地址
         """
         super().__init__()
         ...
@@ -5202,7 +5480,7 @@ class CombAction(Struct):
         self,
         BrokerID: str = None,
         InvestorID: str = None,
-        InstrumentID: str = None,
+        reserve1: str = None,
         CombActionRef: str = None,
         UserID: str = None,
         Direction: str = None,
@@ -5213,7 +5491,7 @@ class CombAction(Struct):
         ExchangeID: str = None,
         ParticipantID: str = None,
         ClientID: str = None,
-        ExchangeInstID: str = None,
+        reserve2: str = None,
         TraderID: str = None,
         InstallID: int = None,
         ActionStatus: str = None,
@@ -5225,17 +5503,20 @@ class CombAction(Struct):
         SessionID: int = None,
         UserProductInfo: str = None,
         StatusMsg: str = None,
-        IPAddress: str = None,
+        reserve3: str = None,
         MacAddress: str = None,
         ComTradeID: str = None,
         BranchID: str = None,
         InvestUnitID: str = None,
+        InstrumentID: str = None,
+        ExchangeInstID: str = None,
+        IPAddress: str = None,
     ):
         """
         申请组合
         :param BrokerID: 经纪公司代码
         :param InvestorID: 投资者代码
-        :param InstrumentID: 合约代码
+        :param reserve1: 保留的无效字段
         :param CombActionRef: 组合引用
         :param UserID: 用户代码
         :param Direction: 买卖方向
@@ -5246,7 +5527,7 @@ class CombAction(Struct):
         :param ExchangeID: 交易所代码
         :param ParticipantID: 会员代码
         :param ClientID: 客户代码
-        :param ExchangeInstID: 合约在交易所的代码
+        :param reserve2: 保留的无效字段
         :param TraderID: 交易所交易员代码
         :param InstallID: 安装编号
         :param ActionStatus: 组合状态
@@ -5258,11 +5539,14 @@ class CombAction(Struct):
         :param SessionID: 会话编号
         :param UserProductInfo: 用户端产品信息
         :param StatusMsg: 状态信息
-        :param IPAddress: IP地址
+        :param reserve3: 保留的无效字段
         :param MacAddress: Mac地址
         :param ComTradeID: 组合编号
         :param BranchID: 营业部编号
         :param InvestUnitID: 投资单元代码
+        :param InstrumentID: 合约代码
+        :param ExchangeInstID: 合约在交易所的代码
+        :param IPAddress: IP地址
         """
         super().__init__()
         ...
@@ -5273,17 +5557,19 @@ class QryCombAction(Struct):
         self,
         BrokerID: str = None,
         InvestorID: str = None,
-        InstrumentID: str = None,
+        reserve1: str = None,
         ExchangeID: str = None,
         InvestUnitID: str = None,
+        InstrumentID: str = None,
     ):
         """
         申请组合查询
         :param BrokerID: 经纪公司代码
         :param InvestorID: 投资者代码
-        :param InstrumentID: 合约代码
+        :param reserve1: 保留的无效字段
         :param ExchangeID: 交易所代码
         :param InvestUnitID: 投资单元代码
+        :param InstrumentID: 合约代码
         """
         super().__init__()
         ...
@@ -5300,7 +5586,7 @@ class ExchangeCombAction(Struct):
         ExchangeID: str = None,
         ParticipantID: str = None,
         ClientID: str = None,
-        ExchangeInstID: str = None,
+        reserve1: str = None,
         TraderID: str = None,
         InstallID: int = None,
         ActionStatus: str = None,
@@ -5308,10 +5594,12 @@ class ExchangeCombAction(Struct):
         TradingDay: str = None,
         SettlementID: int = None,
         SequenceNo: int = None,
-        IPAddress: str = None,
+        reserve2: str = None,
         MacAddress: str = None,
         ComTradeID: str = None,
         BranchID: str = None,
+        ExchangeInstID: str = None,
+        IPAddress: str = None,
     ):
         """
         交易所申请组合信息
@@ -5323,7 +5611,7 @@ class ExchangeCombAction(Struct):
         :param ExchangeID: 交易所代码
         :param ParticipantID: 会员代码
         :param ClientID: 客户代码
-        :param ExchangeInstID: 合约在交易所的代码
+        :param reserve1: 保留的无效字段
         :param TraderID: 交易所交易员代码
         :param InstallID: 安装编号
         :param ActionStatus: 组合状态
@@ -5331,10 +5619,12 @@ class ExchangeCombAction(Struct):
         :param TradingDay: 交易日
         :param SettlementID: 结算编号
         :param SequenceNo: 序号
-        :param IPAddress: IP地址
+        :param reserve2: 保留的无效字段
         :param MacAddress: Mac地址
         :param ComTradeID: 组合编号
         :param BranchID: 营业部编号
+        :param ExchangeInstID: 合约在交易所的代码
+        :param IPAddress: IP地址
         """
         super().__init__()
         ...
@@ -5345,17 +5635,19 @@ class QryExchangeCombAction(Struct):
         self,
         ParticipantID: str = None,
         ClientID: str = None,
-        ExchangeInstID: str = None,
+        reserve1: str = None,
         ExchangeID: str = None,
         TraderID: str = None,
+        ExchangeInstID: str = None,
     ):
         """
         交易所申请组合查询
         :param ParticipantID: 会员代码
         :param ClientID: 客户代码
-        :param ExchangeInstID: 合约在交易所的代码
+        :param reserve1: 保留的无效字段
         :param ExchangeID: 交易所代码
         :param TraderID: 交易所交易员代码
+        :param ExchangeInstID: 合约在交易所的代码
         """
         super().__init__()
         ...
@@ -5364,17 +5656,19 @@ class QryExchangeCombAction(Struct):
 class ProductExchRate(Struct):
     def __init__(
         self,
-        ProductID: str = None,
+        reserve1: str = None,
         QuoteCurrencyID: str = None,
         ExchangeRate: float = None,
         ExchangeID: str = None,
+        ProductID: str = None,
     ):
         """
         产品报价汇率
-        :param ProductID: 产品代码
+        :param reserve1: 保留的无效字段
         :param QuoteCurrencyID: 报价币种类型
         :param ExchangeRate: 汇率
         :param ExchangeID: 交易所代码
+        :param ProductID: 产品代码
         """
         super().__init__()
         ...
@@ -5383,13 +5677,15 @@ class ProductExchRate(Struct):
 class QryProductExchRate(Struct):
     def __init__(
         self,
-        ProductID: str = None,
+        reserve1: str = None,
         ExchangeID: str = None,
+        ProductID: str = None,
     ):
         """
         产品报价汇率查询
-        :param ProductID: 产品代码
+        :param reserve1: 保留的无效字段
         :param ExchangeID: 交易所代码
+        :param ProductID: 产品代码
         """
         super().__init__()
         ...
@@ -5399,14 +5695,16 @@ class QryForQuoteParam(Struct):
     def __init__(
         self,
         BrokerID: str = None,
-        InstrumentID: str = None,
+        reserve1: str = None,
         ExchangeID: str = None,
+        InstrumentID: str = None,
     ):
         """
         查询询价价差参数
         :param BrokerID: 经纪公司代码
-        :param InstrumentID: 合约代码
+        :param reserve1: 保留的无效字段
         :param ExchangeID: 交易所代码
+        :param InstrumentID: 合约代码
         """
         super().__init__()
         ...
@@ -5416,18 +5714,20 @@ class ForQuoteParam(Struct):
     def __init__(
         self,
         BrokerID: str = None,
-        InstrumentID: str = None,
+        reserve1: str = None,
         ExchangeID: str = None,
         LastPrice: float = None,
         PriceInterval: float = None,
+        InstrumentID: str = None,
     ):
         """
         询价价差参数
         :param BrokerID: 经纪公司代码
-        :param InstrumentID: 合约代码
+        :param reserve1: 保留的无效字段
         :param ExchangeID: 交易所代码
         :param LastPrice: 最新价
         :param PriceInterval: 价差
+        :param InstrumentID: 合约代码
         """
         super().__init__()
         ...
@@ -5436,7 +5736,7 @@ class ForQuoteParam(Struct):
 class MMOptionInstrCommRate(Struct):
     def __init__(
         self,
-        InstrumentID: str = None,
+        reserve1: str = None,
         InvestorRange: str = None,
         BrokerID: str = None,
         InvestorID: str = None,
@@ -5448,10 +5748,11 @@ class MMOptionInstrCommRate(Struct):
         CloseTodayRatioByVolume: float = None,
         StrikeRatioByMoney: float = None,
         StrikeRatioByVolume: float = None,
+        InstrumentID: str = None,
     ):
         """
         当前做市商期权合约手续费的详细内容
-        :param InstrumentID: 合约代码
+        :param reserve1: 保留的无效字段
         :param InvestorRange: 投资者范围
         :param BrokerID: 经纪公司代码
         :param InvestorID: 投资者代码
@@ -5463,6 +5764,7 @@ class MMOptionInstrCommRate(Struct):
         :param CloseTodayRatioByVolume: 平今手续费
         :param StrikeRatioByMoney: 执行手续费率
         :param StrikeRatioByVolume: 执行手续费
+        :param InstrumentID: 合约代码
         """
         super().__init__()
         ...
@@ -5473,12 +5775,14 @@ class QryMMOptionInstrCommRate(Struct):
         self,
         BrokerID: str = None,
         InvestorID: str = None,
+        reserve1: str = None,
         InstrumentID: str = None,
     ):
         """
         做市商期权手续费率查询
         :param BrokerID: 经纪公司代码
         :param InvestorID: 投资者代码
+        :param reserve1: 保留的无效字段
         :param InstrumentID: 合约代码
         """
         super().__init__()
@@ -5488,7 +5792,7 @@ class QryMMOptionInstrCommRate(Struct):
 class MMInstrumentCommissionRate(Struct):
     def __init__(
         self,
-        InstrumentID: str = None,
+        reserve1: str = None,
         InvestorRange: str = None,
         BrokerID: str = None,
         InvestorID: str = None,
@@ -5498,10 +5802,11 @@ class MMInstrumentCommissionRate(Struct):
         CloseRatioByVolume: float = None,
         CloseTodayRatioByMoney: float = None,
         CloseTodayRatioByVolume: float = None,
+        InstrumentID: str = None,
     ):
         """
         做市商合约手续费率
-        :param InstrumentID: 合约代码
+        :param reserve1: 保留的无效字段
         :param InvestorRange: 投资者范围
         :param BrokerID: 经纪公司代码
         :param InvestorID: 投资者代码
@@ -5511,6 +5816,7 @@ class MMInstrumentCommissionRate(Struct):
         :param CloseRatioByVolume: 平仓手续费
         :param CloseTodayRatioByMoney: 平今手续费率
         :param CloseTodayRatioByVolume: 平今手续费
+        :param InstrumentID: 合约代码
         """
         super().__init__()
         ...
@@ -5521,12 +5827,14 @@ class QryMMInstrumentCommissionRate(Struct):
         self,
         BrokerID: str = None,
         InvestorID: str = None,
+        reserve1: str = None,
         InstrumentID: str = None,
     ):
         """
         查询做市商合约手续费率
         :param BrokerID: 经纪公司代码
         :param InvestorID: 投资者代码
+        :param reserve1: 保留的无效字段
         :param InstrumentID: 合约代码
         """
         super().__init__()
@@ -5536,7 +5844,7 @@ class QryMMInstrumentCommissionRate(Struct):
 class InstrumentOrderCommRate(Struct):
     def __init__(
         self,
-        InstrumentID: str = None,
+        reserve1: str = None,
         InvestorRange: str = None,
         BrokerID: str = None,
         InvestorID: str = None,
@@ -5545,10 +5853,13 @@ class InstrumentOrderCommRate(Struct):
         OrderActionCommByVolume: float = None,
         ExchangeID: str = None,
         InvestUnitID: str = None,
+        InstrumentID: str = None,
+        OrderCommByTrade: float = None,
+        OrderActionCommByTrade: float = None,
     ):
         """
         当前报单手续费的详细内容
-        :param InstrumentID: 合约代码
+        :param reserve1: 保留的无效字段
         :param InvestorRange: 投资者范围
         :param BrokerID: 经纪公司代码
         :param InvestorID: 投资者代码
@@ -5557,6 +5868,9 @@ class InstrumentOrderCommRate(Struct):
         :param OrderActionCommByVolume: 撤单手续费
         :param ExchangeID: 交易所代码
         :param InvestUnitID: 投资单元代码
+        :param InstrumentID: 合约代码
+        :param OrderCommByTrade: 报单手续费
+        :param OrderActionCommByTrade: 撤单手续费
         """
         super().__init__()
         ...
@@ -5567,12 +5881,14 @@ class QryInstrumentOrderCommRate(Struct):
         self,
         BrokerID: str = None,
         InvestorID: str = None,
+        reserve1: str = None,
         InstrumentID: str = None,
     ):
         """
         报单手续费率查询
         :param BrokerID: 经纪公司代码
         :param InvestorID: 投资者代码
+        :param reserve1: 保留的无效字段
         :param InstrumentID: 合约代码
         """
         super().__init__()
@@ -5601,7 +5917,7 @@ class TradeParam(Struct):
 class InstrumentMarginRateUL(Struct):
     def __init__(
         self,
-        InstrumentID: str = None,
+        reserve1: str = None,
         InvestorRange: str = None,
         BrokerID: str = None,
         InvestorID: str = None,
@@ -5610,10 +5926,11 @@ class InstrumentMarginRateUL(Struct):
         LongMarginRatioByVolume: float = None,
         ShortMarginRatioByMoney: float = None,
         ShortMarginRatioByVolume: float = None,
+        InstrumentID: str = None,
     ):
         """
         合约保证金率调整
-        :param InstrumentID: 合约代码
+        :param reserve1: 保留的无效字段
         :param InvestorRange: 投资者范围
         :param BrokerID: 经纪公司代码
         :param InvestorID: 投资者代码
@@ -5622,6 +5939,7 @@ class InstrumentMarginRateUL(Struct):
         :param LongMarginRatioByVolume: 多头保证金费
         :param ShortMarginRatioByMoney: 空头保证金率
         :param ShortMarginRatioByVolume: 空头保证金费
+        :param InstrumentID: 合约代码
         """
         super().__init__()
         ...
@@ -5633,20 +5951,22 @@ class FutureLimitPosiParam(Struct):
         InvestorRange: str = None,
         BrokerID: str = None,
         InvestorID: str = None,
-        ProductID: str = None,
+        reserve1: str = None,
         SpecOpenVolume: int = None,
         ArbiOpenVolume: int = None,
         OpenVolume: int = None,
+        ProductID: str = None,
     ):
         """
         期货持仓限制参数
         :param InvestorRange: 投资者范围
         :param BrokerID: 经纪公司代码
         :param InvestorID: 投资者代码
-        :param ProductID: 产品代码
+        :param reserve1: 保留的无效字段
         :param SpecOpenVolume: 当日投机开仓数量限制
         :param ArbiOpenVolume: 当日套利开仓数量限制
         :param OpenVolume: 当日投机+套利开仓数量限制
+        :param ProductID: 产品代码
         """
         super().__init__()
         ...
@@ -5655,10 +5975,12 @@ class FutureLimitPosiParam(Struct):
 class LoginForbiddenIP(Struct):
     def __init__(
         self,
+        reserve1: str = None,
         IPAddress: str = None,
     ):
         """
         禁止登录IP
+        :param reserve1: 保留的无效字段
         :param IPAddress: IP地址
         """
         super().__init__()
@@ -5668,13 +5990,15 @@ class LoginForbiddenIP(Struct):
 class IPList(Struct):
     def __init__(
         self,
-        IPAddress: str = None,
+        reserve1: str = None,
         IsWhite: int = None,
+        IPAddress: str = None,
     ):
         """
         IP列表
-        :param IPAddress: IP地址
+        :param reserve1: 保留的无效字段
         :param IsWhite: 是否白名单
+        :param IPAddress: IP地址
         """
         super().__init__()
         ...
@@ -5685,7 +6009,7 @@ class InputOptionSelfClose(Struct):
         self,
         BrokerID: str = None,
         InvestorID: str = None,
-        InstrumentID: str = None,
+        reserve1: str = None,
         OptionSelfCloseRef: str = None,
         UserID: str = None,
         Volume: int = None,
@@ -5698,14 +6022,16 @@ class InputOptionSelfClose(Struct):
         AccountID: str = None,
         CurrencyID: str = None,
         ClientID: str = None,
-        IPAddress: str = None,
+        reserve2: str = None,
         MacAddress: str = None,
+        InstrumentID: str = None,
+        IPAddress: str = None,
     ):
         """
         输入的期权自对冲
         :param BrokerID: 经纪公司代码
         :param InvestorID: 投资者代码
-        :param InstrumentID: 合约代码
+        :param reserve1: 保留的无效字段
         :param OptionSelfCloseRef: 期权自对冲引用
         :param UserID: 用户代码
         :param Volume: 数量
@@ -5718,8 +6044,10 @@ class InputOptionSelfClose(Struct):
         :param AccountID: 资金账号
         :param CurrencyID: 币种代码
         :param ClientID: 交易编码
-        :param IPAddress: IP地址
+        :param reserve2: 保留的无效字段
         :param MacAddress: Mac地址
+        :param InstrumentID: 合约代码
+        :param IPAddress: IP地址
         """
         super().__init__()
         ...
@@ -5739,10 +6067,12 @@ class InputOptionSelfCloseAction(Struct):
         OptionSelfCloseSysID: str = None,
         ActionFlag: str = None,
         UserID: str = None,
-        InstrumentID: str = None,
+        reserve1: str = None,
         InvestUnitID: str = None,
-        IPAddress: str = None,
+        reserve2: str = None,
         MacAddress: str = None,
+        InstrumentID: str = None,
+        IPAddress: str = None,
     ):
         """
         输入期权自对冲操作
@@ -5757,10 +6087,12 @@ class InputOptionSelfCloseAction(Struct):
         :param OptionSelfCloseSysID: 期权自对冲操作编号
         :param ActionFlag: 操作标志
         :param UserID: 用户代码
-        :param InstrumentID: 合约代码
+        :param reserve1: 保留的无效字段
         :param InvestUnitID: 投资单元代码
-        :param IPAddress: IP地址
+        :param reserve2: 保留的无效字段
         :param MacAddress: Mac地址
+        :param InstrumentID: 合约代码
+        :param IPAddress: IP地址
         """
         super().__init__()
         ...
@@ -5771,7 +6103,7 @@ class OptionSelfClose(Struct):
         self,
         BrokerID: str = None,
         InvestorID: str = None,
-        InstrumentID: str = None,
+        reserve1: str = None,
         OptionSelfCloseRef: str = None,
         UserID: str = None,
         Volume: int = None,
@@ -5783,7 +6115,7 @@ class OptionSelfClose(Struct):
         ExchangeID: str = None,
         ParticipantID: str = None,
         ClientID: str = None,
-        ExchangeInstID: str = None,
+        reserve2: str = None,
         TraderID: str = None,
         InstallID: int = None,
         OrderSubmitStatus: str = None,
@@ -5807,14 +6139,17 @@ class OptionSelfClose(Struct):
         InvestUnitID: str = None,
         AccountID: str = None,
         CurrencyID: str = None,
-        IPAddress: str = None,
+        reserve3: str = None,
         MacAddress: str = None,
+        InstrumentID: str = None,
+        ExchangeInstID: str = None,
+        IPAddress: str = None,
     ):
         """
         期权自对冲
         :param BrokerID: 经纪公司代码
         :param InvestorID: 投资者代码
-        :param InstrumentID: 合约代码
+        :param reserve1: 保留的无效字段
         :param OptionSelfCloseRef: 期权自对冲引用
         :param UserID: 用户代码
         :param Volume: 数量
@@ -5826,7 +6161,7 @@ class OptionSelfClose(Struct):
         :param ExchangeID: 交易所代码
         :param ParticipantID: 会员代码
         :param ClientID: 客户代码
-        :param ExchangeInstID: 合约在交易所的代码
+        :param reserve2: 保留的无效字段
         :param TraderID: 交易所交易员代码
         :param InstallID: 安装编号
         :param OrderSubmitStatus: 期权自对冲提交状态
@@ -5850,8 +6185,11 @@ class OptionSelfClose(Struct):
         :param InvestUnitID: 投资单元代码
         :param AccountID: 资金账号
         :param CurrencyID: 币种代码
-        :param IPAddress: IP地址
+        :param reserve3: 保留的无效字段
         :param MacAddress: Mac地址
+        :param InstrumentID: 合约代码
+        :param ExchangeInstID: 合约在交易所的代码
+        :param IPAddress: IP地址
         """
         super().__init__()
         ...
@@ -5882,11 +6220,13 @@ class OptionSelfCloseAction(Struct):
         OrderActionStatus: str = None,
         UserID: str = None,
         StatusMsg: str = None,
-        InstrumentID: str = None,
+        reserve1: str = None,
         BranchID: str = None,
         InvestUnitID: str = None,
-        IPAddress: str = None,
+        reserve2: str = None,
         MacAddress: str = None,
+        InstrumentID: str = None,
+        IPAddress: str = None,
     ):
         """
         期权自对冲操作
@@ -5912,11 +6252,13 @@ class OptionSelfCloseAction(Struct):
         :param OrderActionStatus: 报单操作状态
         :param UserID: 用户代码
         :param StatusMsg: 状态信息
-        :param InstrumentID: 合约代码
+        :param reserve1: 保留的无效字段
         :param BranchID: 营业部编号
         :param InvestUnitID: 投资单元代码
-        :param IPAddress: IP地址
+        :param reserve2: 保留的无效字段
         :param MacAddress: Mac地址
+        :param InstrumentID: 合约代码
+        :param IPAddress: IP地址
         """
         super().__init__()
         ...
@@ -5927,21 +6269,23 @@ class QryOptionSelfClose(Struct):
         self,
         BrokerID: str = None,
         InvestorID: str = None,
-        InstrumentID: str = None,
+        reserve1: str = None,
         ExchangeID: str = None,
         OptionSelfCloseSysID: str = None,
         InsertTimeStart: str = None,
         InsertTimeEnd: str = None,
+        InstrumentID: str = None,
     ):
         """
         期权自对冲查询
         :param BrokerID: 经纪公司代码
         :param InvestorID: 投资者代码
-        :param InstrumentID: 合约代码
+        :param reserve1: 保留的无效字段
         :param ExchangeID: 交易所代码
         :param OptionSelfCloseSysID: 期权自对冲编号
         :param InsertTimeStart: 开始时间
         :param InsertTimeEnd: 结束时间
+        :param InstrumentID: 合约代码
         """
         super().__init__()
         ...
@@ -5959,7 +6303,7 @@ class ExchangeOptionSelfClose(Struct):
         ExchangeID: str = None,
         ParticipantID: str = None,
         ClientID: str = None,
-        ExchangeInstID: str = None,
+        reserve1: str = None,
         TraderID: str = None,
         InstallID: int = None,
         OrderSubmitStatus: str = None,
@@ -5974,8 +6318,10 @@ class ExchangeOptionSelfClose(Struct):
         ClearingPartID: str = None,
         SequenceNo: int = None,
         BranchID: str = None,
-        IPAddress: str = None,
+        reserve2: str = None,
         MacAddress: str = None,
+        ExchangeInstID: str = None,
+        IPAddress: str = None,
     ):
         """
         交易所期权自对冲信息
@@ -5988,7 +6334,7 @@ class ExchangeOptionSelfClose(Struct):
         :param ExchangeID: 交易所代码
         :param ParticipantID: 会员代码
         :param ClientID: 客户代码
-        :param ExchangeInstID: 合约在交易所的代码
+        :param reserve1: 保留的无效字段
         :param TraderID: 交易所交易员代码
         :param InstallID: 安装编号
         :param OrderSubmitStatus: 期权自对冲提交状态
@@ -6003,8 +6349,10 @@ class ExchangeOptionSelfClose(Struct):
         :param ClearingPartID: 结算会员编号
         :param SequenceNo: 序号
         :param BranchID: 营业部编号
-        :param IPAddress: IP地址
+        :param reserve2: 保留的无效字段
         :param MacAddress: Mac地址
+        :param ExchangeInstID: 合约在交易所的代码
+        :param IPAddress: IP地址
         """
         super().__init__()
         ...
@@ -6045,10 +6393,12 @@ class ExchangeOptionSelfCloseAction(Struct):
         OrderActionStatus: str = None,
         UserID: str = None,
         BranchID: str = None,
-        IPAddress: str = None,
+        reserve1: str = None,
         MacAddress: str = None,
-        ExchangeInstID: str = None,
+        reserve2: str = None,
         OptSelfCloseFlag: str = None,
+        IPAddress: str = None,
+        ExchangeInstID: str = None,
     ):
         """
         交易所期权自对冲操作
@@ -6067,10 +6417,12 @@ class ExchangeOptionSelfCloseAction(Struct):
         :param OrderActionStatus: 报单操作状态
         :param UserID: 用户代码
         :param BranchID: 营业部编号
-        :param IPAddress: IP地址
+        :param reserve1: 保留的无效字段
         :param MacAddress: Mac地址
-        :param ExchangeInstID: 合约在交易所的代码
+        :param reserve2: 保留的无效字段
         :param OptSelfCloseFlag: 期权行权的头寸是否自对冲
+        :param IPAddress: IP地址
+        :param ExchangeInstID: 合约在交易所的代码
         """
         super().__init__()
         ...
@@ -6088,6 +6440,8 @@ class SyncDelaySwap(Struct):
         FromRemainSwap: float = None,
         ToCurrencyID: str = None,
         ToAmount: float = None,
+        IsManualSwap: int = None,
+        IsAllRemainSetZero: int = None,
     ):
         """
         延时换汇同步
@@ -6100,6 +6454,8 @@ class SyncDelaySwap(Struct):
         :param FromRemainSwap: 源剩余换汇额度(可提冻结)
         :param ToCurrencyID: 目标币种
         :param ToAmount: 目标金额
+        :param IsManualSwap: 是否手工换汇
+        :param IsAllRemainSetZero: 是否将所有外币的剩余换汇额度设置为0
         """
         super().__init__()
         ...
@@ -6210,9 +6566,9 @@ class MarketData(Struct):
     def __init__(
         self,
         TradingDay: str = None,
-        InstrumentID: str = None,
+        reserve1: str = None,
         ExchangeID: str = None,
-        ExchangeInstID: str = None,
+        reserve2: str = None,
         LastPrice: float = None,
         PreSettlementPrice: float = None,
         PreClosePrice: float = None,
@@ -6232,13 +6588,15 @@ class MarketData(Struct):
         UpdateTime: str = None,
         UpdateMillisec: int = None,
         ActionDay: str = None,
+        InstrumentID: str = None,
+        ExchangeInstID: str = None,
     ):
         """
         市场行情
         :param TradingDay: 交易日
-        :param InstrumentID: 合约代码
+        :param reserve1: 保留的无效字段
         :param ExchangeID: 交易所代码
-        :param ExchangeInstID: 合约在交易所的代码
+        :param reserve2: 保留的无效字段
         :param LastPrice: 最新价
         :param PreSettlementPrice: 上次结算价
         :param PreClosePrice: 昨收盘
@@ -6258,6 +6616,8 @@ class MarketData(Struct):
         :param UpdateTime: 最后修改时间
         :param UpdateMillisec: 最后修改毫秒
         :param ActionDay: 业务日期
+        :param InstrumentID: 合约代码
+        :param ExchangeInstID: 合约在交易所的代码
         """
         super().__init__()
         ...
@@ -6428,17 +6788,34 @@ class MarketDataAsk45(Struct):
 class MarketDataUpdateTime(Struct):
     def __init__(
         self,
-        InstrumentID: str = None,
+        reserve1: str = None,
         UpdateTime: str = None,
         UpdateMillisec: int = None,
         ActionDay: str = None,
+        InstrumentID: str = None,
     ):
         """
         行情更新时间属性
-        :param InstrumentID: 合约代码
+        :param reserve1: 保留的无效字段
         :param UpdateTime: 最后修改时间
         :param UpdateMillisec: 最后修改毫秒
         :param ActionDay: 业务日期
+        :param InstrumentID: 合约代码
+        """
+        super().__init__()
+        ...
+
+
+class MarketDataBandingPrice(Struct):
+    def __init__(
+        self,
+        BandingUpperPrice: float = None,
+        BandingLowerPrice: float = None,
+    ):
+        """
+        行情上下带价
+        :param BandingUpperPrice: 上带价
+        :param BandingLowerPrice: 下带价
         """
         super().__init__()
         ...
@@ -6460,10 +6837,12 @@ class MarketDataExchange(Struct):
 class SpecificInstrument(Struct):
     def __init__(
         self,
+        reserve1: str = None,
         InstrumentID: str = None,
     ):
         """
         指定的合约
+        :param reserve1: 保留的无效字段
         :param InstrumentID: 合约代码
         """
         super().__init__()
@@ -6474,24 +6853,28 @@ class InstrumentStatus(Struct):
     def __init__(
         self,
         ExchangeID: str = None,
-        ExchangeInstID: str = None,
+        reserve1: str = None,
         SettlementGroupID: str = None,
-        InstrumentID: str = None,
+        reserve2: str = None,
         InstrumentStatus: str = None,
         TradingSegmentSN: int = None,
         EnterTime: str = None,
         EnterReason: str = None,
+        ExchangeInstID: str = None,
+        InstrumentID: str = None,
     ):
         """
         合约状态
         :param ExchangeID: 交易所代码
-        :param ExchangeInstID: 合约在交易所的代码
+        :param reserve1: 保留的无效字段
         :param SettlementGroupID: 结算组代码
-        :param InstrumentID: 合约代码
+        :param reserve2: 保留的无效字段
         :param InstrumentStatus: 合约交易状态
         :param TradingSegmentSN: 交易阶段编号
         :param EnterTime: 进入本状态时间
         :param EnterReason: 进入本状态原因
+        :param ExchangeInstID: 合约在交易所的代码
+        :param InstrumentID: 合约代码
         """
         super().__init__()
         ...
@@ -6501,11 +6884,13 @@ class QryInstrumentStatus(Struct):
     def __init__(
         self,
         ExchangeID: str = None,
+        reserve1: str = None,
         ExchangeInstID: str = None,
     ):
         """
         查询合约状态
         :param ExchangeID: 交易所代码
+        :param reserve1: 保留的无效字段
         :param ExchangeInstID: 合约在交易所的代码
         """
         super().__init__()
@@ -6610,17 +6995,19 @@ class QryInvestorPositionDetail(Struct):
         self,
         BrokerID: str = None,
         InvestorID: str = None,
-        InstrumentID: str = None,
+        reserve1: str = None,
         ExchangeID: str = None,
         InvestUnitID: str = None,
+        InstrumentID: str = None,
     ):
         """
         查询投资者持仓明细
         :param BrokerID: 经纪公司代码
         :param InvestorID: 投资者代码
-        :param InstrumentID: 合约代码
+        :param reserve1: 保留的无效字段
         :param ExchangeID: 交易所代码
         :param InvestUnitID: 投资单元代码
+        :param InstrumentID: 合约代码
         """
         super().__init__()
         ...
@@ -6629,7 +7016,7 @@ class QryInvestorPositionDetail(Struct):
 class InvestorPositionDetail(Struct):
     def __init__(
         self,
-        InstrumentID: str = None,
+        reserve1: str = None,
         BrokerID: str = None,
         InvestorID: str = None,
         HedgeFlag: str = None,
@@ -6641,7 +7028,7 @@ class InvestorPositionDetail(Struct):
         TradingDay: str = None,
         SettlementID: int = None,
         TradeType: str = None,
-        CombInstrumentID: str = None,
+        reserve2: str = None,
         ExchangeID: str = None,
         CloseProfitByDate: float = None,
         CloseProfitByTrade: float = None,
@@ -6657,10 +7044,13 @@ class InvestorPositionDetail(Struct):
         CloseAmount: float = None,
         TimeFirstVolume: int = None,
         InvestUnitID: str = None,
+        SpecPosiType: str = None,
+        InstrumentID: str = None,
+        CombInstrumentID: str = None,
     ):
         """
         投资者持仓明细
-        :param InstrumentID: 合约代码
+        :param reserve1: 保留的无效字段
         :param BrokerID: 经纪公司代码
         :param InvestorID: 投资者代码
         :param HedgeFlag: 投机套保标志
@@ -6672,7 +7062,7 @@ class InvestorPositionDetail(Struct):
         :param TradingDay: 交易日
         :param SettlementID: 结算编号
         :param TradeType: 成交类型
-        :param CombInstrumentID: 组合合约代码
+        :param reserve2: 保留的无效字段
         :param ExchangeID: 交易所代码
         :param CloseProfitByDate: 逐日盯市平仓盈亏
         :param CloseProfitByTrade: 逐笔对冲平仓盈亏
@@ -6686,8 +7076,11 @@ class InvestorPositionDetail(Struct):
         :param SettlementPrice: 结算价
         :param CloseVolume: 平仓量
         :param CloseAmount: 平仓金额
-        :param TimeFirstVolume: 按照时间顺序平仓的笔数,大商所专用
+        :param TimeFirstVolume: 先开先平剩余数量
         :param InvestUnitID: 投资单元代码
+        :param SpecPosiType: 特殊持仓标志
+        :param InstrumentID: 合约代码
+        :param CombInstrumentID: 组合合约代码
         """
         super().__init__()
         ...
@@ -6734,6 +7127,7 @@ class MDTraderOffer(Struct):
         BrokerID: str = None,
         MaxTradeID: str = None,
         MaxOrderMessageReference: str = None,
+        OrderCancelAlg: str = None,
     ):
         """
         交易所行情报盘机
@@ -6756,6 +7150,7 @@ class MDTraderOffer(Struct):
         :param BrokerID: 经纪公司代码
         :param MaxTradeID: 本席位最大成交编号
         :param MaxOrderMessageReference: 本席位最大报单备拷
+        :param OrderCancelAlg: 撤单时选择席位算法
         """
         super().__init__()
         ...
@@ -6933,14 +7328,18 @@ class TradingAccountPasswordUpdate(Struct):
 class QryCombinationLeg(Struct):
     def __init__(
         self,
-        CombInstrumentID: str = None,
+        reserve1: str = None,
         LegID: int = None,
+        reserve2: str = None,
+        CombInstrumentID: str = None,
         LegInstrumentID: str = None,
     ):
         """
         查询组合合约分腿
-        :param CombInstrumentID: 组合合约代码
+        :param reserve1: 保留的无效字段
         :param LegID: 单腿编号
+        :param reserve2: 保留的无效字段
+        :param CombInstrumentID: 组合合约代码
         :param LegInstrumentID: 单腿合约代码
         """
         super().__init__()
@@ -6963,21 +7362,25 @@ class QrySyncStatus(Struct):
 class CombinationLeg(Struct):
     def __init__(
         self,
-        CombInstrumentID: str = None,
+        reserve1: str = None,
         LegID: int = None,
-        LegInstrumentID: str = None,
+        reserve2: str = None,
         Direction: str = None,
         LegMultiple: int = None,
         ImplyLevel: int = None,
+        CombInstrumentID: str = None,
+        LegInstrumentID: str = None,
     ):
         """
         组合交易合约的单腿
-        :param CombInstrumentID: 组合合约代码
+        :param reserve1: 保留的无效字段
         :param LegID: 单腿编号
-        :param LegInstrumentID: 单腿合约代码
+        :param reserve2: 保留的无效字段
         :param Direction: 买卖方向
         :param LegMultiple: 单腿乘数
         :param ImplyLevel: 派生层数
+        :param CombInstrumentID: 组合合约代码
+        :param LegInstrumentID: 单腿合约代码
         """
         super().__init__()
         ...
@@ -7076,6 +7479,7 @@ class BrokerUserEvent(Struct):
         EventTime: str = None,
         UserEventInfo: str = None,
         InvestorID: str = None,
+        reserve1: str = None,
         InstrumentID: str = None,
     ):
         """
@@ -7088,6 +7492,7 @@ class BrokerUserEvent(Struct):
         :param EventTime: 事件发生时间
         :param UserEventInfo: 用户事件信息
         :param InvestorID: 投资者代码
+        :param reserve1: 保留的无效字段
         :param InstrumentID: 合约代码
         """
         super().__init__()
@@ -7141,7 +7546,7 @@ class InvestorPositionCombineDetail(Struct):
         InvestorID: str = None,
         ComTradeID: str = None,
         TradeID: str = None,
-        InstrumentID: str = None,
+        reserve1: str = None,
         HedgeFlag: str = None,
         Direction: str = None,
         TotalAmt: int = None,
@@ -7151,9 +7556,11 @@ class InvestorPositionCombineDetail(Struct):
         MarginRateByVolume: float = None,
         LegID: int = None,
         LegMultiple: int = None,
-        CombInstrumentID: str = None,
+        reserve2: str = None,
         TradeGroupID: int = None,
         InvestUnitID: str = None,
+        InstrumentID: str = None,
+        CombInstrumentID: str = None,
     ):
         """
         投资者组合持仓明细
@@ -7165,7 +7572,7 @@ class InvestorPositionCombineDetail(Struct):
         :param InvestorID: 投资者代码
         :param ComTradeID: 组合编号
         :param TradeID: 撮合编号
-        :param InstrumentID: 合约代码
+        :param reserve1: 保留的无效字段
         :param HedgeFlag: 投机套保标志
         :param Direction: 买卖
         :param TotalAmt: 持仓量
@@ -7175,9 +7582,11 @@ class InvestorPositionCombineDetail(Struct):
         :param MarginRateByVolume: 保证金率(按手数)
         :param LegID: 单腿编号
         :param LegMultiple: 单腿乘数
-        :param CombInstrumentID: 组合持仓合约编码
+        :param reserve2: 保留的无效字段
         :param TradeGroupID: 成交组号
         :param InvestUnitID: 投资单元代码
+        :param InstrumentID: 合约代码
+        :param CombInstrumentID: 组合持仓合约编码
         """
         super().__init__()
         ...
@@ -7188,7 +7597,7 @@ class ParkedOrder(Struct):
         self,
         BrokerID: str = None,
         InvestorID: str = None,
-        InstrumentID: str = None,
+        reserve1: str = None,
         OrderRef: str = None,
         UserID: str = None,
         OrderPriceType: str = None,
@@ -7219,14 +7628,16 @@ class ParkedOrder(Struct):
         CurrencyID: str = None,
         ClientID: str = None,
         InvestUnitID: str = None,
-        IPAddress: str = None,
+        reserve2: str = None,
         MacAddress: str = None,
+        InstrumentID: str = None,
+        IPAddress: str = None,
     ):
         """
         预埋单
         :param BrokerID: 经纪公司代码
         :param InvestorID: 投资者代码
-        :param InstrumentID: 合约代码
+        :param reserve1: 保留的无效字段
         :param OrderRef: 报单引用
         :param UserID: 用户代码
         :param OrderPriceType: 报单价格条件
@@ -7257,8 +7668,10 @@ class ParkedOrder(Struct):
         :param CurrencyID: 币种代码
         :param ClientID: 交易编码
         :param InvestUnitID: 投资单元代码
-        :param IPAddress: IP地址
+        :param reserve2: 保留的无效字段
         :param MacAddress: Mac地址
+        :param InstrumentID: 合约代码
+        :param IPAddress: IP地址
         """
         super().__init__()
         ...
@@ -7280,15 +7693,17 @@ class ParkedOrderAction(Struct):
         LimitPrice: float = None,
         VolumeChange: int = None,
         UserID: str = None,
-        InstrumentID: str = None,
+        reserve1: str = None,
         ParkedOrderActionID: str = None,
         UserType: str = None,
         Status: str = None,
         ErrorID: int = None,
         ErrorMsg: str = None,
         InvestUnitID: str = None,
-        IPAddress: str = None,
+        reserve2: str = None,
         MacAddress: str = None,
+        InstrumentID: str = None,
+        IPAddress: str = None,
     ):
         """
         输入预埋单操作
@@ -7305,15 +7720,17 @@ class ParkedOrderAction(Struct):
         :param LimitPrice: 价格
         :param VolumeChange: 数量变化
         :param UserID: 用户代码
-        :param InstrumentID: 合约代码
+        :param reserve1: 保留的无效字段
         :param ParkedOrderActionID: 预埋撤单单编号
         :param UserType: 用户类型
         :param Status: 预埋撤单状态
         :param ErrorID: 错误代码
         :param ErrorMsg: 错误信息
         :param InvestUnitID: 投资单元代码
-        :param IPAddress: IP地址
+        :param reserve2: 保留的无效字段
         :param MacAddress: Mac地址
+        :param InstrumentID: 合约代码
+        :param IPAddress: IP地址
         """
         super().__init__()
         ...
@@ -7324,17 +7741,19 @@ class QryParkedOrder(Struct):
         self,
         BrokerID: str = None,
         InvestorID: str = None,
-        InstrumentID: str = None,
+        reserve1: str = None,
         ExchangeID: str = None,
         InvestUnitID: str = None,
+        InstrumentID: str = None,
     ):
         """
         查询预埋单
         :param BrokerID: 经纪公司代码
         :param InvestorID: 投资者代码
-        :param InstrumentID: 合约代码
+        :param reserve1: 保留的无效字段
         :param ExchangeID: 交易所代码
         :param InvestUnitID: 投资单元代码
+        :param InstrumentID: 合约代码
         """
         super().__init__()
         ...
@@ -7345,17 +7764,19 @@ class QryParkedOrderAction(Struct):
         self,
         BrokerID: str = None,
         InvestorID: str = None,
-        InstrumentID: str = None,
+        reserve1: str = None,
         ExchangeID: str = None,
         InvestUnitID: str = None,
+        InstrumentID: str = None,
     ):
         """
         查询预埋撤单
         :param BrokerID: 经纪公司代码
         :param InvestorID: 投资者代码
-        :param InstrumentID: 合约代码
+        :param reserve1: 保留的无效字段
         :param ExchangeID: 交易所代码
         :param InvestUnitID: 投资单元代码
+        :param InstrumentID: 合约代码
         """
         super().__init__()
         ...
@@ -7427,17 +7848,19 @@ class QryInvestorPositionCombineDetail(Struct):
         self,
         BrokerID: str = None,
         InvestorID: str = None,
-        CombInstrumentID: str = None,
+        reserve1: str = None,
         ExchangeID: str = None,
         InvestUnitID: str = None,
+        CombInstrumentID: str = None,
     ):
         """
         查询组合持仓明细
         :param BrokerID: 经纪公司代码
         :param InvestorID: 投资者代码
-        :param CombInstrumentID: 组合持仓合约编码
+        :param reserve1: 保留的无效字段
         :param ExchangeID: 交易所代码
         :param InvestUnitID: 投资单元代码
+        :param CombInstrumentID: 组合持仓合约编码
         """
         super().__init__()
         ...
@@ -7478,17 +7901,21 @@ class UserIP(Struct):
         self,
         BrokerID: str = None,
         UserID: str = None,
+        reserve1: str = None,
+        reserve2: str = None,
+        MacAddress: str = None,
         IPAddress: str = None,
         IPMask: str = None,
-        MacAddress: str = None,
     ):
         """
         用户IP
         :param BrokerID: 经纪公司代码
         :param UserID: 用户代码
+        :param reserve1: 保留的无效字段
+        :param reserve2: 保留的无效字段
+        :param MacAddress: Mac地址
         :param IPAddress: IP地址
         :param IPMask: IP地址掩码
-        :param MacAddress: Mac地址
         """
         super().__init__()
         ...
@@ -7585,7 +8012,7 @@ class ErrOrder(Struct):
         self,
         BrokerID: str = None,
         InvestorID: str = None,
-        InstrumentID: str = None,
+        reserve1: str = None,
         OrderRef: str = None,
         UserID: str = None,
         OrderPriceType: str = None,
@@ -7613,14 +8040,16 @@ class ErrOrder(Struct):
         AccountID: str = None,
         CurrencyID: str = None,
         ClientID: str = None,
-        IPAddress: str = None,
+        reserve2: str = None,
         MacAddress: str = None,
+        InstrumentID: str = None,
+        IPAddress: str = None,
     ):
         """
         错误报单
         :param BrokerID: 经纪公司代码
         :param InvestorID: 投资者代码
-        :param InstrumentID: 合约代码
+        :param reserve1: 保留的无效字段
         :param OrderRef: 报单引用
         :param UserID: 用户代码
         :param OrderPriceType: 报单价格条件
@@ -7648,8 +8077,10 @@ class ErrOrder(Struct):
         :param AccountID: 资金账号
         :param CurrencyID: 币种代码
         :param ClientID: 交易编码
-        :param IPAddress: IP地址
+        :param reserve2: 保留的无效字段
         :param MacAddress: Mac地址
+        :param InstrumentID: 合约代码
+        :param IPAddress: IP地址
         """
         super().__init__()
         ...
@@ -7660,7 +8091,7 @@ class ErrorConditionalOrder(Struct):
         self,
         BrokerID: str = None,
         InvestorID: str = None,
-        InstrumentID: str = None,
+        reserve1: str = None,
         OrderRef: str = None,
         UserID: str = None,
         OrderPriceType: str = None,
@@ -7683,7 +8114,7 @@ class ErrorConditionalOrder(Struct):
         ExchangeID: str = None,
         ParticipantID: str = None,
         ClientID: str = None,
-        ExchangeInstID: str = None,
+        reserve2: str = None,
         TraderID: str = None,
         InstallID: int = None,
         OrderSubmitStatus: str = None,
@@ -7721,14 +8152,17 @@ class ErrorConditionalOrder(Struct):
         InvestUnitID: str = None,
         AccountID: str = None,
         CurrencyID: str = None,
-        IPAddress: str = None,
+        reserve3: str = None,
         MacAddress: str = None,
+        InstrumentID: str = None,
+        ExchangeInstID: str = None,
+        IPAddress: str = None,
     ):
         """
         查询错误报单操作
         :param BrokerID: 经纪公司代码
         :param InvestorID: 投资者代码
-        :param InstrumentID: 合约代码
+        :param reserve1: 保留的无效字段
         :param OrderRef: 报单引用
         :param UserID: 用户代码
         :param OrderPriceType: 报单价格条件
@@ -7751,7 +8185,7 @@ class ErrorConditionalOrder(Struct):
         :param ExchangeID: 交易所代码
         :param ParticipantID: 会员代码
         :param ClientID: 客户代码
-        :param ExchangeInstID: 合约在交易所的代码
+        :param reserve2: 保留的无效字段
         :param TraderID: 交易所交易员代码
         :param InstallID: 安装编号
         :param OrderSubmitStatus: 报单提交状态
@@ -7789,8 +8223,11 @@ class ErrorConditionalOrder(Struct):
         :param InvestUnitID: 投资单元代码
         :param AccountID: 资金账号
         :param CurrencyID: 币种代码
-        :param IPAddress: IP地址
+        :param reserve3: 保留的无效字段
         :param MacAddress: Mac地址
+        :param InstrumentID: 合约代码
+        :param ExchangeInstID: 合约在交易所的代码
+        :param IPAddress: IP地址
         """
         super().__init__()
         ...
@@ -7838,13 +8275,15 @@ class ErrOrderAction(Struct):
         OrderActionStatus: str = None,
         UserID: str = None,
         StatusMsg: str = None,
-        InstrumentID: str = None,
+        reserve1: str = None,
         BranchID: str = None,
         InvestUnitID: str = None,
-        IPAddress: str = None,
+        reserve2: str = None,
         MacAddress: str = None,
         ErrorID: int = None,
         ErrorMsg: str = None,
+        InstrumentID: str = None,
+        IPAddress: str = None,
     ):
         """
         错误报单操作
@@ -7872,13 +8311,15 @@ class ErrOrderAction(Struct):
         :param OrderActionStatus: 报单操作状态
         :param UserID: 用户代码
         :param StatusMsg: 状态信息
-        :param InstrumentID: 合约代码
+        :param reserve1: 保留的无效字段
         :param BranchID: 营业部编号
         :param InvestUnitID: 投资单元代码
-        :param IPAddress: IP地址
+        :param reserve2: 保留的无效字段
         :param MacAddress: Mac地址
         :param ErrorID: 错误代码
         :param ErrorMsg: 错误信息
+        :param InstrumentID: 合约代码
+        :param IPAddress: IP地址
         """
         super().__init__()
         ...
@@ -7914,12 +8355,12 @@ class ExchangeSequence(Struct):
         ...
 
 
-class QueryMaxOrderVolumeWithPrice(Struct):
+class QryMaxOrderVolumeWithPrice(Struct):
     def __init__(
         self,
         BrokerID: str = None,
         InvestorID: str = None,
-        InstrumentID: str = None,
+        reserve1: str = None,
         Direction: str = None,
         OffsetFlag: str = None,
         HedgeFlag: str = None,
@@ -7927,12 +8368,13 @@ class QueryMaxOrderVolumeWithPrice(Struct):
         Price: float = None,
         ExchangeID: str = None,
         InvestUnitID: str = None,
+        InstrumentID: str = None,
     ):
         """
         根据价格查询最大报单数量
         :param BrokerID: 经纪公司代码
         :param InvestorID: 投资者代码
-        :param InstrumentID: 合约代码
+        :param reserve1: 保留的无效字段
         :param Direction: 买卖方向
         :param OffsetFlag: 开平标志
         :param HedgeFlag: 投机套保标志
@@ -7940,6 +8382,7 @@ class QueryMaxOrderVolumeWithPrice(Struct):
         :param Price: 报单价格
         :param ExchangeID: 交易所代码
         :param InvestUnitID: 投资单元代码
+        :param InstrumentID: 合约代码
         """
         super().__init__()
         ...
@@ -7996,12 +8439,14 @@ class QryBrokerTradingAlgos(Struct):
         self,
         BrokerID: str = None,
         ExchangeID: str = None,
+        reserve1: str = None,
         InstrumentID: str = None,
     ):
         """
         查询经纪公司交易算法
         :param BrokerID: 经纪公司代码
         :param ExchangeID: 交易所代码
+        :param reserve1: 保留的无效字段
         :param InstrumentID: 合约代码
         """
         super().__init__()
@@ -8013,19 +8458,21 @@ class BrokerTradingAlgos(Struct):
         self,
         BrokerID: str = None,
         ExchangeID: str = None,
-        InstrumentID: str = None,
+        reserve1: str = None,
         HandlePositionAlgoID: str = None,
         FindMarginRateAlgoID: str = None,
         HandleTradingAccountAlgoID: str = None,
+        InstrumentID: str = None,
     ):
         """
         经纪公司交易算法
         :param BrokerID: 经纪公司代码
         :param ExchangeID: 交易所代码
-        :param InstrumentID: 合约代码
+        :param reserve1: 保留的无效字段
         :param HandlePositionAlgoID: 持仓处理算法编号
         :param FindMarginRateAlgoID: 寻找保证金率算法编号
         :param HandleTradingAccountAlgoID: 资金处理算法编号
+        :param InstrumentID: 合约代码
         """
         super().__init__()
         ...
@@ -8276,11 +8723,12 @@ class EWarrantOffset(Struct):
         BrokerID: str = None,
         InvestorID: str = None,
         ExchangeID: str = None,
-        InstrumentID: str = None,
+        reserve1: str = None,
         Direction: str = None,
         HedgeFlag: str = None,
         Volume: int = None,
         InvestUnitID: str = None,
+        InstrumentID: str = None,
     ):
         """
         仓单折抵信息
@@ -8288,11 +8736,12 @@ class EWarrantOffset(Struct):
         :param BrokerID: 经纪公司代码
         :param InvestorID: 投资者代码
         :param ExchangeID: 交易所代码
-        :param InstrumentID: 合约代码
+        :param reserve1: 保留的无效字段
         :param Direction: 买卖方向
         :param HedgeFlag: 投机套保标志
         :param Volume: 数量
         :param InvestUnitID: 投资单元代码
+        :param InstrumentID: 合约代码
         """
         super().__init__()
         ...
@@ -8304,16 +8753,18 @@ class QryEWarrantOffset(Struct):
         BrokerID: str = None,
         InvestorID: str = None,
         ExchangeID: str = None,
-        InstrumentID: str = None,
+        reserve1: str = None,
         InvestUnitID: str = None,
+        InstrumentID: str = None,
     ):
         """
         查询仓单折抵信息
         :param BrokerID: 经纪公司代码
         :param InvestorID: 投资者代码
         :param ExchangeID: 交易所代码
-        :param InstrumentID: 合约代码
+        :param reserve1: 保留的无效字段
         :param InvestUnitID: 投资单元代码
+        :param InstrumentID: 合约代码
         """
         super().__init__()
         ...
@@ -8324,19 +8775,21 @@ class QryInvestorProductGroupMargin(Struct):
         self,
         BrokerID: str = None,
         InvestorID: str = None,
-        ProductGroupID: str = None,
+        reserve1: str = None,
         HedgeFlag: str = None,
         ExchangeID: str = None,
         InvestUnitID: str = None,
+        ProductGroupID: str = None,
     ):
         """
         查询投资者品种跨品种保证金
         :param BrokerID: 经纪公司代码
         :param InvestorID: 投资者代码
-        :param ProductGroupID: 品种跨品种标示
+        :param reserve1: 保留的无效字段
         :param HedgeFlag: 投机套保标志
         :param ExchangeID: 交易所代码
         :param InvestUnitID: 投资单元代码
+        :param ProductGroupID: 品种跨品种标示
         """
         super().__init__()
         ...
@@ -8345,7 +8798,7 @@ class QryInvestorProductGroupMargin(Struct):
 class InvestorProductGroupMargin(Struct):
     def __init__(
         self,
-        ProductGroupID: str = None,
+        reserve1: str = None,
         BrokerID: str = None,
         InvestorID: str = None,
         TradingDay: str = None,
@@ -8374,10 +8827,11 @@ class InvestorProductGroupMargin(Struct):
         HedgeFlag: str = None,
         ExchangeID: str = None,
         InvestUnitID: str = None,
+        ProductGroupID: str = None,
     ):
         """
         投资者品种跨品种保证金
-        :param ProductGroupID: 品种跨品种标示
+        :param reserve1: 保留的无效字段
         :param BrokerID: 经纪公司代码
         :param InvestorID: 投资者代码
         :param TradingDay: 交易日
@@ -8406,6 +8860,7 @@ class InvestorProductGroupMargin(Struct):
         :param HedgeFlag: 投机套保标志
         :param ExchangeID: 交易所代码
         :param InvestUnitID: 投资单元代码
+        :param ProductGroupID: 品种跨品种标示
         """
         super().__init__()
         ...
@@ -8452,13 +8907,15 @@ class CFMMCTradingAccountToken(Struct):
 class QryProductGroup(Struct):
     def __init__(
         self,
-        ProductID: str = None,
+        reserve1: str = None,
         ExchangeID: str = None,
+        ProductID: str = None,
     ):
         """
         查询产品组
-        :param ProductID: 产品代码
+        :param reserve1: 保留的无效字段
         :param ExchangeID: 交易所代码
+        :param ProductID: 产品代码
         """
         super().__init__()
         ...
@@ -8467,14 +8924,18 @@ class QryProductGroup(Struct):
 class ProductGroup(Struct):
     def __init__(
         self,
-        ProductID: str = None,
+        reserve1: str = None,
         ExchangeID: str = None,
+        reserve2: str = None,
+        ProductID: str = None,
         ProductGroupID: str = None,
     ):
         """
         投资者品种跨品种保证金产品组
-        :param ProductID: 产品代码
+        :param reserve1: 保留的无效字段
         :param ExchangeID: 交易所代码
+        :param reserve2: 保留的无效字段
+        :param ProductID: 产品代码
         :param ProductGroupID: 产品组代码
         """
         super().__init__()
@@ -8532,6 +8993,65 @@ class QryBulletin(Struct):
         :param SequenceNo: 序列号
         :param NewsType: 公告类型
         :param NewsUrgency: 紧急程度
+        """
+        super().__init__()
+        ...
+
+
+class MulticastInstrument(Struct):
+    def __init__(
+        self,
+        TopicID: int = None,
+        reserve1: str = None,
+        InstrumentNo: int = None,
+        CodePrice: float = None,
+        VolumeMultiple: int = None,
+        PriceTick: float = None,
+        InstrumentID: str = None,
+    ):
+        """
+        MulticastInstrument
+        :param TopicID: 主题号
+        :param reserve1: 保留的无效字段
+        :param InstrumentNo: 合约编号
+        :param CodePrice: 基准价
+        :param VolumeMultiple: 合约数量乘数
+        :param PriceTick: 最小变动价位
+        :param InstrumentID: 合约代码
+        """
+        super().__init__()
+        ...
+
+
+class QryMulticastInstrument(Struct):
+    def __init__(
+        self,
+        TopicID: int = None,
+        reserve1: str = None,
+        InstrumentID: str = None,
+    ):
+        """
+        QryMulticastInstrument
+        :param TopicID: 主题号
+        :param reserve1: 保留的无效字段
+        :param InstrumentID: 合约代码
+        """
+        super().__init__()
+        ...
+
+
+class AppIDAuthAssign(Struct):
+    def __init__(
+        self,
+        BrokerID: str = None,
+        AppID: str = None,
+        DRIdentityID: int = None,
+    ):
+        """
+        App客户端权限分配
+        :param BrokerID: 经纪公司代码
+        :param AppID: App代码
+        :param DRIdentityID: 交易中心代码
         """
         super().__init__()
         ...
@@ -10927,12 +11447,14 @@ class LoginForbiddenUser(Struct):
         self,
         BrokerID: str = None,
         UserID: str = None,
+        reserve1: str = None,
         IPAddress: str = None,
     ):
         """
         禁止登录用户
         :param BrokerID: 经纪公司代码
         :param UserID: 用户代码
+        :param reserve1: 保留的无效字段
         :param IPAddress: IP地址
         """
         super().__init__()
@@ -10949,23 +11471,6 @@ class QryLoginForbiddenUser(Struct):
         查询禁止登录用户
         :param BrokerID: 经纪公司代码
         :param UserID: 用户代码
-        """
-        super().__init__()
-        ...
-
-
-class MulticastGroupInfo(Struct):
-    def __init__(
-        self,
-        GroupIP: str = None,
-        GroupPort: int = None,
-        SourceIP: str = None,
-    ):
-        """
-        UDP组播组信息
-        :param GroupIP: 组播组IP地址
-        :param GroupPort: 组播组IP端口
-        :param SourceIP: 源地址
         """
         super().__init__()
         ...
@@ -10993,10 +11498,12 @@ class TradingAccountReserve(Struct):
 class QryLoginForbiddenIP(Struct):
     def __init__(
         self,
+        reserve1: str = None,
         IPAddress: str = None,
     ):
         """
         查询禁止登录IP
+        :param reserve1: 保留的无效字段
         :param IPAddress: IP地址
         """
         super().__init__()
@@ -11006,10 +11513,12 @@ class QryLoginForbiddenIP(Struct):
 class QryIPList(Struct):
     def __init__(
         self,
+        reserve1: str = None,
         IPAddress: str = None,
     ):
         """
         查询IP列表
+        :param reserve1: 保留的无效字段
         :param IPAddress: IP地址
         """
         super().__init__()
@@ -11304,33 +11813,6 @@ class QrySecAgentTradeInfo(Struct):
         ...
 
 
-class UserSystemInfo(Struct):
-    def __init__(
-        self,
-        BrokerID: str = None,
-        UserID: str = None,
-        ClientSystemInfoLen: int = None,
-        ClientSystemInfo: str = None,
-        ClientPublicIP: str = None,
-        ClientIPPort: int = None,
-        ClientLoginTime: str = None,
-        ClientAppID: str = None,
-    ):
-        """
-        用户系统信息
-        :param BrokerID: 经纪公司代码
-        :param UserID: 用户代码
-        :param ClientSystemInfoLen: 用户端系统内部信息长度
-        :param ClientSystemInfo: 用户端系统内部信息
-        :param ClientPublicIP: 用户公网IP
-        :param ClientIPPort: 终端IP端口
-        :param ClientLoginTime: 登录成功时间
-        :param ClientAppID: App代码
-        """
-        super().__init__()
-        ...
-
-
 class ReqUserAuthMethod(Struct):
     def __init__(
         self,
@@ -11438,10 +11920,11 @@ class ReqUserLoginWithCaptcha(Struct):
         InterfaceProductInfo: str = None,
         ProtocolInfo: str = None,
         MacAddress: str = None,
-        ClientIPAddress: str = None,
+        reserve1: str = None,
         LoginRemark: str = None,
         Captcha: str = None,
         ClientIPPort: int = None,
+        ClientIPAddress: str = None,
     ):
         """
         用户发出带图形验证码的登录请求请求
@@ -11453,10 +11936,11 @@ class ReqUserLoginWithCaptcha(Struct):
         :param InterfaceProductInfo: 接口端产品信息
         :param ProtocolInfo: 协议信息
         :param MacAddress: Mac地址
-        :param ClientIPAddress: 终端IP地址
+        :param reserve1: 保留的无效字段
         :param LoginRemark: 登录备注
         :param Captcha: 图形验证码的文字内容
         :param ClientIPPort: 终端IP端口
+        :param ClientIPAddress: 终端IP地址
         """
         super().__init__()
         ...
@@ -11473,10 +11957,11 @@ class ReqUserLoginWithText(Struct):
         InterfaceProductInfo: str = None,
         ProtocolInfo: str = None,
         MacAddress: str = None,
-        ClientIPAddress: str = None,
+        reserve1: str = None,
         LoginRemark: str = None,
         Text: str = None,
         ClientIPPort: int = None,
+        ClientIPAddress: str = None,
     ):
         """
         用户发出带短信验证码的登录请求请求
@@ -11488,10 +11973,11 @@ class ReqUserLoginWithText(Struct):
         :param InterfaceProductInfo: 接口端产品信息
         :param ProtocolInfo: 协议信息
         :param MacAddress: Mac地址
-        :param ClientIPAddress: 终端IP地址
+        :param reserve1: 保留的无效字段
         :param LoginRemark: 登录备注
         :param Text: 短信验证码文字内容
         :param ClientIPPort: 终端IP端口
+        :param ClientIPAddress: 终端IP地址
         """
         super().__init__()
         ...
@@ -11508,10 +11994,11 @@ class ReqUserLoginWithOTP(Struct):
         InterfaceProductInfo: str = None,
         ProtocolInfo: str = None,
         MacAddress: str = None,
-        ClientIPAddress: str = None,
+        reserve1: str = None,
         LoginRemark: str = None,
         OTPPassword: str = None,
         ClientIPPort: int = None,
+        ClientIPAddress: str = None,
     ):
         """
         用户发出带动态验证码的登录请求请求
@@ -11523,10 +12010,11 @@ class ReqUserLoginWithOTP(Struct):
         :param InterfaceProductInfo: 接口端产品信息
         :param ProtocolInfo: 协议信息
         :param MacAddress: Mac地址
-        :param ClientIPAddress: 终端IP地址
+        :param reserve1: 保留的无效字段
         :param LoginRemark: 登录备注
         :param OTPPassword: OTP密码
         :param ClientIPPort: 终端IP端口
+        :param ClientIPAddress: 终端IP地址
         """
         super().__init__()
         ...
@@ -11604,6 +12092,1532 @@ class QueryFreq(Struct):
         """
         查询频率，每秒查询比数
         :param QueryFreq: 查询频率
+        """
+        super().__init__()
+        ...
+
+
+class AuthForbiddenIP(Struct):
+    def __init__(
+        self,
+        IPAddress: str = None,
+    ):
+        """
+        禁止认证IP
+        :param IPAddress: IP地址
+        """
+        super().__init__()
+        ...
+
+
+class QryAuthForbiddenIP(Struct):
+    def __init__(
+        self,
+        IPAddress: str = None,
+    ):
+        """
+        查询禁止认证IP
+        :param IPAddress: IP地址
+        """
+        super().__init__()
+        ...
+
+
+class SyncDelaySwapFrozen(Struct):
+    def __init__(
+        self,
+        DelaySwapSeqNo: str = None,
+        BrokerID: str = None,
+        InvestorID: str = None,
+        FromCurrencyID: str = None,
+        FromRemainSwap: float = None,
+        IsManualSwap: int = None,
+    ):
+        """
+        换汇可提冻结
+        :param DelaySwapSeqNo: 换汇流水号
+        :param BrokerID: 经纪公司代码
+        :param InvestorID: 投资者代码
+        :param FromCurrencyID: 源币种
+        :param FromRemainSwap: 源剩余换汇额度(可提冻结)
+        :param IsManualSwap: 是否手工换汇
+        """
+        super().__init__()
+        ...
+
+
+class UserSystemInfo(Struct):
+    def __init__(
+        self,
+        BrokerID: str = None,
+        UserID: str = None,
+        ClientSystemInfoLen: int = None,
+        ClientSystemInfo: str = None,
+        reserve1: str = None,
+        ClientIPPort: int = None,
+        ClientLoginTime: str = None,
+        ClientAppID: str = None,
+        ClientPublicIP: str = None,
+        ClientLoginRemark: str = None,
+    ):
+        """
+        用户系统信息
+        :param BrokerID: 经纪公司代码
+        :param UserID: 用户代码
+        :param ClientSystemInfoLen: 用户端系统内部信息长度
+        :param ClientSystemInfo: 用户端系统内部信息
+        :param reserve1: 保留的无效字段
+        :param ClientIPPort: 终端IP端口
+        :param ClientLoginTime: 登录成功时间
+        :param ClientAppID: App代码
+        :param ClientPublicIP: 用户公网IP
+        :param ClientLoginRemark: 客户登录备注2
+        """
+        super().__init__()
+        ...
+
+
+class AuthUserID(Struct):
+    def __init__(
+        self,
+        BrokerID: str = None,
+        AppID: str = None,
+        UserID: str = None,
+        AuthType: str = None,
+    ):
+        """
+        终端用户绑定信息
+        :param BrokerID: 经纪公司代码
+        :param AppID: App代码
+        :param UserID: 用户代码
+        :param AuthType: 校验类型
+        """
+        super().__init__()
+        ...
+
+
+class AuthIP(Struct):
+    def __init__(
+        self,
+        BrokerID: str = None,
+        AppID: str = None,
+        IPAddress: str = None,
+    ):
+        """
+        用户IP绑定信息
+        :param BrokerID: 经纪公司代码
+        :param AppID: App代码
+        :param IPAddress: 用户代码
+        """
+        super().__init__()
+        ...
+
+
+class QryClassifiedInstrument(Struct):
+    def __init__(
+        self,
+        InstrumentID: str = None,
+        ExchangeID: str = None,
+        ExchangeInstID: str = None,
+        ProductID: str = None,
+        TradingType: str = None,
+        ClassType: str = None,
+    ):
+        """
+        查询分类合约
+        :param InstrumentID: 合约代码
+        :param ExchangeID: 交易所代码
+        :param ExchangeInstID: 合约在交易所的代码
+        :param ProductID: 产品代码
+        :param TradingType: 合约交易状态
+        :param ClassType: 合约分类类型
+        """
+        super().__init__()
+        ...
+
+
+class QryCombPromotionParam(Struct):
+    def __init__(
+        self,
+        ExchangeID: str = None,
+        InstrumentID: str = None,
+    ):
+        """
+        查询组合优惠比例
+        :param ExchangeID: 交易所代码
+        :param InstrumentID: 合约代码
+        """
+        super().__init__()
+        ...
+
+
+class CombPromotionParam(Struct):
+    def __init__(
+        self,
+        ExchangeID: str = None,
+        InstrumentID: str = None,
+        CombHedgeFlag: str = None,
+        Xparameter: float = None,
+    ):
+        """
+        组合优惠比例
+        :param ExchangeID: 交易所代码
+        :param InstrumentID: 合约代码
+        :param CombHedgeFlag: 投机套保标志
+        :param Xparameter: 期权组合保证金比例
+        """
+        super().__init__()
+        ...
+
+
+class ReqUserLoginSC(Struct):
+    def __init__(
+        self,
+        TradingDay: str = None,
+        BrokerID: str = None,
+        UserID: str = None,
+        Password: str = None,
+        UserProductInfo: str = None,
+        InterfaceProductInfo: str = None,
+        ProtocolInfo: str = None,
+        MacAddress: str = None,
+        OneTimePassword: str = None,
+        ClientIPAddress: str = None,
+        LoginRemark: str = None,
+        ClientIPPort: int = None,
+        AuthCode: str = None,
+        AppID: str = None,
+    ):
+        """
+        国密用户登录请求
+        :param TradingDay: 交易日
+        :param BrokerID: 经纪公司代码
+        :param UserID: 用户代码
+        :param Password: 密码
+        :param UserProductInfo: 用户端产品信息
+        :param InterfaceProductInfo: 接口端产品信息
+        :param ProtocolInfo: 协议信息
+        :param MacAddress: Mac地址
+        :param OneTimePassword: 动态密码
+        :param ClientIPAddress: 终端IP地址
+        :param LoginRemark: 登录备注
+        :param ClientIPPort: 终端IP端口
+        :param AuthCode: 认证码
+        :param AppID: App代码
+        """
+        super().__init__()
+        ...
+
+
+class QryRiskSettleInvstPosition(Struct):
+    def __init__(
+        self,
+        BrokerID: str = None,
+        InvestorID: str = None,
+        InstrumentID: str = None,
+    ):
+        """
+        投资者风险结算持仓查询
+        :param BrokerID: 经纪公司代码
+        :param InvestorID: 投资者代码
+        :param InstrumentID: 合约代码
+        """
+        super().__init__()
+        ...
+
+
+class QryRiskSettleProductStatus(Struct):
+    def __init__(
+        self,
+        ProductID: str = None,
+    ):
+        """
+        风险结算产品查询
+        :param ProductID: 产品代码
+        """
+        super().__init__()
+        ...
+
+
+class RiskSettleInvstPosition(Struct):
+    def __init__(
+        self,
+        InstrumentID: str = None,
+        BrokerID: str = None,
+        InvestorID: str = None,
+        PosiDirection: str = None,
+        HedgeFlag: str = None,
+        PositionDate: str = None,
+        YdPosition: int = None,
+        Position: int = None,
+        LongFrozen: int = None,
+        ShortFrozen: int = None,
+        LongFrozenAmount: float = None,
+        ShortFrozenAmount: float = None,
+        OpenVolume: int = None,
+        CloseVolume: int = None,
+        OpenAmount: float = None,
+        CloseAmount: float = None,
+        PositionCost: float = None,
+        PreMargin: float = None,
+        UseMargin: float = None,
+        FrozenMargin: float = None,
+        FrozenCash: float = None,
+        FrozenCommission: float = None,
+        CashIn: float = None,
+        Commission: float = None,
+        CloseProfit: float = None,
+        PositionProfit: float = None,
+        PreSettlementPrice: float = None,
+        SettlementPrice: float = None,
+        TradingDay: str = None,
+        SettlementID: int = None,
+        OpenCost: float = None,
+        ExchangeMargin: float = None,
+        CombPosition: int = None,
+        CombLongFrozen: int = None,
+        CombShortFrozen: int = None,
+        CloseProfitByDate: float = None,
+        CloseProfitByTrade: float = None,
+        TodayPosition: int = None,
+        MarginRateByMoney: float = None,
+        MarginRateByVolume: float = None,
+        StrikeFrozen: int = None,
+        StrikeFrozenAmount: float = None,
+        AbandonFrozen: int = None,
+        ExchangeID: str = None,
+        YdStrikeFrozen: int = None,
+        InvestUnitID: str = None,
+        PositionCostOffset: float = None,
+        TasPosition: int = None,
+        TasPositionCost: float = None,
+    ):
+        """
+        投资者风险结算持仓
+        :param InstrumentID: 合约代码
+        :param BrokerID: 经纪公司代码
+        :param InvestorID: 投资者代码
+        :param PosiDirection: 持仓多空方向
+        :param HedgeFlag: 投机套保标志
+        :param PositionDate: 持仓日期
+        :param YdPosition: 上日持仓
+        :param Position: 今日持仓
+        :param LongFrozen: 多头冻结
+        :param ShortFrozen: 空头冻结
+        :param LongFrozenAmount: 开仓冻结金额
+        :param ShortFrozenAmount: 开仓冻结金额
+        :param OpenVolume: 开仓量
+        :param CloseVolume: 平仓量
+        :param OpenAmount: 开仓金额
+        :param CloseAmount: 平仓金额
+        :param PositionCost: 持仓成本
+        :param PreMargin: 上次占用的保证金
+        :param UseMargin: 占用的保证金
+        :param FrozenMargin: 冻结的保证金
+        :param FrozenCash: 冻结的资金
+        :param FrozenCommission: 冻结的手续费
+        :param CashIn: 资金差额
+        :param Commission: 手续费
+        :param CloseProfit: 平仓盈亏
+        :param PositionProfit: 持仓盈亏
+        :param PreSettlementPrice: 上次结算价
+        :param SettlementPrice: 本次结算价
+        :param TradingDay: 交易日
+        :param SettlementID: 结算编号
+        :param OpenCost: 开仓成本
+        :param ExchangeMargin: 交易所保证金
+        :param CombPosition: 组合成交形成的持仓
+        :param CombLongFrozen: 组合多头冻结
+        :param CombShortFrozen: 组合空头冻结
+        :param CloseProfitByDate: 逐日盯市平仓盈亏
+        :param CloseProfitByTrade: 逐笔对冲平仓盈亏
+        :param TodayPosition: 今日持仓
+        :param MarginRateByMoney: 保证金率
+        :param MarginRateByVolume: 保证金率(按手数)
+        :param StrikeFrozen: 执行冻结
+        :param StrikeFrozenAmount: 执行冻结金额
+        :param AbandonFrozen: 放弃执行冻结
+        :param ExchangeID: 交易所代码
+        :param YdStrikeFrozen: 执行冻结的昨仓
+        :param InvestUnitID: 投资单元代码
+        :param PositionCostOffset: 持仓成本差值
+        :param TasPosition: tas持仓手数
+        :param TasPositionCost: tas持仓成本
+        """
+        super().__init__()
+        ...
+
+
+class RiskSettleProductStatus(Struct):
+    def __init__(
+        self,
+        ExchangeID: str = None,
+        ProductID: str = None,
+        ProductStatus: str = None,
+    ):
+        """
+        风险品种
+        :param ExchangeID: 交易所代码
+        :param ProductID: 产品编号
+        :param ProductStatus: 产品结算状态
+        """
+        super().__init__()
+        ...
+
+
+class SyncDeltaInfo(Struct):
+    def __init__(
+        self,
+        SyncDeltaSequenceNo: int = None,
+        SyncDeltaStatus: str = None,
+        SyncDescription: str = None,
+        IsOnlyTrdDelta: int = None,
+    ):
+        """
+        风险结算追平信息
+        :param SyncDeltaSequenceNo: 追平序号
+        :param SyncDeltaStatus: 追平状态
+        :param SyncDescription: 追平描述
+        :param IsOnlyTrdDelta: 是否只有资金追平
+        """
+        super().__init__()
+        ...
+
+
+class SyncDeltaProductStatus(Struct):
+    def __init__(
+        self,
+        SyncDeltaSequenceNo: int = None,
+        ExchangeID: str = None,
+        ProductID: str = None,
+        ProductStatus: str = None,
+    ):
+        """
+        风险结算追平产品信息
+        :param SyncDeltaSequenceNo: 追平序号
+        :param ExchangeID: 交易所代码
+        :param ProductID: 产品代码
+        :param ProductStatus: 是否允许交易
+        """
+        super().__init__()
+        ...
+
+
+class SyncDeltaInvstPosDtl(Struct):
+    def __init__(
+        self,
+        InstrumentID: str = None,
+        BrokerID: str = None,
+        InvestorID: str = None,
+        HedgeFlag: str = None,
+        Direction: str = None,
+        OpenDate: str = None,
+        TradeID: str = None,
+        Volume: int = None,
+        OpenPrice: float = None,
+        TradingDay: str = None,
+        SettlementID: int = None,
+        TradeType: str = None,
+        CombInstrumentID: str = None,
+        ExchangeID: str = None,
+        CloseProfitByDate: float = None,
+        CloseProfitByTrade: float = None,
+        PositionProfitByDate: float = None,
+        PositionProfitByTrade: float = None,
+        Margin: float = None,
+        ExchMargin: float = None,
+        MarginRateByMoney: float = None,
+        MarginRateByVolume: float = None,
+        LastSettlementPrice: float = None,
+        SettlementPrice: float = None,
+        CloseVolume: int = None,
+        CloseAmount: float = None,
+        TimeFirstVolume: int = None,
+        SpecPosiType: str = None,
+        ActionDirection: str = None,
+        SyncDeltaSequenceNo: int = None,
+    ):
+        """
+        风险结算追平持仓明细
+        :param InstrumentID: 合约代码
+        :param BrokerID: 经纪公司代码
+        :param InvestorID: 投资者代码
+        :param HedgeFlag: 投机套保标志
+        :param Direction: 买卖
+        :param OpenDate: 开仓日期
+        :param TradeID: 成交编号
+        :param Volume: 数量
+        :param OpenPrice: 开仓价
+        :param TradingDay: 交易日
+        :param SettlementID: 结算编号
+        :param TradeType: 成交类型
+        :param CombInstrumentID: 组合合约代码
+        :param ExchangeID: 交易所代码
+        :param CloseProfitByDate: 逐日盯市平仓盈亏
+        :param CloseProfitByTrade: 逐笔对冲平仓盈亏
+        :param PositionProfitByDate: 逐日盯市持仓盈亏
+        :param PositionProfitByTrade: 逐笔对冲持仓盈亏
+        :param Margin: 投资者保证金
+        :param ExchMargin: 交易所保证金
+        :param MarginRateByMoney: 保证金率
+        :param MarginRateByVolume: 保证金率(按手数)
+        :param LastSettlementPrice: 昨结算价
+        :param SettlementPrice: 结算价
+        :param CloseVolume: 平仓量
+        :param CloseAmount: 平仓金额
+        :param TimeFirstVolume: 先开先平剩余数量
+        :param SpecPosiType: 特殊持仓标志
+        :param ActionDirection: 操作标志
+        :param SyncDeltaSequenceNo: 追平序号
+        """
+        super().__init__()
+        ...
+
+
+class SyncDeltaInvstPosCombDtl(Struct):
+    def __init__(
+        self,
+        TradingDay: str = None,
+        OpenDate: str = None,
+        ExchangeID: str = None,
+        SettlementID: int = None,
+        BrokerID: str = None,
+        InvestorID: str = None,
+        ComTradeID: str = None,
+        TradeID: str = None,
+        InstrumentID: str = None,
+        HedgeFlag: str = None,
+        Direction: str = None,
+        TotalAmt: int = None,
+        Margin: float = None,
+        ExchMargin: float = None,
+        MarginRateByMoney: float = None,
+        MarginRateByVolume: float = None,
+        LegID: int = None,
+        LegMultiple: int = None,
+        TradeGroupID: int = None,
+        ActionDirection: str = None,
+        SyncDeltaSequenceNo: int = None,
+    ):
+        """
+        风险结算追平组合持仓明细
+        :param TradingDay: 交易日
+        :param OpenDate: 开仓日期
+        :param ExchangeID: 交易所代码
+        :param SettlementID: 结算编号
+        :param BrokerID: 经纪公司代码
+        :param InvestorID: 投资者代码
+        :param ComTradeID: 组合编号
+        :param TradeID: 撮合编号
+        :param InstrumentID: 合约代码
+        :param HedgeFlag: 投机套保标志
+        :param Direction: 买卖
+        :param TotalAmt: 持仓量
+        :param Margin: 投资者保证金
+        :param ExchMargin: 交易所保证金
+        :param MarginRateByMoney: 保证金率
+        :param MarginRateByVolume: 保证金率(按手数)
+        :param LegID: 单腿编号
+        :param LegMultiple: 单腿乘数
+        :param TradeGroupID: 成交组号
+        :param ActionDirection: 操作标志
+        :param SyncDeltaSequenceNo: 追平序号
+        """
+        super().__init__()
+        ...
+
+
+class SyncDeltaTradingAccount(Struct):
+    def __init__(
+        self,
+        BrokerID: str = None,
+        AccountID: str = None,
+        PreMortgage: float = None,
+        PreCredit: float = None,
+        PreDeposit: float = None,
+        PreBalance: float = None,
+        PreMargin: float = None,
+        InterestBase: float = None,
+        Interest: float = None,
+        Deposit: float = None,
+        Withdraw: float = None,
+        FrozenMargin: float = None,
+        FrozenCash: float = None,
+        FrozenCommission: float = None,
+        CurrMargin: float = None,
+        CashIn: float = None,
+        Commission: float = None,
+        CloseProfit: float = None,
+        PositionProfit: float = None,
+        Balance: float = None,
+        Available: float = None,
+        WithdrawQuota: float = None,
+        Reserve: float = None,
+        TradingDay: str = None,
+        SettlementID: int = None,
+        Credit: float = None,
+        Mortgage: float = None,
+        ExchangeMargin: float = None,
+        DeliveryMargin: float = None,
+        ExchangeDeliveryMargin: float = None,
+        ReserveBalance: float = None,
+        CurrencyID: str = None,
+        PreFundMortgageIn: float = None,
+        PreFundMortgageOut: float = None,
+        FundMortgageIn: float = None,
+        FundMortgageOut: float = None,
+        FundMortgageAvailable: float = None,
+        MortgageableFund: float = None,
+        SpecProductMargin: float = None,
+        SpecProductFrozenMargin: float = None,
+        SpecProductCommission: float = None,
+        SpecProductFrozenCommission: float = None,
+        SpecProductPositionProfit: float = None,
+        SpecProductCloseProfit: float = None,
+        SpecProductPositionProfitByAlg: float = None,
+        SpecProductExchangeMargin: float = None,
+        FrozenSwap: float = None,
+        RemainSwap: float = None,
+        SyncDeltaSequenceNo: int = None,
+    ):
+        """
+        风险结算追平资金
+        :param BrokerID: 经纪公司代码
+        :param AccountID: 投资者帐号
+        :param PreMortgage: 上次质押金额
+        :param PreCredit: 上次信用额度
+        :param PreDeposit: 上次存款额
+        :param PreBalance: 上次结算准备金
+        :param PreMargin: 上次占用的保证金
+        :param InterestBase: 利息基数
+        :param Interest: 利息收入
+        :param Deposit: 入金金额
+        :param Withdraw: 出金金额
+        :param FrozenMargin: 冻结的保证金
+        :param FrozenCash: 冻结的资金
+        :param FrozenCommission: 冻结的手续费
+        :param CurrMargin: 当前保证金总额
+        :param CashIn: 资金差额
+        :param Commission: 手续费
+        :param CloseProfit: 平仓盈亏
+        :param PositionProfit: 持仓盈亏
+        :param Balance: 期货结算准备金
+        :param Available: 可用资金
+        :param WithdrawQuota: 可取资金
+        :param Reserve: 基本准备金
+        :param TradingDay: 交易日
+        :param SettlementID: 结算编号
+        :param Credit: 信用额度
+        :param Mortgage: 质押金额
+        :param ExchangeMargin: 交易所保证金
+        :param DeliveryMargin: 投资者交割保证金
+        :param ExchangeDeliveryMargin: 交易所交割保证金
+        :param ReserveBalance: 保底期货结算准备金
+        :param CurrencyID: 币种代码
+        :param PreFundMortgageIn: 上次货币质入金额
+        :param PreFundMortgageOut: 上次货币质出金额
+        :param FundMortgageIn: 货币质入金额
+        :param FundMortgageOut: 货币质出金额
+        :param FundMortgageAvailable: 货币质押余额
+        :param MortgageableFund: 可质押货币金额
+        :param SpecProductMargin: 特殊产品占用保证金
+        :param SpecProductFrozenMargin: 特殊产品冻结保证金
+        :param SpecProductCommission: 特殊产品手续费
+        :param SpecProductFrozenCommission: 特殊产品冻结手续费
+        :param SpecProductPositionProfit: 特殊产品持仓盈亏
+        :param SpecProductCloseProfit: 特殊产品平仓盈亏
+        :param SpecProductPositionProfitByAlg: 根据持仓盈亏算法计算的特殊产品持仓盈亏
+        :param SpecProductExchangeMargin: 特殊产品交易所保证金
+        :param FrozenSwap: 延时换汇冻结金额
+        :param RemainSwap: 剩余换汇额度
+        :param SyncDeltaSequenceNo: 追平序号
+        """
+        super().__init__()
+        ...
+
+
+class SyncDeltaInitInvstMargin(Struct):
+    def __init__(
+        self,
+        BrokerID: str = None,
+        InvestorID: str = None,
+        LastRiskTotalInvstMargin: float = None,
+        LastRiskTotalExchMargin: float = None,
+        ThisSyncInvstMargin: float = None,
+        ThisSyncExchMargin: float = None,
+        RemainRiskInvstMargin: float = None,
+        RemainRiskExchMargin: float = None,
+        LastRiskSpecTotalInvstMargin: float = None,
+        LastRiskSpecTotalExchMargin: float = None,
+        ThisSyncSpecInvstMargin: float = None,
+        ThisSyncSpecExchMargin: float = None,
+        RemainRiskSpecInvstMargin: float = None,
+        RemainRiskSpecExchMargin: float = None,
+        SyncDeltaSequenceNo: int = None,
+    ):
+        """
+        投资者风险结算总保证金
+        :param BrokerID: 经纪公司代码
+        :param InvestorID: 投资者代码
+        :param LastRiskTotalInvstMargin: 追平前总风险保证金
+        :param LastRiskTotalExchMargin: 追平前交易所总风险保证金
+        :param ThisSyncInvstMargin: 本次追平品种总保证金
+        :param ThisSyncExchMargin: 本次追平品种交易所总保证金
+        :param RemainRiskInvstMargin: 本次未追平品种总保证金
+        :param RemainRiskExchMargin: 本次未追平品种交易所总保证金
+        :param LastRiskSpecTotalInvstMargin: 追平前总特殊产品风险保证金
+        :param LastRiskSpecTotalExchMargin: 追平前总特殊产品交易所风险保证金
+        :param ThisSyncSpecInvstMargin: 本次追平品种特殊产品总保证金
+        :param ThisSyncSpecExchMargin: 本次追平品种特殊产品交易所总保证金
+        :param RemainRiskSpecInvstMargin: 本次未追平品种特殊产品总保证金
+        :param RemainRiskSpecExchMargin: 本次未追平品种特殊产品交易所总保证金
+        :param SyncDeltaSequenceNo: 追平序号
+        """
+        super().__init__()
+        ...
+
+
+class SyncDeltaDceCombInstrument(Struct):
+    def __init__(
+        self,
+        CombInstrumentID: str = None,
+        ExchangeID: str = None,
+        ExchangeInstID: str = None,
+        TradeGroupID: int = None,
+        CombHedgeFlag: str = None,
+        CombinationType: str = None,
+        Direction: str = None,
+        ProductID: str = None,
+        Xparameter: float = None,
+        ActionDirection: str = None,
+        SyncDeltaSequenceNo: int = None,
+    ):
+        """
+        风险结算追平组合优先级
+        :param CombInstrumentID: 合约代码
+        :param ExchangeID: 交易所代码
+        :param ExchangeInstID: 合约在交易所的代码
+        :param TradeGroupID: 成交组号
+        :param CombHedgeFlag: 投机套保标志
+        :param CombinationType: 组合类型
+        :param Direction: 买卖
+        :param ProductID: 产品代码
+        :param Xparameter: 期权组合保证金比例
+        :param ActionDirection: 操作标志
+        :param SyncDeltaSequenceNo: 追平序号
+        """
+        super().__init__()
+        ...
+
+
+class SyncDeltaInvstMarginRate(Struct):
+    def __init__(
+        self,
+        InstrumentID: str = None,
+        InvestorRange: str = None,
+        BrokerID: str = None,
+        InvestorID: str = None,
+        HedgeFlag: str = None,
+        LongMarginRatioByMoney: float = None,
+        LongMarginRatioByVolume: float = None,
+        ShortMarginRatioByMoney: float = None,
+        ShortMarginRatioByVolume: float = None,
+        IsRelative: int = None,
+        ActionDirection: str = None,
+        SyncDeltaSequenceNo: int = None,
+    ):
+        """
+        风险结算追平投资者期货保证金率
+        :param InstrumentID: 合约代码
+        :param InvestorRange: 投资者范围
+        :param BrokerID: 经纪公司代码
+        :param InvestorID: 投资者代码
+        :param HedgeFlag: 投机套保标志
+        :param LongMarginRatioByMoney: 多头保证金率
+        :param LongMarginRatioByVolume: 多头保证金费
+        :param ShortMarginRatioByMoney: 空头保证金率
+        :param ShortMarginRatioByVolume: 空头保证金费
+        :param IsRelative: 是否相对交易所收取
+        :param ActionDirection: 操作标志
+        :param SyncDeltaSequenceNo: 追平序号
+        """
+        super().__init__()
+        ...
+
+
+class SyncDeltaExchMarginRate(Struct):
+    def __init__(
+        self,
+        BrokerID: str = None,
+        InstrumentID: str = None,
+        HedgeFlag: str = None,
+        LongMarginRatioByMoney: float = None,
+        LongMarginRatioByVolume: float = None,
+        ShortMarginRatioByMoney: float = None,
+        ShortMarginRatioByVolume: float = None,
+        ActionDirection: str = None,
+        SyncDeltaSequenceNo: int = None,
+    ):
+        """
+        风险结算追平交易所期货保证金率
+        :param BrokerID: 经纪公司代码
+        :param InstrumentID: 合约代码
+        :param HedgeFlag: 投机套保标志
+        :param LongMarginRatioByMoney: 多头保证金率
+        :param LongMarginRatioByVolume: 多头保证金费
+        :param ShortMarginRatioByMoney: 空头保证金率
+        :param ShortMarginRatioByVolume: 空头保证金费
+        :param ActionDirection: 操作标志
+        :param SyncDeltaSequenceNo: 追平序号
+        """
+        super().__init__()
+        ...
+
+
+class SyncDeltaOptExchMargin(Struct):
+    def __init__(
+        self,
+        BrokerID: str = None,
+        InstrumentID: str = None,
+        SShortMarginRatioByMoney: float = None,
+        SShortMarginRatioByVolume: float = None,
+        HShortMarginRatioByMoney: float = None,
+        HShortMarginRatioByVolume: float = None,
+        AShortMarginRatioByMoney: float = None,
+        AShortMarginRatioByVolume: float = None,
+        MShortMarginRatioByMoney: float = None,
+        MShortMarginRatioByVolume: float = None,
+        ActionDirection: str = None,
+        SyncDeltaSequenceNo: int = None,
+    ):
+        """
+        风险结算追平中金现货期权交易所保证金率
+        :param BrokerID: 经纪公司代码
+        :param InstrumentID: 合约代码
+        :param SShortMarginRatioByMoney: 投机空头保证金调整系数
+        :param SShortMarginRatioByVolume: 投机空头保证金调整系数
+        :param HShortMarginRatioByMoney: 保值空头保证金调整系数
+        :param HShortMarginRatioByVolume: 保值空头保证金调整系数
+        :param AShortMarginRatioByMoney: 套利空头保证金调整系数
+        :param AShortMarginRatioByVolume: 套利空头保证金调整系数
+        :param MShortMarginRatioByMoney: 做市商空头保证金调整系数
+        :param MShortMarginRatioByVolume: 做市商空头保证金调整系数
+        :param ActionDirection: 操作标志
+        :param SyncDeltaSequenceNo: 追平序号
+        """
+        super().__init__()
+        ...
+
+
+class SyncDeltaOptInvstMargin(Struct):
+    def __init__(
+        self,
+        InstrumentID: str = None,
+        InvestorRange: str = None,
+        BrokerID: str = None,
+        InvestorID: str = None,
+        SShortMarginRatioByMoney: float = None,
+        SShortMarginRatioByVolume: float = None,
+        HShortMarginRatioByMoney: float = None,
+        HShortMarginRatioByVolume: float = None,
+        AShortMarginRatioByMoney: float = None,
+        AShortMarginRatioByVolume: float = None,
+        IsRelative: int = None,
+        MShortMarginRatioByMoney: float = None,
+        MShortMarginRatioByVolume: float = None,
+        ActionDirection: str = None,
+        SyncDeltaSequenceNo: int = None,
+    ):
+        """
+        风险结算追平中金现货期权投资者保证金率
+        :param InstrumentID: 合约代码
+        :param InvestorRange: 投资者范围
+        :param BrokerID: 经纪公司代码
+        :param InvestorID: 投资者代码
+        :param SShortMarginRatioByMoney: 投机空头保证金调整系数
+        :param SShortMarginRatioByVolume: 投机空头保证金调整系数
+        :param HShortMarginRatioByMoney: 保值空头保证金调整系数
+        :param HShortMarginRatioByVolume: 保值空头保证金调整系数
+        :param AShortMarginRatioByMoney: 套利空头保证金调整系数
+        :param AShortMarginRatioByVolume: 套利空头保证金调整系数
+        :param IsRelative: 是否跟随交易所收取
+        :param MShortMarginRatioByMoney: 做市商空头保证金调整系数
+        :param MShortMarginRatioByVolume: 做市商空头保证金调整系数
+        :param ActionDirection: 操作标志
+        :param SyncDeltaSequenceNo: 追平序号
+        """
+        super().__init__()
+        ...
+
+
+class SyncDeltaInvstMarginRateUL(Struct):
+    def __init__(
+        self,
+        InstrumentID: str = None,
+        InvestorRange: str = None,
+        BrokerID: str = None,
+        InvestorID: str = None,
+        HedgeFlag: str = None,
+        LongMarginRatioByMoney: float = None,
+        LongMarginRatioByVolume: float = None,
+        ShortMarginRatioByMoney: float = None,
+        ShortMarginRatioByVolume: float = None,
+        ActionDirection: str = None,
+        SyncDeltaSequenceNo: int = None,
+    ):
+        """
+        风险结算追平期权标的调整保证金率
+        :param InstrumentID: 合约代码
+        :param InvestorRange: 投资者范围
+        :param BrokerID: 经纪公司代码
+        :param InvestorID: 投资者代码
+        :param HedgeFlag: 投机套保标志
+        :param LongMarginRatioByMoney: 多头保证金率
+        :param LongMarginRatioByVolume: 多头保证金费
+        :param ShortMarginRatioByMoney: 空头保证金率
+        :param ShortMarginRatioByVolume: 空头保证金费
+        :param ActionDirection: 操作标志
+        :param SyncDeltaSequenceNo: 追平序号
+        """
+        super().__init__()
+        ...
+
+
+class SyncDeltaOptInvstCommRate(Struct):
+    def __init__(
+        self,
+        InstrumentID: str = None,
+        InvestorRange: str = None,
+        BrokerID: str = None,
+        InvestorID: str = None,
+        OpenRatioByMoney: float = None,
+        OpenRatioByVolume: float = None,
+        CloseRatioByMoney: float = None,
+        CloseRatioByVolume: float = None,
+        CloseTodayRatioByMoney: float = None,
+        CloseTodayRatioByVolume: float = None,
+        StrikeRatioByMoney: float = None,
+        StrikeRatioByVolume: float = None,
+        ActionDirection: str = None,
+        SyncDeltaSequenceNo: int = None,
+    ):
+        """
+        风险结算追平期权手续费率
+        :param InstrumentID: 合约代码
+        :param InvestorRange: 投资者范围
+        :param BrokerID: 经纪公司代码
+        :param InvestorID: 投资者代码
+        :param OpenRatioByMoney: 开仓手续费率
+        :param OpenRatioByVolume: 开仓手续费
+        :param CloseRatioByMoney: 平仓手续费率
+        :param CloseRatioByVolume: 平仓手续费
+        :param CloseTodayRatioByMoney: 平今手续费率
+        :param CloseTodayRatioByVolume: 平今手续费
+        :param StrikeRatioByMoney: 执行手续费率
+        :param StrikeRatioByVolume: 执行手续费
+        :param ActionDirection: 操作标志
+        :param SyncDeltaSequenceNo: 追平序号
+        """
+        super().__init__()
+        ...
+
+
+class SyncDeltaInvstCommRate(Struct):
+    def __init__(
+        self,
+        InstrumentID: str = None,
+        InvestorRange: str = None,
+        BrokerID: str = None,
+        InvestorID: str = None,
+        OpenRatioByMoney: float = None,
+        OpenRatioByVolume: float = None,
+        CloseRatioByMoney: float = None,
+        CloseRatioByVolume: float = None,
+        CloseTodayRatioByMoney: float = None,
+        CloseTodayRatioByVolume: float = None,
+        ActionDirection: str = None,
+        SyncDeltaSequenceNo: int = None,
+    ):
+        """
+        风险结算追平期货手续费率
+        :param InstrumentID: 合约代码
+        :param InvestorRange: 投资者范围
+        :param BrokerID: 经纪公司代码
+        :param InvestorID: 投资者代码
+        :param OpenRatioByMoney: 开仓手续费率
+        :param OpenRatioByVolume: 开仓手续费
+        :param CloseRatioByMoney: 平仓手续费率
+        :param CloseRatioByVolume: 平仓手续费
+        :param CloseTodayRatioByMoney: 平今手续费率
+        :param CloseTodayRatioByVolume: 平今手续费
+        :param ActionDirection: 操作标志
+        :param SyncDeltaSequenceNo: 追平序号
+        """
+        super().__init__()
+        ...
+
+
+class SyncDeltaProductExchRate(Struct):
+    def __init__(
+        self,
+        ProductID: str = None,
+        QuoteCurrencyID: str = None,
+        ExchangeRate: float = None,
+        ActionDirection: str = None,
+        SyncDeltaSequenceNo: int = None,
+    ):
+        """
+        风险结算追平交叉汇率
+        :param ProductID: 产品代码
+        :param QuoteCurrencyID: 报价币种类型
+        :param ExchangeRate: 汇率
+        :param ActionDirection: 操作标志
+        :param SyncDeltaSequenceNo: 追平序号
+        """
+        super().__init__()
+        ...
+
+
+class SyncDeltaDepthMarketData(Struct):
+    def __init__(
+        self,
+        TradingDay: str = None,
+        InstrumentID: str = None,
+        ExchangeID: str = None,
+        ExchangeInstID: str = None,
+        LastPrice: float = None,
+        PreSettlementPrice: float = None,
+        PreClosePrice: float = None,
+        PreOpenInterest: float = None,
+        OpenPrice: float = None,
+        HighestPrice: float = None,
+        LowestPrice: float = None,
+        Volume: int = None,
+        Turnover: float = None,
+        OpenInterest: float = None,
+        ClosePrice: float = None,
+        SettlementPrice: float = None,
+        UpperLimitPrice: float = None,
+        LowerLimitPrice: float = None,
+        PreDelta: float = None,
+        CurrDelta: float = None,
+        UpdateTime: str = None,
+        UpdateMillisec: int = None,
+        BidPrice1: float = None,
+        BidVolume1: int = None,
+        AskPrice1: float = None,
+        AskVolume1: int = None,
+        BidPrice2: float = None,
+        BidVolume2: int = None,
+        AskPrice2: float = None,
+        AskVolume2: int = None,
+        BidPrice3: float = None,
+        BidVolume3: int = None,
+        AskPrice3: float = None,
+        AskVolume3: int = None,
+        BidPrice4: float = None,
+        BidVolume4: int = None,
+        AskPrice4: float = None,
+        AskVolume4: int = None,
+        BidPrice5: float = None,
+        BidVolume5: int = None,
+        AskPrice5: float = None,
+        AskVolume5: int = None,
+        AveragePrice: float = None,
+        ActionDay: str = None,
+        BandingUpperPrice: float = None,
+        BandingLowerPrice: float = None,
+        ActionDirection: str = None,
+        SyncDeltaSequenceNo: int = None,
+    ):
+        """
+        风险结算追平行情
+        :param TradingDay: 交易日
+        :param InstrumentID: 合约代码
+        :param ExchangeID: 交易所代码
+        :param ExchangeInstID: 合约在交易所的代码
+        :param LastPrice: 最新价
+        :param PreSettlementPrice: 上次结算价
+        :param PreClosePrice: 昨收盘
+        :param PreOpenInterest: 昨持仓量
+        :param OpenPrice: 今开盘
+        :param HighestPrice: 最高价
+        :param LowestPrice: 最低价
+        :param Volume: 数量
+        :param Turnover: 成交金额
+        :param OpenInterest: 持仓量
+        :param ClosePrice: 今收盘
+        :param SettlementPrice: 本次结算价
+        :param UpperLimitPrice: 涨停板价
+        :param LowerLimitPrice: 跌停板价
+        :param PreDelta: 昨虚实度
+        :param CurrDelta: 今虚实度
+        :param UpdateTime: 最后修改时间
+        :param UpdateMillisec: 最后修改毫秒
+        :param BidPrice1: 申买价一
+        :param BidVolume1: 申买量一
+        :param AskPrice1: 申卖价一
+        :param AskVolume1: 申卖量一
+        :param BidPrice2: 申买价二
+        :param BidVolume2: 申买量二
+        :param AskPrice2: 申卖价二
+        :param AskVolume2: 申卖量二
+        :param BidPrice3: 申买价三
+        :param BidVolume3: 申买量三
+        :param AskPrice3: 申卖价三
+        :param AskVolume3: 申卖量三
+        :param BidPrice4: 申买价四
+        :param BidVolume4: 申买量四
+        :param AskPrice4: 申卖价四
+        :param AskVolume4: 申卖量四
+        :param BidPrice5: 申买价五
+        :param BidVolume5: 申买量五
+        :param AskPrice5: 申卖价五
+        :param AskVolume5: 申卖量五
+        :param AveragePrice: 当日均价
+        :param ActionDay: 业务日期
+        :param BandingUpperPrice: 上带价
+        :param BandingLowerPrice: 下带价
+        :param ActionDirection: 操作标志
+        :param SyncDeltaSequenceNo: 追平序号
+        """
+        super().__init__()
+        ...
+
+
+class SyncDeltaIndexPrice(Struct):
+    def __init__(
+        self,
+        BrokerID: str = None,
+        InstrumentID: str = None,
+        ClosePrice: float = None,
+        ActionDirection: str = None,
+        SyncDeltaSequenceNo: int = None,
+    ):
+        """
+        风险结算追平现货指数
+        :param BrokerID: 经纪公司代码
+        :param InstrumentID: 合约代码
+        :param ClosePrice: 指数现货收盘价
+        :param ActionDirection: 操作标志
+        :param SyncDeltaSequenceNo: 追平序号
+        """
+        super().__init__()
+        ...
+
+
+class SyncDeltaEWarrantOffset(Struct):
+    def __init__(
+        self,
+        TradingDay: str = None,
+        BrokerID: str = None,
+        InvestorID: str = None,
+        ExchangeID: str = None,
+        InstrumentID: str = None,
+        Direction: str = None,
+        HedgeFlag: str = None,
+        Volume: int = None,
+        ActionDirection: str = None,
+        SyncDeltaSequenceNo: int = None,
+    ):
+        """
+        风险结算追平仓单折抵
+        :param TradingDay: 交易日期
+        :param BrokerID: 经纪公司代码
+        :param InvestorID: 投资者代码
+        :param ExchangeID: 交易所代码
+        :param InstrumentID: 合约代码
+        :param Direction: 买卖方向
+        :param HedgeFlag: 投机套保标志
+        :param Volume: 数量
+        :param ActionDirection: 操作标志
+        :param SyncDeltaSequenceNo: 追平序号
+        """
+        super().__init__()
+        ...
+
+
+class SPBMFutureParameter(Struct):
+    def __init__(
+        self,
+        TradingDay: str = None,
+        ExchangeID: str = None,
+        InstrumentID: str = None,
+        ProdFamilyCode: str = None,
+        Cvf: int = None,
+        TimeRange: str = None,
+        MarginRate: float = None,
+        LockRateX: float = None,
+        AddOnRate: float = None,
+        PreSettlementPrice: float = None,
+    ):
+        """
+        SPBM期货合约保证金参数
+        :param TradingDay: 交易日
+        :param ExchangeID: 交易所代码
+        :param InstrumentID: 合约代码
+        :param ProdFamilyCode: 品种代码
+        :param Cvf: 期货合约因子
+        :param TimeRange: 阶段标识
+        :param MarginRate: 品种保证金标准
+        :param LockRateX: 期货合约内部对锁仓费率折扣比例
+        :param AddOnRate: 提高保证金标准
+        :param PreSettlementPrice: 昨结算价
+        """
+        super().__init__()
+        ...
+
+
+class SPBMOptionParameter(Struct):
+    def __init__(
+        self,
+        TradingDay: str = None,
+        ExchangeID: str = None,
+        InstrumentID: str = None,
+        ProdFamilyCode: str = None,
+        Cvf: int = None,
+        DownPrice: float = None,
+        Delta: float = None,
+        SlimiDelta: float = None,
+        PreSettlementPrice: float = None,
+    ):
+        """
+        SPBM期权合约保证金参数
+        :param TradingDay: 交易日
+        :param ExchangeID: 交易所代码
+        :param InstrumentID: 合约代码
+        :param ProdFamilyCode: 品种代码
+        :param Cvf: 期权合约因子
+        :param DownPrice: 期权冲抵价格
+        :param Delta: Delta值
+        :param SlimiDelta: 卖方期权风险转换最低值
+        :param PreSettlementPrice: 昨结算价
+        """
+        super().__init__()
+        ...
+
+
+class SPBMIntraParameter(Struct):
+    def __init__(
+        self,
+        TradingDay: str = None,
+        ExchangeID: str = None,
+        ProdFamilyCode: str = None,
+        IntraRateY: float = None,
+    ):
+        """
+        SPBM品种内对锁仓折扣参数
+        :param TradingDay: 交易日
+        :param ExchangeID: 交易所代码
+        :param ProdFamilyCode: 品种代码
+        :param IntraRateY: 品种内合约间对锁仓费率折扣比例
+        """
+        super().__init__()
+        ...
+
+
+class SPBMInterParameter(Struct):
+    def __init__(
+        self,
+        TradingDay: str = None,
+        ExchangeID: str = None,
+        SpreadId: int = None,
+        InterRateZ: float = None,
+        Leg1ProdFamilyCode: str = None,
+        Leg2ProdFamilyCode: str = None,
+    ):
+        """
+        SPBM跨品种抵扣参数
+        :param TradingDay: 交易日
+        :param ExchangeID: 交易所代码
+        :param SpreadId: 优先级
+        :param InterRateZ: 品种间对锁仓费率折扣比例
+        :param Leg1ProdFamilyCode: 第一腿构成品种
+        :param Leg2ProdFamilyCode: 第二腿构成品种
+        """
+        super().__init__()
+        ...
+
+
+class SyncSPBMParameterEnd(Struct):
+    def __init__(
+        self,
+        TradingDay: str = None,
+    ):
+        """
+        同步SPBM参数结束
+        :param TradingDay: 交易日
+        """
+        super().__init__()
+        ...
+
+
+class QrySPBMFutureParameter(Struct):
+    def __init__(
+        self,
+        ExchangeID: str = None,
+        InstrumentID: str = None,
+        ProdFamilyCode: str = None,
+    ):
+        """
+        SPBM期货合约保证金参数查询
+        :param ExchangeID: 交易所代码
+        :param InstrumentID: 合约代码
+        :param ProdFamilyCode: 品种代码
+        """
+        super().__init__()
+        ...
+
+
+class QrySPBMOptionParameter(Struct):
+    def __init__(
+        self,
+        ExchangeID: str = None,
+        InstrumentID: str = None,
+        ProdFamilyCode: str = None,
+    ):
+        """
+        SPBM期权合约保证金参数查询
+        :param ExchangeID: 交易所代码
+        :param InstrumentID: 合约代码
+        :param ProdFamilyCode: 品种代码
+        """
+        super().__init__()
+        ...
+
+
+class QrySPBMIntraParameter(Struct):
+    def __init__(
+        self,
+        ExchangeID: str = None,
+        ProdFamilyCode: str = None,
+    ):
+        """
+        SPBM品种内对锁仓折扣参数查询
+        :param ExchangeID: 交易所代码
+        :param ProdFamilyCode: 品种代码
+        """
+        super().__init__()
+        ...
+
+
+class QrySPBMInterParameter(Struct):
+    def __init__(
+        self,
+        ExchangeID: str = None,
+        Leg1ProdFamilyCode: str = None,
+        Leg2ProdFamilyCode: str = None,
+    ):
+        """
+        SPBM跨品种抵扣参数查询
+        :param ExchangeID: 交易所代码
+        :param Leg1ProdFamilyCode: 第一腿构成品种
+        :param Leg2ProdFamilyCode: 第二腿构成品种
+        """
+        super().__init__()
+        ...
+
+
+class SPBMPortfDefinition(Struct):
+    def __init__(
+        self,
+        ExchangeID: str = None,
+        PortfolioDefID: int = None,
+        ProdFamilyCode: str = None,
+        IsSPBM: int = None,
+    ):
+        """
+        组合保证金套餐
+        :param ExchangeID: 交易所代码
+        :param PortfolioDefID: 组合保证金套餐代码
+        :param ProdFamilyCode: 品种代码
+        :param IsSPBM: 是否启用SPBM
+        """
+        super().__init__()
+        ...
+
+
+class SPBMInvestorPortfDef(Struct):
+    def __init__(
+        self,
+        ExchangeID: str = None,
+        BrokerID: str = None,
+        InvestorID: str = None,
+        PortfolioDefID: int = None,
+    ):
+        """
+        投资者套餐选择
+        :param ExchangeID: 交易所代码
+        :param BrokerID: 经纪公司代码
+        :param InvestorID: 投资者代码
+        :param PortfolioDefID: 组合保证金套餐代码
+        """
+        super().__init__()
+        ...
+
+
+class InvestorPortfMarginRatio(Struct):
+    def __init__(
+        self,
+        InvestorRange: str = None,
+        BrokerID: str = None,
+        InvestorID: str = None,
+        ExchangeID: str = None,
+        MarginRatio: float = None,
+    ):
+        """
+        投资者新型组合保证金系数
+        :param InvestorRange: 投资者范围
+        :param BrokerID: 经纪公司代码
+        :param InvestorID: 投资者代码
+        :param ExchangeID: 交易所代码
+        :param MarginRatio: 会员对投资者收取的保证金和交易所对投资者收取的保证金的比例
+        """
+        super().__init__()
+        ...
+
+
+class QrySPBMPortfDefinition(Struct):
+    def __init__(
+        self,
+        ExchangeID: str = None,
+        PortfolioDefID: int = None,
+        ProdFamilyCode: str = None,
+    ):
+        """
+        组合保证金套餐查询
+        :param ExchangeID: 交易所代码
+        :param PortfolioDefID: 组合保证金套餐代码
+        :param ProdFamilyCode: 品种代码
+        """
+        super().__init__()
+        ...
+
+
+class QrySPBMInvestorPortfDef(Struct):
+    def __init__(
+        self,
+        ExchangeID: str = None,
+        BrokerID: str = None,
+        InvestorID: str = None,
+    ):
+        """
+        投资者套餐选择查询
+        :param ExchangeID: 交易所代码
+        :param BrokerID: 经纪公司代码
+        :param InvestorID: 投资者代码
+        """
+        super().__init__()
+        ...
+
+
+class QryInvestorPortfMarginRatio(Struct):
+    def __init__(
+        self,
+        BrokerID: str = None,
+        InvestorID: str = None,
+        ExchangeID: str = None,
+    ):
+        """
+        投资者新型组合保证金系数查询
+        :param BrokerID: 经纪公司代码
+        :param InvestorID: 投资者代码
+        :param ExchangeID: 交易所代码
+        """
+        super().__init__()
+        ...
+
+
+class InvestorProdSPBMDetail(Struct):
+    def __init__(
+        self,
+        ExchangeID: str = None,
+        BrokerID: str = None,
+        InvestorID: str = None,
+        ProdFamilyCode: str = None,
+        IntraInstrMargin: float = None,
+        BCollectingMargin: float = None,
+        SCollectingMargin: float = None,
+        IntraProdMargin: float = None,
+        NetMargin: float = None,
+        InterProdMargin: float = None,
+        SingleMargin: float = None,
+        AddOnMargin: float = None,
+        DeliveryMargin: float = None,
+        CallOptionMinRisk: float = None,
+        PutOptionMinRisk: float = None,
+        OptionMinRisk: float = None,
+        OptionValueOffset: float = None,
+        OptionRoyalty: float = None,
+        RealOptionValueOffset: float = None,
+        Margin: float = None,
+        ExchMargin: float = None,
+    ):
+        """
+        投资者产品SPBM明细
+        :param ExchangeID: 交易所代码
+        :param BrokerID: 经纪公司代码
+        :param InvestorID: 投资者代码
+        :param ProdFamilyCode: 品种代码
+        :param IntraInstrMargin: 合约内对锁保证金
+        :param BCollectingMargin: 买归集保证金
+        :param SCollectingMargin: 卖归集保证金
+        :param IntraProdMargin: 品种内合约间对锁保证金
+        :param NetMargin: 净保证金
+        :param InterProdMargin: 产品间对锁保证金
+        :param SingleMargin: 裸保证金
+        :param AddOnMargin: 附加保证金
+        :param DeliveryMargin: 交割月保证金
+        :param CallOptionMinRisk: 看涨期权最低风险
+        :param PutOptionMinRisk: 看跌期权最低风险
+        :param OptionMinRisk: 卖方期权最低风险
+        :param OptionValueOffset: 买方期权冲抵价值
+        :param OptionRoyalty: 卖方期权权利金
+        :param RealOptionValueOffset: 价值冲抵
+        :param Margin: 保证金
+        :param ExchMargin: 交易所保证金
+        """
+        super().__init__()
+        ...
+
+
+class QryInvestorProdSPBMDetail(Struct):
+    def __init__(
+        self,
+        ExchangeID: str = None,
+        BrokerID: str = None,
+        InvestorID: str = None,
+        ProdFamilyCode: str = None,
+    ):
+        """
+        投资者产品SPBM明细查询
+        :param ExchangeID: 交易所代码
+        :param BrokerID: 经纪公司代码
+        :param InvestorID: 投资者代码
+        :param ProdFamilyCode: 品种代码
+        """
+        super().__init__()
+        ...
+
+
+class PortfTradeParamSetting(Struct):
+    def __init__(
+        self,
+        ExchangeID: str = None,
+        BrokerID: str = None,
+        InvestorID: str = None,
+        Portfolio: str = None,
+        IsActionVerify: int = None,
+        IsCloseVerify: int = None,
+    ):
+        """
+        组保交易参数设置
+        :param ExchangeID: 交易所代码
+        :param BrokerID: 经纪公司代码
+        :param InvestorID: 投资者代码
+        :param Portfolio: 新型组保算法
+        :param IsActionVerify: 撤单是否验资
+        :param IsCloseVerify: 平仓是否验资
         """
         super().__init__()
         ...

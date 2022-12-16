@@ -258,13 +258,13 @@ cdef class TraderApi:
             result = self._api.ReqOrderAction(<CThostFtdcInputOrderActionField *> address, nRequestID)
         return result
 
-    def ReqQueryMaxOrderVolume(self, pQueryMaxOrderVolume, int nRequestID):
+    def ReqQryMaxOrderVolume(self, pQryMaxOrderVolume, int nRequestID):
         cdef int result
         cdef size_t address
         self._ensure_api_not_null()
-        address = ctypes.addressof(pQueryMaxOrderVolume)
+        address = ctypes.addressof(pQryMaxOrderVolume)
         with nogil:
-            result = self._api.ReqQueryMaxOrderVolume(<CThostFtdcQueryMaxOrderVolumeField *> address, nRequestID)
+            result = self._api.ReqQryMaxOrderVolume(<CThostFtdcQryMaxOrderVolumeField *> address, nRequestID)
         return result
 
     def ReqSettlementInfoConfirm(self, pSettlementInfoConfirm, int nRequestID):
@@ -481,6 +481,15 @@ cdef class TraderApi:
         address = ctypes.addressof(pQryDepthMarketData)
         with nogil:
             result = self._api.ReqQryDepthMarketData(<CThostFtdcQryDepthMarketDataField *> address, nRequestID)
+        return result
+
+    def ReqQryTraderOffer(self, pQryTraderOffer, int nRequestID):
+        cdef int result
+        cdef size_t address
+        self._ensure_api_not_null()
+        address = ctypes.addressof(pQryTraderOffer)
+        with nogil:
+            result = self._api.ReqQryTraderOffer(<CThostFtdcQryTraderOfferField *> address, nRequestID)
         return result
 
     def ReqQrySettlementInfo(self, pQrySettlementInfo, int nRequestID):
@@ -861,6 +870,114 @@ cdef class TraderApi:
             result = self._api.ReqQueryBankAccountMoneyByFuture(<CThostFtdcReqQueryAccountField *> address, nRequestID)
         return result
 
+    def ReqQryClassifiedInstrument(self, pQryClassifiedInstrument, int nRequestID):
+        cdef int result
+        cdef size_t address
+        self._ensure_api_not_null()
+        address = ctypes.addressof(pQryClassifiedInstrument)
+        with nogil:
+            result = self._api.ReqQryClassifiedInstrument(<CThostFtdcQryClassifiedInstrumentField *> address, nRequestID)
+        return result
+
+    def ReqQryCombPromotionParam(self, pQryCombPromotionParam, int nRequestID):
+        cdef int result
+        cdef size_t address
+        self._ensure_api_not_null()
+        address = ctypes.addressof(pQryCombPromotionParam)
+        with nogil:
+            result = self._api.ReqQryCombPromotionParam(<CThostFtdcQryCombPromotionParamField *> address, nRequestID)
+        return result
+
+    def ReqQryRiskSettleInvstPosition(self, pQryRiskSettleInvstPosition, int nRequestID):
+        cdef int result
+        cdef size_t address
+        self._ensure_api_not_null()
+        address = ctypes.addressof(pQryRiskSettleInvstPosition)
+        with nogil:
+            result = self._api.ReqQryRiskSettleInvstPosition(<CThostFtdcQryRiskSettleInvstPositionField *> address, nRequestID)
+        return result
+
+    def ReqQryRiskSettleProductStatus(self, pQryRiskSettleProductStatus, int nRequestID):
+        cdef int result
+        cdef size_t address
+        self._ensure_api_not_null()
+        address = ctypes.addressof(pQryRiskSettleProductStatus)
+        with nogil:
+            result = self._api.ReqQryRiskSettleProductStatus(<CThostFtdcQryRiskSettleProductStatusField *> address, nRequestID)
+        return result
+
+    def ReqQrySPBMFutureParameter(self, pQrySPBMFutureParameter, int nRequestID):
+        cdef int result
+        cdef size_t address
+        self._ensure_api_not_null()
+        address = ctypes.addressof(pQrySPBMFutureParameter)
+        with nogil:
+            result = self._api.ReqQrySPBMFutureParameter(<CThostFtdcQrySPBMFutureParameterField *> address, nRequestID)
+        return result
+
+    def ReqQrySPBMOptionParameter(self, pQrySPBMOptionParameter, int nRequestID):
+        cdef int result
+        cdef size_t address
+        self._ensure_api_not_null()
+        address = ctypes.addressof(pQrySPBMOptionParameter)
+        with nogil:
+            result = self._api.ReqQrySPBMOptionParameter(<CThostFtdcQrySPBMOptionParameterField *> address, nRequestID)
+        return result
+
+    def ReqQrySPBMIntraParameter(self, pQrySPBMIntraParameter, int nRequestID):
+        cdef int result
+        cdef size_t address
+        self._ensure_api_not_null()
+        address = ctypes.addressof(pQrySPBMIntraParameter)
+        with nogil:
+            result = self._api.ReqQrySPBMIntraParameter(<CThostFtdcQrySPBMIntraParameterField *> address, nRequestID)
+        return result
+
+    def ReqQrySPBMInterParameter(self, pQrySPBMInterParameter, int nRequestID):
+        cdef int result
+        cdef size_t address
+        self._ensure_api_not_null()
+        address = ctypes.addressof(pQrySPBMInterParameter)
+        with nogil:
+            result = self._api.ReqQrySPBMInterParameter(<CThostFtdcQrySPBMInterParameterField *> address, nRequestID)
+        return result
+
+    def ReqQrySPBMPortfDefinition(self, pQrySPBMPortfDefinition, int nRequestID):
+        cdef int result
+        cdef size_t address
+        self._ensure_api_not_null()
+        address = ctypes.addressof(pQrySPBMPortfDefinition)
+        with nogil:
+            result = self._api.ReqQrySPBMPortfDefinition(<CThostFtdcQrySPBMPortfDefinitionField *> address, nRequestID)
+        return result
+
+    def ReqQrySPBMInvestorPortfDef(self, pQrySPBMInvestorPortfDef, int nRequestID):
+        cdef int result
+        cdef size_t address
+        self._ensure_api_not_null()
+        address = ctypes.addressof(pQrySPBMInvestorPortfDef)
+        with nogil:
+            result = self._api.ReqQrySPBMInvestorPortfDef(<CThostFtdcQrySPBMInvestorPortfDefField *> address, nRequestID)
+        return result
+
+    def ReqQryInvestorPortfMarginRatio(self, pQryInvestorPortfMarginRatio, int nRequestID):
+        cdef int result
+        cdef size_t address
+        self._ensure_api_not_null()
+        address = ctypes.addressof(pQryInvestorPortfMarginRatio)
+        with nogil:
+            result = self._api.ReqQryInvestorPortfMarginRatio(<CThostFtdcQryInvestorPortfMarginRatioField *> address, nRequestID)
+        return result
+
+    def ReqQryInvestorProdSPBMDetail(self, pQryInvestorProdSPBMDetail, int nRequestID):
+        cdef int result
+        cdef size_t address
+        self._ensure_api_not_null()
+        address = ctypes.addressof(pQryInvestorProdSPBMDetail)
+        with nogil:
+            result = self._api.ReqQryInvestorProdSPBMDetail(<CThostFtdcQryInvestorProdSPBMDetailField *> address, nRequestID)
+        return result
+
 
 cdef extern int TraderSpi__OnFrontConnected(api) except -1:
     api.OnFrontConnected()
@@ -1001,9 +1118,9 @@ cdef extern int TraderSpi__OnRspOrderAction(api, CThostFtdcInputOrderActionField
     return 0
 
 
-cdef extern int TraderSpi__OnRspQueryMaxOrderVolume(api, CThostFtdcQueryMaxOrderVolumeField *pQueryMaxOrderVolume, CThostFtdcRspInfoField *pRspInfo, int nRequestID, cbool bIsLast) except -1:
-    api.OnRspQueryMaxOrderVolume(
-        None if pQueryMaxOrderVolume is NULL else QueryMaxOrderVolume.from_address(<size_t> pQueryMaxOrderVolume).to_tuple(),
+cdef extern int TraderSpi__OnRspQryMaxOrderVolume(api, CThostFtdcQryMaxOrderVolumeField *pQryMaxOrderVolume, CThostFtdcRspInfoField *pRspInfo, int nRequestID, cbool bIsLast) except -1:
+    api.OnRspQryMaxOrderVolume(
+        None if pQryMaxOrderVolume is NULL else QryMaxOrderVolume.from_address(<size_t> pQryMaxOrderVolume).to_tuple(),
         None if pRspInfo is NULL else RspInfo.from_address(<size_t> pRspInfo).to_tuple(),
         nRequestID,
         bIsLast
@@ -1244,6 +1361,16 @@ cdef extern int TraderSpi__OnRspQryInstrument(api, CThostFtdcInstrumentField *pI
 cdef extern int TraderSpi__OnRspQryDepthMarketData(api, CThostFtdcDepthMarketDataField *pDepthMarketData, CThostFtdcRspInfoField *pRspInfo, int nRequestID, cbool bIsLast) except -1:
     api.OnRspQryDepthMarketData(
         None if pDepthMarketData is NULL else DepthMarketData.from_address(<size_t> pDepthMarketData).to_tuple(),
+        None if pRspInfo is NULL else RspInfo.from_address(<size_t> pRspInfo).to_tuple(),
+        nRequestID,
+        bIsLast
+    )
+    return 0
+
+
+cdef extern int TraderSpi__OnRspQryTraderOffer(api, CThostFtdcTraderOfferField *pTraderOffer, CThostFtdcRspInfoField *pRspInfo, int nRequestID, cbool bIsLast) except -1:
+    api.OnRspQryTraderOffer(
+        None if pTraderOffer is NULL else TraderOffer.from_address(<size_t> pTraderOffer).to_tuple(),
         None if pRspInfo is NULL else RspInfo.from_address(<size_t> pRspInfo).to_tuple(),
         nRequestID,
         bIsLast
@@ -1986,5 +2113,125 @@ cdef extern int TraderSpi__OnRtnCancelAccountByBank(api, CThostFtdcCancelAccount
 cdef extern int TraderSpi__OnRtnChangeAccountByBank(api, CThostFtdcChangeAccountField *pChangeAccount) except -1:
     api.OnRtnChangeAccountByBank(
         None if pChangeAccount is NULL else ChangeAccount.from_address(<size_t> pChangeAccount).to_tuple()
+    )
+    return 0
+
+
+cdef extern int TraderSpi__OnRspQryClassifiedInstrument(api, CThostFtdcInstrumentField *pInstrument, CThostFtdcRspInfoField *pRspInfo, int nRequestID, cbool bIsLast) except -1:
+    api.OnRspQryClassifiedInstrument(
+        None if pInstrument is NULL else Instrument.from_address(<size_t> pInstrument).to_tuple(),
+        None if pRspInfo is NULL else RspInfo.from_address(<size_t> pRspInfo).to_tuple(),
+        nRequestID,
+        bIsLast
+    )
+    return 0
+
+
+cdef extern int TraderSpi__OnRspQryCombPromotionParam(api, CThostFtdcCombPromotionParamField *pCombPromotionParam, CThostFtdcRspInfoField *pRspInfo, int nRequestID, cbool bIsLast) except -1:
+    api.OnRspQryCombPromotionParam(
+        None if pCombPromotionParam is NULL else CombPromotionParam.from_address(<size_t> pCombPromotionParam).to_tuple(),
+        None if pRspInfo is NULL else RspInfo.from_address(<size_t> pRspInfo).to_tuple(),
+        nRequestID,
+        bIsLast
+    )
+    return 0
+
+
+cdef extern int TraderSpi__OnRspQryRiskSettleInvstPosition(api, CThostFtdcRiskSettleInvstPositionField *pRiskSettleInvstPosition, CThostFtdcRspInfoField *pRspInfo, int nRequestID, cbool bIsLast) except -1:
+    api.OnRspQryRiskSettleInvstPosition(
+        None if pRiskSettleInvstPosition is NULL else RiskSettleInvstPosition.from_address(<size_t> pRiskSettleInvstPosition).to_tuple(),
+        None if pRspInfo is NULL else RspInfo.from_address(<size_t> pRspInfo).to_tuple(),
+        nRequestID,
+        bIsLast
+    )
+    return 0
+
+
+cdef extern int TraderSpi__OnRspQryRiskSettleProductStatus(api, CThostFtdcRiskSettleProductStatusField *pRiskSettleProductStatus, CThostFtdcRspInfoField *pRspInfo, int nRequestID, cbool bIsLast) except -1:
+    api.OnRspQryRiskSettleProductStatus(
+        None if pRiskSettleProductStatus is NULL else RiskSettleProductStatus.from_address(<size_t> pRiskSettleProductStatus).to_tuple(),
+        None if pRspInfo is NULL else RspInfo.from_address(<size_t> pRspInfo).to_tuple(),
+        nRequestID,
+        bIsLast
+    )
+    return 0
+
+
+cdef extern int TraderSpi__OnRspQrySPBMFutureParameter(api, CThostFtdcSPBMFutureParameterField *pSPBMFutureParameter, CThostFtdcRspInfoField *pRspInfo, int nRequestID, cbool bIsLast) except -1:
+    api.OnRspQrySPBMFutureParameter(
+        None if pSPBMFutureParameter is NULL else SPBMFutureParameter.from_address(<size_t> pSPBMFutureParameter).to_tuple(),
+        None if pRspInfo is NULL else RspInfo.from_address(<size_t> pRspInfo).to_tuple(),
+        nRequestID,
+        bIsLast
+    )
+    return 0
+
+
+cdef extern int TraderSpi__OnRspQrySPBMOptionParameter(api, CThostFtdcSPBMOptionParameterField *pSPBMOptionParameter, CThostFtdcRspInfoField *pRspInfo, int nRequestID, cbool bIsLast) except -1:
+    api.OnRspQrySPBMOptionParameter(
+        None if pSPBMOptionParameter is NULL else SPBMOptionParameter.from_address(<size_t> pSPBMOptionParameter).to_tuple(),
+        None if pRspInfo is NULL else RspInfo.from_address(<size_t> pRspInfo).to_tuple(),
+        nRequestID,
+        bIsLast
+    )
+    return 0
+
+
+cdef extern int TraderSpi__OnRspQrySPBMIntraParameter(api, CThostFtdcSPBMIntraParameterField *pSPBMIntraParameter, CThostFtdcRspInfoField *pRspInfo, int nRequestID, cbool bIsLast) except -1:
+    api.OnRspQrySPBMIntraParameter(
+        None if pSPBMIntraParameter is NULL else SPBMIntraParameter.from_address(<size_t> pSPBMIntraParameter).to_tuple(),
+        None if pRspInfo is NULL else RspInfo.from_address(<size_t> pRspInfo).to_tuple(),
+        nRequestID,
+        bIsLast
+    )
+    return 0
+
+
+cdef extern int TraderSpi__OnRspQrySPBMInterParameter(api, CThostFtdcSPBMInterParameterField *pSPBMInterParameter, CThostFtdcRspInfoField *pRspInfo, int nRequestID, cbool bIsLast) except -1:
+    api.OnRspQrySPBMInterParameter(
+        None if pSPBMInterParameter is NULL else SPBMInterParameter.from_address(<size_t> pSPBMInterParameter).to_tuple(),
+        None if pRspInfo is NULL else RspInfo.from_address(<size_t> pRspInfo).to_tuple(),
+        nRequestID,
+        bIsLast
+    )
+    return 0
+
+
+cdef extern int TraderSpi__OnRspQrySPBMPortfDefinition(api, CThostFtdcSPBMPortfDefinitionField *pSPBMPortfDefinition, CThostFtdcRspInfoField *pRspInfo, int nRequestID, cbool bIsLast) except -1:
+    api.OnRspQrySPBMPortfDefinition(
+        None if pSPBMPortfDefinition is NULL else SPBMPortfDefinition.from_address(<size_t> pSPBMPortfDefinition).to_tuple(),
+        None if pRspInfo is NULL else RspInfo.from_address(<size_t> pRspInfo).to_tuple(),
+        nRequestID,
+        bIsLast
+    )
+    return 0
+
+
+cdef extern int TraderSpi__OnRspQrySPBMInvestorPortfDef(api, CThostFtdcSPBMInvestorPortfDefField *pSPBMInvestorPortfDef, CThostFtdcRspInfoField *pRspInfo, int nRequestID, cbool bIsLast) except -1:
+    api.OnRspQrySPBMInvestorPortfDef(
+        None if pSPBMInvestorPortfDef is NULL else SPBMInvestorPortfDef.from_address(<size_t> pSPBMInvestorPortfDef).to_tuple(),
+        None if pRspInfo is NULL else RspInfo.from_address(<size_t> pRspInfo).to_tuple(),
+        nRequestID,
+        bIsLast
+    )
+    return 0
+
+
+cdef extern int TraderSpi__OnRspQryInvestorPortfMarginRatio(api, CThostFtdcInvestorPortfMarginRatioField *pInvestorPortfMarginRatio, CThostFtdcRspInfoField *pRspInfo, int nRequestID, cbool bIsLast) except -1:
+    api.OnRspQryInvestorPortfMarginRatio(
+        None if pInvestorPortfMarginRatio is NULL else InvestorPortfMarginRatio.from_address(<size_t> pInvestorPortfMarginRatio).to_tuple(),
+        None if pRspInfo is NULL else RspInfo.from_address(<size_t> pRspInfo).to_tuple(),
+        nRequestID,
+        bIsLast
+    )
+    return 0
+
+
+cdef extern int TraderSpi__OnRspQryInvestorProdSPBMDetail(api, CThostFtdcInvestorProdSPBMDetailField *pInvestorProdSPBMDetail, CThostFtdcRspInfoField *pRspInfo, int nRequestID, cbool bIsLast) except -1:
+    api.OnRspQryInvestorProdSPBMDetail(
+        None if pInvestorProdSPBMDetail is NULL else InvestorProdSPBMDetail.from_address(<size_t> pInvestorProdSPBMDetail).to_tuple(),
+        None if pRspInfo is NULL else RspInfo.from_address(<size_t> pRspInfo).to_tuple(),
+        nRequestID,
+        bIsLast
     )
     return 0

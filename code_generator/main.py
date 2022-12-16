@@ -37,6 +37,8 @@ class Constant(NamedTuple):
         name = re.match(RE_CONST, self.name).group("name")
         if name == "None" or re.match(r"^\d+", name):
             name = "_" + name
+        if name in {"True", "False"}:
+            return name.lower()
         return name
 
 
@@ -214,7 +216,10 @@ def parse_struct_header(raw_lines: List[str], type_dict: dict):
     lines = line_gen(raw_lines)
     comment = None
     while True:
-        line = next(lines)
+        try:
+            line = next(lines)
+        except StopIteration:
+            break
         if is_comment(line):
             comment = parse_comment(line)
         elif line.startswith("struct "):
@@ -374,7 +379,6 @@ class PyCodeGenerator(object):
             template = env.get_template("TraderApi.pyx.jinja")
             f.write(template.render(api_methods=self._api_methods, spi_methods=self._spi_methods))
         
-
 
 if __name__ == "__main__":
     PyCodeGenerator("ctp").write("rqctp")

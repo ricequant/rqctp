@@ -52,6 +52,7 @@ c_char_Array_81 = c_char * 81
 c_char_Array_100 = c_char * 100
 c_char_Array_101 = c_char * 101
 c_char_Array_129 = c_char * 129
+c_char_Array_151 = c_char * 151
 c_char_Array_161 = c_char * 161
 c_char_Array_201 = c_char * 201
 c_char_Array_256 = c_char * 256
@@ -95,12 +96,13 @@ class ReqUserLogin(Struct):
         ("ProtocolInfo", c_char_Array_11),
         ("MacAddress", c_char_Array_21),
         ("OneTimePassword", c_char_Array_41),
-        ("ClientIPAddress", c_char_Array_16),
+        ("reserve1", c_char_Array_16),
         ("LoginRemark", c_char_Array_36),
         ("ClientIPPort", c_int),
+        ("ClientIPAddress", c_char_Array_33),
     ]
 
-    def __init__(self, TradingDay=None, BrokerID=None, UserID=None, Password=None, UserProductInfo=None, InterfaceProductInfo=None, ProtocolInfo=None, MacAddress=None, OneTimePassword=None, ClientIPAddress=None, LoginRemark=None, ClientIPPort=None):
+    def __init__(self, TradingDay=None, BrokerID=None, UserID=None, Password=None, UserProductInfo=None, InterfaceProductInfo=None, ProtocolInfo=None, MacAddress=None, OneTimePassword=None, reserve1=None, LoginRemark=None, ClientIPPort=None, ClientIPAddress=None):
         super().__init__()
         if TradingDay:
             self.TradingDay = TradingDay.encode("GBK")
@@ -120,12 +122,14 @@ class ReqUserLogin(Struct):
             self.MacAddress = MacAddress.encode("GBK")
         if OneTimePassword:
             self.OneTimePassword = OneTimePassword.encode("GBK")
-        if ClientIPAddress:
-            self.ClientIPAddress = ClientIPAddress.encode("GBK")
+        if reserve1:
+            self.reserve1 = reserve1.encode("GBK")
         if LoginRemark:
             self.LoginRemark = LoginRemark.encode("GBK")
         if ClientIPPort:
             self.ClientIPPort = ClientIPPort
+        if ClientIPAddress:
+            self.ClientIPAddress = ClientIPAddress.encode("GBK")
 
 
 class RspUserLogin(Struct):
@@ -143,9 +147,11 @@ class RspUserLogin(Struct):
         ("CZCETime", c_char_Array_9),
         ("FFEXTime", c_char_Array_9),
         ("INETime", c_char_Array_9),
+        ("SysVersion", c_char_Array_41),
+        ("GFEXTime", c_char_Array_9),
     ]
 
-    def __init__(self, TradingDay=None, LoginTime=None, BrokerID=None, UserID=None, SystemName=None, FrontID=None, SessionID=None, MaxOrderRef=None, SHFETime=None, DCETime=None, CZCETime=None, FFEXTime=None, INETime=None):
+    def __init__(self, TradingDay=None, LoginTime=None, BrokerID=None, UserID=None, SystemName=None, FrontID=None, SessionID=None, MaxOrderRef=None, SHFETime=None, DCETime=None, CZCETime=None, FFEXTime=None, INETime=None, SysVersion=None, GFEXTime=None):
         super().__init__()
         if TradingDay:
             self.TradingDay = TradingDay.encode("GBK")
@@ -173,6 +179,10 @@ class RspUserLogin(Struct):
             self.FFEXTime = FFEXTime.encode("GBK")
         if INETime:
             self.INETime = INETime.encode("GBK")
+        if SysVersion:
+            self.SysVersion = SysVersion.encode("GBK")
+        if GFEXTime:
+            self.GFEXTime = GFEXTime.encode("GBK")
 
 
 class UserLogout(Struct):
@@ -258,9 +268,11 @@ class AuthenticationInfo(Struct):
         ("IsResult", c_int),
         ("AppID", c_char_Array_33),
         ("AppType", c_char),
+        ("reserve1", c_char_Array_16),
+        ("ClientIPAddress", c_char_Array_33),
     ]
 
-    def __init__(self, BrokerID=None, UserID=None, UserProductInfo=None, AuthInfo=None, IsResult=None, AppID=None, AppType=None):
+    def __init__(self, BrokerID=None, UserID=None, UserProductInfo=None, AuthInfo=None, IsResult=None, AppID=None, AppType=None, reserve1=None, ClientIPAddress=None):
         super().__init__()
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
@@ -276,6 +288,10 @@ class AuthenticationInfo(Struct):
             self.AppID = AppID.encode("GBK")
         if AppType:
             self.AppType = AppType.encode("GBK")
+        if reserve1:
+            self.reserve1 = reserve1.encode("GBK")
+        if ClientIPAddress:
+            self.ClientIPAddress = ClientIPAddress.encode("GBK")
 
 
 class RspUserLogin2(Struct):
@@ -622,7 +638,7 @@ class Exchange(Struct):
 
 class Product(Struct):
     _fields_ = [
-        ("ProductID", c_char_Array_31),
+        ("reserve1", c_char_Array_31),
         ("ProductName", c_char_Array_21),
         ("ExchangeID", c_char_Array_9),
         ("ProductClass", c_char),
@@ -637,14 +653,18 @@ class Product(Struct):
         ("CloseDealType", c_char),
         ("TradeCurrencyID", c_char_Array_4),
         ("MortgageFundUseRange", c_char),
-        ("ExchangeProductID", c_char_Array_31),
+        ("reserve2", c_char_Array_31),
         ("UnderlyingMultiple", c_double),
+        ("ProductID", c_char_Array_81),
+        ("ExchangeProductID", c_char_Array_81),
+        ("OpenLimitControlLevel", c_char),
+        ("OrderFreqControlLevel", c_char),
     ]
 
-    def __init__(self, ProductID=None, ProductName=None, ExchangeID=None, ProductClass=None, VolumeMultiple=None, PriceTick=None, MaxMarketOrderVolume=None, MinMarketOrderVolume=None, MaxLimitOrderVolume=None, MinLimitOrderVolume=None, PositionType=None, PositionDateType=None, CloseDealType=None, TradeCurrencyID=None, MortgageFundUseRange=None, ExchangeProductID=None, UnderlyingMultiple=None):
+    def __init__(self, reserve1=None, ProductName=None, ExchangeID=None, ProductClass=None, VolumeMultiple=None, PriceTick=None, MaxMarketOrderVolume=None, MinMarketOrderVolume=None, MaxLimitOrderVolume=None, MinLimitOrderVolume=None, PositionType=None, PositionDateType=None, CloseDealType=None, TradeCurrencyID=None, MortgageFundUseRange=None, reserve2=None, UnderlyingMultiple=None, ProductID=None, ExchangeProductID=None, OpenLimitControlLevel=None, OrderFreqControlLevel=None):
         super().__init__()
-        if ProductID:
-            self.ProductID = ProductID.encode("GBK")
+        if reserve1:
+            self.reserve1 = reserve1.encode("GBK")
         if ProductName:
             self.ProductName = ProductName.encode("GBK")
         if ExchangeID:
@@ -673,19 +693,27 @@ class Product(Struct):
             self.TradeCurrencyID = TradeCurrencyID.encode("GBK")
         if MortgageFundUseRange:
             self.MortgageFundUseRange = MortgageFundUseRange.encode("GBK")
-        if ExchangeProductID:
-            self.ExchangeProductID = ExchangeProductID.encode("GBK")
+        if reserve2:
+            self.reserve2 = reserve2.encode("GBK")
         if UnderlyingMultiple:
             self.UnderlyingMultiple = UnderlyingMultiple
+        if ProductID:
+            self.ProductID = ProductID.encode("GBK")
+        if ExchangeProductID:
+            self.ExchangeProductID = ExchangeProductID.encode("GBK")
+        if OpenLimitControlLevel:
+            self.OpenLimitControlLevel = OpenLimitControlLevel.encode("GBK")
+        if OrderFreqControlLevel:
+            self.OrderFreqControlLevel = OrderFreqControlLevel.encode("GBK")
 
 
 class Instrument(Struct):
     _fields_ = [
-        ("InstrumentID", c_char_Array_31),
+        ("reserve1", c_char_Array_31),
         ("ExchangeID", c_char_Array_9),
         ("InstrumentName", c_char_Array_21),
-        ("ExchangeInstID", c_char_Array_31),
-        ("ProductID", c_char_Array_31),
+        ("reserve2", c_char_Array_31),
+        ("reserve3", c_char_Array_31),
         ("ProductClass", c_char),
         ("DeliveryYear", c_int),
         ("DeliveryMonth", c_int),
@@ -707,25 +735,29 @@ class Instrument(Struct):
         ("LongMarginRatio", c_double),
         ("ShortMarginRatio", c_double),
         ("MaxMarginSideAlgorithm", c_char),
-        ("UnderlyingInstrID", c_char_Array_31),
+        ("reserve4", c_char_Array_31),
         ("StrikePrice", c_double),
         ("OptionsType", c_char),
         ("UnderlyingMultiple", c_double),
         ("CombinationType", c_char),
+        ("InstrumentID", c_char_Array_81),
+        ("ExchangeInstID", c_char_Array_81),
+        ("ProductID", c_char_Array_81),
+        ("UnderlyingInstrID", c_char_Array_81),
     ]
 
-    def __init__(self, InstrumentID=None, ExchangeID=None, InstrumentName=None, ExchangeInstID=None, ProductID=None, ProductClass=None, DeliveryYear=None, DeliveryMonth=None, MaxMarketOrderVolume=None, MinMarketOrderVolume=None, MaxLimitOrderVolume=None, MinLimitOrderVolume=None, VolumeMultiple=None, PriceTick=None, CreateDate=None, OpenDate=None, ExpireDate=None, StartDelivDate=None, EndDelivDate=None, InstLifePhase=None, IsTrading=None, PositionType=None, PositionDateType=None, LongMarginRatio=None, ShortMarginRatio=None, MaxMarginSideAlgorithm=None, UnderlyingInstrID=None, StrikePrice=None, OptionsType=None, UnderlyingMultiple=None, CombinationType=None):
+    def __init__(self, reserve1=None, ExchangeID=None, InstrumentName=None, reserve2=None, reserve3=None, ProductClass=None, DeliveryYear=None, DeliveryMonth=None, MaxMarketOrderVolume=None, MinMarketOrderVolume=None, MaxLimitOrderVolume=None, MinLimitOrderVolume=None, VolumeMultiple=None, PriceTick=None, CreateDate=None, OpenDate=None, ExpireDate=None, StartDelivDate=None, EndDelivDate=None, InstLifePhase=None, IsTrading=None, PositionType=None, PositionDateType=None, LongMarginRatio=None, ShortMarginRatio=None, MaxMarginSideAlgorithm=None, reserve4=None, StrikePrice=None, OptionsType=None, UnderlyingMultiple=None, CombinationType=None, InstrumentID=None, ExchangeInstID=None, ProductID=None, UnderlyingInstrID=None):
         super().__init__()
-        if InstrumentID:
-            self.InstrumentID = InstrumentID.encode("GBK")
+        if reserve1:
+            self.reserve1 = reserve1.encode("GBK")
         if ExchangeID:
             self.ExchangeID = ExchangeID.encode("GBK")
         if InstrumentName:
             self.InstrumentName = InstrumentName.encode("GBK")
-        if ExchangeInstID:
-            self.ExchangeInstID = ExchangeInstID.encode("GBK")
-        if ProductID:
-            self.ProductID = ProductID.encode("GBK")
+        if reserve2:
+            self.reserve2 = reserve2.encode("GBK")
+        if reserve3:
+            self.reserve3 = reserve3.encode("GBK")
         if ProductClass:
             self.ProductClass = ProductClass.encode("GBK")
         if DeliveryYear:
@@ -768,8 +800,8 @@ class Instrument(Struct):
             self.ShortMarginRatio = ShortMarginRatio
         if MaxMarginSideAlgorithm:
             self.MaxMarginSideAlgorithm = MaxMarginSideAlgorithm.encode("GBK")
-        if UnderlyingInstrID:
-            self.UnderlyingInstrID = UnderlyingInstrID.encode("GBK")
+        if reserve4:
+            self.reserve4 = reserve4.encode("GBK")
         if StrikePrice:
             self.StrikePrice = StrikePrice
         if OptionsType:
@@ -778,6 +810,14 @@ class Instrument(Struct):
             self.UnderlyingMultiple = UnderlyingMultiple
         if CombinationType:
             self.CombinationType = CombinationType.encode("GBK")
+        if InstrumentID:
+            self.InstrumentID = InstrumentID.encode("GBK")
+        if ExchangeInstID:
+            self.ExchangeInstID = ExchangeInstID.encode("GBK")
+        if ProductID:
+            self.ProductID = ProductID.encode("GBK")
+        if UnderlyingInstrID:
+            self.UnderlyingInstrID = UnderlyingInstrID.encode("GBK")
 
 
 class Broker(Struct):
@@ -808,9 +848,10 @@ class Trader(Struct):
         ("Password", c_char_Array_41),
         ("InstallCount", c_int),
         ("BrokerID", c_char_Array_11),
+        ("OrderCancelAlg", c_char),
     ]
 
-    def __init__(self, ExchangeID=None, TraderID=None, ParticipantID=None, Password=None, InstallCount=None, BrokerID=None):
+    def __init__(self, ExchangeID=None, TraderID=None, ParticipantID=None, Password=None, InstallCount=None, BrokerID=None, OrderCancelAlg=None):
         super().__init__()
         if ExchangeID:
             self.ExchangeID = ExchangeID.encode("GBK")
@@ -824,6 +865,8 @@ class Trader(Struct):
             self.InstallCount = InstallCount
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
+        if OrderCancelAlg:
+            self.OrderCancelAlg = OrderCancelAlg.encode("GBK")
 
 
 class Investor(Struct):
@@ -841,9 +884,11 @@ class Investor(Struct):
         ("Mobile", c_char_Array_41),
         ("CommModelID", c_char_Array_13),
         ("MarginModelID", c_char_Array_13),
+        ("IsOrderFreq", c_char),
+        ("IsOpenVolLimit", c_char),
     ]
 
-    def __init__(self, InvestorID=None, BrokerID=None, InvestorGroupID=None, InvestorName=None, IdentifiedCardType=None, IdentifiedCardNo=None, IsActive=None, Telephone=None, Address=None, OpenDate=None, Mobile=None, CommModelID=None, MarginModelID=None):
+    def __init__(self, InvestorID=None, BrokerID=None, InvestorGroupID=None, InvestorName=None, IdentifiedCardType=None, IdentifiedCardNo=None, IsActive=None, Telephone=None, Address=None, OpenDate=None, Mobile=None, CommModelID=None, MarginModelID=None, IsOrderFreq=None, IsOpenVolLimit=None):
         super().__init__()
         if InvestorID:
             self.InvestorID = InvestorID.encode("GBK")
@@ -871,6 +916,10 @@ class Investor(Struct):
             self.CommModelID = CommModelID.encode("GBK")
         if MarginModelID:
             self.MarginModelID = MarginModelID.encode("GBK")
+        if IsOrderFreq:
+            self.IsOrderFreq = IsOrderFreq.encode("GBK")
+        if IsOpenVolLimit:
+            self.IsOpenVolLimit = IsOpenVolLimit.encode("GBK")
 
 
 class TradingCode(Struct):
@@ -1136,7 +1185,7 @@ class TradingAccount(Struct):
 
 class InvestorPosition(Struct):
     _fields_ = [
-        ("InstrumentID", c_char_Array_31),
+        ("reserve1", c_char_Array_31),
         ("BrokerID", c_char_Array_11),
         ("InvestorID", c_char_Array_13),
         ("PosiDirection", c_char),
@@ -1183,12 +1232,15 @@ class InvestorPosition(Struct):
         ("YdStrikeFrozen", c_int),
         ("InvestUnitID", c_char_Array_17),
         ("PositionCostOffset", c_double),
+        ("TasPosition", c_int),
+        ("TasPositionCost", c_double),
+        ("InstrumentID", c_char_Array_81),
     ]
 
-    def __init__(self, InstrumentID=None, BrokerID=None, InvestorID=None, PosiDirection=None, HedgeFlag=None, PositionDate=None, YdPosition=None, Position=None, LongFrozen=None, ShortFrozen=None, LongFrozenAmount=None, ShortFrozenAmount=None, OpenVolume=None, CloseVolume=None, OpenAmount=None, CloseAmount=None, PositionCost=None, PreMargin=None, UseMargin=None, FrozenMargin=None, FrozenCash=None, FrozenCommission=None, CashIn=None, Commission=None, CloseProfit=None, PositionProfit=None, PreSettlementPrice=None, SettlementPrice=None, TradingDay=None, SettlementID=None, OpenCost=None, ExchangeMargin=None, CombPosition=None, CombLongFrozen=None, CombShortFrozen=None, CloseProfitByDate=None, CloseProfitByTrade=None, TodayPosition=None, MarginRateByMoney=None, MarginRateByVolume=None, StrikeFrozen=None, StrikeFrozenAmount=None, AbandonFrozen=None, ExchangeID=None, YdStrikeFrozen=None, InvestUnitID=None, PositionCostOffset=None):
+    def __init__(self, reserve1=None, BrokerID=None, InvestorID=None, PosiDirection=None, HedgeFlag=None, PositionDate=None, YdPosition=None, Position=None, LongFrozen=None, ShortFrozen=None, LongFrozenAmount=None, ShortFrozenAmount=None, OpenVolume=None, CloseVolume=None, OpenAmount=None, CloseAmount=None, PositionCost=None, PreMargin=None, UseMargin=None, FrozenMargin=None, FrozenCash=None, FrozenCommission=None, CashIn=None, Commission=None, CloseProfit=None, PositionProfit=None, PreSettlementPrice=None, SettlementPrice=None, TradingDay=None, SettlementID=None, OpenCost=None, ExchangeMargin=None, CombPosition=None, CombLongFrozen=None, CombShortFrozen=None, CloseProfitByDate=None, CloseProfitByTrade=None, TodayPosition=None, MarginRateByMoney=None, MarginRateByVolume=None, StrikeFrozen=None, StrikeFrozenAmount=None, AbandonFrozen=None, ExchangeID=None, YdStrikeFrozen=None, InvestUnitID=None, PositionCostOffset=None, TasPosition=None, TasPositionCost=None, InstrumentID=None):
         super().__init__()
-        if InstrumentID:
-            self.InstrumentID = InstrumentID.encode("GBK")
+        if reserve1:
+            self.reserve1 = reserve1.encode("GBK")
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
         if InvestorID:
@@ -1281,11 +1333,17 @@ class InvestorPosition(Struct):
             self.InvestUnitID = InvestUnitID.encode("GBK")
         if PositionCostOffset:
             self.PositionCostOffset = PositionCostOffset
+        if TasPosition:
+            self.TasPosition = TasPosition
+        if TasPositionCost:
+            self.TasPositionCost = TasPositionCost
+        if InstrumentID:
+            self.InstrumentID = InstrumentID.encode("GBK")
 
 
 class InstrumentMarginRate(Struct):
     _fields_ = [
-        ("InstrumentID", c_char_Array_31),
+        ("reserve1", c_char_Array_31),
         ("InvestorRange", c_char),
         ("BrokerID", c_char_Array_11),
         ("InvestorID", c_char_Array_13),
@@ -1297,12 +1355,13 @@ class InstrumentMarginRate(Struct):
         ("IsRelative", c_int),
         ("ExchangeID", c_char_Array_9),
         ("InvestUnitID", c_char_Array_17),
+        ("InstrumentID", c_char_Array_81),
     ]
 
-    def __init__(self, InstrumentID=None, InvestorRange=None, BrokerID=None, InvestorID=None, HedgeFlag=None, LongMarginRatioByMoney=None, LongMarginRatioByVolume=None, ShortMarginRatioByMoney=None, ShortMarginRatioByVolume=None, IsRelative=None, ExchangeID=None, InvestUnitID=None):
+    def __init__(self, reserve1=None, InvestorRange=None, BrokerID=None, InvestorID=None, HedgeFlag=None, LongMarginRatioByMoney=None, LongMarginRatioByVolume=None, ShortMarginRatioByMoney=None, ShortMarginRatioByVolume=None, IsRelative=None, ExchangeID=None, InvestUnitID=None, InstrumentID=None):
         super().__init__()
-        if InstrumentID:
-            self.InstrumentID = InstrumentID.encode("GBK")
+        if reserve1:
+            self.reserve1 = reserve1.encode("GBK")
         if InvestorRange:
             self.InvestorRange = InvestorRange.encode("GBK")
         if BrokerID:
@@ -1325,11 +1384,13 @@ class InstrumentMarginRate(Struct):
             self.ExchangeID = ExchangeID.encode("GBK")
         if InvestUnitID:
             self.InvestUnitID = InvestUnitID.encode("GBK")
+        if InstrumentID:
+            self.InstrumentID = InstrumentID.encode("GBK")
 
 
 class InstrumentCommissionRate(Struct):
     _fields_ = [
-        ("InstrumentID", c_char_Array_31),
+        ("reserve1", c_char_Array_31),
         ("InvestorRange", c_char),
         ("BrokerID", c_char_Array_11),
         ("InvestorID", c_char_Array_13),
@@ -1342,12 +1403,13 @@ class InstrumentCommissionRate(Struct):
         ("ExchangeID", c_char_Array_9),
         ("BizType", c_char),
         ("InvestUnitID", c_char_Array_17),
+        ("InstrumentID", c_char_Array_81),
     ]
 
-    def __init__(self, InstrumentID=None, InvestorRange=None, BrokerID=None, InvestorID=None, OpenRatioByMoney=None, OpenRatioByVolume=None, CloseRatioByMoney=None, CloseRatioByVolume=None, CloseTodayRatioByMoney=None, CloseTodayRatioByVolume=None, ExchangeID=None, BizType=None, InvestUnitID=None):
+    def __init__(self, reserve1=None, InvestorRange=None, BrokerID=None, InvestorID=None, OpenRatioByMoney=None, OpenRatioByVolume=None, CloseRatioByMoney=None, CloseRatioByVolume=None, CloseTodayRatioByMoney=None, CloseTodayRatioByVolume=None, ExchangeID=None, BizType=None, InvestUnitID=None, InstrumentID=None):
         super().__init__()
-        if InstrumentID:
-            self.InstrumentID = InstrumentID.encode("GBK")
+        if reserve1:
+            self.reserve1 = reserve1.encode("GBK")
         if InvestorRange:
             self.InvestorRange = InvestorRange.encode("GBK")
         if BrokerID:
@@ -1372,14 +1434,16 @@ class InstrumentCommissionRate(Struct):
             self.BizType = BizType.encode("GBK")
         if InvestUnitID:
             self.InvestUnitID = InvestUnitID.encode("GBK")
+        if InstrumentID:
+            self.InstrumentID = InstrumentID.encode("GBK")
 
 
 class DepthMarketData(Struct):
     _fields_ = [
         ("TradingDay", c_char_Array_9),
-        ("InstrumentID", c_char_Array_31),
+        ("reserve1", c_char_Array_31),
         ("ExchangeID", c_char_Array_9),
-        ("ExchangeInstID", c_char_Array_31),
+        ("reserve2", c_char_Array_31),
         ("LastPrice", c_double),
         ("PreSettlementPrice", c_double),
         ("PreClosePrice", c_double),
@@ -1420,18 +1484,22 @@ class DepthMarketData(Struct):
         ("AskVolume5", c_int),
         ("AveragePrice", c_double),
         ("ActionDay", c_char_Array_9),
+        ("InstrumentID", c_char_Array_81),
+        ("ExchangeInstID", c_char_Array_81),
+        ("BandingUpperPrice", c_double),
+        ("BandingLowerPrice", c_double),
     ]
 
-    def __init__(self, TradingDay=None, InstrumentID=None, ExchangeID=None, ExchangeInstID=None, LastPrice=None, PreSettlementPrice=None, PreClosePrice=None, PreOpenInterest=None, OpenPrice=None, HighestPrice=None, LowestPrice=None, Volume=None, Turnover=None, OpenInterest=None, ClosePrice=None, SettlementPrice=None, UpperLimitPrice=None, LowerLimitPrice=None, PreDelta=None, CurrDelta=None, UpdateTime=None, UpdateMillisec=None, BidPrice1=None, BidVolume1=None, AskPrice1=None, AskVolume1=None, BidPrice2=None, BidVolume2=None, AskPrice2=None, AskVolume2=None, BidPrice3=None, BidVolume3=None, AskPrice3=None, AskVolume3=None, BidPrice4=None, BidVolume4=None, AskPrice4=None, AskVolume4=None, BidPrice5=None, BidVolume5=None, AskPrice5=None, AskVolume5=None, AveragePrice=None, ActionDay=None):
+    def __init__(self, TradingDay=None, reserve1=None, ExchangeID=None, reserve2=None, LastPrice=None, PreSettlementPrice=None, PreClosePrice=None, PreOpenInterest=None, OpenPrice=None, HighestPrice=None, LowestPrice=None, Volume=None, Turnover=None, OpenInterest=None, ClosePrice=None, SettlementPrice=None, UpperLimitPrice=None, LowerLimitPrice=None, PreDelta=None, CurrDelta=None, UpdateTime=None, UpdateMillisec=None, BidPrice1=None, BidVolume1=None, AskPrice1=None, AskVolume1=None, BidPrice2=None, BidVolume2=None, AskPrice2=None, AskVolume2=None, BidPrice3=None, BidVolume3=None, AskPrice3=None, AskVolume3=None, BidPrice4=None, BidVolume4=None, AskPrice4=None, AskVolume4=None, BidPrice5=None, BidVolume5=None, AskPrice5=None, AskVolume5=None, AveragePrice=None, ActionDay=None, InstrumentID=None, ExchangeInstID=None, BandingUpperPrice=None, BandingLowerPrice=None):
         super().__init__()
         if TradingDay:
             self.TradingDay = TradingDay.encode("GBK")
-        if InstrumentID:
-            self.InstrumentID = InstrumentID.encode("GBK")
+        if reserve1:
+            self.reserve1 = reserve1.encode("GBK")
         if ExchangeID:
             self.ExchangeID = ExchangeID.encode("GBK")
-        if ExchangeInstID:
-            self.ExchangeInstID = ExchangeInstID.encode("GBK")
+        if reserve2:
+            self.reserve2 = reserve2.encode("GBK")
         if LastPrice:
             self.LastPrice = LastPrice
         if PreSettlementPrice:
@@ -1512,21 +1580,30 @@ class DepthMarketData(Struct):
             self.AveragePrice = AveragePrice
         if ActionDay:
             self.ActionDay = ActionDay.encode("GBK")
+        if InstrumentID:
+            self.InstrumentID = InstrumentID.encode("GBK")
+        if ExchangeInstID:
+            self.ExchangeInstID = ExchangeInstID.encode("GBK")
+        if BandingUpperPrice:
+            self.BandingUpperPrice = BandingUpperPrice
+        if BandingLowerPrice:
+            self.BandingLowerPrice = BandingLowerPrice
 
 
 class InstrumentTradingRight(Struct):
     _fields_ = [
-        ("InstrumentID", c_char_Array_31),
+        ("reserve1", c_char_Array_31),
         ("InvestorRange", c_char),
         ("BrokerID", c_char_Array_11),
         ("InvestorID", c_char_Array_13),
         ("TradingRight", c_char),
+        ("InstrumentID", c_char_Array_81),
     ]
 
-    def __init__(self, InstrumentID=None, InvestorRange=None, BrokerID=None, InvestorID=None, TradingRight=None):
+    def __init__(self, reserve1=None, InvestorRange=None, BrokerID=None, InvestorID=None, TradingRight=None, InstrumentID=None):
         super().__init__()
-        if InstrumentID:
-            self.InstrumentID = InstrumentID.encode("GBK")
+        if reserve1:
+            self.reserve1 = reserve1.encode("GBK")
         if InvestorRange:
             self.InvestorRange = InvestorRange.encode("GBK")
         if BrokerID:
@@ -1535,6 +1612,8 @@ class InstrumentTradingRight(Struct):
             self.InvestorID = InvestorID.encode("GBK")
         if TradingRight:
             self.TradingRight = TradingRight.encode("GBK")
+        if InstrumentID:
+            self.InstrumentID = InstrumentID.encode("GBK")
 
 
 class BrokerUser(Struct):
@@ -1633,9 +1712,10 @@ class TraderOffer(Struct):
         ("BrokerID", c_char_Array_11),
         ("MaxTradeID", c_char_Array_21),
         ("MaxOrderMessageReference", c_char_Array_7),
+        ("OrderCancelAlg", c_char),
     ]
 
-    def __init__(self, ExchangeID=None, TraderID=None, ParticipantID=None, Password=None, InstallID=None, OrderLocalID=None, TraderConnectStatus=None, ConnectRequestDate=None, ConnectRequestTime=None, LastReportDate=None, LastReportTime=None, ConnectDate=None, ConnectTime=None, StartDate=None, StartTime=None, TradingDay=None, BrokerID=None, MaxTradeID=None, MaxOrderMessageReference=None):
+    def __init__(self, ExchangeID=None, TraderID=None, ParticipantID=None, Password=None, InstallID=None, OrderLocalID=None, TraderConnectStatus=None, ConnectRequestDate=None, ConnectRequestTime=None, LastReportDate=None, LastReportTime=None, ConnectDate=None, ConnectTime=None, StartDate=None, StartTime=None, TradingDay=None, BrokerID=None, MaxTradeID=None, MaxOrderMessageReference=None, OrderCancelAlg=None):
         super().__init__()
         if ExchangeID:
             self.ExchangeID = ExchangeID.encode("GBK")
@@ -1675,6 +1755,8 @@ class TraderOffer(Struct):
             self.MaxTradeID = MaxTradeID.encode("GBK")
         if MaxOrderMessageReference:
             self.MaxOrderMessageReference = MaxOrderMessageReference.encode("GBK")
+        if OrderCancelAlg:
+            self.OrderCancelAlg = OrderCancelAlg.encode("GBK")
 
 
 class SettlementInfo(Struct):
@@ -1711,7 +1793,7 @@ class SettlementInfo(Struct):
 
 class InstrumentMarginRateAdjust(Struct):
     _fields_ = [
-        ("InstrumentID", c_char_Array_31),
+        ("reserve1", c_char_Array_31),
         ("InvestorRange", c_char),
         ("BrokerID", c_char_Array_11),
         ("InvestorID", c_char_Array_13),
@@ -1721,12 +1803,13 @@ class InstrumentMarginRateAdjust(Struct):
         ("ShortMarginRatioByMoney", c_double),
         ("ShortMarginRatioByVolume", c_double),
         ("IsRelative", c_int),
+        ("InstrumentID", c_char_Array_81),
     ]
 
-    def __init__(self, InstrumentID=None, InvestorRange=None, BrokerID=None, InvestorID=None, HedgeFlag=None, LongMarginRatioByMoney=None, LongMarginRatioByVolume=None, ShortMarginRatioByMoney=None, ShortMarginRatioByVolume=None, IsRelative=None):
+    def __init__(self, reserve1=None, InvestorRange=None, BrokerID=None, InvestorID=None, HedgeFlag=None, LongMarginRatioByMoney=None, LongMarginRatioByVolume=None, ShortMarginRatioByMoney=None, ShortMarginRatioByVolume=None, IsRelative=None, InstrumentID=None):
         super().__init__()
-        if InstrumentID:
-            self.InstrumentID = InstrumentID.encode("GBK")
+        if reserve1:
+            self.reserve1 = reserve1.encode("GBK")
         if InvestorRange:
             self.InvestorRange = InvestorRange.encode("GBK")
         if BrokerID:
@@ -1745,26 +1828,29 @@ class InstrumentMarginRateAdjust(Struct):
             self.ShortMarginRatioByVolume = ShortMarginRatioByVolume
         if IsRelative:
             self.IsRelative = IsRelative
+        if InstrumentID:
+            self.InstrumentID = InstrumentID.encode("GBK")
 
 
 class ExchangeMarginRate(Struct):
     _fields_ = [
         ("BrokerID", c_char_Array_11),
-        ("InstrumentID", c_char_Array_31),
+        ("reserve1", c_char_Array_31),
         ("HedgeFlag", c_char),
         ("LongMarginRatioByMoney", c_double),
         ("LongMarginRatioByVolume", c_double),
         ("ShortMarginRatioByMoney", c_double),
         ("ShortMarginRatioByVolume", c_double),
         ("ExchangeID", c_char_Array_9),
+        ("InstrumentID", c_char_Array_81),
     ]
 
-    def __init__(self, BrokerID=None, InstrumentID=None, HedgeFlag=None, LongMarginRatioByMoney=None, LongMarginRatioByVolume=None, ShortMarginRatioByMoney=None, ShortMarginRatioByVolume=None, ExchangeID=None):
+    def __init__(self, BrokerID=None, reserve1=None, HedgeFlag=None, LongMarginRatioByMoney=None, LongMarginRatioByVolume=None, ShortMarginRatioByMoney=None, ShortMarginRatioByVolume=None, ExchangeID=None, InstrumentID=None):
         super().__init__()
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
-        if InstrumentID:
-            self.InstrumentID = InstrumentID.encode("GBK")
+        if reserve1:
+            self.reserve1 = reserve1.encode("GBK")
         if HedgeFlag:
             self.HedgeFlag = HedgeFlag.encode("GBK")
         if LongMarginRatioByMoney:
@@ -1777,12 +1863,14 @@ class ExchangeMarginRate(Struct):
             self.ShortMarginRatioByVolume = ShortMarginRatioByVolume
         if ExchangeID:
             self.ExchangeID = ExchangeID.encode("GBK")
+        if InstrumentID:
+            self.InstrumentID = InstrumentID.encode("GBK")
 
 
 class ExchangeMarginRateAdjust(Struct):
     _fields_ = [
         ("BrokerID", c_char_Array_11),
-        ("InstrumentID", c_char_Array_31),
+        ("reserve1", c_char_Array_31),
         ("HedgeFlag", c_char),
         ("LongMarginRatioByMoney", c_double),
         ("LongMarginRatioByVolume", c_double),
@@ -1796,14 +1884,15 @@ class ExchangeMarginRateAdjust(Struct):
         ("NoLongMarginRatioByVolume", c_double),
         ("NoShortMarginRatioByMoney", c_double),
         ("NoShortMarginRatioByVolume", c_double),
+        ("InstrumentID", c_char_Array_81),
     ]
 
-    def __init__(self, BrokerID=None, InstrumentID=None, HedgeFlag=None, LongMarginRatioByMoney=None, LongMarginRatioByVolume=None, ShortMarginRatioByMoney=None, ShortMarginRatioByVolume=None, ExchLongMarginRatioByMoney=None, ExchLongMarginRatioByVolume=None, ExchShortMarginRatioByMoney=None, ExchShortMarginRatioByVolume=None, NoLongMarginRatioByMoney=None, NoLongMarginRatioByVolume=None, NoShortMarginRatioByMoney=None, NoShortMarginRatioByVolume=None):
+    def __init__(self, BrokerID=None, reserve1=None, HedgeFlag=None, LongMarginRatioByMoney=None, LongMarginRatioByVolume=None, ShortMarginRatioByMoney=None, ShortMarginRatioByVolume=None, ExchLongMarginRatioByMoney=None, ExchLongMarginRatioByVolume=None, ExchShortMarginRatioByMoney=None, ExchShortMarginRatioByVolume=None, NoLongMarginRatioByMoney=None, NoLongMarginRatioByVolume=None, NoShortMarginRatioByMoney=None, NoShortMarginRatioByVolume=None, InstrumentID=None):
         super().__init__()
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
-        if InstrumentID:
-            self.InstrumentID = InstrumentID.encode("GBK")
+        if reserve1:
+            self.reserve1 = reserve1.encode("GBK")
         if HedgeFlag:
             self.HedgeFlag = HedgeFlag.encode("GBK")
         if LongMarginRatioByMoney:
@@ -1830,6 +1919,8 @@ class ExchangeMarginRateAdjust(Struct):
             self.NoShortMarginRatioByMoney = NoShortMarginRatioByMoney
         if NoShortMarginRatioByVolume:
             self.NoShortMarginRatioByVolume = NoShortMarginRatioByVolume
+        if InstrumentID:
+            self.InstrumentID = InstrumentID.encode("GBK")
 
 
 class ExchangeRate(Struct):
@@ -1914,7 +2005,7 @@ class LoginInfo(Struct):
         ("UserID", c_char_Array_16),
         ("LoginDate", c_char_Array_9),
         ("LoginTime", c_char_Array_9),
-        ("IPAddress", c_char_Array_16),
+        ("reserve1", c_char_Array_16),
         ("UserProductInfo", c_char_Array_11),
         ("InterfaceProductInfo", c_char_Array_11),
         ("ProtocolInfo", c_char_Array_11),
@@ -1931,9 +2022,10 @@ class LoginInfo(Struct):
         ("IsQryControl", c_int),
         ("LoginRemark", c_char_Array_36),
         ("Password", c_char_Array_41),
+        ("IPAddress", c_char_Array_33),
     ]
 
-    def __init__(self, FrontID=None, SessionID=None, BrokerID=None, UserID=None, LoginDate=None, LoginTime=None, IPAddress=None, UserProductInfo=None, InterfaceProductInfo=None, ProtocolInfo=None, SystemName=None, PasswordDeprecated=None, MaxOrderRef=None, SHFETime=None, DCETime=None, CZCETime=None, FFEXTime=None, MacAddress=None, OneTimePassword=None, INETime=None, IsQryControl=None, LoginRemark=None, Password=None):
+    def __init__(self, FrontID=None, SessionID=None, BrokerID=None, UserID=None, LoginDate=None, LoginTime=None, reserve1=None, UserProductInfo=None, InterfaceProductInfo=None, ProtocolInfo=None, SystemName=None, PasswordDeprecated=None, MaxOrderRef=None, SHFETime=None, DCETime=None, CZCETime=None, FFEXTime=None, MacAddress=None, OneTimePassword=None, INETime=None, IsQryControl=None, LoginRemark=None, Password=None, IPAddress=None):
         super().__init__()
         if FrontID:
             self.FrontID = FrontID
@@ -1947,8 +2039,8 @@ class LoginInfo(Struct):
             self.LoginDate = LoginDate.encode("GBK")
         if LoginTime:
             self.LoginTime = LoginTime.encode("GBK")
-        if IPAddress:
-            self.IPAddress = IPAddress.encode("GBK")
+        if reserve1:
+            self.reserve1 = reserve1.encode("GBK")
         if UserProductInfo:
             self.UserProductInfo = UserProductInfo.encode("GBK")
         if InterfaceProductInfo:
@@ -1981,6 +2073,8 @@ class LoginInfo(Struct):
             self.LoginRemark = LoginRemark.encode("GBK")
         if Password:
             self.Password = Password.encode("GBK")
+        if IPAddress:
+            self.IPAddress = IPAddress.encode("GBK")
 
 
 class LogoutAll(Struct):
@@ -2044,7 +2138,7 @@ class InputOrder(Struct):
     _fields_ = [
         ("BrokerID", c_char_Array_11),
         ("InvestorID", c_char_Array_13),
-        ("InstrumentID", c_char_Array_31),
+        ("reserve1", c_char_Array_31),
         ("OrderRef", c_char_Array_13),
         ("UserID", c_char_Array_16),
         ("OrderPriceType", c_char),
@@ -2070,18 +2164,20 @@ class InputOrder(Struct):
         ("AccountID", c_char_Array_13),
         ("CurrencyID", c_char_Array_4),
         ("ClientID", c_char_Array_11),
-        ("IPAddress", c_char_Array_16),
+        ("reserve2", c_char_Array_16),
         ("MacAddress", c_char_Array_21),
+        ("InstrumentID", c_char_Array_81),
+        ("IPAddress", c_char_Array_33),
     ]
 
-    def __init__(self, BrokerID=None, InvestorID=None, InstrumentID=None, OrderRef=None, UserID=None, OrderPriceType=None, Direction=None, CombOffsetFlag=None, CombHedgeFlag=None, LimitPrice=None, VolumeTotalOriginal=None, TimeCondition=None, GTDDate=None, VolumeCondition=None, MinVolume=None, ContingentCondition=None, StopPrice=None, ForceCloseReason=None, IsAutoSuspend=None, BusinessUnit=None, RequestID=None, UserForceClose=None, IsSwapOrder=None, ExchangeID=None, InvestUnitID=None, AccountID=None, CurrencyID=None, ClientID=None, IPAddress=None, MacAddress=None):
+    def __init__(self, BrokerID=None, InvestorID=None, reserve1=None, OrderRef=None, UserID=None, OrderPriceType=None, Direction=None, CombOffsetFlag=None, CombHedgeFlag=None, LimitPrice=None, VolumeTotalOriginal=None, TimeCondition=None, GTDDate=None, VolumeCondition=None, MinVolume=None, ContingentCondition=None, StopPrice=None, ForceCloseReason=None, IsAutoSuspend=None, BusinessUnit=None, RequestID=None, UserForceClose=None, IsSwapOrder=None, ExchangeID=None, InvestUnitID=None, AccountID=None, CurrencyID=None, ClientID=None, reserve2=None, MacAddress=None, InstrumentID=None, IPAddress=None):
         super().__init__()
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
         if InvestorID:
             self.InvestorID = InvestorID.encode("GBK")
-        if InstrumentID:
-            self.InstrumentID = InstrumentID.encode("GBK")
+        if reserve1:
+            self.reserve1 = reserve1.encode("GBK")
         if OrderRef:
             self.OrderRef = OrderRef.encode("GBK")
         if UserID:
@@ -2132,17 +2228,21 @@ class InputOrder(Struct):
             self.CurrencyID = CurrencyID.encode("GBK")
         if ClientID:
             self.ClientID = ClientID.encode("GBK")
-        if IPAddress:
-            self.IPAddress = IPAddress.encode("GBK")
+        if reserve2:
+            self.reserve2 = reserve2.encode("GBK")
         if MacAddress:
             self.MacAddress = MacAddress.encode("GBK")
+        if InstrumentID:
+            self.InstrumentID = InstrumentID.encode("GBK")
+        if IPAddress:
+            self.IPAddress = IPAddress.encode("GBK")
 
 
 class Order(Struct):
     _fields_ = [
         ("BrokerID", c_char_Array_11),
         ("InvestorID", c_char_Array_13),
-        ("InstrumentID", c_char_Array_31),
+        ("reserve1", c_char_Array_31),
         ("OrderRef", c_char_Array_13),
         ("UserID", c_char_Array_16),
         ("OrderPriceType", c_char),
@@ -2165,7 +2265,7 @@ class Order(Struct):
         ("ExchangeID", c_char_Array_9),
         ("ParticipantID", c_char_Array_11),
         ("ClientID", c_char_Array_11),
-        ("ExchangeInstID", c_char_Array_31),
+        ("reserve2", c_char_Array_31),
         ("TraderID", c_char_Array_21),
         ("InstallID", c_int),
         ("OrderSubmitStatus", c_char),
@@ -2201,18 +2301,21 @@ class Order(Struct):
         ("InvestUnitID", c_char_Array_17),
         ("AccountID", c_char_Array_13),
         ("CurrencyID", c_char_Array_4),
-        ("IPAddress", c_char_Array_16),
+        ("reserve3", c_char_Array_16),
         ("MacAddress", c_char_Array_21),
+        ("InstrumentID", c_char_Array_81),
+        ("ExchangeInstID", c_char_Array_81),
+        ("IPAddress", c_char_Array_33),
     ]
 
-    def __init__(self, BrokerID=None, InvestorID=None, InstrumentID=None, OrderRef=None, UserID=None, OrderPriceType=None, Direction=None, CombOffsetFlag=None, CombHedgeFlag=None, LimitPrice=None, VolumeTotalOriginal=None, TimeCondition=None, GTDDate=None, VolumeCondition=None, MinVolume=None, ContingentCondition=None, StopPrice=None, ForceCloseReason=None, IsAutoSuspend=None, BusinessUnit=None, RequestID=None, OrderLocalID=None, ExchangeID=None, ParticipantID=None, ClientID=None, ExchangeInstID=None, TraderID=None, InstallID=None, OrderSubmitStatus=None, NotifySequence=None, TradingDay=None, SettlementID=None, OrderSysID=None, OrderSource=None, OrderStatus=None, OrderType=None, VolumeTraded=None, VolumeTotal=None, InsertDate=None, InsertTime=None, ActiveTime=None, SuspendTime=None, UpdateTime=None, CancelTime=None, ActiveTraderID=None, ClearingPartID=None, SequenceNo=None, FrontID=None, SessionID=None, UserProductInfo=None, StatusMsg=None, UserForceClose=None, ActiveUserID=None, BrokerOrderSeq=None, RelativeOrderSysID=None, ZCETotalTradedVolume=None, IsSwapOrder=None, BranchID=None, InvestUnitID=None, AccountID=None, CurrencyID=None, IPAddress=None, MacAddress=None):
+    def __init__(self, BrokerID=None, InvestorID=None, reserve1=None, OrderRef=None, UserID=None, OrderPriceType=None, Direction=None, CombOffsetFlag=None, CombHedgeFlag=None, LimitPrice=None, VolumeTotalOriginal=None, TimeCondition=None, GTDDate=None, VolumeCondition=None, MinVolume=None, ContingentCondition=None, StopPrice=None, ForceCloseReason=None, IsAutoSuspend=None, BusinessUnit=None, RequestID=None, OrderLocalID=None, ExchangeID=None, ParticipantID=None, ClientID=None, reserve2=None, TraderID=None, InstallID=None, OrderSubmitStatus=None, NotifySequence=None, TradingDay=None, SettlementID=None, OrderSysID=None, OrderSource=None, OrderStatus=None, OrderType=None, VolumeTraded=None, VolumeTotal=None, InsertDate=None, InsertTime=None, ActiveTime=None, SuspendTime=None, UpdateTime=None, CancelTime=None, ActiveTraderID=None, ClearingPartID=None, SequenceNo=None, FrontID=None, SessionID=None, UserProductInfo=None, StatusMsg=None, UserForceClose=None, ActiveUserID=None, BrokerOrderSeq=None, RelativeOrderSysID=None, ZCETotalTradedVolume=None, IsSwapOrder=None, BranchID=None, InvestUnitID=None, AccountID=None, CurrencyID=None, reserve3=None, MacAddress=None, InstrumentID=None, ExchangeInstID=None, IPAddress=None):
         super().__init__()
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
         if InvestorID:
             self.InvestorID = InvestorID.encode("GBK")
-        if InstrumentID:
-            self.InstrumentID = InstrumentID.encode("GBK")
+        if reserve1:
+            self.reserve1 = reserve1.encode("GBK")
         if OrderRef:
             self.OrderRef = OrderRef.encode("GBK")
         if UserID:
@@ -2257,8 +2360,8 @@ class Order(Struct):
             self.ParticipantID = ParticipantID.encode("GBK")
         if ClientID:
             self.ClientID = ClientID.encode("GBK")
-        if ExchangeInstID:
-            self.ExchangeInstID = ExchangeInstID.encode("GBK")
+        if reserve2:
+            self.reserve2 = reserve2.encode("GBK")
         if TraderID:
             self.TraderID = TraderID.encode("GBK")
         if InstallID:
@@ -2329,10 +2432,16 @@ class Order(Struct):
             self.AccountID = AccountID.encode("GBK")
         if CurrencyID:
             self.CurrencyID = CurrencyID.encode("GBK")
-        if IPAddress:
-            self.IPAddress = IPAddress.encode("GBK")
+        if reserve3:
+            self.reserve3 = reserve3.encode("GBK")
         if MacAddress:
             self.MacAddress = MacAddress.encode("GBK")
+        if InstrumentID:
+            self.InstrumentID = InstrumentID.encode("GBK")
+        if ExchangeInstID:
+            self.ExchangeInstID = ExchangeInstID.encode("GBK")
+        if IPAddress:
+            self.IPAddress = IPAddress.encode("GBK")
 
 
 class ExchangeOrder(Struct):
@@ -2357,7 +2466,7 @@ class ExchangeOrder(Struct):
         ("ExchangeID", c_char_Array_9),
         ("ParticipantID", c_char_Array_11),
         ("ClientID", c_char_Array_11),
-        ("ExchangeInstID", c_char_Array_31),
+        ("reserve1", c_char_Array_31),
         ("TraderID", c_char_Array_21),
         ("InstallID", c_int),
         ("OrderSubmitStatus", c_char),
@@ -2380,11 +2489,13 @@ class ExchangeOrder(Struct):
         ("ClearingPartID", c_char_Array_11),
         ("SequenceNo", c_int),
         ("BranchID", c_char_Array_9),
-        ("IPAddress", c_char_Array_16),
+        ("reserve2", c_char_Array_16),
         ("MacAddress", c_char_Array_21),
+        ("ExchangeInstID", c_char_Array_81),
+        ("IPAddress", c_char_Array_33),
     ]
 
-    def __init__(self, OrderPriceType=None, Direction=None, CombOffsetFlag=None, CombHedgeFlag=None, LimitPrice=None, VolumeTotalOriginal=None, TimeCondition=None, GTDDate=None, VolumeCondition=None, MinVolume=None, ContingentCondition=None, StopPrice=None, ForceCloseReason=None, IsAutoSuspend=None, BusinessUnit=None, RequestID=None, OrderLocalID=None, ExchangeID=None, ParticipantID=None, ClientID=None, ExchangeInstID=None, TraderID=None, InstallID=None, OrderSubmitStatus=None, NotifySequence=None, TradingDay=None, SettlementID=None, OrderSysID=None, OrderSource=None, OrderStatus=None, OrderType=None, VolumeTraded=None, VolumeTotal=None, InsertDate=None, InsertTime=None, ActiveTime=None, SuspendTime=None, UpdateTime=None, CancelTime=None, ActiveTraderID=None, ClearingPartID=None, SequenceNo=None, BranchID=None, IPAddress=None, MacAddress=None):
+    def __init__(self, OrderPriceType=None, Direction=None, CombOffsetFlag=None, CombHedgeFlag=None, LimitPrice=None, VolumeTotalOriginal=None, TimeCondition=None, GTDDate=None, VolumeCondition=None, MinVolume=None, ContingentCondition=None, StopPrice=None, ForceCloseReason=None, IsAutoSuspend=None, BusinessUnit=None, RequestID=None, OrderLocalID=None, ExchangeID=None, ParticipantID=None, ClientID=None, reserve1=None, TraderID=None, InstallID=None, OrderSubmitStatus=None, NotifySequence=None, TradingDay=None, SettlementID=None, OrderSysID=None, OrderSource=None, OrderStatus=None, OrderType=None, VolumeTraded=None, VolumeTotal=None, InsertDate=None, InsertTime=None, ActiveTime=None, SuspendTime=None, UpdateTime=None, CancelTime=None, ActiveTraderID=None, ClearingPartID=None, SequenceNo=None, BranchID=None, reserve2=None, MacAddress=None, ExchangeInstID=None, IPAddress=None):
         super().__init__()
         if OrderPriceType:
             self.OrderPriceType = OrderPriceType.encode("GBK")
@@ -2426,8 +2537,8 @@ class ExchangeOrder(Struct):
             self.ParticipantID = ParticipantID.encode("GBK")
         if ClientID:
             self.ClientID = ClientID.encode("GBK")
-        if ExchangeInstID:
-            self.ExchangeInstID = ExchangeInstID.encode("GBK")
+        if reserve1:
+            self.reserve1 = reserve1.encode("GBK")
         if TraderID:
             self.TraderID = TraderID.encode("GBK")
         if InstallID:
@@ -2472,10 +2583,14 @@ class ExchangeOrder(Struct):
             self.SequenceNo = SequenceNo
         if BranchID:
             self.BranchID = BranchID.encode("GBK")
-        if IPAddress:
-            self.IPAddress = IPAddress.encode("GBK")
+        if reserve2:
+            self.reserve2 = reserve2.encode("GBK")
         if MacAddress:
             self.MacAddress = MacAddress.encode("GBK")
+        if ExchangeInstID:
+            self.ExchangeInstID = ExchangeInstID.encode("GBK")
+        if IPAddress:
+            self.IPAddress = IPAddress.encode("GBK")
 
 
 class ExchangeOrderInsertError(Struct):
@@ -2522,13 +2637,15 @@ class InputOrderAction(Struct):
         ("LimitPrice", c_double),
         ("VolumeChange", c_int),
         ("UserID", c_char_Array_16),
-        ("InstrumentID", c_char_Array_31),
+        ("reserve1", c_char_Array_31),
         ("InvestUnitID", c_char_Array_17),
-        ("IPAddress", c_char_Array_16),
+        ("reserve2", c_char_Array_16),
         ("MacAddress", c_char_Array_21),
+        ("InstrumentID", c_char_Array_81),
+        ("IPAddress", c_char_Array_33),
     ]
 
-    def __init__(self, BrokerID=None, InvestorID=None, OrderActionRef=None, OrderRef=None, RequestID=None, FrontID=None, SessionID=None, ExchangeID=None, OrderSysID=None, ActionFlag=None, LimitPrice=None, VolumeChange=None, UserID=None, InstrumentID=None, InvestUnitID=None, IPAddress=None, MacAddress=None):
+    def __init__(self, BrokerID=None, InvestorID=None, OrderActionRef=None, OrderRef=None, RequestID=None, FrontID=None, SessionID=None, ExchangeID=None, OrderSysID=None, ActionFlag=None, LimitPrice=None, VolumeChange=None, UserID=None, reserve1=None, InvestUnitID=None, reserve2=None, MacAddress=None, InstrumentID=None, IPAddress=None):
         super().__init__()
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
@@ -2556,14 +2673,18 @@ class InputOrderAction(Struct):
             self.VolumeChange = VolumeChange
         if UserID:
             self.UserID = UserID.encode("GBK")
-        if InstrumentID:
-            self.InstrumentID = InstrumentID.encode("GBK")
+        if reserve1:
+            self.reserve1 = reserve1.encode("GBK")
         if InvestUnitID:
             self.InvestUnitID = InvestUnitID.encode("GBK")
-        if IPAddress:
-            self.IPAddress = IPAddress.encode("GBK")
+        if reserve2:
+            self.reserve2 = reserve2.encode("GBK")
         if MacAddress:
             self.MacAddress = MacAddress.encode("GBK")
+        if InstrumentID:
+            self.InstrumentID = InstrumentID.encode("GBK")
+        if IPAddress:
+            self.IPAddress = IPAddress.encode("GBK")
 
 
 class OrderAction(Struct):
@@ -2592,14 +2713,16 @@ class OrderAction(Struct):
         ("OrderActionStatus", c_char),
         ("UserID", c_char_Array_16),
         ("StatusMsg", c_char_Array_81),
-        ("InstrumentID", c_char_Array_31),
+        ("reserve1", c_char_Array_31),
         ("BranchID", c_char_Array_9),
         ("InvestUnitID", c_char_Array_17),
-        ("IPAddress", c_char_Array_16),
+        ("reserve2", c_char_Array_16),
         ("MacAddress", c_char_Array_21),
+        ("InstrumentID", c_char_Array_81),
+        ("IPAddress", c_char_Array_33),
     ]
 
-    def __init__(self, BrokerID=None, InvestorID=None, OrderActionRef=None, OrderRef=None, RequestID=None, FrontID=None, SessionID=None, ExchangeID=None, OrderSysID=None, ActionFlag=None, LimitPrice=None, VolumeChange=None, ActionDate=None, ActionTime=None, TraderID=None, InstallID=None, OrderLocalID=None, ActionLocalID=None, ParticipantID=None, ClientID=None, BusinessUnit=None, OrderActionStatus=None, UserID=None, StatusMsg=None, InstrumentID=None, BranchID=None, InvestUnitID=None, IPAddress=None, MacAddress=None):
+    def __init__(self, BrokerID=None, InvestorID=None, OrderActionRef=None, OrderRef=None, RequestID=None, FrontID=None, SessionID=None, ExchangeID=None, OrderSysID=None, ActionFlag=None, LimitPrice=None, VolumeChange=None, ActionDate=None, ActionTime=None, TraderID=None, InstallID=None, OrderLocalID=None, ActionLocalID=None, ParticipantID=None, ClientID=None, BusinessUnit=None, OrderActionStatus=None, UserID=None, StatusMsg=None, reserve1=None, BranchID=None, InvestUnitID=None, reserve2=None, MacAddress=None, InstrumentID=None, IPAddress=None):
         super().__init__()
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
@@ -2649,16 +2772,20 @@ class OrderAction(Struct):
             self.UserID = UserID.encode("GBK")
         if StatusMsg:
             self.StatusMsg = StatusMsg.encode("GBK")
-        if InstrumentID:
-            self.InstrumentID = InstrumentID.encode("GBK")
+        if reserve1:
+            self.reserve1 = reserve1.encode("GBK")
         if BranchID:
             self.BranchID = BranchID.encode("GBK")
         if InvestUnitID:
             self.InvestUnitID = InvestUnitID.encode("GBK")
-        if IPAddress:
-            self.IPAddress = IPAddress.encode("GBK")
+        if reserve2:
+            self.reserve2 = reserve2.encode("GBK")
         if MacAddress:
             self.MacAddress = MacAddress.encode("GBK")
+        if InstrumentID:
+            self.InstrumentID = InstrumentID.encode("GBK")
+        if IPAddress:
+            self.IPAddress = IPAddress.encode("GBK")
 
 
 class ExchangeOrderAction(Struct):
@@ -2680,11 +2807,12 @@ class ExchangeOrderAction(Struct):
         ("OrderActionStatus", c_char),
         ("UserID", c_char_Array_16),
         ("BranchID", c_char_Array_9),
-        ("IPAddress", c_char_Array_16),
+        ("reserve1", c_char_Array_16),
         ("MacAddress", c_char_Array_21),
+        ("IPAddress", c_char_Array_33),
     ]
 
-    def __init__(self, ExchangeID=None, OrderSysID=None, ActionFlag=None, LimitPrice=None, VolumeChange=None, ActionDate=None, ActionTime=None, TraderID=None, InstallID=None, OrderLocalID=None, ActionLocalID=None, ParticipantID=None, ClientID=None, BusinessUnit=None, OrderActionStatus=None, UserID=None, BranchID=None, IPAddress=None, MacAddress=None):
+    def __init__(self, ExchangeID=None, OrderSysID=None, ActionFlag=None, LimitPrice=None, VolumeChange=None, ActionDate=None, ActionTime=None, TraderID=None, InstallID=None, OrderLocalID=None, ActionLocalID=None, ParticipantID=None, ClientID=None, BusinessUnit=None, OrderActionStatus=None, UserID=None, BranchID=None, reserve1=None, MacAddress=None, IPAddress=None):
         super().__init__()
         if ExchangeID:
             self.ExchangeID = ExchangeID.encode("GBK")
@@ -2720,10 +2848,12 @@ class ExchangeOrderAction(Struct):
             self.UserID = UserID.encode("GBK")
         if BranchID:
             self.BranchID = BranchID.encode("GBK")
-        if IPAddress:
-            self.IPAddress = IPAddress.encode("GBK")
+        if reserve1:
+            self.reserve1 = reserve1.encode("GBK")
         if MacAddress:
             self.MacAddress = MacAddress.encode("GBK")
+        if IPAddress:
+            self.IPAddress = IPAddress.encode("GBK")
 
 
 class ExchangeOrderActionError(Struct):
@@ -2767,7 +2897,7 @@ class ExchangeTrade(Struct):
         ("ParticipantID", c_char_Array_11),
         ("ClientID", c_char_Array_11),
         ("TradingRole", c_char),
-        ("ExchangeInstID", c_char_Array_31),
+        ("reserve1", c_char_Array_31),
         ("OffsetFlag", c_char),
         ("HedgeFlag", c_char),
         ("Price", c_double),
@@ -2782,9 +2912,10 @@ class ExchangeTrade(Struct):
         ("BusinessUnit", c_char_Array_21),
         ("SequenceNo", c_int),
         ("TradeSource", c_char),
+        ("ExchangeInstID", c_char_Array_81),
     ]
 
-    def __init__(self, ExchangeID=None, TradeID=None, Direction=None, OrderSysID=None, ParticipantID=None, ClientID=None, TradingRole=None, ExchangeInstID=None, OffsetFlag=None, HedgeFlag=None, Price=None, Volume=None, TradeDate=None, TradeTime=None, TradeType=None, PriceSource=None, TraderID=None, OrderLocalID=None, ClearingPartID=None, BusinessUnit=None, SequenceNo=None, TradeSource=None):
+    def __init__(self, ExchangeID=None, TradeID=None, Direction=None, OrderSysID=None, ParticipantID=None, ClientID=None, TradingRole=None, reserve1=None, OffsetFlag=None, HedgeFlag=None, Price=None, Volume=None, TradeDate=None, TradeTime=None, TradeType=None, PriceSource=None, TraderID=None, OrderLocalID=None, ClearingPartID=None, BusinessUnit=None, SequenceNo=None, TradeSource=None, ExchangeInstID=None):
         super().__init__()
         if ExchangeID:
             self.ExchangeID = ExchangeID.encode("GBK")
@@ -2800,8 +2931,8 @@ class ExchangeTrade(Struct):
             self.ClientID = ClientID.encode("GBK")
         if TradingRole:
             self.TradingRole = TradingRole.encode("GBK")
-        if ExchangeInstID:
-            self.ExchangeInstID = ExchangeInstID.encode("GBK")
+        if reserve1:
+            self.reserve1 = reserve1.encode("GBK")
         if OffsetFlag:
             self.OffsetFlag = OffsetFlag.encode("GBK")
         if HedgeFlag:
@@ -2830,13 +2961,15 @@ class ExchangeTrade(Struct):
             self.SequenceNo = SequenceNo
         if TradeSource:
             self.TradeSource = TradeSource.encode("GBK")
+        if ExchangeInstID:
+            self.ExchangeInstID = ExchangeInstID.encode("GBK")
 
 
 class Trade(Struct):
     _fields_ = [
         ("BrokerID", c_char_Array_11),
         ("InvestorID", c_char_Array_13),
-        ("InstrumentID", c_char_Array_31),
+        ("reserve1", c_char_Array_31),
         ("OrderRef", c_char_Array_13),
         ("UserID", c_char_Array_16),
         ("ExchangeID", c_char_Array_9),
@@ -2846,7 +2979,7 @@ class Trade(Struct):
         ("ParticipantID", c_char_Array_11),
         ("ClientID", c_char_Array_11),
         ("TradingRole", c_char),
-        ("ExchangeInstID", c_char_Array_31),
+        ("reserve2", c_char_Array_31),
         ("OffsetFlag", c_char),
         ("HedgeFlag", c_char),
         ("Price", c_double),
@@ -2865,16 +2998,18 @@ class Trade(Struct):
         ("BrokerOrderSeq", c_int),
         ("TradeSource", c_char),
         ("InvestUnitID", c_char_Array_17),
+        ("InstrumentID", c_char_Array_81),
+        ("ExchangeInstID", c_char_Array_81),
     ]
 
-    def __init__(self, BrokerID=None, InvestorID=None, InstrumentID=None, OrderRef=None, UserID=None, ExchangeID=None, TradeID=None, Direction=None, OrderSysID=None, ParticipantID=None, ClientID=None, TradingRole=None, ExchangeInstID=None, OffsetFlag=None, HedgeFlag=None, Price=None, Volume=None, TradeDate=None, TradeTime=None, TradeType=None, PriceSource=None, TraderID=None, OrderLocalID=None, ClearingPartID=None, BusinessUnit=None, SequenceNo=None, TradingDay=None, SettlementID=None, BrokerOrderSeq=None, TradeSource=None, InvestUnitID=None):
+    def __init__(self, BrokerID=None, InvestorID=None, reserve1=None, OrderRef=None, UserID=None, ExchangeID=None, TradeID=None, Direction=None, OrderSysID=None, ParticipantID=None, ClientID=None, TradingRole=None, reserve2=None, OffsetFlag=None, HedgeFlag=None, Price=None, Volume=None, TradeDate=None, TradeTime=None, TradeType=None, PriceSource=None, TraderID=None, OrderLocalID=None, ClearingPartID=None, BusinessUnit=None, SequenceNo=None, TradingDay=None, SettlementID=None, BrokerOrderSeq=None, TradeSource=None, InvestUnitID=None, InstrumentID=None, ExchangeInstID=None):
         super().__init__()
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
         if InvestorID:
             self.InvestorID = InvestorID.encode("GBK")
-        if InstrumentID:
-            self.InstrumentID = InstrumentID.encode("GBK")
+        if reserve1:
+            self.reserve1 = reserve1.encode("GBK")
         if OrderRef:
             self.OrderRef = OrderRef.encode("GBK")
         if UserID:
@@ -2893,8 +3028,8 @@ class Trade(Struct):
             self.ClientID = ClientID.encode("GBK")
         if TradingRole:
             self.TradingRole = TradingRole.encode("GBK")
-        if ExchangeInstID:
-            self.ExchangeInstID = ExchangeInstID.encode("GBK")
+        if reserve2:
+            self.reserve2 = reserve2.encode("GBK")
         if OffsetFlag:
             self.OffsetFlag = OffsetFlag.encode("GBK")
         if HedgeFlag:
@@ -2931,6 +3066,10 @@ class Trade(Struct):
             self.TradeSource = TradeSource.encode("GBK")
         if InvestUnitID:
             self.InvestUnitID = InvestUnitID.encode("GBK")
+        if InstrumentID:
+            self.InstrumentID = InstrumentID.encode("GBK")
+        if ExchangeInstID:
+            self.ExchangeInstID = ExchangeInstID.encode("GBK")
 
 
 class UserSession(Struct):
@@ -2941,15 +3080,16 @@ class UserSession(Struct):
         ("UserID", c_char_Array_16),
         ("LoginDate", c_char_Array_9),
         ("LoginTime", c_char_Array_9),
-        ("IPAddress", c_char_Array_16),
+        ("reserve1", c_char_Array_16),
         ("UserProductInfo", c_char_Array_11),
         ("InterfaceProductInfo", c_char_Array_11),
         ("ProtocolInfo", c_char_Array_11),
         ("MacAddress", c_char_Array_21),
         ("LoginRemark", c_char_Array_36),
+        ("IPAddress", c_char_Array_33),
     ]
 
-    def __init__(self, FrontID=None, SessionID=None, BrokerID=None, UserID=None, LoginDate=None, LoginTime=None, IPAddress=None, UserProductInfo=None, InterfaceProductInfo=None, ProtocolInfo=None, MacAddress=None, LoginRemark=None):
+    def __init__(self, FrontID=None, SessionID=None, BrokerID=None, UserID=None, LoginDate=None, LoginTime=None, reserve1=None, UserProductInfo=None, InterfaceProductInfo=None, ProtocolInfo=None, MacAddress=None, LoginRemark=None, IPAddress=None):
         super().__init__()
         if FrontID:
             self.FrontID = FrontID
@@ -2963,8 +3103,8 @@ class UserSession(Struct):
             self.LoginDate = LoginDate.encode("GBK")
         if LoginTime:
             self.LoginTime = LoginTime.encode("GBK")
-        if IPAddress:
-            self.IPAddress = IPAddress.encode("GBK")
+        if reserve1:
+            self.reserve1 = reserve1.encode("GBK")
         if UserProductInfo:
             self.UserProductInfo = UserProductInfo.encode("GBK")
         if InterfaceProductInfo:
@@ -2975,29 +3115,32 @@ class UserSession(Struct):
             self.MacAddress = MacAddress.encode("GBK")
         if LoginRemark:
             self.LoginRemark = LoginRemark.encode("GBK")
+        if IPAddress:
+            self.IPAddress = IPAddress.encode("GBK")
 
 
-class QueryMaxOrderVolume(Struct):
+class QryMaxOrderVolume(Struct):
     _fields_ = [
         ("BrokerID", c_char_Array_11),
         ("InvestorID", c_char_Array_13),
-        ("InstrumentID", c_char_Array_31),
+        ("reserve1", c_char_Array_31),
         ("Direction", c_char),
         ("OffsetFlag", c_char),
         ("HedgeFlag", c_char),
         ("MaxVolume", c_int),
         ("ExchangeID", c_char_Array_9),
         ("InvestUnitID", c_char_Array_17),
+        ("InstrumentID", c_char_Array_81),
     ]
 
-    def __init__(self, BrokerID=None, InvestorID=None, InstrumentID=None, Direction=None, OffsetFlag=None, HedgeFlag=None, MaxVolume=None, ExchangeID=None, InvestUnitID=None):
+    def __init__(self, BrokerID=None, InvestorID=None, reserve1=None, Direction=None, OffsetFlag=None, HedgeFlag=None, MaxVolume=None, ExchangeID=None, InvestUnitID=None, InstrumentID=None):
         super().__init__()
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
         if InvestorID:
             self.InvestorID = InvestorID.encode("GBK")
-        if InstrumentID:
-            self.InstrumentID = InstrumentID.encode("GBK")
+        if reserve1:
+            self.reserve1 = reserve1.encode("GBK")
         if Direction:
             self.Direction = Direction.encode("GBK")
         if OffsetFlag:
@@ -3010,6 +3153,8 @@ class QueryMaxOrderVolume(Struct):
             self.ExchangeID = ExchangeID.encode("GBK")
         if InvestUnitID:
             self.InvestUnitID = InvestUnitID.encode("GBK")
+        if InstrumentID:
+            self.InstrumentID = InstrumentID.encode("GBK")
 
 
 class SettlementInfoConfirm(Struct):
@@ -3049,9 +3194,11 @@ class SyncDeposit(Struct):
         ("Deposit", c_double),
         ("IsForce", c_int),
         ("CurrencyID", c_char_Array_4),
+        ("IsFromSopt", c_int),
+        ("TradingPassword", c_char_Array_41),
     ]
 
-    def __init__(self, DepositSeqNo=None, BrokerID=None, InvestorID=None, Deposit=None, IsForce=None, CurrencyID=None):
+    def __init__(self, DepositSeqNo=None, BrokerID=None, InvestorID=None, Deposit=None, IsForce=None, CurrencyID=None, IsFromSopt=None, TradingPassword=None):
         super().__init__()
         if DepositSeqNo:
             self.DepositSeqNo = DepositSeqNo.encode("GBK")
@@ -3065,6 +3212,10 @@ class SyncDeposit(Struct):
             self.IsForce = IsForce
         if CurrencyID:
             self.CurrencyID = CurrencyID.encode("GBK")
+        if IsFromSopt:
+            self.IsFromSopt = IsFromSopt
+        if TradingPassword:
+            self.TradingPassword = TradingPassword.encode("GBK")
 
 
 class SyncFundMortgage(Struct):
@@ -3119,9 +3270,11 @@ class SyncingInvestor(Struct):
         ("Mobile", c_char_Array_41),
         ("CommModelID", c_char_Array_13),
         ("MarginModelID", c_char_Array_13),
+        ("IsOrderFreq", c_char),
+        ("IsOpenVolLimit", c_char),
     ]
 
-    def __init__(self, InvestorID=None, BrokerID=None, InvestorGroupID=None, InvestorName=None, IdentifiedCardType=None, IdentifiedCardNo=None, IsActive=None, Telephone=None, Address=None, OpenDate=None, Mobile=None, CommModelID=None, MarginModelID=None):
+    def __init__(self, InvestorID=None, BrokerID=None, InvestorGroupID=None, InvestorName=None, IdentifiedCardType=None, IdentifiedCardNo=None, IsActive=None, Telephone=None, Address=None, OpenDate=None, Mobile=None, CommModelID=None, MarginModelID=None, IsOrderFreq=None, IsOpenVolLimit=None):
         super().__init__()
         if InvestorID:
             self.InvestorID = InvestorID.encode("GBK")
@@ -3149,6 +3302,10 @@ class SyncingInvestor(Struct):
             self.CommModelID = CommModelID.encode("GBK")
         if MarginModelID:
             self.MarginModelID = MarginModelID.encode("GBK")
+        if IsOrderFreq:
+            self.IsOrderFreq = IsOrderFreq.encode("GBK")
+        if IsOpenVolLimit:
+            self.IsOpenVolLimit = IsOpenVolLimit.encode("GBK")
 
 
 class SyncingTradingCode(Struct):
@@ -3348,7 +3505,7 @@ class SyncingTradingAccount(Struct):
 
 class SyncingInvestorPosition(Struct):
     _fields_ = [
-        ("InstrumentID", c_char_Array_31),
+        ("reserve1", c_char_Array_31),
         ("BrokerID", c_char_Array_11),
         ("InvestorID", c_char_Array_13),
         ("PosiDirection", c_char),
@@ -3395,12 +3552,15 @@ class SyncingInvestorPosition(Struct):
         ("YdStrikeFrozen", c_int),
         ("InvestUnitID", c_char_Array_17),
         ("PositionCostOffset", c_double),
+        ("TasPosition", c_int),
+        ("TasPositionCost", c_double),
+        ("InstrumentID", c_char_Array_81),
     ]
 
-    def __init__(self, InstrumentID=None, BrokerID=None, InvestorID=None, PosiDirection=None, HedgeFlag=None, PositionDate=None, YdPosition=None, Position=None, LongFrozen=None, ShortFrozen=None, LongFrozenAmount=None, ShortFrozenAmount=None, OpenVolume=None, CloseVolume=None, OpenAmount=None, CloseAmount=None, PositionCost=None, PreMargin=None, UseMargin=None, FrozenMargin=None, FrozenCash=None, FrozenCommission=None, CashIn=None, Commission=None, CloseProfit=None, PositionProfit=None, PreSettlementPrice=None, SettlementPrice=None, TradingDay=None, SettlementID=None, OpenCost=None, ExchangeMargin=None, CombPosition=None, CombLongFrozen=None, CombShortFrozen=None, CloseProfitByDate=None, CloseProfitByTrade=None, TodayPosition=None, MarginRateByMoney=None, MarginRateByVolume=None, StrikeFrozen=None, StrikeFrozenAmount=None, AbandonFrozen=None, ExchangeID=None, YdStrikeFrozen=None, InvestUnitID=None, PositionCostOffset=None):
+    def __init__(self, reserve1=None, BrokerID=None, InvestorID=None, PosiDirection=None, HedgeFlag=None, PositionDate=None, YdPosition=None, Position=None, LongFrozen=None, ShortFrozen=None, LongFrozenAmount=None, ShortFrozenAmount=None, OpenVolume=None, CloseVolume=None, OpenAmount=None, CloseAmount=None, PositionCost=None, PreMargin=None, UseMargin=None, FrozenMargin=None, FrozenCash=None, FrozenCommission=None, CashIn=None, Commission=None, CloseProfit=None, PositionProfit=None, PreSettlementPrice=None, SettlementPrice=None, TradingDay=None, SettlementID=None, OpenCost=None, ExchangeMargin=None, CombPosition=None, CombLongFrozen=None, CombShortFrozen=None, CloseProfitByDate=None, CloseProfitByTrade=None, TodayPosition=None, MarginRateByMoney=None, MarginRateByVolume=None, StrikeFrozen=None, StrikeFrozenAmount=None, AbandonFrozen=None, ExchangeID=None, YdStrikeFrozen=None, InvestUnitID=None, PositionCostOffset=None, TasPosition=None, TasPositionCost=None, InstrumentID=None):
         super().__init__()
-        if InstrumentID:
-            self.InstrumentID = InstrumentID.encode("GBK")
+        if reserve1:
+            self.reserve1 = reserve1.encode("GBK")
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
         if InvestorID:
@@ -3493,11 +3653,17 @@ class SyncingInvestorPosition(Struct):
             self.InvestUnitID = InvestUnitID.encode("GBK")
         if PositionCostOffset:
             self.PositionCostOffset = PositionCostOffset
+        if TasPosition:
+            self.TasPosition = TasPosition
+        if TasPositionCost:
+            self.TasPositionCost = TasPositionCost
+        if InstrumentID:
+            self.InstrumentID = InstrumentID.encode("GBK")
 
 
 class SyncingInstrumentMarginRate(Struct):
     _fields_ = [
-        ("InstrumentID", c_char_Array_31),
+        ("reserve1", c_char_Array_31),
         ("InvestorRange", c_char),
         ("BrokerID", c_char_Array_11),
         ("InvestorID", c_char_Array_13),
@@ -3507,12 +3673,13 @@ class SyncingInstrumentMarginRate(Struct):
         ("ShortMarginRatioByMoney", c_double),
         ("ShortMarginRatioByVolume", c_double),
         ("IsRelative", c_int),
+        ("InstrumentID", c_char_Array_81),
     ]
 
-    def __init__(self, InstrumentID=None, InvestorRange=None, BrokerID=None, InvestorID=None, HedgeFlag=None, LongMarginRatioByMoney=None, LongMarginRatioByVolume=None, ShortMarginRatioByMoney=None, ShortMarginRatioByVolume=None, IsRelative=None):
+    def __init__(self, reserve1=None, InvestorRange=None, BrokerID=None, InvestorID=None, HedgeFlag=None, LongMarginRatioByMoney=None, LongMarginRatioByVolume=None, ShortMarginRatioByMoney=None, ShortMarginRatioByVolume=None, IsRelative=None, InstrumentID=None):
         super().__init__()
-        if InstrumentID:
-            self.InstrumentID = InstrumentID.encode("GBK")
+        if reserve1:
+            self.reserve1 = reserve1.encode("GBK")
         if InvestorRange:
             self.InvestorRange = InvestorRange.encode("GBK")
         if BrokerID:
@@ -3531,11 +3698,13 @@ class SyncingInstrumentMarginRate(Struct):
             self.ShortMarginRatioByVolume = ShortMarginRatioByVolume
         if IsRelative:
             self.IsRelative = IsRelative
+        if InstrumentID:
+            self.InstrumentID = InstrumentID.encode("GBK")
 
 
 class SyncingInstrumentCommissionRate(Struct):
     _fields_ = [
-        ("InstrumentID", c_char_Array_31),
+        ("reserve1", c_char_Array_31),
         ("InvestorRange", c_char),
         ("BrokerID", c_char_Array_11),
         ("InvestorID", c_char_Array_13),
@@ -3545,12 +3714,13 @@ class SyncingInstrumentCommissionRate(Struct):
         ("CloseRatioByVolume", c_double),
         ("CloseTodayRatioByMoney", c_double),
         ("CloseTodayRatioByVolume", c_double),
+        ("InstrumentID", c_char_Array_81),
     ]
 
-    def __init__(self, InstrumentID=None, InvestorRange=None, BrokerID=None, InvestorID=None, OpenRatioByMoney=None, OpenRatioByVolume=None, CloseRatioByMoney=None, CloseRatioByVolume=None, CloseTodayRatioByMoney=None, CloseTodayRatioByVolume=None):
+    def __init__(self, reserve1=None, InvestorRange=None, BrokerID=None, InvestorID=None, OpenRatioByMoney=None, OpenRatioByVolume=None, CloseRatioByMoney=None, CloseRatioByVolume=None, CloseTodayRatioByMoney=None, CloseTodayRatioByVolume=None, InstrumentID=None):
         super().__init__()
-        if InstrumentID:
-            self.InstrumentID = InstrumentID.encode("GBK")
+        if reserve1:
+            self.reserve1 = reserve1.encode("GBK")
         if InvestorRange:
             self.InvestorRange = InvestorRange.encode("GBK")
         if BrokerID:
@@ -3569,21 +3739,24 @@ class SyncingInstrumentCommissionRate(Struct):
             self.CloseTodayRatioByMoney = CloseTodayRatioByMoney
         if CloseTodayRatioByVolume:
             self.CloseTodayRatioByVolume = CloseTodayRatioByVolume
+        if InstrumentID:
+            self.InstrumentID = InstrumentID.encode("GBK")
 
 
 class SyncingInstrumentTradingRight(Struct):
     _fields_ = [
-        ("InstrumentID", c_char_Array_31),
+        ("reserve1", c_char_Array_31),
         ("InvestorRange", c_char),
         ("BrokerID", c_char_Array_11),
         ("InvestorID", c_char_Array_13),
         ("TradingRight", c_char),
+        ("InstrumentID", c_char_Array_81),
     ]
 
-    def __init__(self, InstrumentID=None, InvestorRange=None, BrokerID=None, InvestorID=None, TradingRight=None):
+    def __init__(self, reserve1=None, InvestorRange=None, BrokerID=None, InvestorID=None, TradingRight=None, InstrumentID=None):
         super().__init__()
-        if InstrumentID:
-            self.InstrumentID = InstrumentID.encode("GBK")
+        if reserve1:
+            self.reserve1 = reserve1.encode("GBK")
         if InvestorRange:
             self.InvestorRange = InvestorRange.encode("GBK")
         if BrokerID:
@@ -3592,28 +3765,31 @@ class SyncingInstrumentTradingRight(Struct):
             self.InvestorID = InvestorID.encode("GBK")
         if TradingRight:
             self.TradingRight = TradingRight.encode("GBK")
+        if InstrumentID:
+            self.InstrumentID = InstrumentID.encode("GBK")
 
 
 class QryOrder(Struct):
     _fields_ = [
         ("BrokerID", c_char_Array_11),
         ("InvestorID", c_char_Array_13),
-        ("InstrumentID", c_char_Array_31),
+        ("reserve1", c_char_Array_31),
         ("ExchangeID", c_char_Array_9),
         ("OrderSysID", c_char_Array_21),
         ("InsertTimeStart", c_char_Array_9),
         ("InsertTimeEnd", c_char_Array_9),
         ("InvestUnitID", c_char_Array_17),
+        ("InstrumentID", c_char_Array_81),
     ]
 
-    def __init__(self, BrokerID=None, InvestorID=None, InstrumentID=None, ExchangeID=None, OrderSysID=None, InsertTimeStart=None, InsertTimeEnd=None, InvestUnitID=None):
+    def __init__(self, BrokerID=None, InvestorID=None, reserve1=None, ExchangeID=None, OrderSysID=None, InsertTimeStart=None, InsertTimeEnd=None, InvestUnitID=None, InstrumentID=None):
         super().__init__()
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
         if InvestorID:
             self.InvestorID = InvestorID.encode("GBK")
-        if InstrumentID:
-            self.InstrumentID = InstrumentID.encode("GBK")
+        if reserve1:
+            self.reserve1 = reserve1.encode("GBK")
         if ExchangeID:
             self.ExchangeID = ExchangeID.encode("GBK")
         if OrderSysID:
@@ -3624,28 +3800,31 @@ class QryOrder(Struct):
             self.InsertTimeEnd = InsertTimeEnd.encode("GBK")
         if InvestUnitID:
             self.InvestUnitID = InvestUnitID.encode("GBK")
+        if InstrumentID:
+            self.InstrumentID = InstrumentID.encode("GBK")
 
 
 class QryTrade(Struct):
     _fields_ = [
         ("BrokerID", c_char_Array_11),
         ("InvestorID", c_char_Array_13),
-        ("InstrumentID", c_char_Array_31),
+        ("reserve1", c_char_Array_31),
         ("ExchangeID", c_char_Array_9),
         ("TradeID", c_char_Array_21),
         ("TradeTimeStart", c_char_Array_9),
         ("TradeTimeEnd", c_char_Array_9),
         ("InvestUnitID", c_char_Array_17),
+        ("InstrumentID", c_char_Array_81),
     ]
 
-    def __init__(self, BrokerID=None, InvestorID=None, InstrumentID=None, ExchangeID=None, TradeID=None, TradeTimeStart=None, TradeTimeEnd=None, InvestUnitID=None):
+    def __init__(self, BrokerID=None, InvestorID=None, reserve1=None, ExchangeID=None, TradeID=None, TradeTimeStart=None, TradeTimeEnd=None, InvestUnitID=None, InstrumentID=None):
         super().__init__()
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
         if InvestorID:
             self.InvestorID = InvestorID.encode("GBK")
-        if InstrumentID:
-            self.InstrumentID = InstrumentID.encode("GBK")
+        if reserve1:
+            self.reserve1 = reserve1.encode("GBK")
         if ExchangeID:
             self.ExchangeID = ExchangeID.encode("GBK")
         if TradeID:
@@ -3656,29 +3835,34 @@ class QryTrade(Struct):
             self.TradeTimeEnd = TradeTimeEnd.encode("GBK")
         if InvestUnitID:
             self.InvestUnitID = InvestUnitID.encode("GBK")
+        if InstrumentID:
+            self.InstrumentID = InstrumentID.encode("GBK")
 
 
 class QryInvestorPosition(Struct):
     _fields_ = [
         ("BrokerID", c_char_Array_11),
         ("InvestorID", c_char_Array_13),
-        ("InstrumentID", c_char_Array_31),
+        ("reserve1", c_char_Array_31),
         ("ExchangeID", c_char_Array_9),
         ("InvestUnitID", c_char_Array_17),
+        ("InstrumentID", c_char_Array_81),
     ]
 
-    def __init__(self, BrokerID=None, InvestorID=None, InstrumentID=None, ExchangeID=None, InvestUnitID=None):
+    def __init__(self, BrokerID=None, InvestorID=None, reserve1=None, ExchangeID=None, InvestUnitID=None, InstrumentID=None):
         super().__init__()
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
         if InvestorID:
             self.InvestorID = InvestorID.encode("GBK")
-        if InstrumentID:
-            self.InstrumentID = InstrumentID.encode("GBK")
+        if reserve1:
+            self.reserve1 = reserve1.encode("GBK")
         if ExchangeID:
             self.ExchangeID = ExchangeID.encode("GBK")
         if InvestUnitID:
             self.InvestUnitID = InvestUnitID.encode("GBK")
+        if InstrumentID:
+            self.InstrumentID = InstrumentID.encode("GBK")
 
 
 class QryTradingAccount(Struct):
@@ -3759,64 +3943,73 @@ class QryInstrumentMarginRate(Struct):
     _fields_ = [
         ("BrokerID", c_char_Array_11),
         ("InvestorID", c_char_Array_13),
-        ("InstrumentID", c_char_Array_31),
+        ("reserve1", c_char_Array_31),
         ("HedgeFlag", c_char),
         ("ExchangeID", c_char_Array_9),
         ("InvestUnitID", c_char_Array_17),
+        ("InstrumentID", c_char_Array_81),
     ]
 
-    def __init__(self, BrokerID=None, InvestorID=None, InstrumentID=None, HedgeFlag=None, ExchangeID=None, InvestUnitID=None):
+    def __init__(self, BrokerID=None, InvestorID=None, reserve1=None, HedgeFlag=None, ExchangeID=None, InvestUnitID=None, InstrumentID=None):
         super().__init__()
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
         if InvestorID:
             self.InvestorID = InvestorID.encode("GBK")
-        if InstrumentID:
-            self.InstrumentID = InstrumentID.encode("GBK")
+        if reserve1:
+            self.reserve1 = reserve1.encode("GBK")
         if HedgeFlag:
             self.HedgeFlag = HedgeFlag.encode("GBK")
         if ExchangeID:
             self.ExchangeID = ExchangeID.encode("GBK")
         if InvestUnitID:
             self.InvestUnitID = InvestUnitID.encode("GBK")
+        if InstrumentID:
+            self.InstrumentID = InstrumentID.encode("GBK")
 
 
 class QryInstrumentCommissionRate(Struct):
     _fields_ = [
         ("BrokerID", c_char_Array_11),
         ("InvestorID", c_char_Array_13),
-        ("InstrumentID", c_char_Array_31),
+        ("reserve1", c_char_Array_31),
         ("ExchangeID", c_char_Array_9),
         ("InvestUnitID", c_char_Array_17),
+        ("InstrumentID", c_char_Array_81),
     ]
 
-    def __init__(self, BrokerID=None, InvestorID=None, InstrumentID=None, ExchangeID=None, InvestUnitID=None):
+    def __init__(self, BrokerID=None, InvestorID=None, reserve1=None, ExchangeID=None, InvestUnitID=None, InstrumentID=None):
         super().__init__()
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
         if InvestorID:
             self.InvestorID = InvestorID.encode("GBK")
-        if InstrumentID:
-            self.InstrumentID = InstrumentID.encode("GBK")
+        if reserve1:
+            self.reserve1 = reserve1.encode("GBK")
         if ExchangeID:
             self.ExchangeID = ExchangeID.encode("GBK")
         if InvestUnitID:
             self.InvestUnitID = InvestUnitID.encode("GBK")
+        if InstrumentID:
+            self.InstrumentID = InstrumentID.encode("GBK")
 
 
 class QryInstrumentTradingRight(Struct):
     _fields_ = [
         ("BrokerID", c_char_Array_11),
         ("InvestorID", c_char_Array_13),
-        ("InstrumentID", c_char_Array_31),
+        ("reserve1", c_char_Array_31),
+        ("InstrumentID", c_char_Array_81),
     ]
 
-    def __init__(self, BrokerID=None, InvestorID=None, InstrumentID=None):
+    def __init__(self, BrokerID=None, InvestorID=None, reserve1=None, InstrumentID=None):
         super().__init__()
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
         if InvestorID:
             self.InvestorID = InvestorID.encode("GBK")
+        if reserve1:
+            self.reserve1 = reserve1.encode("GBK")
         if InstrumentID:
             self.InstrumentID = InstrumentID.encode("GBK")
 
@@ -3912,23 +4105,26 @@ class QryExchangeOrder(Struct):
     _fields_ = [
         ("ParticipantID", c_char_Array_11),
         ("ClientID", c_char_Array_11),
-        ("ExchangeInstID", c_char_Array_31),
+        ("reserve1", c_char_Array_31),
         ("ExchangeID", c_char_Array_9),
         ("TraderID", c_char_Array_21),
+        ("ExchangeInstID", c_char_Array_81),
     ]
 
-    def __init__(self, ParticipantID=None, ClientID=None, ExchangeInstID=None, ExchangeID=None, TraderID=None):
+    def __init__(self, ParticipantID=None, ClientID=None, reserve1=None, ExchangeID=None, TraderID=None, ExchangeInstID=None):
         super().__init__()
         if ParticipantID:
             self.ParticipantID = ParticipantID.encode("GBK")
         if ClientID:
             self.ClientID = ClientID.encode("GBK")
-        if ExchangeInstID:
-            self.ExchangeInstID = ExchangeInstID.encode("GBK")
+        if reserve1:
+            self.reserve1 = reserve1.encode("GBK")
         if ExchangeID:
             self.ExchangeID = ExchangeID.encode("GBK")
         if TraderID:
             self.TraderID = TraderID.encode("GBK")
+        if ExchangeInstID:
+            self.ExchangeInstID = ExchangeInstID.encode("GBK")
 
 
 class QryOrderAction(Struct):
@@ -3992,35 +4188,47 @@ class QryExchange(Struct):
 
 class QryProduct(Struct):
     _fields_ = [
-        ("ProductID", c_char_Array_31),
+        ("reserve1", c_char_Array_31),
         ("ProductClass", c_char),
         ("ExchangeID", c_char_Array_9),
+        ("ProductID", c_char_Array_81),
     ]
 
-    def __init__(self, ProductID=None, ProductClass=None, ExchangeID=None):
+    def __init__(self, reserve1=None, ProductClass=None, ExchangeID=None, ProductID=None):
         super().__init__()
-        if ProductID:
-            self.ProductID = ProductID.encode("GBK")
+        if reserve1:
+            self.reserve1 = reserve1.encode("GBK")
         if ProductClass:
             self.ProductClass = ProductClass.encode("GBK")
         if ExchangeID:
             self.ExchangeID = ExchangeID.encode("GBK")
+        if ProductID:
+            self.ProductID = ProductID.encode("GBK")
 
 
 class QryInstrument(Struct):
     _fields_ = [
-        ("InstrumentID", c_char_Array_31),
+        ("reserve1", c_char_Array_31),
         ("ExchangeID", c_char_Array_9),
-        ("ExchangeInstID", c_char_Array_31),
-        ("ProductID", c_char_Array_31),
+        ("reserve2", c_char_Array_31),
+        ("reserve3", c_char_Array_31),
+        ("InstrumentID", c_char_Array_81),
+        ("ExchangeInstID", c_char_Array_81),
+        ("ProductID", c_char_Array_81),
     ]
 
-    def __init__(self, InstrumentID=None, ExchangeID=None, ExchangeInstID=None, ProductID=None):
+    def __init__(self, reserve1=None, ExchangeID=None, reserve2=None, reserve3=None, InstrumentID=None, ExchangeInstID=None, ProductID=None):
         super().__init__()
-        if InstrumentID:
-            self.InstrumentID = InstrumentID.encode("GBK")
+        if reserve1:
+            self.reserve1 = reserve1.encode("GBK")
         if ExchangeID:
             self.ExchangeID = ExchangeID.encode("GBK")
+        if reserve2:
+            self.reserve2 = reserve2.encode("GBK")
+        if reserve3:
+            self.reserve3 = reserve3.encode("GBK")
+        if InstrumentID:
+            self.InstrumentID = InstrumentID.encode("GBK")
         if ExchangeInstID:
             self.ExchangeInstID = ExchangeInstID.encode("GBK")
         if ProductID:
@@ -4029,16 +4237,19 @@ class QryInstrument(Struct):
 
 class QryDepthMarketData(Struct):
     _fields_ = [
-        ("InstrumentID", c_char_Array_31),
+        ("reserve1", c_char_Array_31),
         ("ExchangeID", c_char_Array_9),
+        ("InstrumentID", c_char_Array_81),
     ]
 
-    def __init__(self, InstrumentID=None, ExchangeID=None):
+    def __init__(self, reserve1=None, ExchangeID=None, InstrumentID=None):
         super().__init__()
-        if InstrumentID:
-            self.InstrumentID = InstrumentID.encode("GBK")
+        if reserve1:
+            self.reserve1 = reserve1.encode("GBK")
         if ExchangeID:
             self.ExchangeID = ExchangeID.encode("GBK")
+        if InstrumentID:
+            self.InstrumentID = InstrumentID.encode("GBK")
 
 
 class QryBrokerUser(Struct):
@@ -4126,38 +4337,44 @@ class QrySettlementInfo(Struct):
 class QryExchangeMarginRate(Struct):
     _fields_ = [
         ("BrokerID", c_char_Array_11),
-        ("InstrumentID", c_char_Array_31),
+        ("reserve1", c_char_Array_31),
         ("HedgeFlag", c_char),
         ("ExchangeID", c_char_Array_9),
+        ("InstrumentID", c_char_Array_81),
     ]
 
-    def __init__(self, BrokerID=None, InstrumentID=None, HedgeFlag=None, ExchangeID=None):
+    def __init__(self, BrokerID=None, reserve1=None, HedgeFlag=None, ExchangeID=None, InstrumentID=None):
         super().__init__()
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
-        if InstrumentID:
-            self.InstrumentID = InstrumentID.encode("GBK")
+        if reserve1:
+            self.reserve1 = reserve1.encode("GBK")
         if HedgeFlag:
             self.HedgeFlag = HedgeFlag.encode("GBK")
         if ExchangeID:
             self.ExchangeID = ExchangeID.encode("GBK")
+        if InstrumentID:
+            self.InstrumentID = InstrumentID.encode("GBK")
 
 
 class QryExchangeMarginRateAdjust(Struct):
     _fields_ = [
         ("BrokerID", c_char_Array_11),
-        ("InstrumentID", c_char_Array_31),
+        ("reserve1", c_char_Array_31),
         ("HedgeFlag", c_char),
+        ("InstrumentID", c_char_Array_81),
     ]
 
-    def __init__(self, BrokerID=None, InstrumentID=None, HedgeFlag=None):
+    def __init__(self, BrokerID=None, reserve1=None, HedgeFlag=None, InstrumentID=None):
         super().__init__()
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
-        if InstrumentID:
-            self.InstrumentID = InstrumentID.encode("GBK")
+        if reserve1:
+            self.reserve1 = reserve1.encode("GBK")
         if HedgeFlag:
             self.HedgeFlag = HedgeFlag.encode("GBK")
+        if InstrumentID:
+            self.InstrumentID = InstrumentID.encode("GBK")
 
 
 class QryExchangeRate(Struct):
@@ -4195,23 +4412,24 @@ class QryHisOrder(Struct):
     _fields_ = [
         ("BrokerID", c_char_Array_11),
         ("InvestorID", c_char_Array_13),
-        ("InstrumentID", c_char_Array_31),
+        ("reserve1", c_char_Array_31),
         ("ExchangeID", c_char_Array_9),
         ("OrderSysID", c_char_Array_21),
         ("InsertTimeStart", c_char_Array_9),
         ("InsertTimeEnd", c_char_Array_9),
         ("TradingDay", c_char_Array_9),
         ("SettlementID", c_int),
+        ("InstrumentID", c_char_Array_81),
     ]
 
-    def __init__(self, BrokerID=None, InvestorID=None, InstrumentID=None, ExchangeID=None, OrderSysID=None, InsertTimeStart=None, InsertTimeEnd=None, TradingDay=None, SettlementID=None):
+    def __init__(self, BrokerID=None, InvestorID=None, reserve1=None, ExchangeID=None, OrderSysID=None, InsertTimeStart=None, InsertTimeEnd=None, TradingDay=None, SettlementID=None, InstrumentID=None):
         super().__init__()
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
         if InvestorID:
             self.InvestorID = InvestorID.encode("GBK")
-        if InstrumentID:
-            self.InstrumentID = InstrumentID.encode("GBK")
+        if reserve1:
+            self.reserve1 = reserve1.encode("GBK")
         if ExchangeID:
             self.ExchangeID = ExchangeID.encode("GBK")
         if OrderSysID:
@@ -4224,23 +4442,26 @@ class QryHisOrder(Struct):
             self.TradingDay = TradingDay.encode("GBK")
         if SettlementID:
             self.SettlementID = SettlementID
+        if InstrumentID:
+            self.InstrumentID = InstrumentID.encode("GBK")
 
 
 class OptionInstrMiniMargin(Struct):
     _fields_ = [
-        ("InstrumentID", c_char_Array_31),
+        ("reserve1", c_char_Array_31),
         ("InvestorRange", c_char),
         ("BrokerID", c_char_Array_11),
         ("InvestorID", c_char_Array_13),
         ("MinMargin", c_double),
         ("ValueMethod", c_char),
         ("IsRelative", c_int),
+        ("InstrumentID", c_char_Array_81),
     ]
 
-    def __init__(self, InstrumentID=None, InvestorRange=None, BrokerID=None, InvestorID=None, MinMargin=None, ValueMethod=None, IsRelative=None):
+    def __init__(self, reserve1=None, InvestorRange=None, BrokerID=None, InvestorID=None, MinMargin=None, ValueMethod=None, IsRelative=None, InstrumentID=None):
         super().__init__()
-        if InstrumentID:
-            self.InstrumentID = InstrumentID.encode("GBK")
+        if reserve1:
+            self.reserve1 = reserve1.encode("GBK")
         if InvestorRange:
             self.InvestorRange = InvestorRange.encode("GBK")
         if BrokerID:
@@ -4253,11 +4474,13 @@ class OptionInstrMiniMargin(Struct):
             self.ValueMethod = ValueMethod.encode("GBK")
         if IsRelative:
             self.IsRelative = IsRelative
+        if InstrumentID:
+            self.InstrumentID = InstrumentID.encode("GBK")
 
 
 class OptionInstrMarginAdjust(Struct):
     _fields_ = [
-        ("InstrumentID", c_char_Array_31),
+        ("reserve1", c_char_Array_31),
         ("InvestorRange", c_char),
         ("BrokerID", c_char_Array_11),
         ("InvestorID", c_char_Array_13),
@@ -4270,12 +4493,13 @@ class OptionInstrMarginAdjust(Struct):
         ("IsRelative", c_int),
         ("MShortMarginRatioByMoney", c_double),
         ("MShortMarginRatioByVolume", c_double),
+        ("InstrumentID", c_char_Array_81),
     ]
 
-    def __init__(self, InstrumentID=None, InvestorRange=None, BrokerID=None, InvestorID=None, SShortMarginRatioByMoney=None, SShortMarginRatioByVolume=None, HShortMarginRatioByMoney=None, HShortMarginRatioByVolume=None, AShortMarginRatioByMoney=None, AShortMarginRatioByVolume=None, IsRelative=None, MShortMarginRatioByMoney=None, MShortMarginRatioByVolume=None):
+    def __init__(self, reserve1=None, InvestorRange=None, BrokerID=None, InvestorID=None, SShortMarginRatioByMoney=None, SShortMarginRatioByVolume=None, HShortMarginRatioByMoney=None, HShortMarginRatioByVolume=None, AShortMarginRatioByMoney=None, AShortMarginRatioByVolume=None, IsRelative=None, MShortMarginRatioByMoney=None, MShortMarginRatioByVolume=None, InstrumentID=None):
         super().__init__()
-        if InstrumentID:
-            self.InstrumentID = InstrumentID.encode("GBK")
+        if reserve1:
+            self.reserve1 = reserve1.encode("GBK")
         if InvestorRange:
             self.InvestorRange = InvestorRange.encode("GBK")
         if BrokerID:
@@ -4300,11 +4524,13 @@ class OptionInstrMarginAdjust(Struct):
             self.MShortMarginRatioByMoney = MShortMarginRatioByMoney
         if MShortMarginRatioByVolume:
             self.MShortMarginRatioByVolume = MShortMarginRatioByVolume
+        if InstrumentID:
+            self.InstrumentID = InstrumentID.encode("GBK")
 
 
 class OptionInstrCommRate(Struct):
     _fields_ = [
-        ("InstrumentID", c_char_Array_31),
+        ("reserve1", c_char_Array_31),
         ("InvestorRange", c_char),
         ("BrokerID", c_char_Array_11),
         ("InvestorID", c_char_Array_13),
@@ -4318,12 +4544,13 @@ class OptionInstrCommRate(Struct):
         ("StrikeRatioByVolume", c_double),
         ("ExchangeID", c_char_Array_9),
         ("InvestUnitID", c_char_Array_17),
+        ("InstrumentID", c_char_Array_81),
     ]
 
-    def __init__(self, InstrumentID=None, InvestorRange=None, BrokerID=None, InvestorID=None, OpenRatioByMoney=None, OpenRatioByVolume=None, CloseRatioByMoney=None, CloseRatioByVolume=None, CloseTodayRatioByMoney=None, CloseTodayRatioByVolume=None, StrikeRatioByMoney=None, StrikeRatioByVolume=None, ExchangeID=None, InvestUnitID=None):
+    def __init__(self, reserve1=None, InvestorRange=None, BrokerID=None, InvestorID=None, OpenRatioByMoney=None, OpenRatioByVolume=None, CloseRatioByMoney=None, CloseRatioByVolume=None, CloseTodayRatioByMoney=None, CloseTodayRatioByVolume=None, StrikeRatioByMoney=None, StrikeRatioByVolume=None, ExchangeID=None, InvestUnitID=None, InstrumentID=None):
         super().__init__()
-        if InstrumentID:
-            self.InstrumentID = InstrumentID.encode("GBK")
+        if reserve1:
+            self.reserve1 = reserve1.encode("GBK")
         if InvestorRange:
             self.InvestorRange = InvestorRange.encode("GBK")
         if BrokerID:
@@ -4350,13 +4577,15 @@ class OptionInstrCommRate(Struct):
             self.ExchangeID = ExchangeID.encode("GBK")
         if InvestUnitID:
             self.InvestUnitID = InvestUnitID.encode("GBK")
+        if InstrumentID:
+            self.InstrumentID = InstrumentID.encode("GBK")
 
 
 class OptionInstrTradeCost(Struct):
     _fields_ = [
         ("BrokerID", c_char_Array_11),
         ("InvestorID", c_char_Array_13),
-        ("InstrumentID", c_char_Array_31),
+        ("reserve1", c_char_Array_31),
         ("HedgeFlag", c_char),
         ("FixedMargin", c_double),
         ("MiniMargin", c_double),
@@ -4365,16 +4594,17 @@ class OptionInstrTradeCost(Struct):
         ("ExchMiniMargin", c_double),
         ("ExchangeID", c_char_Array_9),
         ("InvestUnitID", c_char_Array_17),
+        ("InstrumentID", c_char_Array_81),
     ]
 
-    def __init__(self, BrokerID=None, InvestorID=None, InstrumentID=None, HedgeFlag=None, FixedMargin=None, MiniMargin=None, Royalty=None, ExchFixedMargin=None, ExchMiniMargin=None, ExchangeID=None, InvestUnitID=None):
+    def __init__(self, BrokerID=None, InvestorID=None, reserve1=None, HedgeFlag=None, FixedMargin=None, MiniMargin=None, Royalty=None, ExchFixedMargin=None, ExchMiniMargin=None, ExchangeID=None, InvestUnitID=None, InstrumentID=None):
         super().__init__()
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
         if InvestorID:
             self.InvestorID = InvestorID.encode("GBK")
-        if InstrumentID:
-            self.InstrumentID = InstrumentID.encode("GBK")
+        if reserve1:
+            self.reserve1 = reserve1.encode("GBK")
         if HedgeFlag:
             self.HedgeFlag = HedgeFlag.encode("GBK")
         if FixedMargin:
@@ -4391,28 +4621,31 @@ class OptionInstrTradeCost(Struct):
             self.ExchangeID = ExchangeID.encode("GBK")
         if InvestUnitID:
             self.InvestUnitID = InvestUnitID.encode("GBK")
+        if InstrumentID:
+            self.InstrumentID = InstrumentID.encode("GBK")
 
 
 class QryOptionInstrTradeCost(Struct):
     _fields_ = [
         ("BrokerID", c_char_Array_11),
         ("InvestorID", c_char_Array_13),
-        ("InstrumentID", c_char_Array_31),
+        ("reserve1", c_char_Array_31),
         ("HedgeFlag", c_char),
         ("InputPrice", c_double),
         ("UnderlyingPrice", c_double),
         ("ExchangeID", c_char_Array_9),
         ("InvestUnitID", c_char_Array_17),
+        ("InstrumentID", c_char_Array_81),
     ]
 
-    def __init__(self, BrokerID=None, InvestorID=None, InstrumentID=None, HedgeFlag=None, InputPrice=None, UnderlyingPrice=None, ExchangeID=None, InvestUnitID=None):
+    def __init__(self, BrokerID=None, InvestorID=None, reserve1=None, HedgeFlag=None, InputPrice=None, UnderlyingPrice=None, ExchangeID=None, InvestUnitID=None, InstrumentID=None):
         super().__init__()
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
         if InvestorID:
             self.InvestorID = InvestorID.encode("GBK")
-        if InstrumentID:
-            self.InstrumentID = InstrumentID.encode("GBK")
+        if reserve1:
+            self.reserve1 = reserve1.encode("GBK")
         if HedgeFlag:
             self.HedgeFlag = HedgeFlag.encode("GBK")
         if InputPrice:
@@ -4423,53 +4656,61 @@ class QryOptionInstrTradeCost(Struct):
             self.ExchangeID = ExchangeID.encode("GBK")
         if InvestUnitID:
             self.InvestUnitID = InvestUnitID.encode("GBK")
+        if InstrumentID:
+            self.InstrumentID = InstrumentID.encode("GBK")
 
 
 class QryOptionInstrCommRate(Struct):
     _fields_ = [
         ("BrokerID", c_char_Array_11),
         ("InvestorID", c_char_Array_13),
-        ("InstrumentID", c_char_Array_31),
+        ("reserve1", c_char_Array_31),
         ("ExchangeID", c_char_Array_9),
         ("InvestUnitID", c_char_Array_17),
+        ("InstrumentID", c_char_Array_81),
     ]
 
-    def __init__(self, BrokerID=None, InvestorID=None, InstrumentID=None, ExchangeID=None, InvestUnitID=None):
+    def __init__(self, BrokerID=None, InvestorID=None, reserve1=None, ExchangeID=None, InvestUnitID=None, InstrumentID=None):
         super().__init__()
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
         if InvestorID:
             self.InvestorID = InvestorID.encode("GBK")
-        if InstrumentID:
-            self.InstrumentID = InstrumentID.encode("GBK")
+        if reserve1:
+            self.reserve1 = reserve1.encode("GBK")
         if ExchangeID:
             self.ExchangeID = ExchangeID.encode("GBK")
         if InvestUnitID:
             self.InvestUnitID = InvestUnitID.encode("GBK")
+        if InstrumentID:
+            self.InstrumentID = InstrumentID.encode("GBK")
 
 
 class IndexPrice(Struct):
     _fields_ = [
         ("BrokerID", c_char_Array_11),
-        ("InstrumentID", c_char_Array_31),
+        ("reserve1", c_char_Array_31),
         ("ClosePrice", c_double),
+        ("InstrumentID", c_char_Array_81),
     ]
 
-    def __init__(self, BrokerID=None, InstrumentID=None, ClosePrice=None):
+    def __init__(self, BrokerID=None, reserve1=None, ClosePrice=None, InstrumentID=None):
         super().__init__()
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
-        if InstrumentID:
-            self.InstrumentID = InstrumentID.encode("GBK")
+        if reserve1:
+            self.reserve1 = reserve1.encode("GBK")
         if ClosePrice:
             self.ClosePrice = ClosePrice
+        if InstrumentID:
+            self.InstrumentID = InstrumentID.encode("GBK")
 
 
 class InputExecOrder(Struct):
     _fields_ = [
         ("BrokerID", c_char_Array_11),
         ("InvestorID", c_char_Array_13),
-        ("InstrumentID", c_char_Array_31),
+        ("reserve1", c_char_Array_31),
         ("ExecOrderRef", c_char_Array_13),
         ("UserID", c_char_Array_16),
         ("Volume", c_int),
@@ -4486,18 +4727,20 @@ class InputExecOrder(Struct):
         ("AccountID", c_char_Array_13),
         ("CurrencyID", c_char_Array_4),
         ("ClientID", c_char_Array_11),
-        ("IPAddress", c_char_Array_16),
+        ("reserve2", c_char_Array_16),
         ("MacAddress", c_char_Array_21),
+        ("InstrumentID", c_char_Array_81),
+        ("IPAddress", c_char_Array_33),
     ]
 
-    def __init__(self, BrokerID=None, InvestorID=None, InstrumentID=None, ExecOrderRef=None, UserID=None, Volume=None, RequestID=None, BusinessUnit=None, OffsetFlag=None, HedgeFlag=None, ActionType=None, PosiDirection=None, ReservePositionFlag=None, CloseFlag=None, ExchangeID=None, InvestUnitID=None, AccountID=None, CurrencyID=None, ClientID=None, IPAddress=None, MacAddress=None):
+    def __init__(self, BrokerID=None, InvestorID=None, reserve1=None, ExecOrderRef=None, UserID=None, Volume=None, RequestID=None, BusinessUnit=None, OffsetFlag=None, HedgeFlag=None, ActionType=None, PosiDirection=None, ReservePositionFlag=None, CloseFlag=None, ExchangeID=None, InvestUnitID=None, AccountID=None, CurrencyID=None, ClientID=None, reserve2=None, MacAddress=None, InstrumentID=None, IPAddress=None):
         super().__init__()
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
         if InvestorID:
             self.InvestorID = InvestorID.encode("GBK")
-        if InstrumentID:
-            self.InstrumentID = InstrumentID.encode("GBK")
+        if reserve1:
+            self.reserve1 = reserve1.encode("GBK")
         if ExecOrderRef:
             self.ExecOrderRef = ExecOrderRef.encode("GBK")
         if UserID:
@@ -4530,10 +4773,14 @@ class InputExecOrder(Struct):
             self.CurrencyID = CurrencyID.encode("GBK")
         if ClientID:
             self.ClientID = ClientID.encode("GBK")
-        if IPAddress:
-            self.IPAddress = IPAddress.encode("GBK")
+        if reserve2:
+            self.reserve2 = reserve2.encode("GBK")
         if MacAddress:
             self.MacAddress = MacAddress.encode("GBK")
+        if InstrumentID:
+            self.InstrumentID = InstrumentID.encode("GBK")
+        if IPAddress:
+            self.IPAddress = IPAddress.encode("GBK")
 
 
 class InputExecOrderAction(Struct):
@@ -4549,13 +4796,15 @@ class InputExecOrderAction(Struct):
         ("ExecOrderSysID", c_char_Array_21),
         ("ActionFlag", c_char),
         ("UserID", c_char_Array_16),
-        ("InstrumentID", c_char_Array_31),
+        ("reserve1", c_char_Array_31),
         ("InvestUnitID", c_char_Array_17),
-        ("IPAddress", c_char_Array_16),
+        ("reserve2", c_char_Array_16),
         ("MacAddress", c_char_Array_21),
+        ("InstrumentID", c_char_Array_81),
+        ("IPAddress", c_char_Array_33),
     ]
 
-    def __init__(self, BrokerID=None, InvestorID=None, ExecOrderActionRef=None, ExecOrderRef=None, RequestID=None, FrontID=None, SessionID=None, ExchangeID=None, ExecOrderSysID=None, ActionFlag=None, UserID=None, InstrumentID=None, InvestUnitID=None, IPAddress=None, MacAddress=None):
+    def __init__(self, BrokerID=None, InvestorID=None, ExecOrderActionRef=None, ExecOrderRef=None, RequestID=None, FrontID=None, SessionID=None, ExchangeID=None, ExecOrderSysID=None, ActionFlag=None, UserID=None, reserve1=None, InvestUnitID=None, reserve2=None, MacAddress=None, InstrumentID=None, IPAddress=None):
         super().__init__()
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
@@ -4579,21 +4828,25 @@ class InputExecOrderAction(Struct):
             self.ActionFlag = ActionFlag.encode("GBK")
         if UserID:
             self.UserID = UserID.encode("GBK")
-        if InstrumentID:
-            self.InstrumentID = InstrumentID.encode("GBK")
+        if reserve1:
+            self.reserve1 = reserve1.encode("GBK")
         if InvestUnitID:
             self.InvestUnitID = InvestUnitID.encode("GBK")
-        if IPAddress:
-            self.IPAddress = IPAddress.encode("GBK")
+        if reserve2:
+            self.reserve2 = reserve2.encode("GBK")
         if MacAddress:
             self.MacAddress = MacAddress.encode("GBK")
+        if InstrumentID:
+            self.InstrumentID = InstrumentID.encode("GBK")
+        if IPAddress:
+            self.IPAddress = IPAddress.encode("GBK")
 
 
 class ExecOrder(Struct):
     _fields_ = [
         ("BrokerID", c_char_Array_11),
         ("InvestorID", c_char_Array_13),
-        ("InstrumentID", c_char_Array_31),
+        ("reserve1", c_char_Array_31),
         ("ExecOrderRef", c_char_Array_13),
         ("UserID", c_char_Array_16),
         ("Volume", c_int),
@@ -4609,7 +4862,7 @@ class ExecOrder(Struct):
         ("ExchangeID", c_char_Array_9),
         ("ParticipantID", c_char_Array_11),
         ("ClientID", c_char_Array_11),
-        ("ExchangeInstID", c_char_Array_31),
+        ("reserve2", c_char_Array_31),
         ("TraderID", c_char_Array_21),
         ("InstallID", c_int),
         ("OrderSubmitStatus", c_char),
@@ -4633,18 +4886,21 @@ class ExecOrder(Struct):
         ("InvestUnitID", c_char_Array_17),
         ("AccountID", c_char_Array_13),
         ("CurrencyID", c_char_Array_4),
-        ("IPAddress", c_char_Array_16),
+        ("reserve3", c_char_Array_16),
         ("MacAddress", c_char_Array_21),
+        ("InstrumentID", c_char_Array_81),
+        ("ExchangeInstID", c_char_Array_81),
+        ("IPAddress", c_char_Array_33),
     ]
 
-    def __init__(self, BrokerID=None, InvestorID=None, InstrumentID=None, ExecOrderRef=None, UserID=None, Volume=None, RequestID=None, BusinessUnit=None, OffsetFlag=None, HedgeFlag=None, ActionType=None, PosiDirection=None, ReservePositionFlag=None, CloseFlag=None, ExecOrderLocalID=None, ExchangeID=None, ParticipantID=None, ClientID=None, ExchangeInstID=None, TraderID=None, InstallID=None, OrderSubmitStatus=None, NotifySequence=None, TradingDay=None, SettlementID=None, ExecOrderSysID=None, InsertDate=None, InsertTime=None, CancelTime=None, ExecResult=None, ClearingPartID=None, SequenceNo=None, FrontID=None, SessionID=None, UserProductInfo=None, StatusMsg=None, ActiveUserID=None, BrokerExecOrderSeq=None, BranchID=None, InvestUnitID=None, AccountID=None, CurrencyID=None, IPAddress=None, MacAddress=None):
+    def __init__(self, BrokerID=None, InvestorID=None, reserve1=None, ExecOrderRef=None, UserID=None, Volume=None, RequestID=None, BusinessUnit=None, OffsetFlag=None, HedgeFlag=None, ActionType=None, PosiDirection=None, ReservePositionFlag=None, CloseFlag=None, ExecOrderLocalID=None, ExchangeID=None, ParticipantID=None, ClientID=None, reserve2=None, TraderID=None, InstallID=None, OrderSubmitStatus=None, NotifySequence=None, TradingDay=None, SettlementID=None, ExecOrderSysID=None, InsertDate=None, InsertTime=None, CancelTime=None, ExecResult=None, ClearingPartID=None, SequenceNo=None, FrontID=None, SessionID=None, UserProductInfo=None, StatusMsg=None, ActiveUserID=None, BrokerExecOrderSeq=None, BranchID=None, InvestUnitID=None, AccountID=None, CurrencyID=None, reserve3=None, MacAddress=None, InstrumentID=None, ExchangeInstID=None, IPAddress=None):
         super().__init__()
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
         if InvestorID:
             self.InvestorID = InvestorID.encode("GBK")
-        if InstrumentID:
-            self.InstrumentID = InstrumentID.encode("GBK")
+        if reserve1:
+            self.reserve1 = reserve1.encode("GBK")
         if ExecOrderRef:
             self.ExecOrderRef = ExecOrderRef.encode("GBK")
         if UserID:
@@ -4675,8 +4931,8 @@ class ExecOrder(Struct):
             self.ParticipantID = ParticipantID.encode("GBK")
         if ClientID:
             self.ClientID = ClientID.encode("GBK")
-        if ExchangeInstID:
-            self.ExchangeInstID = ExchangeInstID.encode("GBK")
+        if reserve2:
+            self.reserve2 = reserve2.encode("GBK")
         if TraderID:
             self.TraderID = TraderID.encode("GBK")
         if InstallID:
@@ -4723,10 +4979,16 @@ class ExecOrder(Struct):
             self.AccountID = AccountID.encode("GBK")
         if CurrencyID:
             self.CurrencyID = CurrencyID.encode("GBK")
-        if IPAddress:
-            self.IPAddress = IPAddress.encode("GBK")
+        if reserve3:
+            self.reserve3 = reserve3.encode("GBK")
         if MacAddress:
             self.MacAddress = MacAddress.encode("GBK")
+        if InstrumentID:
+            self.InstrumentID = InstrumentID.encode("GBK")
+        if ExchangeInstID:
+            self.ExchangeInstID = ExchangeInstID.encode("GBK")
+        if IPAddress:
+            self.IPAddress = IPAddress.encode("GBK")
 
 
 class ExecOrderAction(Struct):
@@ -4754,14 +5016,16 @@ class ExecOrderAction(Struct):
         ("UserID", c_char_Array_16),
         ("ActionType", c_char),
         ("StatusMsg", c_char_Array_81),
-        ("InstrumentID", c_char_Array_31),
+        ("reserve1", c_char_Array_31),
         ("BranchID", c_char_Array_9),
         ("InvestUnitID", c_char_Array_17),
-        ("IPAddress", c_char_Array_16),
+        ("reserve2", c_char_Array_16),
         ("MacAddress", c_char_Array_21),
+        ("InstrumentID", c_char_Array_81),
+        ("IPAddress", c_char_Array_33),
     ]
 
-    def __init__(self, BrokerID=None, InvestorID=None, ExecOrderActionRef=None, ExecOrderRef=None, RequestID=None, FrontID=None, SessionID=None, ExchangeID=None, ExecOrderSysID=None, ActionFlag=None, ActionDate=None, ActionTime=None, TraderID=None, InstallID=None, ExecOrderLocalID=None, ActionLocalID=None, ParticipantID=None, ClientID=None, BusinessUnit=None, OrderActionStatus=None, UserID=None, ActionType=None, StatusMsg=None, InstrumentID=None, BranchID=None, InvestUnitID=None, IPAddress=None, MacAddress=None):
+    def __init__(self, BrokerID=None, InvestorID=None, ExecOrderActionRef=None, ExecOrderRef=None, RequestID=None, FrontID=None, SessionID=None, ExchangeID=None, ExecOrderSysID=None, ActionFlag=None, ActionDate=None, ActionTime=None, TraderID=None, InstallID=None, ExecOrderLocalID=None, ActionLocalID=None, ParticipantID=None, ClientID=None, BusinessUnit=None, OrderActionStatus=None, UserID=None, ActionType=None, StatusMsg=None, reserve1=None, BranchID=None, InvestUnitID=None, reserve2=None, MacAddress=None, InstrumentID=None, IPAddress=None):
         super().__init__()
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
@@ -4809,37 +5073,42 @@ class ExecOrderAction(Struct):
             self.ActionType = ActionType.encode("GBK")
         if StatusMsg:
             self.StatusMsg = StatusMsg.encode("GBK")
-        if InstrumentID:
-            self.InstrumentID = InstrumentID.encode("GBK")
+        if reserve1:
+            self.reserve1 = reserve1.encode("GBK")
         if BranchID:
             self.BranchID = BranchID.encode("GBK")
         if InvestUnitID:
             self.InvestUnitID = InvestUnitID.encode("GBK")
-        if IPAddress:
-            self.IPAddress = IPAddress.encode("GBK")
+        if reserve2:
+            self.reserve2 = reserve2.encode("GBK")
         if MacAddress:
             self.MacAddress = MacAddress.encode("GBK")
+        if InstrumentID:
+            self.InstrumentID = InstrumentID.encode("GBK")
+        if IPAddress:
+            self.IPAddress = IPAddress.encode("GBK")
 
 
 class QryExecOrder(Struct):
     _fields_ = [
         ("BrokerID", c_char_Array_11),
         ("InvestorID", c_char_Array_13),
-        ("InstrumentID", c_char_Array_31),
+        ("reserve1", c_char_Array_31),
         ("ExchangeID", c_char_Array_9),
         ("ExecOrderSysID", c_char_Array_21),
         ("InsertTimeStart", c_char_Array_9),
         ("InsertTimeEnd", c_char_Array_9),
+        ("InstrumentID", c_char_Array_81),
     ]
 
-    def __init__(self, BrokerID=None, InvestorID=None, InstrumentID=None, ExchangeID=None, ExecOrderSysID=None, InsertTimeStart=None, InsertTimeEnd=None):
+    def __init__(self, BrokerID=None, InvestorID=None, reserve1=None, ExchangeID=None, ExecOrderSysID=None, InsertTimeStart=None, InsertTimeEnd=None, InstrumentID=None):
         super().__init__()
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
         if InvestorID:
             self.InvestorID = InvestorID.encode("GBK")
-        if InstrumentID:
-            self.InstrumentID = InstrumentID.encode("GBK")
+        if reserve1:
+            self.reserve1 = reserve1.encode("GBK")
         if ExchangeID:
             self.ExchangeID = ExchangeID.encode("GBK")
         if ExecOrderSysID:
@@ -4848,6 +5117,8 @@ class QryExecOrder(Struct):
             self.InsertTimeStart = InsertTimeStart.encode("GBK")
         if InsertTimeEnd:
             self.InsertTimeEnd = InsertTimeEnd.encode("GBK")
+        if InstrumentID:
+            self.InstrumentID = InstrumentID.encode("GBK")
 
 
 class ExchangeExecOrder(Struct):
@@ -4865,7 +5136,7 @@ class ExchangeExecOrder(Struct):
         ("ExchangeID", c_char_Array_9),
         ("ParticipantID", c_char_Array_11),
         ("ClientID", c_char_Array_11),
-        ("ExchangeInstID", c_char_Array_31),
+        ("reserve1", c_char_Array_31),
         ("TraderID", c_char_Array_21),
         ("InstallID", c_int),
         ("OrderSubmitStatus", c_char),
@@ -4880,11 +5151,13 @@ class ExchangeExecOrder(Struct):
         ("ClearingPartID", c_char_Array_11),
         ("SequenceNo", c_int),
         ("BranchID", c_char_Array_9),
-        ("IPAddress", c_char_Array_16),
+        ("reserve2", c_char_Array_16),
         ("MacAddress", c_char_Array_21),
+        ("ExchangeInstID", c_char_Array_81),
+        ("IPAddress", c_char_Array_33),
     ]
 
-    def __init__(self, Volume=None, RequestID=None, BusinessUnit=None, OffsetFlag=None, HedgeFlag=None, ActionType=None, PosiDirection=None, ReservePositionFlag=None, CloseFlag=None, ExecOrderLocalID=None, ExchangeID=None, ParticipantID=None, ClientID=None, ExchangeInstID=None, TraderID=None, InstallID=None, OrderSubmitStatus=None, NotifySequence=None, TradingDay=None, SettlementID=None, ExecOrderSysID=None, InsertDate=None, InsertTime=None, CancelTime=None, ExecResult=None, ClearingPartID=None, SequenceNo=None, BranchID=None, IPAddress=None, MacAddress=None):
+    def __init__(self, Volume=None, RequestID=None, BusinessUnit=None, OffsetFlag=None, HedgeFlag=None, ActionType=None, PosiDirection=None, ReservePositionFlag=None, CloseFlag=None, ExecOrderLocalID=None, ExchangeID=None, ParticipantID=None, ClientID=None, reserve1=None, TraderID=None, InstallID=None, OrderSubmitStatus=None, NotifySequence=None, TradingDay=None, SettlementID=None, ExecOrderSysID=None, InsertDate=None, InsertTime=None, CancelTime=None, ExecResult=None, ClearingPartID=None, SequenceNo=None, BranchID=None, reserve2=None, MacAddress=None, ExchangeInstID=None, IPAddress=None):
         super().__init__()
         if Volume:
             self.Volume = Volume
@@ -4912,8 +5185,8 @@ class ExchangeExecOrder(Struct):
             self.ParticipantID = ParticipantID.encode("GBK")
         if ClientID:
             self.ClientID = ClientID.encode("GBK")
-        if ExchangeInstID:
-            self.ExchangeInstID = ExchangeInstID.encode("GBK")
+        if reserve1:
+            self.reserve1 = reserve1.encode("GBK")
         if TraderID:
             self.TraderID = TraderID.encode("GBK")
         if InstallID:
@@ -4942,33 +5215,40 @@ class ExchangeExecOrder(Struct):
             self.SequenceNo = SequenceNo
         if BranchID:
             self.BranchID = BranchID.encode("GBK")
-        if IPAddress:
-            self.IPAddress = IPAddress.encode("GBK")
+        if reserve2:
+            self.reserve2 = reserve2.encode("GBK")
         if MacAddress:
             self.MacAddress = MacAddress.encode("GBK")
+        if ExchangeInstID:
+            self.ExchangeInstID = ExchangeInstID.encode("GBK")
+        if IPAddress:
+            self.IPAddress = IPAddress.encode("GBK")
 
 
 class QryExchangeExecOrder(Struct):
     _fields_ = [
         ("ParticipantID", c_char_Array_11),
         ("ClientID", c_char_Array_11),
-        ("ExchangeInstID", c_char_Array_31),
+        ("reserve1", c_char_Array_31),
         ("ExchangeID", c_char_Array_9),
         ("TraderID", c_char_Array_21),
+        ("ExchangeInstID", c_char_Array_81),
     ]
 
-    def __init__(self, ParticipantID=None, ClientID=None, ExchangeInstID=None, ExchangeID=None, TraderID=None):
+    def __init__(self, ParticipantID=None, ClientID=None, reserve1=None, ExchangeID=None, TraderID=None, ExchangeInstID=None):
         super().__init__()
         if ParticipantID:
             self.ParticipantID = ParticipantID.encode("GBK")
         if ClientID:
             self.ClientID = ClientID.encode("GBK")
-        if ExchangeInstID:
-            self.ExchangeInstID = ExchangeInstID.encode("GBK")
+        if reserve1:
+            self.reserve1 = reserve1.encode("GBK")
         if ExchangeID:
             self.ExchangeID = ExchangeID.encode("GBK")
         if TraderID:
             self.TraderID = TraderID.encode("GBK")
+        if ExchangeInstID:
+            self.ExchangeInstID = ExchangeInstID.encode("GBK")
 
 
 class QryExecOrderAction(Struct):
@@ -5006,13 +5286,15 @@ class ExchangeExecOrderAction(Struct):
         ("UserID", c_char_Array_16),
         ("ActionType", c_char),
         ("BranchID", c_char_Array_9),
-        ("IPAddress", c_char_Array_16),
+        ("reserve1", c_char_Array_16),
         ("MacAddress", c_char_Array_21),
-        ("ExchangeInstID", c_char_Array_31),
+        ("reserve2", c_char_Array_31),
         ("Volume", c_int),
+        ("IPAddress", c_char_Array_33),
+        ("ExchangeInstID", c_char_Array_81),
     ]
 
-    def __init__(self, ExchangeID=None, ExecOrderSysID=None, ActionFlag=None, ActionDate=None, ActionTime=None, TraderID=None, InstallID=None, ExecOrderLocalID=None, ActionLocalID=None, ParticipantID=None, ClientID=None, BusinessUnit=None, OrderActionStatus=None, UserID=None, ActionType=None, BranchID=None, IPAddress=None, MacAddress=None, ExchangeInstID=None, Volume=None):
+    def __init__(self, ExchangeID=None, ExecOrderSysID=None, ActionFlag=None, ActionDate=None, ActionTime=None, TraderID=None, InstallID=None, ExecOrderLocalID=None, ActionLocalID=None, ParticipantID=None, ClientID=None, BusinessUnit=None, OrderActionStatus=None, UserID=None, ActionType=None, BranchID=None, reserve1=None, MacAddress=None, reserve2=None, Volume=None, IPAddress=None, ExchangeInstID=None):
         super().__init__()
         if ExchangeID:
             self.ExchangeID = ExchangeID.encode("GBK")
@@ -5046,14 +5328,18 @@ class ExchangeExecOrderAction(Struct):
             self.ActionType = ActionType.encode("GBK")
         if BranchID:
             self.BranchID = BranchID.encode("GBK")
-        if IPAddress:
-            self.IPAddress = IPAddress.encode("GBK")
+        if reserve1:
+            self.reserve1 = reserve1.encode("GBK")
         if MacAddress:
             self.MacAddress = MacAddress.encode("GBK")
-        if ExchangeInstID:
-            self.ExchangeInstID = ExchangeInstID.encode("GBK")
+        if reserve2:
+            self.reserve2 = reserve2.encode("GBK")
         if Volume:
             self.Volume = Volume
+        if IPAddress:
+            self.IPAddress = IPAddress.encode("GBK")
+        if ExchangeInstID:
+            self.ExchangeInstID = ExchangeInstID.encode("GBK")
 
 
 class QryExchangeExecOrderAction(Struct):
@@ -5080,7 +5366,7 @@ class ErrExecOrder(Struct):
     _fields_ = [
         ("BrokerID", c_char_Array_11),
         ("InvestorID", c_char_Array_13),
-        ("InstrumentID", c_char_Array_31),
+        ("reserve1", c_char_Array_31),
         ("ExecOrderRef", c_char_Array_13),
         ("UserID", c_char_Array_16),
         ("Volume", c_int),
@@ -5097,20 +5383,22 @@ class ErrExecOrder(Struct):
         ("AccountID", c_char_Array_13),
         ("CurrencyID", c_char_Array_4),
         ("ClientID", c_char_Array_11),
-        ("IPAddress", c_char_Array_16),
+        ("reserve2", c_char_Array_16),
         ("MacAddress", c_char_Array_21),
         ("ErrorID", c_int),
         ("ErrorMsg", c_char_Array_81),
+        ("InstrumentID", c_char_Array_81),
+        ("IPAddress", c_char_Array_33),
     ]
 
-    def __init__(self, BrokerID=None, InvestorID=None, InstrumentID=None, ExecOrderRef=None, UserID=None, Volume=None, RequestID=None, BusinessUnit=None, OffsetFlag=None, HedgeFlag=None, ActionType=None, PosiDirection=None, ReservePositionFlag=None, CloseFlag=None, ExchangeID=None, InvestUnitID=None, AccountID=None, CurrencyID=None, ClientID=None, IPAddress=None, MacAddress=None, ErrorID=None, ErrorMsg=None):
+    def __init__(self, BrokerID=None, InvestorID=None, reserve1=None, ExecOrderRef=None, UserID=None, Volume=None, RequestID=None, BusinessUnit=None, OffsetFlag=None, HedgeFlag=None, ActionType=None, PosiDirection=None, ReservePositionFlag=None, CloseFlag=None, ExchangeID=None, InvestUnitID=None, AccountID=None, CurrencyID=None, ClientID=None, reserve2=None, MacAddress=None, ErrorID=None, ErrorMsg=None, InstrumentID=None, IPAddress=None):
         super().__init__()
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
         if InvestorID:
             self.InvestorID = InvestorID.encode("GBK")
-        if InstrumentID:
-            self.InstrumentID = InstrumentID.encode("GBK")
+        if reserve1:
+            self.reserve1 = reserve1.encode("GBK")
         if ExecOrderRef:
             self.ExecOrderRef = ExecOrderRef.encode("GBK")
         if UserID:
@@ -5143,14 +5431,18 @@ class ErrExecOrder(Struct):
             self.CurrencyID = CurrencyID.encode("GBK")
         if ClientID:
             self.ClientID = ClientID.encode("GBK")
-        if IPAddress:
-            self.IPAddress = IPAddress.encode("GBK")
+        if reserve2:
+            self.reserve2 = reserve2.encode("GBK")
         if MacAddress:
             self.MacAddress = MacAddress.encode("GBK")
         if ErrorID:
             self.ErrorID = ErrorID
         if ErrorMsg:
             self.ErrorMsg = ErrorMsg.encode("GBK")
+        if InstrumentID:
+            self.InstrumentID = InstrumentID.encode("GBK")
+        if IPAddress:
+            self.IPAddress = IPAddress.encode("GBK")
 
 
 class QryErrExecOrder(Struct):
@@ -5180,15 +5472,17 @@ class ErrExecOrderAction(Struct):
         ("ExecOrderSysID", c_char_Array_21),
         ("ActionFlag", c_char),
         ("UserID", c_char_Array_16),
-        ("InstrumentID", c_char_Array_31),
+        ("reserve1", c_char_Array_31),
         ("InvestUnitID", c_char_Array_17),
-        ("IPAddress", c_char_Array_16),
+        ("reserve2", c_char_Array_16),
         ("MacAddress", c_char_Array_21),
         ("ErrorID", c_int),
         ("ErrorMsg", c_char_Array_81),
+        ("InstrumentID", c_char_Array_81),
+        ("IPAddress", c_char_Array_33),
     ]
 
-    def __init__(self, BrokerID=None, InvestorID=None, ExecOrderActionRef=None, ExecOrderRef=None, RequestID=None, FrontID=None, SessionID=None, ExchangeID=None, ExecOrderSysID=None, ActionFlag=None, UserID=None, InstrumentID=None, InvestUnitID=None, IPAddress=None, MacAddress=None, ErrorID=None, ErrorMsg=None):
+    def __init__(self, BrokerID=None, InvestorID=None, ExecOrderActionRef=None, ExecOrderRef=None, RequestID=None, FrontID=None, SessionID=None, ExchangeID=None, ExecOrderSysID=None, ActionFlag=None, UserID=None, reserve1=None, InvestUnitID=None, reserve2=None, MacAddress=None, ErrorID=None, ErrorMsg=None, InstrumentID=None, IPAddress=None):
         super().__init__()
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
@@ -5212,18 +5506,22 @@ class ErrExecOrderAction(Struct):
             self.ActionFlag = ActionFlag.encode("GBK")
         if UserID:
             self.UserID = UserID.encode("GBK")
-        if InstrumentID:
-            self.InstrumentID = InstrumentID.encode("GBK")
+        if reserve1:
+            self.reserve1 = reserve1.encode("GBK")
         if InvestUnitID:
             self.InvestUnitID = InvestUnitID.encode("GBK")
-        if IPAddress:
-            self.IPAddress = IPAddress.encode("GBK")
+        if reserve2:
+            self.reserve2 = reserve2.encode("GBK")
         if MacAddress:
             self.MacAddress = MacAddress.encode("GBK")
         if ErrorID:
             self.ErrorID = ErrorID
         if ErrorMsg:
             self.ErrorMsg = ErrorMsg.encode("GBK")
+        if InstrumentID:
+            self.InstrumentID = InstrumentID.encode("GBK")
+        if IPAddress:
+            self.IPAddress = IPAddress.encode("GBK")
 
 
 class QryErrExecOrderAction(Struct):
@@ -5242,18 +5540,19 @@ class QryErrExecOrderAction(Struct):
 
 class OptionInstrTradingRight(Struct):
     _fields_ = [
-        ("InstrumentID", c_char_Array_31),
+        ("reserve1", c_char_Array_31),
         ("InvestorRange", c_char),
         ("BrokerID", c_char_Array_11),
         ("InvestorID", c_char_Array_13),
         ("Direction", c_char),
         ("TradingRight", c_char),
+        ("InstrumentID", c_char_Array_81),
     ]
 
-    def __init__(self, InstrumentID=None, InvestorRange=None, BrokerID=None, InvestorID=None, Direction=None, TradingRight=None):
+    def __init__(self, reserve1=None, InvestorRange=None, BrokerID=None, InvestorID=None, Direction=None, TradingRight=None, InstrumentID=None):
         super().__init__()
-        if InstrumentID:
-            self.InstrumentID = InstrumentID.encode("GBK")
+        if reserve1:
+            self.reserve1 = reserve1.encode("GBK")
         if InvestorRange:
             self.InvestorRange = InvestorRange.encode("GBK")
         if BrokerID:
@@ -5264,49 +5563,56 @@ class OptionInstrTradingRight(Struct):
             self.Direction = Direction.encode("GBK")
         if TradingRight:
             self.TradingRight = TradingRight.encode("GBK")
+        if InstrumentID:
+            self.InstrumentID = InstrumentID.encode("GBK")
 
 
 class QryOptionInstrTradingRight(Struct):
     _fields_ = [
         ("BrokerID", c_char_Array_11),
         ("InvestorID", c_char_Array_13),
-        ("InstrumentID", c_char_Array_31),
+        ("reserve1", c_char_Array_31),
         ("Direction", c_char),
+        ("InstrumentID", c_char_Array_81),
     ]
 
-    def __init__(self, BrokerID=None, InvestorID=None, InstrumentID=None, Direction=None):
+    def __init__(self, BrokerID=None, InvestorID=None, reserve1=None, Direction=None, InstrumentID=None):
         super().__init__()
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
         if InvestorID:
             self.InvestorID = InvestorID.encode("GBK")
-        if InstrumentID:
-            self.InstrumentID = InstrumentID.encode("GBK")
+        if reserve1:
+            self.reserve1 = reserve1.encode("GBK")
         if Direction:
             self.Direction = Direction.encode("GBK")
+        if InstrumentID:
+            self.InstrumentID = InstrumentID.encode("GBK")
 
 
 class InputForQuote(Struct):
     _fields_ = [
         ("BrokerID", c_char_Array_11),
         ("InvestorID", c_char_Array_13),
-        ("InstrumentID", c_char_Array_31),
+        ("reserve1", c_char_Array_31),
         ("ForQuoteRef", c_char_Array_13),
         ("UserID", c_char_Array_16),
         ("ExchangeID", c_char_Array_9),
         ("InvestUnitID", c_char_Array_17),
-        ("IPAddress", c_char_Array_16),
+        ("reserve2", c_char_Array_16),
         ("MacAddress", c_char_Array_21),
+        ("InstrumentID", c_char_Array_81),
+        ("IPAddress", c_char_Array_33),
     ]
 
-    def __init__(self, BrokerID=None, InvestorID=None, InstrumentID=None, ForQuoteRef=None, UserID=None, ExchangeID=None, InvestUnitID=None, IPAddress=None, MacAddress=None):
+    def __init__(self, BrokerID=None, InvestorID=None, reserve1=None, ForQuoteRef=None, UserID=None, ExchangeID=None, InvestUnitID=None, reserve2=None, MacAddress=None, InstrumentID=None, IPAddress=None):
         super().__init__()
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
         if InvestorID:
             self.InvestorID = InvestorID.encode("GBK")
-        if InstrumentID:
-            self.InstrumentID = InstrumentID.encode("GBK")
+        if reserve1:
+            self.reserve1 = reserve1.encode("GBK")
         if ForQuoteRef:
             self.ForQuoteRef = ForQuoteRef.encode("GBK")
         if UserID:
@@ -5315,24 +5621,28 @@ class InputForQuote(Struct):
             self.ExchangeID = ExchangeID.encode("GBK")
         if InvestUnitID:
             self.InvestUnitID = InvestUnitID.encode("GBK")
-        if IPAddress:
-            self.IPAddress = IPAddress.encode("GBK")
+        if reserve2:
+            self.reserve2 = reserve2.encode("GBK")
         if MacAddress:
             self.MacAddress = MacAddress.encode("GBK")
+        if InstrumentID:
+            self.InstrumentID = InstrumentID.encode("GBK")
+        if IPAddress:
+            self.IPAddress = IPAddress.encode("GBK")
 
 
 class ForQuote(Struct):
     _fields_ = [
         ("BrokerID", c_char_Array_11),
         ("InvestorID", c_char_Array_13),
-        ("InstrumentID", c_char_Array_31),
+        ("reserve1", c_char_Array_31),
         ("ForQuoteRef", c_char_Array_13),
         ("UserID", c_char_Array_16),
         ("ForQuoteLocalID", c_char_Array_13),
         ("ExchangeID", c_char_Array_9),
         ("ParticipantID", c_char_Array_11),
         ("ClientID", c_char_Array_11),
-        ("ExchangeInstID", c_char_Array_31),
+        ("reserve2", c_char_Array_31),
         ("TraderID", c_char_Array_21),
         ("InstallID", c_int),
         ("InsertDate", c_char_Array_9),
@@ -5344,18 +5654,21 @@ class ForQuote(Struct):
         ("ActiveUserID", c_char_Array_16),
         ("BrokerForQutoSeq", c_int),
         ("InvestUnitID", c_char_Array_17),
-        ("IPAddress", c_char_Array_16),
+        ("reserve3", c_char_Array_16),
         ("MacAddress", c_char_Array_21),
+        ("InstrumentID", c_char_Array_81),
+        ("ExchangeInstID", c_char_Array_81),
+        ("IPAddress", c_char_Array_33),
     ]
 
-    def __init__(self, BrokerID=None, InvestorID=None, InstrumentID=None, ForQuoteRef=None, UserID=None, ForQuoteLocalID=None, ExchangeID=None, ParticipantID=None, ClientID=None, ExchangeInstID=None, TraderID=None, InstallID=None, InsertDate=None, InsertTime=None, ForQuoteStatus=None, FrontID=None, SessionID=None, StatusMsg=None, ActiveUserID=None, BrokerForQutoSeq=None, InvestUnitID=None, IPAddress=None, MacAddress=None):
+    def __init__(self, BrokerID=None, InvestorID=None, reserve1=None, ForQuoteRef=None, UserID=None, ForQuoteLocalID=None, ExchangeID=None, ParticipantID=None, ClientID=None, reserve2=None, TraderID=None, InstallID=None, InsertDate=None, InsertTime=None, ForQuoteStatus=None, FrontID=None, SessionID=None, StatusMsg=None, ActiveUserID=None, BrokerForQutoSeq=None, InvestUnitID=None, reserve3=None, MacAddress=None, InstrumentID=None, ExchangeInstID=None, IPAddress=None):
         super().__init__()
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
         if InvestorID:
             self.InvestorID = InvestorID.encode("GBK")
-        if InstrumentID:
-            self.InstrumentID = InstrumentID.encode("GBK")
+        if reserve1:
+            self.reserve1 = reserve1.encode("GBK")
         if ForQuoteRef:
             self.ForQuoteRef = ForQuoteRef.encode("GBK")
         if UserID:
@@ -5368,8 +5681,8 @@ class ForQuote(Struct):
             self.ParticipantID = ParticipantID.encode("GBK")
         if ClientID:
             self.ClientID = ClientID.encode("GBK")
-        if ExchangeInstID:
-            self.ExchangeInstID = ExchangeInstID.encode("GBK")
+        if reserve2:
+            self.reserve2 = reserve2.encode("GBK")
         if TraderID:
             self.TraderID = TraderID.encode("GBK")
         if InstallID:
@@ -5392,31 +5705,38 @@ class ForQuote(Struct):
             self.BrokerForQutoSeq = BrokerForQutoSeq
         if InvestUnitID:
             self.InvestUnitID = InvestUnitID.encode("GBK")
-        if IPAddress:
-            self.IPAddress = IPAddress.encode("GBK")
+        if reserve3:
+            self.reserve3 = reserve3.encode("GBK")
         if MacAddress:
             self.MacAddress = MacAddress.encode("GBK")
+        if InstrumentID:
+            self.InstrumentID = InstrumentID.encode("GBK")
+        if ExchangeInstID:
+            self.ExchangeInstID = ExchangeInstID.encode("GBK")
+        if IPAddress:
+            self.IPAddress = IPAddress.encode("GBK")
 
 
 class QryForQuote(Struct):
     _fields_ = [
         ("BrokerID", c_char_Array_11),
         ("InvestorID", c_char_Array_13),
-        ("InstrumentID", c_char_Array_31),
+        ("reserve1", c_char_Array_31),
         ("ExchangeID", c_char_Array_9),
         ("InsertTimeStart", c_char_Array_9),
         ("InsertTimeEnd", c_char_Array_9),
         ("InvestUnitID", c_char_Array_17),
+        ("InstrumentID", c_char_Array_81),
     ]
 
-    def __init__(self, BrokerID=None, InvestorID=None, InstrumentID=None, ExchangeID=None, InsertTimeStart=None, InsertTimeEnd=None, InvestUnitID=None):
+    def __init__(self, BrokerID=None, InvestorID=None, reserve1=None, ExchangeID=None, InsertTimeStart=None, InsertTimeEnd=None, InvestUnitID=None, InstrumentID=None):
         super().__init__()
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
         if InvestorID:
             self.InvestorID = InvestorID.encode("GBK")
-        if InstrumentID:
-            self.InstrumentID = InstrumentID.encode("GBK")
+        if reserve1:
+            self.reserve1 = reserve1.encode("GBK")
         if ExchangeID:
             self.ExchangeID = ExchangeID.encode("GBK")
         if InsertTimeStart:
@@ -5425,6 +5745,8 @@ class QryForQuote(Struct):
             self.InsertTimeEnd = InsertTimeEnd.encode("GBK")
         if InvestUnitID:
             self.InvestUnitID = InvestUnitID.encode("GBK")
+        if InstrumentID:
+            self.InstrumentID = InstrumentID.encode("GBK")
 
 
 class ExchangeForQuote(Struct):
@@ -5433,17 +5755,19 @@ class ExchangeForQuote(Struct):
         ("ExchangeID", c_char_Array_9),
         ("ParticipantID", c_char_Array_11),
         ("ClientID", c_char_Array_11),
-        ("ExchangeInstID", c_char_Array_31),
+        ("reserve1", c_char_Array_31),
         ("TraderID", c_char_Array_21),
         ("InstallID", c_int),
         ("InsertDate", c_char_Array_9),
         ("InsertTime", c_char_Array_9),
         ("ForQuoteStatus", c_char),
-        ("IPAddress", c_char_Array_16),
+        ("reserve2", c_char_Array_16),
         ("MacAddress", c_char_Array_21),
+        ("ExchangeInstID", c_char_Array_81),
+        ("IPAddress", c_char_Array_33),
     ]
 
-    def __init__(self, ForQuoteLocalID=None, ExchangeID=None, ParticipantID=None, ClientID=None, ExchangeInstID=None, TraderID=None, InstallID=None, InsertDate=None, InsertTime=None, ForQuoteStatus=None, IPAddress=None, MacAddress=None):
+    def __init__(self, ForQuoteLocalID=None, ExchangeID=None, ParticipantID=None, ClientID=None, reserve1=None, TraderID=None, InstallID=None, InsertDate=None, InsertTime=None, ForQuoteStatus=None, reserve2=None, MacAddress=None, ExchangeInstID=None, IPAddress=None):
         super().__init__()
         if ForQuoteLocalID:
             self.ForQuoteLocalID = ForQuoteLocalID.encode("GBK")
@@ -5453,8 +5777,8 @@ class ExchangeForQuote(Struct):
             self.ParticipantID = ParticipantID.encode("GBK")
         if ClientID:
             self.ClientID = ClientID.encode("GBK")
-        if ExchangeInstID:
-            self.ExchangeInstID = ExchangeInstID.encode("GBK")
+        if reserve1:
+            self.reserve1 = reserve1.encode("GBK")
         if TraderID:
             self.TraderID = TraderID.encode("GBK")
         if InstallID:
@@ -5465,40 +5789,47 @@ class ExchangeForQuote(Struct):
             self.InsertTime = InsertTime.encode("GBK")
         if ForQuoteStatus:
             self.ForQuoteStatus = ForQuoteStatus.encode("GBK")
-        if IPAddress:
-            self.IPAddress = IPAddress.encode("GBK")
+        if reserve2:
+            self.reserve2 = reserve2.encode("GBK")
         if MacAddress:
             self.MacAddress = MacAddress.encode("GBK")
+        if ExchangeInstID:
+            self.ExchangeInstID = ExchangeInstID.encode("GBK")
+        if IPAddress:
+            self.IPAddress = IPAddress.encode("GBK")
 
 
 class QryExchangeForQuote(Struct):
     _fields_ = [
         ("ParticipantID", c_char_Array_11),
         ("ClientID", c_char_Array_11),
-        ("ExchangeInstID", c_char_Array_31),
+        ("reserve1", c_char_Array_31),
         ("ExchangeID", c_char_Array_9),
         ("TraderID", c_char_Array_21),
+        ("ExchangeInstID", c_char_Array_81),
     ]
 
-    def __init__(self, ParticipantID=None, ClientID=None, ExchangeInstID=None, ExchangeID=None, TraderID=None):
+    def __init__(self, ParticipantID=None, ClientID=None, reserve1=None, ExchangeID=None, TraderID=None, ExchangeInstID=None):
         super().__init__()
         if ParticipantID:
             self.ParticipantID = ParticipantID.encode("GBK")
         if ClientID:
             self.ClientID = ClientID.encode("GBK")
-        if ExchangeInstID:
-            self.ExchangeInstID = ExchangeInstID.encode("GBK")
+        if reserve1:
+            self.reserve1 = reserve1.encode("GBK")
         if ExchangeID:
             self.ExchangeID = ExchangeID.encode("GBK")
         if TraderID:
             self.TraderID = TraderID.encode("GBK")
+        if ExchangeInstID:
+            self.ExchangeInstID = ExchangeInstID.encode("GBK")
 
 
 class InputQuote(Struct):
     _fields_ = [
         ("BrokerID", c_char_Array_11),
         ("InvestorID", c_char_Array_13),
-        ("InstrumentID", c_char_Array_31),
+        ("reserve1", c_char_Array_31),
         ("QuoteRef", c_char_Array_13),
         ("UserID", c_char_Array_16),
         ("AskPrice", c_double),
@@ -5517,18 +5848,21 @@ class InputQuote(Struct):
         ("ExchangeID", c_char_Array_9),
         ("InvestUnitID", c_char_Array_17),
         ("ClientID", c_char_Array_11),
-        ("IPAddress", c_char_Array_16),
+        ("reserve2", c_char_Array_16),
         ("MacAddress", c_char_Array_21),
+        ("InstrumentID", c_char_Array_81),
+        ("IPAddress", c_char_Array_33),
+        ("ReplaceSysID", c_char_Array_21),
     ]
 
-    def __init__(self, BrokerID=None, InvestorID=None, InstrumentID=None, QuoteRef=None, UserID=None, AskPrice=None, BidPrice=None, AskVolume=None, BidVolume=None, RequestID=None, BusinessUnit=None, AskOffsetFlag=None, BidOffsetFlag=None, AskHedgeFlag=None, BidHedgeFlag=None, AskOrderRef=None, BidOrderRef=None, ForQuoteSysID=None, ExchangeID=None, InvestUnitID=None, ClientID=None, IPAddress=None, MacAddress=None):
+    def __init__(self, BrokerID=None, InvestorID=None, reserve1=None, QuoteRef=None, UserID=None, AskPrice=None, BidPrice=None, AskVolume=None, BidVolume=None, RequestID=None, BusinessUnit=None, AskOffsetFlag=None, BidOffsetFlag=None, AskHedgeFlag=None, BidHedgeFlag=None, AskOrderRef=None, BidOrderRef=None, ForQuoteSysID=None, ExchangeID=None, InvestUnitID=None, ClientID=None, reserve2=None, MacAddress=None, InstrumentID=None, IPAddress=None, ReplaceSysID=None):
         super().__init__()
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
         if InvestorID:
             self.InvestorID = InvestorID.encode("GBK")
-        if InstrumentID:
-            self.InstrumentID = InstrumentID.encode("GBK")
+        if reserve1:
+            self.reserve1 = reserve1.encode("GBK")
         if QuoteRef:
             self.QuoteRef = QuoteRef.encode("GBK")
         if UserID:
@@ -5565,10 +5899,16 @@ class InputQuote(Struct):
             self.InvestUnitID = InvestUnitID.encode("GBK")
         if ClientID:
             self.ClientID = ClientID.encode("GBK")
-        if IPAddress:
-            self.IPAddress = IPAddress.encode("GBK")
+        if reserve2:
+            self.reserve2 = reserve2.encode("GBK")
         if MacAddress:
             self.MacAddress = MacAddress.encode("GBK")
+        if InstrumentID:
+            self.InstrumentID = InstrumentID.encode("GBK")
+        if IPAddress:
+            self.IPAddress = IPAddress.encode("GBK")
+        if ReplaceSysID:
+            self.ReplaceSysID = ReplaceSysID.encode("GBK")
 
 
 class InputQuoteAction(Struct):
@@ -5584,14 +5924,16 @@ class InputQuoteAction(Struct):
         ("QuoteSysID", c_char_Array_21),
         ("ActionFlag", c_char),
         ("UserID", c_char_Array_16),
-        ("InstrumentID", c_char_Array_31),
+        ("reserve1", c_char_Array_31),
         ("InvestUnitID", c_char_Array_17),
         ("ClientID", c_char_Array_11),
-        ("IPAddress", c_char_Array_16),
+        ("reserve2", c_char_Array_16),
         ("MacAddress", c_char_Array_21),
+        ("InstrumentID", c_char_Array_81),
+        ("IPAddress", c_char_Array_33),
     ]
 
-    def __init__(self, BrokerID=None, InvestorID=None, QuoteActionRef=None, QuoteRef=None, RequestID=None, FrontID=None, SessionID=None, ExchangeID=None, QuoteSysID=None, ActionFlag=None, UserID=None, InstrumentID=None, InvestUnitID=None, ClientID=None, IPAddress=None, MacAddress=None):
+    def __init__(self, BrokerID=None, InvestorID=None, QuoteActionRef=None, QuoteRef=None, RequestID=None, FrontID=None, SessionID=None, ExchangeID=None, QuoteSysID=None, ActionFlag=None, UserID=None, reserve1=None, InvestUnitID=None, ClientID=None, reserve2=None, MacAddress=None, InstrumentID=None, IPAddress=None):
         super().__init__()
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
@@ -5615,23 +5957,27 @@ class InputQuoteAction(Struct):
             self.ActionFlag = ActionFlag.encode("GBK")
         if UserID:
             self.UserID = UserID.encode("GBK")
-        if InstrumentID:
-            self.InstrumentID = InstrumentID.encode("GBK")
+        if reserve1:
+            self.reserve1 = reserve1.encode("GBK")
         if InvestUnitID:
             self.InvestUnitID = InvestUnitID.encode("GBK")
         if ClientID:
             self.ClientID = ClientID.encode("GBK")
-        if IPAddress:
-            self.IPAddress = IPAddress.encode("GBK")
+        if reserve2:
+            self.reserve2 = reserve2.encode("GBK")
         if MacAddress:
             self.MacAddress = MacAddress.encode("GBK")
+        if InstrumentID:
+            self.InstrumentID = InstrumentID.encode("GBK")
+        if IPAddress:
+            self.IPAddress = IPAddress.encode("GBK")
 
 
 class Quote(Struct):
     _fields_ = [
         ("BrokerID", c_char_Array_11),
         ("InvestorID", c_char_Array_13),
-        ("InstrumentID", c_char_Array_31),
+        ("reserve1", c_char_Array_31),
         ("QuoteRef", c_char_Array_13),
         ("UserID", c_char_Array_16),
         ("AskPrice", c_double),
@@ -5648,7 +5994,7 @@ class Quote(Struct):
         ("ExchangeID", c_char_Array_9),
         ("ParticipantID", c_char_Array_11),
         ("ClientID", c_char_Array_11),
-        ("ExchangeInstID", c_char_Array_31),
+        ("reserve2", c_char_Array_31),
         ("TraderID", c_char_Array_21),
         ("InstallID", c_int),
         ("NotifySequence", c_int),
@@ -5677,18 +6023,22 @@ class Quote(Struct):
         ("InvestUnitID", c_char_Array_17),
         ("AccountID", c_char_Array_13),
         ("CurrencyID", c_char_Array_4),
-        ("IPAddress", c_char_Array_16),
+        ("reserve3", c_char_Array_16),
         ("MacAddress", c_char_Array_21),
+        ("InstrumentID", c_char_Array_81),
+        ("ExchangeInstID", c_char_Array_81),
+        ("IPAddress", c_char_Array_33),
+        ("ReplaceSysID", c_char_Array_21),
     ]
 
-    def __init__(self, BrokerID=None, InvestorID=None, InstrumentID=None, QuoteRef=None, UserID=None, AskPrice=None, BidPrice=None, AskVolume=None, BidVolume=None, RequestID=None, BusinessUnit=None, AskOffsetFlag=None, BidOffsetFlag=None, AskHedgeFlag=None, BidHedgeFlag=None, QuoteLocalID=None, ExchangeID=None, ParticipantID=None, ClientID=None, ExchangeInstID=None, TraderID=None, InstallID=None, NotifySequence=None, OrderSubmitStatus=None, TradingDay=None, SettlementID=None, QuoteSysID=None, InsertDate=None, InsertTime=None, CancelTime=None, QuoteStatus=None, ClearingPartID=None, SequenceNo=None, AskOrderSysID=None, BidOrderSysID=None, FrontID=None, SessionID=None, UserProductInfo=None, StatusMsg=None, ActiveUserID=None, BrokerQuoteSeq=None, AskOrderRef=None, BidOrderRef=None, ForQuoteSysID=None, BranchID=None, InvestUnitID=None, AccountID=None, CurrencyID=None, IPAddress=None, MacAddress=None):
+    def __init__(self, BrokerID=None, InvestorID=None, reserve1=None, QuoteRef=None, UserID=None, AskPrice=None, BidPrice=None, AskVolume=None, BidVolume=None, RequestID=None, BusinessUnit=None, AskOffsetFlag=None, BidOffsetFlag=None, AskHedgeFlag=None, BidHedgeFlag=None, QuoteLocalID=None, ExchangeID=None, ParticipantID=None, ClientID=None, reserve2=None, TraderID=None, InstallID=None, NotifySequence=None, OrderSubmitStatus=None, TradingDay=None, SettlementID=None, QuoteSysID=None, InsertDate=None, InsertTime=None, CancelTime=None, QuoteStatus=None, ClearingPartID=None, SequenceNo=None, AskOrderSysID=None, BidOrderSysID=None, FrontID=None, SessionID=None, UserProductInfo=None, StatusMsg=None, ActiveUserID=None, BrokerQuoteSeq=None, AskOrderRef=None, BidOrderRef=None, ForQuoteSysID=None, BranchID=None, InvestUnitID=None, AccountID=None, CurrencyID=None, reserve3=None, MacAddress=None, InstrumentID=None, ExchangeInstID=None, IPAddress=None, ReplaceSysID=None):
         super().__init__()
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
         if InvestorID:
             self.InvestorID = InvestorID.encode("GBK")
-        if InstrumentID:
-            self.InstrumentID = InstrumentID.encode("GBK")
+        if reserve1:
+            self.reserve1 = reserve1.encode("GBK")
         if QuoteRef:
             self.QuoteRef = QuoteRef.encode("GBK")
         if UserID:
@@ -5721,8 +6071,8 @@ class Quote(Struct):
             self.ParticipantID = ParticipantID.encode("GBK")
         if ClientID:
             self.ClientID = ClientID.encode("GBK")
-        if ExchangeInstID:
-            self.ExchangeInstID = ExchangeInstID.encode("GBK")
+        if reserve2:
+            self.reserve2 = reserve2.encode("GBK")
         if TraderID:
             self.TraderID = TraderID.encode("GBK")
         if InstallID:
@@ -5779,10 +6129,18 @@ class Quote(Struct):
             self.AccountID = AccountID.encode("GBK")
         if CurrencyID:
             self.CurrencyID = CurrencyID.encode("GBK")
-        if IPAddress:
-            self.IPAddress = IPAddress.encode("GBK")
+        if reserve3:
+            self.reserve3 = reserve3.encode("GBK")
         if MacAddress:
             self.MacAddress = MacAddress.encode("GBK")
+        if InstrumentID:
+            self.InstrumentID = InstrumentID.encode("GBK")
+        if ExchangeInstID:
+            self.ExchangeInstID = ExchangeInstID.encode("GBK")
+        if IPAddress:
+            self.IPAddress = IPAddress.encode("GBK")
+        if ReplaceSysID:
+            self.ReplaceSysID = ReplaceSysID.encode("GBK")
 
 
 class QuoteAction(Struct):
@@ -5809,14 +6167,16 @@ class QuoteAction(Struct):
         ("OrderActionStatus", c_char),
         ("UserID", c_char_Array_16),
         ("StatusMsg", c_char_Array_81),
-        ("InstrumentID", c_char_Array_31),
+        ("reserve1", c_char_Array_31),
         ("BranchID", c_char_Array_9),
         ("InvestUnitID", c_char_Array_17),
-        ("IPAddress", c_char_Array_16),
+        ("reserve2", c_char_Array_16),
         ("MacAddress", c_char_Array_21),
+        ("InstrumentID", c_char_Array_81),
+        ("IPAddress", c_char_Array_33),
     ]
 
-    def __init__(self, BrokerID=None, InvestorID=None, QuoteActionRef=None, QuoteRef=None, RequestID=None, FrontID=None, SessionID=None, ExchangeID=None, QuoteSysID=None, ActionFlag=None, ActionDate=None, ActionTime=None, TraderID=None, InstallID=None, QuoteLocalID=None, ActionLocalID=None, ParticipantID=None, ClientID=None, BusinessUnit=None, OrderActionStatus=None, UserID=None, StatusMsg=None, InstrumentID=None, BranchID=None, InvestUnitID=None, IPAddress=None, MacAddress=None):
+    def __init__(self, BrokerID=None, InvestorID=None, QuoteActionRef=None, QuoteRef=None, RequestID=None, FrontID=None, SessionID=None, ExchangeID=None, QuoteSysID=None, ActionFlag=None, ActionDate=None, ActionTime=None, TraderID=None, InstallID=None, QuoteLocalID=None, ActionLocalID=None, ParticipantID=None, ClientID=None, BusinessUnit=None, OrderActionStatus=None, UserID=None, StatusMsg=None, reserve1=None, BranchID=None, InvestUnitID=None, reserve2=None, MacAddress=None, InstrumentID=None, IPAddress=None):
         super().__init__()
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
@@ -5862,38 +6222,43 @@ class QuoteAction(Struct):
             self.UserID = UserID.encode("GBK")
         if StatusMsg:
             self.StatusMsg = StatusMsg.encode("GBK")
-        if InstrumentID:
-            self.InstrumentID = InstrumentID.encode("GBK")
+        if reserve1:
+            self.reserve1 = reserve1.encode("GBK")
         if BranchID:
             self.BranchID = BranchID.encode("GBK")
         if InvestUnitID:
             self.InvestUnitID = InvestUnitID.encode("GBK")
-        if IPAddress:
-            self.IPAddress = IPAddress.encode("GBK")
+        if reserve2:
+            self.reserve2 = reserve2.encode("GBK")
         if MacAddress:
             self.MacAddress = MacAddress.encode("GBK")
+        if InstrumentID:
+            self.InstrumentID = InstrumentID.encode("GBK")
+        if IPAddress:
+            self.IPAddress = IPAddress.encode("GBK")
 
 
 class QryQuote(Struct):
     _fields_ = [
         ("BrokerID", c_char_Array_11),
         ("InvestorID", c_char_Array_13),
-        ("InstrumentID", c_char_Array_31),
+        ("reserve1", c_char_Array_31),
         ("ExchangeID", c_char_Array_9),
         ("QuoteSysID", c_char_Array_21),
         ("InsertTimeStart", c_char_Array_9),
         ("InsertTimeEnd", c_char_Array_9),
         ("InvestUnitID", c_char_Array_17),
+        ("InstrumentID", c_char_Array_81),
     ]
 
-    def __init__(self, BrokerID=None, InvestorID=None, InstrumentID=None, ExchangeID=None, QuoteSysID=None, InsertTimeStart=None, InsertTimeEnd=None, InvestUnitID=None):
+    def __init__(self, BrokerID=None, InvestorID=None, reserve1=None, ExchangeID=None, QuoteSysID=None, InsertTimeStart=None, InsertTimeEnd=None, InvestUnitID=None, InstrumentID=None):
         super().__init__()
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
         if InvestorID:
             self.InvestorID = InvestorID.encode("GBK")
-        if InstrumentID:
-            self.InstrumentID = InstrumentID.encode("GBK")
+        if reserve1:
+            self.reserve1 = reserve1.encode("GBK")
         if ExchangeID:
             self.ExchangeID = ExchangeID.encode("GBK")
         if QuoteSysID:
@@ -5904,6 +6269,8 @@ class QryQuote(Struct):
             self.InsertTimeEnd = InsertTimeEnd.encode("GBK")
         if InvestUnitID:
             self.InvestUnitID = InvestUnitID.encode("GBK")
+        if InstrumentID:
+            self.InstrumentID = InstrumentID.encode("GBK")
 
 
 class ExchangeQuote(Struct):
@@ -5922,7 +6289,7 @@ class ExchangeQuote(Struct):
         ("ExchangeID", c_char_Array_9),
         ("ParticipantID", c_char_Array_11),
         ("ClientID", c_char_Array_11),
-        ("ExchangeInstID", c_char_Array_31),
+        ("reserve1", c_char_Array_31),
         ("TraderID", c_char_Array_21),
         ("InstallID", c_int),
         ("NotifySequence", c_int),
@@ -5940,11 +6307,13 @@ class ExchangeQuote(Struct):
         ("BidOrderSysID", c_char_Array_21),
         ("ForQuoteSysID", c_char_Array_21),
         ("BranchID", c_char_Array_9),
-        ("IPAddress", c_char_Array_16),
+        ("reserve2", c_char_Array_16),
         ("MacAddress", c_char_Array_21),
+        ("ExchangeInstID", c_char_Array_81),
+        ("IPAddress", c_char_Array_33),
     ]
 
-    def __init__(self, AskPrice=None, BidPrice=None, AskVolume=None, BidVolume=None, RequestID=None, BusinessUnit=None, AskOffsetFlag=None, BidOffsetFlag=None, AskHedgeFlag=None, BidHedgeFlag=None, QuoteLocalID=None, ExchangeID=None, ParticipantID=None, ClientID=None, ExchangeInstID=None, TraderID=None, InstallID=None, NotifySequence=None, OrderSubmitStatus=None, TradingDay=None, SettlementID=None, QuoteSysID=None, InsertDate=None, InsertTime=None, CancelTime=None, QuoteStatus=None, ClearingPartID=None, SequenceNo=None, AskOrderSysID=None, BidOrderSysID=None, ForQuoteSysID=None, BranchID=None, IPAddress=None, MacAddress=None):
+    def __init__(self, AskPrice=None, BidPrice=None, AskVolume=None, BidVolume=None, RequestID=None, BusinessUnit=None, AskOffsetFlag=None, BidOffsetFlag=None, AskHedgeFlag=None, BidHedgeFlag=None, QuoteLocalID=None, ExchangeID=None, ParticipantID=None, ClientID=None, reserve1=None, TraderID=None, InstallID=None, NotifySequence=None, OrderSubmitStatus=None, TradingDay=None, SettlementID=None, QuoteSysID=None, InsertDate=None, InsertTime=None, CancelTime=None, QuoteStatus=None, ClearingPartID=None, SequenceNo=None, AskOrderSysID=None, BidOrderSysID=None, ForQuoteSysID=None, BranchID=None, reserve2=None, MacAddress=None, ExchangeInstID=None, IPAddress=None):
         super().__init__()
         if AskPrice:
             self.AskPrice = AskPrice
@@ -5974,8 +6343,8 @@ class ExchangeQuote(Struct):
             self.ParticipantID = ParticipantID.encode("GBK")
         if ClientID:
             self.ClientID = ClientID.encode("GBK")
-        if ExchangeInstID:
-            self.ExchangeInstID = ExchangeInstID.encode("GBK")
+        if reserve1:
+            self.reserve1 = reserve1.encode("GBK")
         if TraderID:
             self.TraderID = TraderID.encode("GBK")
         if InstallID:
@@ -6010,33 +6379,40 @@ class ExchangeQuote(Struct):
             self.ForQuoteSysID = ForQuoteSysID.encode("GBK")
         if BranchID:
             self.BranchID = BranchID.encode("GBK")
-        if IPAddress:
-            self.IPAddress = IPAddress.encode("GBK")
+        if reserve2:
+            self.reserve2 = reserve2.encode("GBK")
         if MacAddress:
             self.MacAddress = MacAddress.encode("GBK")
+        if ExchangeInstID:
+            self.ExchangeInstID = ExchangeInstID.encode("GBK")
+        if IPAddress:
+            self.IPAddress = IPAddress.encode("GBK")
 
 
 class QryExchangeQuote(Struct):
     _fields_ = [
         ("ParticipantID", c_char_Array_11),
         ("ClientID", c_char_Array_11),
-        ("ExchangeInstID", c_char_Array_31),
+        ("reserve1", c_char_Array_31),
         ("ExchangeID", c_char_Array_9),
         ("TraderID", c_char_Array_21),
+        ("ExchangeInstID", c_char_Array_81),
     ]
 
-    def __init__(self, ParticipantID=None, ClientID=None, ExchangeInstID=None, ExchangeID=None, TraderID=None):
+    def __init__(self, ParticipantID=None, ClientID=None, reserve1=None, ExchangeID=None, TraderID=None, ExchangeInstID=None):
         super().__init__()
         if ParticipantID:
             self.ParticipantID = ParticipantID.encode("GBK")
         if ClientID:
             self.ClientID = ClientID.encode("GBK")
-        if ExchangeInstID:
-            self.ExchangeInstID = ExchangeInstID.encode("GBK")
+        if reserve1:
+            self.reserve1 = reserve1.encode("GBK")
         if ExchangeID:
             self.ExchangeID = ExchangeID.encode("GBK")
         if TraderID:
             self.TraderID = TraderID.encode("GBK")
+        if ExchangeInstID:
+            self.ExchangeInstID = ExchangeInstID.encode("GBK")
 
 
 class QryQuoteAction(Struct):
@@ -6072,11 +6448,12 @@ class ExchangeQuoteAction(Struct):
         ("BusinessUnit", c_char_Array_21),
         ("OrderActionStatus", c_char),
         ("UserID", c_char_Array_16),
-        ("IPAddress", c_char_Array_16),
+        ("reserve1", c_char_Array_16),
         ("MacAddress", c_char_Array_21),
+        ("IPAddress", c_char_Array_33),
     ]
 
-    def __init__(self, ExchangeID=None, QuoteSysID=None, ActionFlag=None, ActionDate=None, ActionTime=None, TraderID=None, InstallID=None, QuoteLocalID=None, ActionLocalID=None, ParticipantID=None, ClientID=None, BusinessUnit=None, OrderActionStatus=None, UserID=None, IPAddress=None, MacAddress=None):
+    def __init__(self, ExchangeID=None, QuoteSysID=None, ActionFlag=None, ActionDate=None, ActionTime=None, TraderID=None, InstallID=None, QuoteLocalID=None, ActionLocalID=None, ParticipantID=None, ClientID=None, BusinessUnit=None, OrderActionStatus=None, UserID=None, reserve1=None, MacAddress=None, IPAddress=None):
         super().__init__()
         if ExchangeID:
             self.ExchangeID = ExchangeID.encode("GBK")
@@ -6106,10 +6483,12 @@ class ExchangeQuoteAction(Struct):
             self.OrderActionStatus = OrderActionStatus.encode("GBK")
         if UserID:
             self.UserID = UserID.encode("GBK")
-        if IPAddress:
-            self.IPAddress = IPAddress.encode("GBK")
+        if reserve1:
+            self.reserve1 = reserve1.encode("GBK")
         if MacAddress:
             self.MacAddress = MacAddress.encode("GBK")
+        if IPAddress:
+            self.IPAddress = IPAddress.encode("GBK")
 
 
 class QryExchangeQuoteAction(Struct):
@@ -6134,17 +6513,18 @@ class QryExchangeQuoteAction(Struct):
 
 class OptionInstrDelta(Struct):
     _fields_ = [
-        ("InstrumentID", c_char_Array_31),
+        ("reserve1", c_char_Array_31),
         ("InvestorRange", c_char),
         ("BrokerID", c_char_Array_11),
         ("InvestorID", c_char_Array_13),
         ("Delta", c_double),
+        ("InstrumentID", c_char_Array_81),
     ]
 
-    def __init__(self, InstrumentID=None, InvestorRange=None, BrokerID=None, InvestorID=None, Delta=None):
+    def __init__(self, reserve1=None, InvestorRange=None, BrokerID=None, InvestorID=None, Delta=None, InstrumentID=None):
         super().__init__()
-        if InstrumentID:
-            self.InstrumentID = InstrumentID.encode("GBK")
+        if reserve1:
+            self.reserve1 = reserve1.encode("GBK")
         if InvestorRange:
             self.InvestorRange = InvestorRange.encode("GBK")
         if BrokerID:
@@ -6153,24 +6533,27 @@ class OptionInstrDelta(Struct):
             self.InvestorID = InvestorID.encode("GBK")
         if Delta:
             self.Delta = Delta
+        if InstrumentID:
+            self.InstrumentID = InstrumentID.encode("GBK")
 
 
 class ForQuoteRsp(Struct):
     _fields_ = [
         ("TradingDay", c_char_Array_9),
-        ("InstrumentID", c_char_Array_31),
+        ("reserve1", c_char_Array_31),
         ("ForQuoteSysID", c_char_Array_21),
         ("ForQuoteTime", c_char_Array_9),
         ("ActionDay", c_char_Array_9),
         ("ExchangeID", c_char_Array_9),
+        ("InstrumentID", c_char_Array_81),
     ]
 
-    def __init__(self, TradingDay=None, InstrumentID=None, ForQuoteSysID=None, ForQuoteTime=None, ActionDay=None, ExchangeID=None):
+    def __init__(self, TradingDay=None, reserve1=None, ForQuoteSysID=None, ForQuoteTime=None, ActionDay=None, ExchangeID=None, InstrumentID=None):
         super().__init__()
         if TradingDay:
             self.TradingDay = TradingDay.encode("GBK")
-        if InstrumentID:
-            self.InstrumentID = InstrumentID.encode("GBK")
+        if reserve1:
+            self.reserve1 = reserve1.encode("GBK")
         if ForQuoteSysID:
             self.ForQuoteSysID = ForQuoteSysID.encode("GBK")
         if ForQuoteTime:
@@ -6179,22 +6562,25 @@ class ForQuoteRsp(Struct):
             self.ActionDay = ActionDay.encode("GBK")
         if ExchangeID:
             self.ExchangeID = ExchangeID.encode("GBK")
+        if InstrumentID:
+            self.InstrumentID = InstrumentID.encode("GBK")
 
 
 class StrikeOffset(Struct):
     _fields_ = [
-        ("InstrumentID", c_char_Array_31),
+        ("reserve1", c_char_Array_31),
         ("InvestorRange", c_char),
         ("BrokerID", c_char_Array_11),
         ("InvestorID", c_char_Array_13),
         ("Offset", c_double),
         ("OffsetType", c_char),
+        ("InstrumentID", c_char_Array_81),
     ]
 
-    def __init__(self, InstrumentID=None, InvestorRange=None, BrokerID=None, InvestorID=None, Offset=None, OffsetType=None):
+    def __init__(self, reserve1=None, InvestorRange=None, BrokerID=None, InvestorID=None, Offset=None, OffsetType=None, InstrumentID=None):
         super().__init__()
-        if InstrumentID:
-            self.InstrumentID = InstrumentID.encode("GBK")
+        if reserve1:
+            self.reserve1 = reserve1.encode("GBK")
         if InvestorRange:
             self.InvestorRange = InvestorRange.encode("GBK")
         if BrokerID:
@@ -6205,21 +6591,26 @@ class StrikeOffset(Struct):
             self.Offset = Offset
         if OffsetType:
             self.OffsetType = OffsetType.encode("GBK")
+        if InstrumentID:
+            self.InstrumentID = InstrumentID.encode("GBK")
 
 
 class QryStrikeOffset(Struct):
     _fields_ = [
         ("BrokerID", c_char_Array_11),
         ("InvestorID", c_char_Array_13),
-        ("InstrumentID", c_char_Array_31),
+        ("reserve1", c_char_Array_31),
+        ("InstrumentID", c_char_Array_81),
     ]
 
-    def __init__(self, BrokerID=None, InvestorID=None, InstrumentID=None):
+    def __init__(self, BrokerID=None, InvestorID=None, reserve1=None, InstrumentID=None):
         super().__init__()
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
         if InvestorID:
             self.InvestorID = InvestorID.encode("GBK")
+        if reserve1:
+            self.reserve1 = reserve1.encode("GBK")
         if InstrumentID:
             self.InstrumentID = InstrumentID.encode("GBK")
 
@@ -6235,11 +6626,12 @@ class InputBatchOrderAction(Struct):
         ("ExchangeID", c_char_Array_9),
         ("UserID", c_char_Array_16),
         ("InvestUnitID", c_char_Array_17),
-        ("IPAddress", c_char_Array_16),
+        ("reserve1", c_char_Array_16),
         ("MacAddress", c_char_Array_21),
+        ("IPAddress", c_char_Array_33),
     ]
 
-    def __init__(self, BrokerID=None, InvestorID=None, OrderActionRef=None, RequestID=None, FrontID=None, SessionID=None, ExchangeID=None, UserID=None, InvestUnitID=None, IPAddress=None, MacAddress=None):
+    def __init__(self, BrokerID=None, InvestorID=None, OrderActionRef=None, RequestID=None, FrontID=None, SessionID=None, ExchangeID=None, UserID=None, InvestUnitID=None, reserve1=None, MacAddress=None, IPAddress=None):
         super().__init__()
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
@@ -6259,10 +6651,12 @@ class InputBatchOrderAction(Struct):
             self.UserID = UserID.encode("GBK")
         if InvestUnitID:
             self.InvestUnitID = InvestUnitID.encode("GBK")
-        if IPAddress:
-            self.IPAddress = IPAddress.encode("GBK")
+        if reserve1:
+            self.reserve1 = reserve1.encode("GBK")
         if MacAddress:
             self.MacAddress = MacAddress.encode("GBK")
+        if IPAddress:
+            self.IPAddress = IPAddress.encode("GBK")
 
 
 class BatchOrderAction(Struct):
@@ -6286,11 +6680,12 @@ class BatchOrderAction(Struct):
         ("UserID", c_char_Array_16),
         ("StatusMsg", c_char_Array_81),
         ("InvestUnitID", c_char_Array_17),
-        ("IPAddress", c_char_Array_16),
+        ("reserve1", c_char_Array_16),
         ("MacAddress", c_char_Array_21),
+        ("IPAddress", c_char_Array_33),
     ]
 
-    def __init__(self, BrokerID=None, InvestorID=None, OrderActionRef=None, RequestID=None, FrontID=None, SessionID=None, ExchangeID=None, ActionDate=None, ActionTime=None, TraderID=None, InstallID=None, ActionLocalID=None, ParticipantID=None, ClientID=None, BusinessUnit=None, OrderActionStatus=None, UserID=None, StatusMsg=None, InvestUnitID=None, IPAddress=None, MacAddress=None):
+    def __init__(self, BrokerID=None, InvestorID=None, OrderActionRef=None, RequestID=None, FrontID=None, SessionID=None, ExchangeID=None, ActionDate=None, ActionTime=None, TraderID=None, InstallID=None, ActionLocalID=None, ParticipantID=None, ClientID=None, BusinessUnit=None, OrderActionStatus=None, UserID=None, StatusMsg=None, InvestUnitID=None, reserve1=None, MacAddress=None, IPAddress=None):
         super().__init__()
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
@@ -6330,10 +6725,12 @@ class BatchOrderAction(Struct):
             self.StatusMsg = StatusMsg.encode("GBK")
         if InvestUnitID:
             self.InvestUnitID = InvestUnitID.encode("GBK")
-        if IPAddress:
-            self.IPAddress = IPAddress.encode("GBK")
+        if reserve1:
+            self.reserve1 = reserve1.encode("GBK")
         if MacAddress:
             self.MacAddress = MacAddress.encode("GBK")
+        if IPAddress:
+            self.IPAddress = IPAddress.encode("GBK")
 
 
 class ExchangeBatchOrderAction(Struct):
@@ -6349,11 +6746,12 @@ class ExchangeBatchOrderAction(Struct):
         ("BusinessUnit", c_char_Array_21),
         ("OrderActionStatus", c_char),
         ("UserID", c_char_Array_16),
-        ("IPAddress", c_char_Array_16),
+        ("reserve1", c_char_Array_16),
         ("MacAddress", c_char_Array_21),
+        ("IPAddress", c_char_Array_33),
     ]
 
-    def __init__(self, ExchangeID=None, ActionDate=None, ActionTime=None, TraderID=None, InstallID=None, ActionLocalID=None, ParticipantID=None, ClientID=None, BusinessUnit=None, OrderActionStatus=None, UserID=None, IPAddress=None, MacAddress=None):
+    def __init__(self, ExchangeID=None, ActionDate=None, ActionTime=None, TraderID=None, InstallID=None, ActionLocalID=None, ParticipantID=None, ClientID=None, BusinessUnit=None, OrderActionStatus=None, UserID=None, reserve1=None, MacAddress=None, IPAddress=None):
         super().__init__()
         if ExchangeID:
             self.ExchangeID = ExchangeID.encode("GBK")
@@ -6377,10 +6775,12 @@ class ExchangeBatchOrderAction(Struct):
             self.OrderActionStatus = OrderActionStatus.encode("GBK")
         if UserID:
             self.UserID = UserID.encode("GBK")
-        if IPAddress:
-            self.IPAddress = IPAddress.encode("GBK")
+        if reserve1:
+            self.reserve1 = reserve1.encode("GBK")
         if MacAddress:
             self.MacAddress = MacAddress.encode("GBK")
+        if IPAddress:
+            self.IPAddress = IPAddress.encode("GBK")
 
 
 class QryBatchOrderAction(Struct):
@@ -6403,45 +6803,51 @@ class QryBatchOrderAction(Struct):
 class CombInstrumentGuard(Struct):
     _fields_ = [
         ("BrokerID", c_char_Array_11),
-        ("InstrumentID", c_char_Array_31),
+        ("reserve1", c_char_Array_31),
         ("GuarantRatio", c_double),
         ("ExchangeID", c_char_Array_9),
+        ("InstrumentID", c_char_Array_81),
     ]
 
-    def __init__(self, BrokerID=None, InstrumentID=None, GuarantRatio=None, ExchangeID=None):
+    def __init__(self, BrokerID=None, reserve1=None, GuarantRatio=None, ExchangeID=None, InstrumentID=None):
         super().__init__()
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
-        if InstrumentID:
-            self.InstrumentID = InstrumentID.encode("GBK")
+        if reserve1:
+            self.reserve1 = reserve1.encode("GBK")
         if GuarantRatio:
             self.GuarantRatio = GuarantRatio
         if ExchangeID:
             self.ExchangeID = ExchangeID.encode("GBK")
+        if InstrumentID:
+            self.InstrumentID = InstrumentID.encode("GBK")
 
 
 class QryCombInstrumentGuard(Struct):
     _fields_ = [
         ("BrokerID", c_char_Array_11),
-        ("InstrumentID", c_char_Array_31),
+        ("reserve1", c_char_Array_31),
         ("ExchangeID", c_char_Array_9),
+        ("InstrumentID", c_char_Array_81),
     ]
 
-    def __init__(self, BrokerID=None, InstrumentID=None, ExchangeID=None):
+    def __init__(self, BrokerID=None, reserve1=None, ExchangeID=None, InstrumentID=None):
         super().__init__()
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
-        if InstrumentID:
-            self.InstrumentID = InstrumentID.encode("GBK")
+        if reserve1:
+            self.reserve1 = reserve1.encode("GBK")
         if ExchangeID:
             self.ExchangeID = ExchangeID.encode("GBK")
+        if InstrumentID:
+            self.InstrumentID = InstrumentID.encode("GBK")
 
 
 class InputCombAction(Struct):
     _fields_ = [
         ("BrokerID", c_char_Array_11),
         ("InvestorID", c_char_Array_13),
-        ("InstrumentID", c_char_Array_31),
+        ("reserve1", c_char_Array_31),
         ("CombActionRef", c_char_Array_13),
         ("UserID", c_char_Array_16),
         ("Direction", c_char),
@@ -6449,19 +6855,23 @@ class InputCombAction(Struct):
         ("CombDirection", c_char),
         ("HedgeFlag", c_char),
         ("ExchangeID", c_char_Array_9),
-        ("IPAddress", c_char_Array_16),
+        ("reserve2", c_char_Array_16),
         ("MacAddress", c_char_Array_21),
         ("InvestUnitID", c_char_Array_17),
+        ("FrontID", c_int),
+        ("SessionID", c_int),
+        ("InstrumentID", c_char_Array_81),
+        ("IPAddress", c_char_Array_33),
     ]
 
-    def __init__(self, BrokerID=None, InvestorID=None, InstrumentID=None, CombActionRef=None, UserID=None, Direction=None, Volume=None, CombDirection=None, HedgeFlag=None, ExchangeID=None, IPAddress=None, MacAddress=None, InvestUnitID=None):
+    def __init__(self, BrokerID=None, InvestorID=None, reserve1=None, CombActionRef=None, UserID=None, Direction=None, Volume=None, CombDirection=None, HedgeFlag=None, ExchangeID=None, reserve2=None, MacAddress=None, InvestUnitID=None, FrontID=None, SessionID=None, InstrumentID=None, IPAddress=None):
         super().__init__()
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
         if InvestorID:
             self.InvestorID = InvestorID.encode("GBK")
-        if InstrumentID:
-            self.InstrumentID = InstrumentID.encode("GBK")
+        if reserve1:
+            self.reserve1 = reserve1.encode("GBK")
         if CombActionRef:
             self.CombActionRef = CombActionRef.encode("GBK")
         if UserID:
@@ -6476,19 +6886,27 @@ class InputCombAction(Struct):
             self.HedgeFlag = HedgeFlag.encode("GBK")
         if ExchangeID:
             self.ExchangeID = ExchangeID.encode("GBK")
-        if IPAddress:
-            self.IPAddress = IPAddress.encode("GBK")
+        if reserve2:
+            self.reserve2 = reserve2.encode("GBK")
         if MacAddress:
             self.MacAddress = MacAddress.encode("GBK")
         if InvestUnitID:
             self.InvestUnitID = InvestUnitID.encode("GBK")
+        if FrontID:
+            self.FrontID = FrontID
+        if SessionID:
+            self.SessionID = SessionID
+        if InstrumentID:
+            self.InstrumentID = InstrumentID.encode("GBK")
+        if IPAddress:
+            self.IPAddress = IPAddress.encode("GBK")
 
 
 class CombAction(Struct):
     _fields_ = [
         ("BrokerID", c_char_Array_11),
         ("InvestorID", c_char_Array_13),
-        ("InstrumentID", c_char_Array_31),
+        ("reserve1", c_char_Array_31),
         ("CombActionRef", c_char_Array_13),
         ("UserID", c_char_Array_16),
         ("Direction", c_char),
@@ -6499,7 +6917,7 @@ class CombAction(Struct):
         ("ExchangeID", c_char_Array_9),
         ("ParticipantID", c_char_Array_11),
         ("ClientID", c_char_Array_11),
-        ("ExchangeInstID", c_char_Array_31),
+        ("reserve2", c_char_Array_31),
         ("TraderID", c_char_Array_21),
         ("InstallID", c_int),
         ("ActionStatus", c_char),
@@ -6511,21 +6929,24 @@ class CombAction(Struct):
         ("SessionID", c_int),
         ("UserProductInfo", c_char_Array_11),
         ("StatusMsg", c_char_Array_81),
-        ("IPAddress", c_char_Array_16),
+        ("reserve3", c_char_Array_16),
         ("MacAddress", c_char_Array_21),
         ("ComTradeID", c_char_Array_21),
         ("BranchID", c_char_Array_9),
         ("InvestUnitID", c_char_Array_17),
+        ("InstrumentID", c_char_Array_81),
+        ("ExchangeInstID", c_char_Array_81),
+        ("IPAddress", c_char_Array_33),
     ]
 
-    def __init__(self, BrokerID=None, InvestorID=None, InstrumentID=None, CombActionRef=None, UserID=None, Direction=None, Volume=None, CombDirection=None, HedgeFlag=None, ActionLocalID=None, ExchangeID=None, ParticipantID=None, ClientID=None, ExchangeInstID=None, TraderID=None, InstallID=None, ActionStatus=None, NotifySequence=None, TradingDay=None, SettlementID=None, SequenceNo=None, FrontID=None, SessionID=None, UserProductInfo=None, StatusMsg=None, IPAddress=None, MacAddress=None, ComTradeID=None, BranchID=None, InvestUnitID=None):
+    def __init__(self, BrokerID=None, InvestorID=None, reserve1=None, CombActionRef=None, UserID=None, Direction=None, Volume=None, CombDirection=None, HedgeFlag=None, ActionLocalID=None, ExchangeID=None, ParticipantID=None, ClientID=None, reserve2=None, TraderID=None, InstallID=None, ActionStatus=None, NotifySequence=None, TradingDay=None, SettlementID=None, SequenceNo=None, FrontID=None, SessionID=None, UserProductInfo=None, StatusMsg=None, reserve3=None, MacAddress=None, ComTradeID=None, BranchID=None, InvestUnitID=None, InstrumentID=None, ExchangeInstID=None, IPAddress=None):
         super().__init__()
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
         if InvestorID:
             self.InvestorID = InvestorID.encode("GBK")
-        if InstrumentID:
-            self.InstrumentID = InstrumentID.encode("GBK")
+        if reserve1:
+            self.reserve1 = reserve1.encode("GBK")
         if CombActionRef:
             self.CombActionRef = CombActionRef.encode("GBK")
         if UserID:
@@ -6546,8 +6967,8 @@ class CombAction(Struct):
             self.ParticipantID = ParticipantID.encode("GBK")
         if ClientID:
             self.ClientID = ClientID.encode("GBK")
-        if ExchangeInstID:
-            self.ExchangeInstID = ExchangeInstID.encode("GBK")
+        if reserve2:
+            self.reserve2 = reserve2.encode("GBK")
         if TraderID:
             self.TraderID = TraderID.encode("GBK")
         if InstallID:
@@ -6570,8 +6991,8 @@ class CombAction(Struct):
             self.UserProductInfo = UserProductInfo.encode("GBK")
         if StatusMsg:
             self.StatusMsg = StatusMsg.encode("GBK")
-        if IPAddress:
-            self.IPAddress = IPAddress.encode("GBK")
+        if reserve3:
+            self.reserve3 = reserve3.encode("GBK")
         if MacAddress:
             self.MacAddress = MacAddress.encode("GBK")
         if ComTradeID:
@@ -6580,29 +7001,38 @@ class CombAction(Struct):
             self.BranchID = BranchID.encode("GBK")
         if InvestUnitID:
             self.InvestUnitID = InvestUnitID.encode("GBK")
+        if InstrumentID:
+            self.InstrumentID = InstrumentID.encode("GBK")
+        if ExchangeInstID:
+            self.ExchangeInstID = ExchangeInstID.encode("GBK")
+        if IPAddress:
+            self.IPAddress = IPAddress.encode("GBK")
 
 
 class QryCombAction(Struct):
     _fields_ = [
         ("BrokerID", c_char_Array_11),
         ("InvestorID", c_char_Array_13),
-        ("InstrumentID", c_char_Array_31),
+        ("reserve1", c_char_Array_31),
         ("ExchangeID", c_char_Array_9),
         ("InvestUnitID", c_char_Array_17),
+        ("InstrumentID", c_char_Array_81),
     ]
 
-    def __init__(self, BrokerID=None, InvestorID=None, InstrumentID=None, ExchangeID=None, InvestUnitID=None):
+    def __init__(self, BrokerID=None, InvestorID=None, reserve1=None, ExchangeID=None, InvestUnitID=None, InstrumentID=None):
         super().__init__()
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
         if InvestorID:
             self.InvestorID = InvestorID.encode("GBK")
-        if InstrumentID:
-            self.InstrumentID = InstrumentID.encode("GBK")
+        if reserve1:
+            self.reserve1 = reserve1.encode("GBK")
         if ExchangeID:
             self.ExchangeID = ExchangeID.encode("GBK")
         if InvestUnitID:
             self.InvestUnitID = InvestUnitID.encode("GBK")
+        if InstrumentID:
+            self.InstrumentID = InstrumentID.encode("GBK")
 
 
 class ExchangeCombAction(Struct):
@@ -6615,7 +7045,7 @@ class ExchangeCombAction(Struct):
         ("ExchangeID", c_char_Array_9),
         ("ParticipantID", c_char_Array_11),
         ("ClientID", c_char_Array_11),
-        ("ExchangeInstID", c_char_Array_31),
+        ("reserve1", c_char_Array_31),
         ("TraderID", c_char_Array_21),
         ("InstallID", c_int),
         ("ActionStatus", c_char),
@@ -6623,13 +7053,15 @@ class ExchangeCombAction(Struct):
         ("TradingDay", c_char_Array_9),
         ("SettlementID", c_int),
         ("SequenceNo", c_int),
-        ("IPAddress", c_char_Array_16),
+        ("reserve2", c_char_Array_16),
         ("MacAddress", c_char_Array_21),
         ("ComTradeID", c_char_Array_21),
         ("BranchID", c_char_Array_9),
+        ("ExchangeInstID", c_char_Array_81),
+        ("IPAddress", c_char_Array_33),
     ]
 
-    def __init__(self, Direction=None, Volume=None, CombDirection=None, HedgeFlag=None, ActionLocalID=None, ExchangeID=None, ParticipantID=None, ClientID=None, ExchangeInstID=None, TraderID=None, InstallID=None, ActionStatus=None, NotifySequence=None, TradingDay=None, SettlementID=None, SequenceNo=None, IPAddress=None, MacAddress=None, ComTradeID=None, BranchID=None):
+    def __init__(self, Direction=None, Volume=None, CombDirection=None, HedgeFlag=None, ActionLocalID=None, ExchangeID=None, ParticipantID=None, ClientID=None, reserve1=None, TraderID=None, InstallID=None, ActionStatus=None, NotifySequence=None, TradingDay=None, SettlementID=None, SequenceNo=None, reserve2=None, MacAddress=None, ComTradeID=None, BranchID=None, ExchangeInstID=None, IPAddress=None):
         super().__init__()
         if Direction:
             self.Direction = Direction.encode("GBK")
@@ -6647,8 +7079,8 @@ class ExchangeCombAction(Struct):
             self.ParticipantID = ParticipantID.encode("GBK")
         if ClientID:
             self.ClientID = ClientID.encode("GBK")
-        if ExchangeInstID:
-            self.ExchangeInstID = ExchangeInstID.encode("GBK")
+        if reserve1:
+            self.reserve1 = reserve1.encode("GBK")
         if TraderID:
             self.TraderID = TraderID.encode("GBK")
         if InstallID:
@@ -6663,116 +7095,135 @@ class ExchangeCombAction(Struct):
             self.SettlementID = SettlementID
         if SequenceNo:
             self.SequenceNo = SequenceNo
-        if IPAddress:
-            self.IPAddress = IPAddress.encode("GBK")
+        if reserve2:
+            self.reserve2 = reserve2.encode("GBK")
         if MacAddress:
             self.MacAddress = MacAddress.encode("GBK")
         if ComTradeID:
             self.ComTradeID = ComTradeID.encode("GBK")
         if BranchID:
             self.BranchID = BranchID.encode("GBK")
+        if ExchangeInstID:
+            self.ExchangeInstID = ExchangeInstID.encode("GBK")
+        if IPAddress:
+            self.IPAddress = IPAddress.encode("GBK")
 
 
 class QryExchangeCombAction(Struct):
     _fields_ = [
         ("ParticipantID", c_char_Array_11),
         ("ClientID", c_char_Array_11),
-        ("ExchangeInstID", c_char_Array_31),
+        ("reserve1", c_char_Array_31),
         ("ExchangeID", c_char_Array_9),
         ("TraderID", c_char_Array_21),
+        ("ExchangeInstID", c_char_Array_81),
     ]
 
-    def __init__(self, ParticipantID=None, ClientID=None, ExchangeInstID=None, ExchangeID=None, TraderID=None):
+    def __init__(self, ParticipantID=None, ClientID=None, reserve1=None, ExchangeID=None, TraderID=None, ExchangeInstID=None):
         super().__init__()
         if ParticipantID:
             self.ParticipantID = ParticipantID.encode("GBK")
         if ClientID:
             self.ClientID = ClientID.encode("GBK")
-        if ExchangeInstID:
-            self.ExchangeInstID = ExchangeInstID.encode("GBK")
+        if reserve1:
+            self.reserve1 = reserve1.encode("GBK")
         if ExchangeID:
             self.ExchangeID = ExchangeID.encode("GBK")
         if TraderID:
             self.TraderID = TraderID.encode("GBK")
+        if ExchangeInstID:
+            self.ExchangeInstID = ExchangeInstID.encode("GBK")
 
 
 class ProductExchRate(Struct):
     _fields_ = [
-        ("ProductID", c_char_Array_31),
+        ("reserve1", c_char_Array_31),
         ("QuoteCurrencyID", c_char_Array_4),
         ("ExchangeRate", c_double),
         ("ExchangeID", c_char_Array_9),
+        ("ProductID", c_char_Array_81),
     ]
 
-    def __init__(self, ProductID=None, QuoteCurrencyID=None, ExchangeRate=None, ExchangeID=None):
+    def __init__(self, reserve1=None, QuoteCurrencyID=None, ExchangeRate=None, ExchangeID=None, ProductID=None):
         super().__init__()
-        if ProductID:
-            self.ProductID = ProductID.encode("GBK")
+        if reserve1:
+            self.reserve1 = reserve1.encode("GBK")
         if QuoteCurrencyID:
             self.QuoteCurrencyID = QuoteCurrencyID.encode("GBK")
         if ExchangeRate:
             self.ExchangeRate = ExchangeRate
         if ExchangeID:
             self.ExchangeID = ExchangeID.encode("GBK")
+        if ProductID:
+            self.ProductID = ProductID.encode("GBK")
 
 
 class QryProductExchRate(Struct):
     _fields_ = [
-        ("ProductID", c_char_Array_31),
+        ("reserve1", c_char_Array_31),
         ("ExchangeID", c_char_Array_9),
+        ("ProductID", c_char_Array_81),
     ]
 
-    def __init__(self, ProductID=None, ExchangeID=None):
+    def __init__(self, reserve1=None, ExchangeID=None, ProductID=None):
         super().__init__()
-        if ProductID:
-            self.ProductID = ProductID.encode("GBK")
+        if reserve1:
+            self.reserve1 = reserve1.encode("GBK")
         if ExchangeID:
             self.ExchangeID = ExchangeID.encode("GBK")
+        if ProductID:
+            self.ProductID = ProductID.encode("GBK")
 
 
 class QryForQuoteParam(Struct):
     _fields_ = [
         ("BrokerID", c_char_Array_11),
-        ("InstrumentID", c_char_Array_31),
+        ("reserve1", c_char_Array_31),
         ("ExchangeID", c_char_Array_9),
+        ("InstrumentID", c_char_Array_81),
     ]
 
-    def __init__(self, BrokerID=None, InstrumentID=None, ExchangeID=None):
+    def __init__(self, BrokerID=None, reserve1=None, ExchangeID=None, InstrumentID=None):
         super().__init__()
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
-        if InstrumentID:
-            self.InstrumentID = InstrumentID.encode("GBK")
+        if reserve1:
+            self.reserve1 = reserve1.encode("GBK")
         if ExchangeID:
             self.ExchangeID = ExchangeID.encode("GBK")
+        if InstrumentID:
+            self.InstrumentID = InstrumentID.encode("GBK")
 
 
 class ForQuoteParam(Struct):
     _fields_ = [
         ("BrokerID", c_char_Array_11),
-        ("InstrumentID", c_char_Array_31),
+        ("reserve1", c_char_Array_31),
         ("ExchangeID", c_char_Array_9),
         ("LastPrice", c_double),
         ("PriceInterval", c_double),
+        ("InstrumentID", c_char_Array_81),
     ]
 
-    def __init__(self, BrokerID=None, InstrumentID=None, ExchangeID=None, LastPrice=None, PriceInterval=None):
+    def __init__(self, BrokerID=None, reserve1=None, ExchangeID=None, LastPrice=None, PriceInterval=None, InstrumentID=None):
         super().__init__()
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
-        if InstrumentID:
-            self.InstrumentID = InstrumentID.encode("GBK")
+        if reserve1:
+            self.reserve1 = reserve1.encode("GBK")
         if ExchangeID:
             self.ExchangeID = ExchangeID.encode("GBK")
         if LastPrice:
             self.LastPrice = LastPrice
         if PriceInterval:
             self.PriceInterval = PriceInterval
+        if InstrumentID:
+            self.InstrumentID = InstrumentID.encode("GBK")
 
 
 class MMOptionInstrCommRate(Struct):
     _fields_ = [
-        ("InstrumentID", c_char_Array_31),
+        ("reserve1", c_char_Array_31),
         ("InvestorRange", c_char),
         ("BrokerID", c_char_Array_11),
         ("InvestorID", c_char_Array_13),
@@ -6784,12 +7235,13 @@ class MMOptionInstrCommRate(Struct):
         ("CloseTodayRatioByVolume", c_double),
         ("StrikeRatioByMoney", c_double),
         ("StrikeRatioByVolume", c_double),
+        ("InstrumentID", c_char_Array_81),
     ]
 
-    def __init__(self, InstrumentID=None, InvestorRange=None, BrokerID=None, InvestorID=None, OpenRatioByMoney=None, OpenRatioByVolume=None, CloseRatioByMoney=None, CloseRatioByVolume=None, CloseTodayRatioByMoney=None, CloseTodayRatioByVolume=None, StrikeRatioByMoney=None, StrikeRatioByVolume=None):
+    def __init__(self, reserve1=None, InvestorRange=None, BrokerID=None, InvestorID=None, OpenRatioByMoney=None, OpenRatioByVolume=None, CloseRatioByMoney=None, CloseRatioByVolume=None, CloseTodayRatioByMoney=None, CloseTodayRatioByVolume=None, StrikeRatioByMoney=None, StrikeRatioByVolume=None, InstrumentID=None):
         super().__init__()
-        if InstrumentID:
-            self.InstrumentID = InstrumentID.encode("GBK")
+        if reserve1:
+            self.reserve1 = reserve1.encode("GBK")
         if InvestorRange:
             self.InvestorRange = InvestorRange.encode("GBK")
         if BrokerID:
@@ -6812,28 +7264,33 @@ class MMOptionInstrCommRate(Struct):
             self.StrikeRatioByMoney = StrikeRatioByMoney
         if StrikeRatioByVolume:
             self.StrikeRatioByVolume = StrikeRatioByVolume
+        if InstrumentID:
+            self.InstrumentID = InstrumentID.encode("GBK")
 
 
 class QryMMOptionInstrCommRate(Struct):
     _fields_ = [
         ("BrokerID", c_char_Array_11),
         ("InvestorID", c_char_Array_13),
-        ("InstrumentID", c_char_Array_31),
+        ("reserve1", c_char_Array_31),
+        ("InstrumentID", c_char_Array_81),
     ]
 
-    def __init__(self, BrokerID=None, InvestorID=None, InstrumentID=None):
+    def __init__(self, BrokerID=None, InvestorID=None, reserve1=None, InstrumentID=None):
         super().__init__()
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
         if InvestorID:
             self.InvestorID = InvestorID.encode("GBK")
+        if reserve1:
+            self.reserve1 = reserve1.encode("GBK")
         if InstrumentID:
             self.InstrumentID = InstrumentID.encode("GBK")
 
 
 class MMInstrumentCommissionRate(Struct):
     _fields_ = [
-        ("InstrumentID", c_char_Array_31),
+        ("reserve1", c_char_Array_31),
         ("InvestorRange", c_char),
         ("BrokerID", c_char_Array_11),
         ("InvestorID", c_char_Array_13),
@@ -6843,12 +7300,13 @@ class MMInstrumentCommissionRate(Struct):
         ("CloseRatioByVolume", c_double),
         ("CloseTodayRatioByMoney", c_double),
         ("CloseTodayRatioByVolume", c_double),
+        ("InstrumentID", c_char_Array_81),
     ]
 
-    def __init__(self, InstrumentID=None, InvestorRange=None, BrokerID=None, InvestorID=None, OpenRatioByMoney=None, OpenRatioByVolume=None, CloseRatioByMoney=None, CloseRatioByVolume=None, CloseTodayRatioByMoney=None, CloseTodayRatioByVolume=None):
+    def __init__(self, reserve1=None, InvestorRange=None, BrokerID=None, InvestorID=None, OpenRatioByMoney=None, OpenRatioByVolume=None, CloseRatioByMoney=None, CloseRatioByVolume=None, CloseTodayRatioByMoney=None, CloseTodayRatioByVolume=None, InstrumentID=None):
         super().__init__()
-        if InstrumentID:
-            self.InstrumentID = InstrumentID.encode("GBK")
+        if reserve1:
+            self.reserve1 = reserve1.encode("GBK")
         if InvestorRange:
             self.InvestorRange = InvestorRange.encode("GBK")
         if BrokerID:
@@ -6867,28 +7325,33 @@ class MMInstrumentCommissionRate(Struct):
             self.CloseTodayRatioByMoney = CloseTodayRatioByMoney
         if CloseTodayRatioByVolume:
             self.CloseTodayRatioByVolume = CloseTodayRatioByVolume
+        if InstrumentID:
+            self.InstrumentID = InstrumentID.encode("GBK")
 
 
 class QryMMInstrumentCommissionRate(Struct):
     _fields_ = [
         ("BrokerID", c_char_Array_11),
         ("InvestorID", c_char_Array_13),
-        ("InstrumentID", c_char_Array_31),
+        ("reserve1", c_char_Array_31),
+        ("InstrumentID", c_char_Array_81),
     ]
 
-    def __init__(self, BrokerID=None, InvestorID=None, InstrumentID=None):
+    def __init__(self, BrokerID=None, InvestorID=None, reserve1=None, InstrumentID=None):
         super().__init__()
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
         if InvestorID:
             self.InvestorID = InvestorID.encode("GBK")
+        if reserve1:
+            self.reserve1 = reserve1.encode("GBK")
         if InstrumentID:
             self.InstrumentID = InstrumentID.encode("GBK")
 
 
 class InstrumentOrderCommRate(Struct):
     _fields_ = [
-        ("InstrumentID", c_char_Array_31),
+        ("reserve1", c_char_Array_31),
         ("InvestorRange", c_char),
         ("BrokerID", c_char_Array_11),
         ("InvestorID", c_char_Array_13),
@@ -6897,12 +7360,15 @@ class InstrumentOrderCommRate(Struct):
         ("OrderActionCommByVolume", c_double),
         ("ExchangeID", c_char_Array_9),
         ("InvestUnitID", c_char_Array_17),
+        ("InstrumentID", c_char_Array_81),
+        ("OrderCommByTrade", c_double),
+        ("OrderActionCommByTrade", c_double),
     ]
 
-    def __init__(self, InstrumentID=None, InvestorRange=None, BrokerID=None, InvestorID=None, HedgeFlag=None, OrderCommByVolume=None, OrderActionCommByVolume=None, ExchangeID=None, InvestUnitID=None):
+    def __init__(self, reserve1=None, InvestorRange=None, BrokerID=None, InvestorID=None, HedgeFlag=None, OrderCommByVolume=None, OrderActionCommByVolume=None, ExchangeID=None, InvestUnitID=None, InstrumentID=None, OrderCommByTrade=None, OrderActionCommByTrade=None):
         super().__init__()
-        if InstrumentID:
-            self.InstrumentID = InstrumentID.encode("GBK")
+        if reserve1:
+            self.reserve1 = reserve1.encode("GBK")
         if InvestorRange:
             self.InvestorRange = InvestorRange.encode("GBK")
         if BrokerID:
@@ -6919,21 +7385,30 @@ class InstrumentOrderCommRate(Struct):
             self.ExchangeID = ExchangeID.encode("GBK")
         if InvestUnitID:
             self.InvestUnitID = InvestUnitID.encode("GBK")
+        if InstrumentID:
+            self.InstrumentID = InstrumentID.encode("GBK")
+        if OrderCommByTrade:
+            self.OrderCommByTrade = OrderCommByTrade
+        if OrderActionCommByTrade:
+            self.OrderActionCommByTrade = OrderActionCommByTrade
 
 
 class QryInstrumentOrderCommRate(Struct):
     _fields_ = [
         ("BrokerID", c_char_Array_11),
         ("InvestorID", c_char_Array_13),
-        ("InstrumentID", c_char_Array_31),
+        ("reserve1", c_char_Array_31),
+        ("InstrumentID", c_char_Array_81),
     ]
 
-    def __init__(self, BrokerID=None, InvestorID=None, InstrumentID=None):
+    def __init__(self, BrokerID=None, InvestorID=None, reserve1=None, InstrumentID=None):
         super().__init__()
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
         if InvestorID:
             self.InvestorID = InvestorID.encode("GBK")
+        if reserve1:
+            self.reserve1 = reserve1.encode("GBK")
         if InstrumentID:
             self.InstrumentID = InstrumentID.encode("GBK")
 
@@ -6960,7 +7435,7 @@ class TradeParam(Struct):
 
 class InstrumentMarginRateUL(Struct):
     _fields_ = [
-        ("InstrumentID", c_char_Array_31),
+        ("reserve1", c_char_Array_31),
         ("InvestorRange", c_char),
         ("BrokerID", c_char_Array_11),
         ("InvestorID", c_char_Array_13),
@@ -6969,12 +7444,13 @@ class InstrumentMarginRateUL(Struct):
         ("LongMarginRatioByVolume", c_double),
         ("ShortMarginRatioByMoney", c_double),
         ("ShortMarginRatioByVolume", c_double),
+        ("InstrumentID", c_char_Array_81),
     ]
 
-    def __init__(self, InstrumentID=None, InvestorRange=None, BrokerID=None, InvestorID=None, HedgeFlag=None, LongMarginRatioByMoney=None, LongMarginRatioByVolume=None, ShortMarginRatioByMoney=None, ShortMarginRatioByVolume=None):
+    def __init__(self, reserve1=None, InvestorRange=None, BrokerID=None, InvestorID=None, HedgeFlag=None, LongMarginRatioByMoney=None, LongMarginRatioByVolume=None, ShortMarginRatioByMoney=None, ShortMarginRatioByVolume=None, InstrumentID=None):
         super().__init__()
-        if InstrumentID:
-            self.InstrumentID = InstrumentID.encode("GBK")
+        if reserve1:
+            self.reserve1 = reserve1.encode("GBK")
         if InvestorRange:
             self.InvestorRange = InvestorRange.encode("GBK")
         if BrokerID:
@@ -6991,6 +7467,8 @@ class InstrumentMarginRateUL(Struct):
             self.ShortMarginRatioByMoney = ShortMarginRatioByMoney
         if ShortMarginRatioByVolume:
             self.ShortMarginRatioByVolume = ShortMarginRatioByVolume
+        if InstrumentID:
+            self.InstrumentID = InstrumentID.encode("GBK")
 
 
 class FutureLimitPosiParam(Struct):
@@ -6998,13 +7476,14 @@ class FutureLimitPosiParam(Struct):
         ("InvestorRange", c_char),
         ("BrokerID", c_char_Array_11),
         ("InvestorID", c_char_Array_13),
-        ("ProductID", c_char_Array_31),
+        ("reserve1", c_char_Array_31),
         ("SpecOpenVolume", c_int),
         ("ArbiOpenVolume", c_int),
         ("OpenVolume", c_int),
+        ("ProductID", c_char_Array_81),
     ]
 
-    def __init__(self, InvestorRange=None, BrokerID=None, InvestorID=None, ProductID=None, SpecOpenVolume=None, ArbiOpenVolume=None, OpenVolume=None):
+    def __init__(self, InvestorRange=None, BrokerID=None, InvestorID=None, reserve1=None, SpecOpenVolume=None, ArbiOpenVolume=None, OpenVolume=None, ProductID=None):
         super().__init__()
         if InvestorRange:
             self.InvestorRange = InvestorRange.encode("GBK")
@@ -7012,46 +7491,54 @@ class FutureLimitPosiParam(Struct):
             self.BrokerID = BrokerID.encode("GBK")
         if InvestorID:
             self.InvestorID = InvestorID.encode("GBK")
-        if ProductID:
-            self.ProductID = ProductID.encode("GBK")
+        if reserve1:
+            self.reserve1 = reserve1.encode("GBK")
         if SpecOpenVolume:
             self.SpecOpenVolume = SpecOpenVolume
         if ArbiOpenVolume:
             self.ArbiOpenVolume = ArbiOpenVolume
         if OpenVolume:
             self.OpenVolume = OpenVolume
+        if ProductID:
+            self.ProductID = ProductID.encode("GBK")
 
 
 class LoginForbiddenIP(Struct):
     _fields_ = [
-        ("IPAddress", c_char_Array_16),
+        ("reserve1", c_char_Array_16),
+        ("IPAddress", c_char_Array_33),
     ]
 
-    def __init__(self, IPAddress=None):
+    def __init__(self, reserve1=None, IPAddress=None):
         super().__init__()
+        if reserve1:
+            self.reserve1 = reserve1.encode("GBK")
         if IPAddress:
             self.IPAddress = IPAddress.encode("GBK")
 
 
 class IPList(Struct):
     _fields_ = [
-        ("IPAddress", c_char_Array_16),
+        ("reserve1", c_char_Array_16),
         ("IsWhite", c_int),
+        ("IPAddress", c_char_Array_33),
     ]
 
-    def __init__(self, IPAddress=None, IsWhite=None):
+    def __init__(self, reserve1=None, IsWhite=None, IPAddress=None):
         super().__init__()
-        if IPAddress:
-            self.IPAddress = IPAddress.encode("GBK")
+        if reserve1:
+            self.reserve1 = reserve1.encode("GBK")
         if IsWhite:
             self.IsWhite = IsWhite
+        if IPAddress:
+            self.IPAddress = IPAddress.encode("GBK")
 
 
 class InputOptionSelfClose(Struct):
     _fields_ = [
         ("BrokerID", c_char_Array_11),
         ("InvestorID", c_char_Array_13),
-        ("InstrumentID", c_char_Array_31),
+        ("reserve1", c_char_Array_31),
         ("OptionSelfCloseRef", c_char_Array_13),
         ("UserID", c_char_Array_16),
         ("Volume", c_int),
@@ -7064,18 +7551,20 @@ class InputOptionSelfClose(Struct):
         ("AccountID", c_char_Array_13),
         ("CurrencyID", c_char_Array_4),
         ("ClientID", c_char_Array_11),
-        ("IPAddress", c_char_Array_16),
+        ("reserve2", c_char_Array_16),
         ("MacAddress", c_char_Array_21),
+        ("InstrumentID", c_char_Array_81),
+        ("IPAddress", c_char_Array_33),
     ]
 
-    def __init__(self, BrokerID=None, InvestorID=None, InstrumentID=None, OptionSelfCloseRef=None, UserID=None, Volume=None, RequestID=None, BusinessUnit=None, HedgeFlag=None, OptSelfCloseFlag=None, ExchangeID=None, InvestUnitID=None, AccountID=None, CurrencyID=None, ClientID=None, IPAddress=None, MacAddress=None):
+    def __init__(self, BrokerID=None, InvestorID=None, reserve1=None, OptionSelfCloseRef=None, UserID=None, Volume=None, RequestID=None, BusinessUnit=None, HedgeFlag=None, OptSelfCloseFlag=None, ExchangeID=None, InvestUnitID=None, AccountID=None, CurrencyID=None, ClientID=None, reserve2=None, MacAddress=None, InstrumentID=None, IPAddress=None):
         super().__init__()
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
         if InvestorID:
             self.InvestorID = InvestorID.encode("GBK")
-        if InstrumentID:
-            self.InstrumentID = InstrumentID.encode("GBK")
+        if reserve1:
+            self.reserve1 = reserve1.encode("GBK")
         if OptionSelfCloseRef:
             self.OptionSelfCloseRef = OptionSelfCloseRef.encode("GBK")
         if UserID:
@@ -7100,10 +7589,14 @@ class InputOptionSelfClose(Struct):
             self.CurrencyID = CurrencyID.encode("GBK")
         if ClientID:
             self.ClientID = ClientID.encode("GBK")
-        if IPAddress:
-            self.IPAddress = IPAddress.encode("GBK")
+        if reserve2:
+            self.reserve2 = reserve2.encode("GBK")
         if MacAddress:
             self.MacAddress = MacAddress.encode("GBK")
+        if InstrumentID:
+            self.InstrumentID = InstrumentID.encode("GBK")
+        if IPAddress:
+            self.IPAddress = IPAddress.encode("GBK")
 
 
 class InputOptionSelfCloseAction(Struct):
@@ -7119,13 +7612,15 @@ class InputOptionSelfCloseAction(Struct):
         ("OptionSelfCloseSysID", c_char_Array_21),
         ("ActionFlag", c_char),
         ("UserID", c_char_Array_16),
-        ("InstrumentID", c_char_Array_31),
+        ("reserve1", c_char_Array_31),
         ("InvestUnitID", c_char_Array_17),
-        ("IPAddress", c_char_Array_16),
+        ("reserve2", c_char_Array_16),
         ("MacAddress", c_char_Array_21),
+        ("InstrumentID", c_char_Array_81),
+        ("IPAddress", c_char_Array_33),
     ]
 
-    def __init__(self, BrokerID=None, InvestorID=None, OptionSelfCloseActionRef=None, OptionSelfCloseRef=None, RequestID=None, FrontID=None, SessionID=None, ExchangeID=None, OptionSelfCloseSysID=None, ActionFlag=None, UserID=None, InstrumentID=None, InvestUnitID=None, IPAddress=None, MacAddress=None):
+    def __init__(self, BrokerID=None, InvestorID=None, OptionSelfCloseActionRef=None, OptionSelfCloseRef=None, RequestID=None, FrontID=None, SessionID=None, ExchangeID=None, OptionSelfCloseSysID=None, ActionFlag=None, UserID=None, reserve1=None, InvestUnitID=None, reserve2=None, MacAddress=None, InstrumentID=None, IPAddress=None):
         super().__init__()
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
@@ -7149,21 +7644,25 @@ class InputOptionSelfCloseAction(Struct):
             self.ActionFlag = ActionFlag.encode("GBK")
         if UserID:
             self.UserID = UserID.encode("GBK")
-        if InstrumentID:
-            self.InstrumentID = InstrumentID.encode("GBK")
+        if reserve1:
+            self.reserve1 = reserve1.encode("GBK")
         if InvestUnitID:
             self.InvestUnitID = InvestUnitID.encode("GBK")
-        if IPAddress:
-            self.IPAddress = IPAddress.encode("GBK")
+        if reserve2:
+            self.reserve2 = reserve2.encode("GBK")
         if MacAddress:
             self.MacAddress = MacAddress.encode("GBK")
+        if InstrumentID:
+            self.InstrumentID = InstrumentID.encode("GBK")
+        if IPAddress:
+            self.IPAddress = IPAddress.encode("GBK")
 
 
 class OptionSelfClose(Struct):
     _fields_ = [
         ("BrokerID", c_char_Array_11),
         ("InvestorID", c_char_Array_13),
-        ("InstrumentID", c_char_Array_31),
+        ("reserve1", c_char_Array_31),
         ("OptionSelfCloseRef", c_char_Array_13),
         ("UserID", c_char_Array_16),
         ("Volume", c_int),
@@ -7175,7 +7674,7 @@ class OptionSelfClose(Struct):
         ("ExchangeID", c_char_Array_9),
         ("ParticipantID", c_char_Array_11),
         ("ClientID", c_char_Array_11),
-        ("ExchangeInstID", c_char_Array_31),
+        ("reserve2", c_char_Array_31),
         ("TraderID", c_char_Array_21),
         ("InstallID", c_int),
         ("OrderSubmitStatus", c_char),
@@ -7199,18 +7698,21 @@ class OptionSelfClose(Struct):
         ("InvestUnitID", c_char_Array_17),
         ("AccountID", c_char_Array_13),
         ("CurrencyID", c_char_Array_4),
-        ("IPAddress", c_char_Array_16),
+        ("reserve3", c_char_Array_16),
         ("MacAddress", c_char_Array_21),
+        ("InstrumentID", c_char_Array_81),
+        ("ExchangeInstID", c_char_Array_81),
+        ("IPAddress", c_char_Array_33),
     ]
 
-    def __init__(self, BrokerID=None, InvestorID=None, InstrumentID=None, OptionSelfCloseRef=None, UserID=None, Volume=None, RequestID=None, BusinessUnit=None, HedgeFlag=None, OptSelfCloseFlag=None, OptionSelfCloseLocalID=None, ExchangeID=None, ParticipantID=None, ClientID=None, ExchangeInstID=None, TraderID=None, InstallID=None, OrderSubmitStatus=None, NotifySequence=None, TradingDay=None, SettlementID=None, OptionSelfCloseSysID=None, InsertDate=None, InsertTime=None, CancelTime=None, ExecResult=None, ClearingPartID=None, SequenceNo=None, FrontID=None, SessionID=None, UserProductInfo=None, StatusMsg=None, ActiveUserID=None, BrokerOptionSelfCloseSeq=None, BranchID=None, InvestUnitID=None, AccountID=None, CurrencyID=None, IPAddress=None, MacAddress=None):
+    def __init__(self, BrokerID=None, InvestorID=None, reserve1=None, OptionSelfCloseRef=None, UserID=None, Volume=None, RequestID=None, BusinessUnit=None, HedgeFlag=None, OptSelfCloseFlag=None, OptionSelfCloseLocalID=None, ExchangeID=None, ParticipantID=None, ClientID=None, reserve2=None, TraderID=None, InstallID=None, OrderSubmitStatus=None, NotifySequence=None, TradingDay=None, SettlementID=None, OptionSelfCloseSysID=None, InsertDate=None, InsertTime=None, CancelTime=None, ExecResult=None, ClearingPartID=None, SequenceNo=None, FrontID=None, SessionID=None, UserProductInfo=None, StatusMsg=None, ActiveUserID=None, BrokerOptionSelfCloseSeq=None, BranchID=None, InvestUnitID=None, AccountID=None, CurrencyID=None, reserve3=None, MacAddress=None, InstrumentID=None, ExchangeInstID=None, IPAddress=None):
         super().__init__()
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
         if InvestorID:
             self.InvestorID = InvestorID.encode("GBK")
-        if InstrumentID:
-            self.InstrumentID = InstrumentID.encode("GBK")
+        if reserve1:
+            self.reserve1 = reserve1.encode("GBK")
         if OptionSelfCloseRef:
             self.OptionSelfCloseRef = OptionSelfCloseRef.encode("GBK")
         if UserID:
@@ -7233,8 +7735,8 @@ class OptionSelfClose(Struct):
             self.ParticipantID = ParticipantID.encode("GBK")
         if ClientID:
             self.ClientID = ClientID.encode("GBK")
-        if ExchangeInstID:
-            self.ExchangeInstID = ExchangeInstID.encode("GBK")
+        if reserve2:
+            self.reserve2 = reserve2.encode("GBK")
         if TraderID:
             self.TraderID = TraderID.encode("GBK")
         if InstallID:
@@ -7281,10 +7783,16 @@ class OptionSelfClose(Struct):
             self.AccountID = AccountID.encode("GBK")
         if CurrencyID:
             self.CurrencyID = CurrencyID.encode("GBK")
-        if IPAddress:
-            self.IPAddress = IPAddress.encode("GBK")
+        if reserve3:
+            self.reserve3 = reserve3.encode("GBK")
         if MacAddress:
             self.MacAddress = MacAddress.encode("GBK")
+        if InstrumentID:
+            self.InstrumentID = InstrumentID.encode("GBK")
+        if ExchangeInstID:
+            self.ExchangeInstID = ExchangeInstID.encode("GBK")
+        if IPAddress:
+            self.IPAddress = IPAddress.encode("GBK")
 
 
 class OptionSelfCloseAction(Struct):
@@ -7311,14 +7819,16 @@ class OptionSelfCloseAction(Struct):
         ("OrderActionStatus", c_char),
         ("UserID", c_char_Array_16),
         ("StatusMsg", c_char_Array_81),
-        ("InstrumentID", c_char_Array_31),
+        ("reserve1", c_char_Array_31),
         ("BranchID", c_char_Array_9),
         ("InvestUnitID", c_char_Array_17),
-        ("IPAddress", c_char_Array_16),
+        ("reserve2", c_char_Array_16),
         ("MacAddress", c_char_Array_21),
+        ("InstrumentID", c_char_Array_81),
+        ("IPAddress", c_char_Array_33),
     ]
 
-    def __init__(self, BrokerID=None, InvestorID=None, OptionSelfCloseActionRef=None, OptionSelfCloseRef=None, RequestID=None, FrontID=None, SessionID=None, ExchangeID=None, OptionSelfCloseSysID=None, ActionFlag=None, ActionDate=None, ActionTime=None, TraderID=None, InstallID=None, OptionSelfCloseLocalID=None, ActionLocalID=None, ParticipantID=None, ClientID=None, BusinessUnit=None, OrderActionStatus=None, UserID=None, StatusMsg=None, InstrumentID=None, BranchID=None, InvestUnitID=None, IPAddress=None, MacAddress=None):
+    def __init__(self, BrokerID=None, InvestorID=None, OptionSelfCloseActionRef=None, OptionSelfCloseRef=None, RequestID=None, FrontID=None, SessionID=None, ExchangeID=None, OptionSelfCloseSysID=None, ActionFlag=None, ActionDate=None, ActionTime=None, TraderID=None, InstallID=None, OptionSelfCloseLocalID=None, ActionLocalID=None, ParticipantID=None, ClientID=None, BusinessUnit=None, OrderActionStatus=None, UserID=None, StatusMsg=None, reserve1=None, BranchID=None, InvestUnitID=None, reserve2=None, MacAddress=None, InstrumentID=None, IPAddress=None):
         super().__init__()
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
@@ -7364,37 +7874,42 @@ class OptionSelfCloseAction(Struct):
             self.UserID = UserID.encode("GBK")
         if StatusMsg:
             self.StatusMsg = StatusMsg.encode("GBK")
-        if InstrumentID:
-            self.InstrumentID = InstrumentID.encode("GBK")
+        if reserve1:
+            self.reserve1 = reserve1.encode("GBK")
         if BranchID:
             self.BranchID = BranchID.encode("GBK")
         if InvestUnitID:
             self.InvestUnitID = InvestUnitID.encode("GBK")
-        if IPAddress:
-            self.IPAddress = IPAddress.encode("GBK")
+        if reserve2:
+            self.reserve2 = reserve2.encode("GBK")
         if MacAddress:
             self.MacAddress = MacAddress.encode("GBK")
+        if InstrumentID:
+            self.InstrumentID = InstrumentID.encode("GBK")
+        if IPAddress:
+            self.IPAddress = IPAddress.encode("GBK")
 
 
 class QryOptionSelfClose(Struct):
     _fields_ = [
         ("BrokerID", c_char_Array_11),
         ("InvestorID", c_char_Array_13),
-        ("InstrumentID", c_char_Array_31),
+        ("reserve1", c_char_Array_31),
         ("ExchangeID", c_char_Array_9),
         ("OptionSelfCloseSysID", c_char_Array_21),
         ("InsertTimeStart", c_char_Array_9),
         ("InsertTimeEnd", c_char_Array_9),
+        ("InstrumentID", c_char_Array_81),
     ]
 
-    def __init__(self, BrokerID=None, InvestorID=None, InstrumentID=None, ExchangeID=None, OptionSelfCloseSysID=None, InsertTimeStart=None, InsertTimeEnd=None):
+    def __init__(self, BrokerID=None, InvestorID=None, reserve1=None, ExchangeID=None, OptionSelfCloseSysID=None, InsertTimeStart=None, InsertTimeEnd=None, InstrumentID=None):
         super().__init__()
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
         if InvestorID:
             self.InvestorID = InvestorID.encode("GBK")
-        if InstrumentID:
-            self.InstrumentID = InstrumentID.encode("GBK")
+        if reserve1:
+            self.reserve1 = reserve1.encode("GBK")
         if ExchangeID:
             self.ExchangeID = ExchangeID.encode("GBK")
         if OptionSelfCloseSysID:
@@ -7403,6 +7918,8 @@ class QryOptionSelfClose(Struct):
             self.InsertTimeStart = InsertTimeStart.encode("GBK")
         if InsertTimeEnd:
             self.InsertTimeEnd = InsertTimeEnd.encode("GBK")
+        if InstrumentID:
+            self.InstrumentID = InstrumentID.encode("GBK")
 
 
 class ExchangeOptionSelfClose(Struct):
@@ -7416,7 +7933,7 @@ class ExchangeOptionSelfClose(Struct):
         ("ExchangeID", c_char_Array_9),
         ("ParticipantID", c_char_Array_11),
         ("ClientID", c_char_Array_11),
-        ("ExchangeInstID", c_char_Array_31),
+        ("reserve1", c_char_Array_31),
         ("TraderID", c_char_Array_21),
         ("InstallID", c_int),
         ("OrderSubmitStatus", c_char),
@@ -7431,11 +7948,13 @@ class ExchangeOptionSelfClose(Struct):
         ("ClearingPartID", c_char_Array_11),
         ("SequenceNo", c_int),
         ("BranchID", c_char_Array_9),
-        ("IPAddress", c_char_Array_16),
+        ("reserve2", c_char_Array_16),
         ("MacAddress", c_char_Array_21),
+        ("ExchangeInstID", c_char_Array_81),
+        ("IPAddress", c_char_Array_33),
     ]
 
-    def __init__(self, Volume=None, RequestID=None, BusinessUnit=None, HedgeFlag=None, OptSelfCloseFlag=None, OptionSelfCloseLocalID=None, ExchangeID=None, ParticipantID=None, ClientID=None, ExchangeInstID=None, TraderID=None, InstallID=None, OrderSubmitStatus=None, NotifySequence=None, TradingDay=None, SettlementID=None, OptionSelfCloseSysID=None, InsertDate=None, InsertTime=None, CancelTime=None, ExecResult=None, ClearingPartID=None, SequenceNo=None, BranchID=None, IPAddress=None, MacAddress=None):
+    def __init__(self, Volume=None, RequestID=None, BusinessUnit=None, HedgeFlag=None, OptSelfCloseFlag=None, OptionSelfCloseLocalID=None, ExchangeID=None, ParticipantID=None, ClientID=None, reserve1=None, TraderID=None, InstallID=None, OrderSubmitStatus=None, NotifySequence=None, TradingDay=None, SettlementID=None, OptionSelfCloseSysID=None, InsertDate=None, InsertTime=None, CancelTime=None, ExecResult=None, ClearingPartID=None, SequenceNo=None, BranchID=None, reserve2=None, MacAddress=None, ExchangeInstID=None, IPAddress=None):
         super().__init__()
         if Volume:
             self.Volume = Volume
@@ -7455,8 +7974,8 @@ class ExchangeOptionSelfClose(Struct):
             self.ParticipantID = ParticipantID.encode("GBK")
         if ClientID:
             self.ClientID = ClientID.encode("GBK")
-        if ExchangeInstID:
-            self.ExchangeInstID = ExchangeInstID.encode("GBK")
+        if reserve1:
+            self.reserve1 = reserve1.encode("GBK")
         if TraderID:
             self.TraderID = TraderID.encode("GBK")
         if InstallID:
@@ -7485,10 +8004,14 @@ class ExchangeOptionSelfClose(Struct):
             self.SequenceNo = SequenceNo
         if BranchID:
             self.BranchID = BranchID.encode("GBK")
-        if IPAddress:
-            self.IPAddress = IPAddress.encode("GBK")
+        if reserve2:
+            self.reserve2 = reserve2.encode("GBK")
         if MacAddress:
             self.MacAddress = MacAddress.encode("GBK")
+        if ExchangeInstID:
+            self.ExchangeInstID = ExchangeInstID.encode("GBK")
+        if IPAddress:
+            self.IPAddress = IPAddress.encode("GBK")
 
 
 class QryOptionSelfCloseAction(Struct):
@@ -7525,13 +8048,15 @@ class ExchangeOptionSelfCloseAction(Struct):
         ("OrderActionStatus", c_char),
         ("UserID", c_char_Array_16),
         ("BranchID", c_char_Array_9),
-        ("IPAddress", c_char_Array_16),
+        ("reserve1", c_char_Array_16),
         ("MacAddress", c_char_Array_21),
-        ("ExchangeInstID", c_char_Array_31),
+        ("reserve2", c_char_Array_31),
         ("OptSelfCloseFlag", c_char),
+        ("IPAddress", c_char_Array_33),
+        ("ExchangeInstID", c_char_Array_81),
     ]
 
-    def __init__(self, ExchangeID=None, OptionSelfCloseSysID=None, ActionFlag=None, ActionDate=None, ActionTime=None, TraderID=None, InstallID=None, OptionSelfCloseLocalID=None, ActionLocalID=None, ParticipantID=None, ClientID=None, BusinessUnit=None, OrderActionStatus=None, UserID=None, BranchID=None, IPAddress=None, MacAddress=None, ExchangeInstID=None, OptSelfCloseFlag=None):
+    def __init__(self, ExchangeID=None, OptionSelfCloseSysID=None, ActionFlag=None, ActionDate=None, ActionTime=None, TraderID=None, InstallID=None, OptionSelfCloseLocalID=None, ActionLocalID=None, ParticipantID=None, ClientID=None, BusinessUnit=None, OrderActionStatus=None, UserID=None, BranchID=None, reserve1=None, MacAddress=None, reserve2=None, OptSelfCloseFlag=None, IPAddress=None, ExchangeInstID=None):
         super().__init__()
         if ExchangeID:
             self.ExchangeID = ExchangeID.encode("GBK")
@@ -7563,14 +8088,18 @@ class ExchangeOptionSelfCloseAction(Struct):
             self.UserID = UserID.encode("GBK")
         if BranchID:
             self.BranchID = BranchID.encode("GBK")
-        if IPAddress:
-            self.IPAddress = IPAddress.encode("GBK")
+        if reserve1:
+            self.reserve1 = reserve1.encode("GBK")
         if MacAddress:
             self.MacAddress = MacAddress.encode("GBK")
-        if ExchangeInstID:
-            self.ExchangeInstID = ExchangeInstID.encode("GBK")
+        if reserve2:
+            self.reserve2 = reserve2.encode("GBK")
         if OptSelfCloseFlag:
             self.OptSelfCloseFlag = OptSelfCloseFlag.encode("GBK")
+        if IPAddress:
+            self.IPAddress = IPAddress.encode("GBK")
+        if ExchangeInstID:
+            self.ExchangeInstID = ExchangeInstID.encode("GBK")
 
 
 class SyncDelaySwap(Struct):
@@ -7584,9 +8113,11 @@ class SyncDelaySwap(Struct):
         ("FromRemainSwap", c_double),
         ("ToCurrencyID", c_char_Array_4),
         ("ToAmount", c_double),
+        ("IsManualSwap", c_int),
+        ("IsAllRemainSetZero", c_int),
     ]
 
-    def __init__(self, DelaySwapSeqNo=None, BrokerID=None, InvestorID=None, FromCurrencyID=None, FromAmount=None, FromFrozenSwap=None, FromRemainSwap=None, ToCurrencyID=None, ToAmount=None):
+    def __init__(self, DelaySwapSeqNo=None, BrokerID=None, InvestorID=None, FromCurrencyID=None, FromAmount=None, FromFrozenSwap=None, FromRemainSwap=None, ToCurrencyID=None, ToAmount=None, IsManualSwap=None, IsAllRemainSetZero=None):
         super().__init__()
         if DelaySwapSeqNo:
             self.DelaySwapSeqNo = DelaySwapSeqNo.encode("GBK")
@@ -7606,6 +8137,10 @@ class SyncDelaySwap(Struct):
             self.ToCurrencyID = ToCurrencyID.encode("GBK")
         if ToAmount:
             self.ToAmount = ToAmount
+        if IsManualSwap:
+            self.IsManualSwap = IsManualSwap
+        if IsAllRemainSetZero:
+            self.IsAllRemainSetZero = IsAllRemainSetZero
 
 
 class QrySyncDelaySwap(Struct):
@@ -7720,9 +8255,9 @@ class SecAgentTradeInfo(Struct):
 class MarketData(Struct):
     _fields_ = [
         ("TradingDay", c_char_Array_9),
-        ("InstrumentID", c_char_Array_31),
+        ("reserve1", c_char_Array_31),
         ("ExchangeID", c_char_Array_9),
-        ("ExchangeInstID", c_char_Array_31),
+        ("reserve2", c_char_Array_31),
         ("LastPrice", c_double),
         ("PreSettlementPrice", c_double),
         ("PreClosePrice", c_double),
@@ -7742,18 +8277,20 @@ class MarketData(Struct):
         ("UpdateTime", c_char_Array_9),
         ("UpdateMillisec", c_int),
         ("ActionDay", c_char_Array_9),
+        ("InstrumentID", c_char_Array_81),
+        ("ExchangeInstID", c_char_Array_81),
     ]
 
-    def __init__(self, TradingDay=None, InstrumentID=None, ExchangeID=None, ExchangeInstID=None, LastPrice=None, PreSettlementPrice=None, PreClosePrice=None, PreOpenInterest=None, OpenPrice=None, HighestPrice=None, LowestPrice=None, Volume=None, Turnover=None, OpenInterest=None, ClosePrice=None, SettlementPrice=None, UpperLimitPrice=None, LowerLimitPrice=None, PreDelta=None, CurrDelta=None, UpdateTime=None, UpdateMillisec=None, ActionDay=None):
+    def __init__(self, TradingDay=None, reserve1=None, ExchangeID=None, reserve2=None, LastPrice=None, PreSettlementPrice=None, PreClosePrice=None, PreOpenInterest=None, OpenPrice=None, HighestPrice=None, LowestPrice=None, Volume=None, Turnover=None, OpenInterest=None, ClosePrice=None, SettlementPrice=None, UpperLimitPrice=None, LowerLimitPrice=None, PreDelta=None, CurrDelta=None, UpdateTime=None, UpdateMillisec=None, ActionDay=None, InstrumentID=None, ExchangeInstID=None):
         super().__init__()
         if TradingDay:
             self.TradingDay = TradingDay.encode("GBK")
-        if InstrumentID:
-            self.InstrumentID = InstrumentID.encode("GBK")
+        if reserve1:
+            self.reserve1 = reserve1.encode("GBK")
         if ExchangeID:
             self.ExchangeID = ExchangeID.encode("GBK")
-        if ExchangeInstID:
-            self.ExchangeInstID = ExchangeInstID.encode("GBK")
+        if reserve2:
+            self.reserve2 = reserve2.encode("GBK")
         if LastPrice:
             self.LastPrice = LastPrice
         if PreSettlementPrice:
@@ -7792,6 +8329,10 @@ class MarketData(Struct):
             self.UpdateMillisec = UpdateMillisec
         if ActionDay:
             self.ActionDay = ActionDay.encode("GBK")
+        if InstrumentID:
+            self.InstrumentID = InstrumentID.encode("GBK")
+        if ExchangeInstID:
+            self.ExchangeInstID = ExchangeInstID.encode("GBK")
 
 
 class MarketDataBase(Struct):
@@ -7971,22 +8512,39 @@ class MarketDataAsk45(Struct):
 
 class MarketDataUpdateTime(Struct):
     _fields_ = [
-        ("InstrumentID", c_char_Array_31),
+        ("reserve1", c_char_Array_31),
         ("UpdateTime", c_char_Array_9),
         ("UpdateMillisec", c_int),
         ("ActionDay", c_char_Array_9),
+        ("InstrumentID", c_char_Array_81),
     ]
 
-    def __init__(self, InstrumentID=None, UpdateTime=None, UpdateMillisec=None, ActionDay=None):
+    def __init__(self, reserve1=None, UpdateTime=None, UpdateMillisec=None, ActionDay=None, InstrumentID=None):
         super().__init__()
-        if InstrumentID:
-            self.InstrumentID = InstrumentID.encode("GBK")
+        if reserve1:
+            self.reserve1 = reserve1.encode("GBK")
         if UpdateTime:
             self.UpdateTime = UpdateTime.encode("GBK")
         if UpdateMillisec:
             self.UpdateMillisec = UpdateMillisec
         if ActionDay:
             self.ActionDay = ActionDay.encode("GBK")
+        if InstrumentID:
+            self.InstrumentID = InstrumentID.encode("GBK")
+
+
+class MarketDataBandingPrice(Struct):
+    _fields_ = [
+        ("BandingUpperPrice", c_double),
+        ("BandingLowerPrice", c_double),
+    ]
+
+    def __init__(self, BandingUpperPrice=None, BandingLowerPrice=None):
+        super().__init__()
+        if BandingUpperPrice:
+            self.BandingUpperPrice = BandingUpperPrice
+        if BandingLowerPrice:
+            self.BandingLowerPrice = BandingLowerPrice
 
 
 class MarketDataExchange(Struct):
@@ -8002,11 +8560,14 @@ class MarketDataExchange(Struct):
 
 class SpecificInstrument(Struct):
     _fields_ = [
-        ("InstrumentID", c_char_Array_31),
+        ("reserve1", c_char_Array_31),
+        ("InstrumentID", c_char_Array_81),
     ]
 
-    def __init__(self, InstrumentID=None):
+    def __init__(self, reserve1=None, InstrumentID=None):
         super().__init__()
+        if reserve1:
+            self.reserve1 = reserve1.encode("GBK")
         if InstrumentID:
             self.InstrumentID = InstrumentID.encode("GBK")
 
@@ -8014,25 +8575,27 @@ class SpecificInstrument(Struct):
 class InstrumentStatus(Struct):
     _fields_ = [
         ("ExchangeID", c_char_Array_9),
-        ("ExchangeInstID", c_char_Array_31),
+        ("reserve1", c_char_Array_31),
         ("SettlementGroupID", c_char_Array_9),
-        ("InstrumentID", c_char_Array_31),
+        ("reserve2", c_char_Array_31),
         ("InstrumentStatus", c_char),
         ("TradingSegmentSN", c_int),
         ("EnterTime", c_char_Array_9),
         ("EnterReason", c_char),
+        ("ExchangeInstID", c_char_Array_81),
+        ("InstrumentID", c_char_Array_81),
     ]
 
-    def __init__(self, ExchangeID=None, ExchangeInstID=None, SettlementGroupID=None, InstrumentID=None, InstrumentStatus=None, TradingSegmentSN=None, EnterTime=None, EnterReason=None):
+    def __init__(self, ExchangeID=None, reserve1=None, SettlementGroupID=None, reserve2=None, InstrumentStatus=None, TradingSegmentSN=None, EnterTime=None, EnterReason=None, ExchangeInstID=None, InstrumentID=None):
         super().__init__()
         if ExchangeID:
             self.ExchangeID = ExchangeID.encode("GBK")
-        if ExchangeInstID:
-            self.ExchangeInstID = ExchangeInstID.encode("GBK")
+        if reserve1:
+            self.reserve1 = reserve1.encode("GBK")
         if SettlementGroupID:
             self.SettlementGroupID = SettlementGroupID.encode("GBK")
-        if InstrumentID:
-            self.InstrumentID = InstrumentID.encode("GBK")
+        if reserve2:
+            self.reserve2 = reserve2.encode("GBK")
         if InstrumentStatus:
             self.InstrumentStatus = InstrumentStatus.encode("GBK")
         if TradingSegmentSN:
@@ -8041,18 +8604,25 @@ class InstrumentStatus(Struct):
             self.EnterTime = EnterTime.encode("GBK")
         if EnterReason:
             self.EnterReason = EnterReason.encode("GBK")
+        if ExchangeInstID:
+            self.ExchangeInstID = ExchangeInstID.encode("GBK")
+        if InstrumentID:
+            self.InstrumentID = InstrumentID.encode("GBK")
 
 
 class QryInstrumentStatus(Struct):
     _fields_ = [
         ("ExchangeID", c_char_Array_9),
-        ("ExchangeInstID", c_char_Array_31),
+        ("reserve1", c_char_Array_31),
+        ("ExchangeInstID", c_char_Array_81),
     ]
 
-    def __init__(self, ExchangeID=None, ExchangeInstID=None):
+    def __init__(self, ExchangeID=None, reserve1=None, ExchangeInstID=None):
         super().__init__()
         if ExchangeID:
             self.ExchangeID = ExchangeID.encode("GBK")
+        if reserve1:
+            self.reserve1 = reserve1.encode("GBK")
         if ExchangeInstID:
             self.ExchangeInstID = ExchangeInstID.encode("GBK")
 
@@ -8158,28 +8728,31 @@ class QryInvestorPositionDetail(Struct):
     _fields_ = [
         ("BrokerID", c_char_Array_11),
         ("InvestorID", c_char_Array_13),
-        ("InstrumentID", c_char_Array_31),
+        ("reserve1", c_char_Array_31),
         ("ExchangeID", c_char_Array_9),
         ("InvestUnitID", c_char_Array_17),
+        ("InstrumentID", c_char_Array_81),
     ]
 
-    def __init__(self, BrokerID=None, InvestorID=None, InstrumentID=None, ExchangeID=None, InvestUnitID=None):
+    def __init__(self, BrokerID=None, InvestorID=None, reserve1=None, ExchangeID=None, InvestUnitID=None, InstrumentID=None):
         super().__init__()
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
         if InvestorID:
             self.InvestorID = InvestorID.encode("GBK")
-        if InstrumentID:
-            self.InstrumentID = InstrumentID.encode("GBK")
+        if reserve1:
+            self.reserve1 = reserve1.encode("GBK")
         if ExchangeID:
             self.ExchangeID = ExchangeID.encode("GBK")
         if InvestUnitID:
             self.InvestUnitID = InvestUnitID.encode("GBK")
+        if InstrumentID:
+            self.InstrumentID = InstrumentID.encode("GBK")
 
 
 class InvestorPositionDetail(Struct):
     _fields_ = [
-        ("InstrumentID", c_char_Array_31),
+        ("reserve1", c_char_Array_31),
         ("BrokerID", c_char_Array_11),
         ("InvestorID", c_char_Array_13),
         ("HedgeFlag", c_char),
@@ -8191,7 +8764,7 @@ class InvestorPositionDetail(Struct):
         ("TradingDay", c_char_Array_9),
         ("SettlementID", c_int),
         ("TradeType", c_char),
-        ("CombInstrumentID", c_char_Array_31),
+        ("reserve2", c_char_Array_31),
         ("ExchangeID", c_char_Array_9),
         ("CloseProfitByDate", c_double),
         ("CloseProfitByTrade", c_double),
@@ -8207,12 +8780,15 @@ class InvestorPositionDetail(Struct):
         ("CloseAmount", c_double),
         ("TimeFirstVolume", c_int),
         ("InvestUnitID", c_char_Array_17),
+        ("SpecPosiType", c_char),
+        ("InstrumentID", c_char_Array_81),
+        ("CombInstrumentID", c_char_Array_81),
     ]
 
-    def __init__(self, InstrumentID=None, BrokerID=None, InvestorID=None, HedgeFlag=None, Direction=None, OpenDate=None, TradeID=None, Volume=None, OpenPrice=None, TradingDay=None, SettlementID=None, TradeType=None, CombInstrumentID=None, ExchangeID=None, CloseProfitByDate=None, CloseProfitByTrade=None, PositionProfitByDate=None, PositionProfitByTrade=None, Margin=None, ExchMargin=None, MarginRateByMoney=None, MarginRateByVolume=None, LastSettlementPrice=None, SettlementPrice=None, CloseVolume=None, CloseAmount=None, TimeFirstVolume=None, InvestUnitID=None):
+    def __init__(self, reserve1=None, BrokerID=None, InvestorID=None, HedgeFlag=None, Direction=None, OpenDate=None, TradeID=None, Volume=None, OpenPrice=None, TradingDay=None, SettlementID=None, TradeType=None, reserve2=None, ExchangeID=None, CloseProfitByDate=None, CloseProfitByTrade=None, PositionProfitByDate=None, PositionProfitByTrade=None, Margin=None, ExchMargin=None, MarginRateByMoney=None, MarginRateByVolume=None, LastSettlementPrice=None, SettlementPrice=None, CloseVolume=None, CloseAmount=None, TimeFirstVolume=None, InvestUnitID=None, SpecPosiType=None, InstrumentID=None, CombInstrumentID=None):
         super().__init__()
-        if InstrumentID:
-            self.InstrumentID = InstrumentID.encode("GBK")
+        if reserve1:
+            self.reserve1 = reserve1.encode("GBK")
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
         if InvestorID:
@@ -8235,8 +8811,8 @@ class InvestorPositionDetail(Struct):
             self.SettlementID = SettlementID
         if TradeType:
             self.TradeType = TradeType.encode("GBK")
-        if CombInstrumentID:
-            self.CombInstrumentID = CombInstrumentID.encode("GBK")
+        if reserve2:
+            self.reserve2 = reserve2.encode("GBK")
         if ExchangeID:
             self.ExchangeID = ExchangeID.encode("GBK")
         if CloseProfitByDate:
@@ -8267,6 +8843,12 @@ class InvestorPositionDetail(Struct):
             self.TimeFirstVolume = TimeFirstVolume
         if InvestUnitID:
             self.InvestUnitID = InvestUnitID.encode("GBK")
+        if SpecPosiType:
+            self.SpecPosiType = SpecPosiType.encode("GBK")
+        if InstrumentID:
+            self.InstrumentID = InstrumentID.encode("GBK")
+        if CombInstrumentID:
+            self.CombInstrumentID = CombInstrumentID.encode("GBK")
 
 
 class TradingAccountPassword(Struct):
@@ -8310,9 +8892,10 @@ class MDTraderOffer(Struct):
         ("BrokerID", c_char_Array_11),
         ("MaxTradeID", c_char_Array_21),
         ("MaxOrderMessageReference", c_char_Array_7),
+        ("OrderCancelAlg", c_char),
     ]
 
-    def __init__(self, ExchangeID=None, TraderID=None, ParticipantID=None, Password=None, InstallID=None, OrderLocalID=None, TraderConnectStatus=None, ConnectRequestDate=None, ConnectRequestTime=None, LastReportDate=None, LastReportTime=None, ConnectDate=None, ConnectTime=None, StartDate=None, StartTime=None, TradingDay=None, BrokerID=None, MaxTradeID=None, MaxOrderMessageReference=None):
+    def __init__(self, ExchangeID=None, TraderID=None, ParticipantID=None, Password=None, InstallID=None, OrderLocalID=None, TraderConnectStatus=None, ConnectRequestDate=None, ConnectRequestTime=None, LastReportDate=None, LastReportTime=None, ConnectDate=None, ConnectTime=None, StartDate=None, StartTime=None, TradingDay=None, BrokerID=None, MaxTradeID=None, MaxOrderMessageReference=None, OrderCancelAlg=None):
         super().__init__()
         if ExchangeID:
             self.ExchangeID = ExchangeID.encode("GBK")
@@ -8352,6 +8935,8 @@ class MDTraderOffer(Struct):
             self.MaxTradeID = MaxTradeID.encode("GBK")
         if MaxOrderMessageReference:
             self.MaxOrderMessageReference = MaxOrderMessageReference.encode("GBK")
+        if OrderCancelAlg:
+            self.OrderCancelAlg = OrderCancelAlg.encode("GBK")
 
 
 class QryMDTraderOffer(Struct):
@@ -8533,17 +9118,23 @@ class TradingAccountPasswordUpdate(Struct):
 
 class QryCombinationLeg(Struct):
     _fields_ = [
-        ("CombInstrumentID", c_char_Array_31),
+        ("reserve1", c_char_Array_31),
         ("LegID", c_int),
-        ("LegInstrumentID", c_char_Array_31),
+        ("reserve2", c_char_Array_31),
+        ("CombInstrumentID", c_char_Array_81),
+        ("LegInstrumentID", c_char_Array_81),
     ]
 
-    def __init__(self, CombInstrumentID=None, LegID=None, LegInstrumentID=None):
+    def __init__(self, reserve1=None, LegID=None, reserve2=None, CombInstrumentID=None, LegInstrumentID=None):
         super().__init__()
-        if CombInstrumentID:
-            self.CombInstrumentID = CombInstrumentID.encode("GBK")
+        if reserve1:
+            self.reserve1 = reserve1.encode("GBK")
         if LegID:
             self.LegID = LegID
+        if reserve2:
+            self.reserve2 = reserve2.encode("GBK")
+        if CombInstrumentID:
+            self.CombInstrumentID = CombInstrumentID.encode("GBK")
         if LegInstrumentID:
             self.LegInstrumentID = LegInstrumentID.encode("GBK")
 
@@ -8561,28 +9152,34 @@ class QrySyncStatus(Struct):
 
 class CombinationLeg(Struct):
     _fields_ = [
-        ("CombInstrumentID", c_char_Array_31),
+        ("reserve1", c_char_Array_31),
         ("LegID", c_int),
-        ("LegInstrumentID", c_char_Array_31),
+        ("reserve2", c_char_Array_31),
         ("Direction", c_char),
         ("LegMultiple", c_int),
         ("ImplyLevel", c_int),
+        ("CombInstrumentID", c_char_Array_81),
+        ("LegInstrumentID", c_char_Array_81),
     ]
 
-    def __init__(self, CombInstrumentID=None, LegID=None, LegInstrumentID=None, Direction=None, LegMultiple=None, ImplyLevel=None):
+    def __init__(self, reserve1=None, LegID=None, reserve2=None, Direction=None, LegMultiple=None, ImplyLevel=None, CombInstrumentID=None, LegInstrumentID=None):
         super().__init__()
-        if CombInstrumentID:
-            self.CombInstrumentID = CombInstrumentID.encode("GBK")
+        if reserve1:
+            self.reserve1 = reserve1.encode("GBK")
         if LegID:
             self.LegID = LegID
-        if LegInstrumentID:
-            self.LegInstrumentID = LegInstrumentID.encode("GBK")
+        if reserve2:
+            self.reserve2 = reserve2.encode("GBK")
         if Direction:
             self.Direction = Direction.encode("GBK")
         if LegMultiple:
             self.LegMultiple = LegMultiple
         if ImplyLevel:
             self.ImplyLevel = ImplyLevel
+        if CombInstrumentID:
+            self.CombInstrumentID = CombInstrumentID.encode("GBK")
+        if LegInstrumentID:
+            self.LegInstrumentID = LegInstrumentID.encode("GBK")
 
 
 class SyncStatus(Struct):
@@ -8684,10 +9281,11 @@ class BrokerUserEvent(Struct):
         ("EventTime", c_char_Array_9),
         ("UserEventInfo", c_char_Array_1025),
         ("InvestorID", c_char_Array_13),
-        ("InstrumentID", c_char_Array_31),
+        ("reserve1", c_char_Array_31),
+        ("InstrumentID", c_char_Array_81),
     ]
 
-    def __init__(self, BrokerID=None, UserID=None, UserEventType=None, EventSequenceNo=None, EventDate=None, EventTime=None, UserEventInfo=None, InvestorID=None, InstrumentID=None):
+    def __init__(self, BrokerID=None, UserID=None, UserEventType=None, EventSequenceNo=None, EventDate=None, EventTime=None, UserEventInfo=None, InvestorID=None, reserve1=None, InstrumentID=None):
         super().__init__()
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
@@ -8705,6 +9303,8 @@ class BrokerUserEvent(Struct):
             self.UserEventInfo = UserEventInfo.encode("GBK")
         if InvestorID:
             self.InvestorID = InvestorID.encode("GBK")
+        if reserve1:
+            self.reserve1 = reserve1.encode("GBK")
         if InstrumentID:
             self.InstrumentID = InstrumentID.encode("GBK")
 
@@ -8756,7 +9356,7 @@ class InvestorPositionCombineDetail(Struct):
         ("InvestorID", c_char_Array_13),
         ("ComTradeID", c_char_Array_21),
         ("TradeID", c_char_Array_21),
-        ("InstrumentID", c_char_Array_31),
+        ("reserve1", c_char_Array_31),
         ("HedgeFlag", c_char),
         ("Direction", c_char),
         ("TotalAmt", c_int),
@@ -8766,12 +9366,14 @@ class InvestorPositionCombineDetail(Struct):
         ("MarginRateByVolume", c_double),
         ("LegID", c_int),
         ("LegMultiple", c_int),
-        ("CombInstrumentID", c_char_Array_31),
+        ("reserve2", c_char_Array_31),
         ("TradeGroupID", c_int),
         ("InvestUnitID", c_char_Array_17),
+        ("InstrumentID", c_char_Array_81),
+        ("CombInstrumentID", c_char_Array_81),
     ]
 
-    def __init__(self, TradingDay=None, OpenDate=None, ExchangeID=None, SettlementID=None, BrokerID=None, InvestorID=None, ComTradeID=None, TradeID=None, InstrumentID=None, HedgeFlag=None, Direction=None, TotalAmt=None, Margin=None, ExchMargin=None, MarginRateByMoney=None, MarginRateByVolume=None, LegID=None, LegMultiple=None, CombInstrumentID=None, TradeGroupID=None, InvestUnitID=None):
+    def __init__(self, TradingDay=None, OpenDate=None, ExchangeID=None, SettlementID=None, BrokerID=None, InvestorID=None, ComTradeID=None, TradeID=None, reserve1=None, HedgeFlag=None, Direction=None, TotalAmt=None, Margin=None, ExchMargin=None, MarginRateByMoney=None, MarginRateByVolume=None, LegID=None, LegMultiple=None, reserve2=None, TradeGroupID=None, InvestUnitID=None, InstrumentID=None, CombInstrumentID=None):
         super().__init__()
         if TradingDay:
             self.TradingDay = TradingDay.encode("GBK")
@@ -8789,8 +9391,8 @@ class InvestorPositionCombineDetail(Struct):
             self.ComTradeID = ComTradeID.encode("GBK")
         if TradeID:
             self.TradeID = TradeID.encode("GBK")
-        if InstrumentID:
-            self.InstrumentID = InstrumentID.encode("GBK")
+        if reserve1:
+            self.reserve1 = reserve1.encode("GBK")
         if HedgeFlag:
             self.HedgeFlag = HedgeFlag.encode("GBK")
         if Direction:
@@ -8809,19 +9411,23 @@ class InvestorPositionCombineDetail(Struct):
             self.LegID = LegID
         if LegMultiple:
             self.LegMultiple = LegMultiple
-        if CombInstrumentID:
-            self.CombInstrumentID = CombInstrumentID.encode("GBK")
+        if reserve2:
+            self.reserve2 = reserve2.encode("GBK")
         if TradeGroupID:
             self.TradeGroupID = TradeGroupID
         if InvestUnitID:
             self.InvestUnitID = InvestUnitID.encode("GBK")
+        if InstrumentID:
+            self.InstrumentID = InstrumentID.encode("GBK")
+        if CombInstrumentID:
+            self.CombInstrumentID = CombInstrumentID.encode("GBK")
 
 
 class ParkedOrder(Struct):
     _fields_ = [
         ("BrokerID", c_char_Array_11),
         ("InvestorID", c_char_Array_13),
-        ("InstrumentID", c_char_Array_31),
+        ("reserve1", c_char_Array_31),
         ("OrderRef", c_char_Array_13),
         ("UserID", c_char_Array_16),
         ("OrderPriceType", c_char),
@@ -8852,18 +9458,20 @@ class ParkedOrder(Struct):
         ("CurrencyID", c_char_Array_4),
         ("ClientID", c_char_Array_11),
         ("InvestUnitID", c_char_Array_17),
-        ("IPAddress", c_char_Array_16),
+        ("reserve2", c_char_Array_16),
         ("MacAddress", c_char_Array_21),
+        ("InstrumentID", c_char_Array_81),
+        ("IPAddress", c_char_Array_33),
     ]
 
-    def __init__(self, BrokerID=None, InvestorID=None, InstrumentID=None, OrderRef=None, UserID=None, OrderPriceType=None, Direction=None, CombOffsetFlag=None, CombHedgeFlag=None, LimitPrice=None, VolumeTotalOriginal=None, TimeCondition=None, GTDDate=None, VolumeCondition=None, MinVolume=None, ContingentCondition=None, StopPrice=None, ForceCloseReason=None, IsAutoSuspend=None, BusinessUnit=None, RequestID=None, UserForceClose=None, ExchangeID=None, ParkedOrderID=None, UserType=None, Status=None, ErrorID=None, ErrorMsg=None, IsSwapOrder=None, AccountID=None, CurrencyID=None, ClientID=None, InvestUnitID=None, IPAddress=None, MacAddress=None):
+    def __init__(self, BrokerID=None, InvestorID=None, reserve1=None, OrderRef=None, UserID=None, OrderPriceType=None, Direction=None, CombOffsetFlag=None, CombHedgeFlag=None, LimitPrice=None, VolumeTotalOriginal=None, TimeCondition=None, GTDDate=None, VolumeCondition=None, MinVolume=None, ContingentCondition=None, StopPrice=None, ForceCloseReason=None, IsAutoSuspend=None, BusinessUnit=None, RequestID=None, UserForceClose=None, ExchangeID=None, ParkedOrderID=None, UserType=None, Status=None, ErrorID=None, ErrorMsg=None, IsSwapOrder=None, AccountID=None, CurrencyID=None, ClientID=None, InvestUnitID=None, reserve2=None, MacAddress=None, InstrumentID=None, IPAddress=None):
         super().__init__()
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
         if InvestorID:
             self.InvestorID = InvestorID.encode("GBK")
-        if InstrumentID:
-            self.InstrumentID = InstrumentID.encode("GBK")
+        if reserve1:
+            self.reserve1 = reserve1.encode("GBK")
         if OrderRef:
             self.OrderRef = OrderRef.encode("GBK")
         if UserID:
@@ -8924,10 +9532,14 @@ class ParkedOrder(Struct):
             self.ClientID = ClientID.encode("GBK")
         if InvestUnitID:
             self.InvestUnitID = InvestUnitID.encode("GBK")
-        if IPAddress:
-            self.IPAddress = IPAddress.encode("GBK")
+        if reserve2:
+            self.reserve2 = reserve2.encode("GBK")
         if MacAddress:
             self.MacAddress = MacAddress.encode("GBK")
+        if InstrumentID:
+            self.InstrumentID = InstrumentID.encode("GBK")
+        if IPAddress:
+            self.IPAddress = IPAddress.encode("GBK")
 
 
 class ParkedOrderAction(Struct):
@@ -8945,18 +9557,20 @@ class ParkedOrderAction(Struct):
         ("LimitPrice", c_double),
         ("VolumeChange", c_int),
         ("UserID", c_char_Array_16),
-        ("InstrumentID", c_char_Array_31),
+        ("reserve1", c_char_Array_31),
         ("ParkedOrderActionID", c_char_Array_13),
         ("UserType", c_char),
         ("Status", c_char),
         ("ErrorID", c_int),
         ("ErrorMsg", c_char_Array_81),
         ("InvestUnitID", c_char_Array_17),
-        ("IPAddress", c_char_Array_16),
+        ("reserve2", c_char_Array_16),
         ("MacAddress", c_char_Array_21),
+        ("InstrumentID", c_char_Array_81),
+        ("IPAddress", c_char_Array_33),
     ]
 
-    def __init__(self, BrokerID=None, InvestorID=None, OrderActionRef=None, OrderRef=None, RequestID=None, FrontID=None, SessionID=None, ExchangeID=None, OrderSysID=None, ActionFlag=None, LimitPrice=None, VolumeChange=None, UserID=None, InstrumentID=None, ParkedOrderActionID=None, UserType=None, Status=None, ErrorID=None, ErrorMsg=None, InvestUnitID=None, IPAddress=None, MacAddress=None):
+    def __init__(self, BrokerID=None, InvestorID=None, OrderActionRef=None, OrderRef=None, RequestID=None, FrontID=None, SessionID=None, ExchangeID=None, OrderSysID=None, ActionFlag=None, LimitPrice=None, VolumeChange=None, UserID=None, reserve1=None, ParkedOrderActionID=None, UserType=None, Status=None, ErrorID=None, ErrorMsg=None, InvestUnitID=None, reserve2=None, MacAddress=None, InstrumentID=None, IPAddress=None):
         super().__init__()
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
@@ -8984,8 +9598,8 @@ class ParkedOrderAction(Struct):
             self.VolumeChange = VolumeChange
         if UserID:
             self.UserID = UserID.encode("GBK")
-        if InstrumentID:
-            self.InstrumentID = InstrumentID.encode("GBK")
+        if reserve1:
+            self.reserve1 = reserve1.encode("GBK")
         if ParkedOrderActionID:
             self.ParkedOrderActionID = ParkedOrderActionID.encode("GBK")
         if UserType:
@@ -8998,56 +9612,66 @@ class ParkedOrderAction(Struct):
             self.ErrorMsg = ErrorMsg.encode("GBK")
         if InvestUnitID:
             self.InvestUnitID = InvestUnitID.encode("GBK")
-        if IPAddress:
-            self.IPAddress = IPAddress.encode("GBK")
+        if reserve2:
+            self.reserve2 = reserve2.encode("GBK")
         if MacAddress:
             self.MacAddress = MacAddress.encode("GBK")
+        if InstrumentID:
+            self.InstrumentID = InstrumentID.encode("GBK")
+        if IPAddress:
+            self.IPAddress = IPAddress.encode("GBK")
 
 
 class QryParkedOrder(Struct):
     _fields_ = [
         ("BrokerID", c_char_Array_11),
         ("InvestorID", c_char_Array_13),
-        ("InstrumentID", c_char_Array_31),
+        ("reserve1", c_char_Array_31),
         ("ExchangeID", c_char_Array_9),
         ("InvestUnitID", c_char_Array_17),
+        ("InstrumentID", c_char_Array_81),
     ]
 
-    def __init__(self, BrokerID=None, InvestorID=None, InstrumentID=None, ExchangeID=None, InvestUnitID=None):
+    def __init__(self, BrokerID=None, InvestorID=None, reserve1=None, ExchangeID=None, InvestUnitID=None, InstrumentID=None):
         super().__init__()
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
         if InvestorID:
             self.InvestorID = InvestorID.encode("GBK")
-        if InstrumentID:
-            self.InstrumentID = InstrumentID.encode("GBK")
+        if reserve1:
+            self.reserve1 = reserve1.encode("GBK")
         if ExchangeID:
             self.ExchangeID = ExchangeID.encode("GBK")
         if InvestUnitID:
             self.InvestUnitID = InvestUnitID.encode("GBK")
+        if InstrumentID:
+            self.InstrumentID = InstrumentID.encode("GBK")
 
 
 class QryParkedOrderAction(Struct):
     _fields_ = [
         ("BrokerID", c_char_Array_11),
         ("InvestorID", c_char_Array_13),
-        ("InstrumentID", c_char_Array_31),
+        ("reserve1", c_char_Array_31),
         ("ExchangeID", c_char_Array_9),
         ("InvestUnitID", c_char_Array_17),
+        ("InstrumentID", c_char_Array_81),
     ]
 
-    def __init__(self, BrokerID=None, InvestorID=None, InstrumentID=None, ExchangeID=None, InvestUnitID=None):
+    def __init__(self, BrokerID=None, InvestorID=None, reserve1=None, ExchangeID=None, InvestUnitID=None, InstrumentID=None):
         super().__init__()
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
         if InvestorID:
             self.InvestorID = InvestorID.encode("GBK")
-        if InstrumentID:
-            self.InstrumentID = InstrumentID.encode("GBK")
+        if reserve1:
+            self.reserve1 = reserve1.encode("GBK")
         if ExchangeID:
             self.ExchangeID = ExchangeID.encode("GBK")
         if InvestUnitID:
             self.InvestUnitID = InvestUnitID.encode("GBK")
+        if InstrumentID:
+            self.InstrumentID = InstrumentID.encode("GBK")
 
 
 class RemoveParkedOrder(Struct):
@@ -9120,23 +9744,26 @@ class QryInvestorPositionCombineDetail(Struct):
     _fields_ = [
         ("BrokerID", c_char_Array_11),
         ("InvestorID", c_char_Array_13),
-        ("CombInstrumentID", c_char_Array_31),
+        ("reserve1", c_char_Array_31),
         ("ExchangeID", c_char_Array_9),
         ("InvestUnitID", c_char_Array_17),
+        ("CombInstrumentID", c_char_Array_81),
     ]
 
-    def __init__(self, BrokerID=None, InvestorID=None, CombInstrumentID=None, ExchangeID=None, InvestUnitID=None):
+    def __init__(self, BrokerID=None, InvestorID=None, reserve1=None, ExchangeID=None, InvestUnitID=None, CombInstrumentID=None):
         super().__init__()
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
         if InvestorID:
             self.InvestorID = InvestorID.encode("GBK")
-        if CombInstrumentID:
-            self.CombInstrumentID = CombInstrumentID.encode("GBK")
+        if reserve1:
+            self.reserve1 = reserve1.encode("GBK")
         if ExchangeID:
             self.ExchangeID = ExchangeID.encode("GBK")
         if InvestUnitID:
             self.InvestUnitID = InvestUnitID.encode("GBK")
+        if CombInstrumentID:
+            self.CombInstrumentID = CombInstrumentID.encode("GBK")
 
 
 class MarketDataAveragePrice(Struct):
@@ -9171,23 +9798,29 @@ class UserIP(Struct):
     _fields_ = [
         ("BrokerID", c_char_Array_11),
         ("UserID", c_char_Array_16),
-        ("IPAddress", c_char_Array_16),
-        ("IPMask", c_char_Array_16),
+        ("reserve1", c_char_Array_16),
+        ("reserve2", c_char_Array_16),
         ("MacAddress", c_char_Array_21),
+        ("IPAddress", c_char_Array_33),
+        ("IPMask", c_char_Array_33),
     ]
 
-    def __init__(self, BrokerID=None, UserID=None, IPAddress=None, IPMask=None, MacAddress=None):
+    def __init__(self, BrokerID=None, UserID=None, reserve1=None, reserve2=None, MacAddress=None, IPAddress=None, IPMask=None):
         super().__init__()
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
         if UserID:
             self.UserID = UserID.encode("GBK")
+        if reserve1:
+            self.reserve1 = reserve1.encode("GBK")
+        if reserve2:
+            self.reserve2 = reserve2.encode("GBK")
+        if MacAddress:
+            self.MacAddress = MacAddress.encode("GBK")
         if IPAddress:
             self.IPAddress = IPAddress.encode("GBK")
         if IPMask:
             self.IPMask = IPMask.encode("GBK")
-        if MacAddress:
-            self.MacAddress = MacAddress.encode("GBK")
 
 
 class TradingNoticeInfo(Struct):
@@ -9289,7 +9922,7 @@ class ErrOrder(Struct):
     _fields_ = [
         ("BrokerID", c_char_Array_11),
         ("InvestorID", c_char_Array_13),
-        ("InstrumentID", c_char_Array_31),
+        ("reserve1", c_char_Array_31),
         ("OrderRef", c_char_Array_13),
         ("UserID", c_char_Array_16),
         ("OrderPriceType", c_char),
@@ -9317,18 +9950,20 @@ class ErrOrder(Struct):
         ("AccountID", c_char_Array_13),
         ("CurrencyID", c_char_Array_4),
         ("ClientID", c_char_Array_11),
-        ("IPAddress", c_char_Array_16),
+        ("reserve2", c_char_Array_16),
         ("MacAddress", c_char_Array_21),
+        ("InstrumentID", c_char_Array_81),
+        ("IPAddress", c_char_Array_33),
     ]
 
-    def __init__(self, BrokerID=None, InvestorID=None, InstrumentID=None, OrderRef=None, UserID=None, OrderPriceType=None, Direction=None, CombOffsetFlag=None, CombHedgeFlag=None, LimitPrice=None, VolumeTotalOriginal=None, TimeCondition=None, GTDDate=None, VolumeCondition=None, MinVolume=None, ContingentCondition=None, StopPrice=None, ForceCloseReason=None, IsAutoSuspend=None, BusinessUnit=None, RequestID=None, UserForceClose=None, ErrorID=None, ErrorMsg=None, IsSwapOrder=None, ExchangeID=None, InvestUnitID=None, AccountID=None, CurrencyID=None, ClientID=None, IPAddress=None, MacAddress=None):
+    def __init__(self, BrokerID=None, InvestorID=None, reserve1=None, OrderRef=None, UserID=None, OrderPriceType=None, Direction=None, CombOffsetFlag=None, CombHedgeFlag=None, LimitPrice=None, VolumeTotalOriginal=None, TimeCondition=None, GTDDate=None, VolumeCondition=None, MinVolume=None, ContingentCondition=None, StopPrice=None, ForceCloseReason=None, IsAutoSuspend=None, BusinessUnit=None, RequestID=None, UserForceClose=None, ErrorID=None, ErrorMsg=None, IsSwapOrder=None, ExchangeID=None, InvestUnitID=None, AccountID=None, CurrencyID=None, ClientID=None, reserve2=None, MacAddress=None, InstrumentID=None, IPAddress=None):
         super().__init__()
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
         if InvestorID:
             self.InvestorID = InvestorID.encode("GBK")
-        if InstrumentID:
-            self.InstrumentID = InstrumentID.encode("GBK")
+        if reserve1:
+            self.reserve1 = reserve1.encode("GBK")
         if OrderRef:
             self.OrderRef = OrderRef.encode("GBK")
         if UserID:
@@ -9383,17 +10018,21 @@ class ErrOrder(Struct):
             self.CurrencyID = CurrencyID.encode("GBK")
         if ClientID:
             self.ClientID = ClientID.encode("GBK")
-        if IPAddress:
-            self.IPAddress = IPAddress.encode("GBK")
+        if reserve2:
+            self.reserve2 = reserve2.encode("GBK")
         if MacAddress:
             self.MacAddress = MacAddress.encode("GBK")
+        if InstrumentID:
+            self.InstrumentID = InstrumentID.encode("GBK")
+        if IPAddress:
+            self.IPAddress = IPAddress.encode("GBK")
 
 
 class ErrorConditionalOrder(Struct):
     _fields_ = [
         ("BrokerID", c_char_Array_11),
         ("InvestorID", c_char_Array_13),
-        ("InstrumentID", c_char_Array_31),
+        ("reserve1", c_char_Array_31),
         ("OrderRef", c_char_Array_13),
         ("UserID", c_char_Array_16),
         ("OrderPriceType", c_char),
@@ -9416,7 +10055,7 @@ class ErrorConditionalOrder(Struct):
         ("ExchangeID", c_char_Array_9),
         ("ParticipantID", c_char_Array_11),
         ("ClientID", c_char_Array_11),
-        ("ExchangeInstID", c_char_Array_31),
+        ("reserve2", c_char_Array_31),
         ("TraderID", c_char_Array_21),
         ("InstallID", c_int),
         ("OrderSubmitStatus", c_char),
@@ -9454,18 +10093,21 @@ class ErrorConditionalOrder(Struct):
         ("InvestUnitID", c_char_Array_17),
         ("AccountID", c_char_Array_13),
         ("CurrencyID", c_char_Array_4),
-        ("IPAddress", c_char_Array_16),
+        ("reserve3", c_char_Array_16),
         ("MacAddress", c_char_Array_21),
+        ("InstrumentID", c_char_Array_81),
+        ("ExchangeInstID", c_char_Array_81),
+        ("IPAddress", c_char_Array_33),
     ]
 
-    def __init__(self, BrokerID=None, InvestorID=None, InstrumentID=None, OrderRef=None, UserID=None, OrderPriceType=None, Direction=None, CombOffsetFlag=None, CombHedgeFlag=None, LimitPrice=None, VolumeTotalOriginal=None, TimeCondition=None, GTDDate=None, VolumeCondition=None, MinVolume=None, ContingentCondition=None, StopPrice=None, ForceCloseReason=None, IsAutoSuspend=None, BusinessUnit=None, RequestID=None, OrderLocalID=None, ExchangeID=None, ParticipantID=None, ClientID=None, ExchangeInstID=None, TraderID=None, InstallID=None, OrderSubmitStatus=None, NotifySequence=None, TradingDay=None, SettlementID=None, OrderSysID=None, OrderSource=None, OrderStatus=None, OrderType=None, VolumeTraded=None, VolumeTotal=None, InsertDate=None, InsertTime=None, ActiveTime=None, SuspendTime=None, UpdateTime=None, CancelTime=None, ActiveTraderID=None, ClearingPartID=None, SequenceNo=None, FrontID=None, SessionID=None, UserProductInfo=None, StatusMsg=None, UserForceClose=None, ActiveUserID=None, BrokerOrderSeq=None, RelativeOrderSysID=None, ZCETotalTradedVolume=None, ErrorID=None, ErrorMsg=None, IsSwapOrder=None, BranchID=None, InvestUnitID=None, AccountID=None, CurrencyID=None, IPAddress=None, MacAddress=None):
+    def __init__(self, BrokerID=None, InvestorID=None, reserve1=None, OrderRef=None, UserID=None, OrderPriceType=None, Direction=None, CombOffsetFlag=None, CombHedgeFlag=None, LimitPrice=None, VolumeTotalOriginal=None, TimeCondition=None, GTDDate=None, VolumeCondition=None, MinVolume=None, ContingentCondition=None, StopPrice=None, ForceCloseReason=None, IsAutoSuspend=None, BusinessUnit=None, RequestID=None, OrderLocalID=None, ExchangeID=None, ParticipantID=None, ClientID=None, reserve2=None, TraderID=None, InstallID=None, OrderSubmitStatus=None, NotifySequence=None, TradingDay=None, SettlementID=None, OrderSysID=None, OrderSource=None, OrderStatus=None, OrderType=None, VolumeTraded=None, VolumeTotal=None, InsertDate=None, InsertTime=None, ActiveTime=None, SuspendTime=None, UpdateTime=None, CancelTime=None, ActiveTraderID=None, ClearingPartID=None, SequenceNo=None, FrontID=None, SessionID=None, UserProductInfo=None, StatusMsg=None, UserForceClose=None, ActiveUserID=None, BrokerOrderSeq=None, RelativeOrderSysID=None, ZCETotalTradedVolume=None, ErrorID=None, ErrorMsg=None, IsSwapOrder=None, BranchID=None, InvestUnitID=None, AccountID=None, CurrencyID=None, reserve3=None, MacAddress=None, InstrumentID=None, ExchangeInstID=None, IPAddress=None):
         super().__init__()
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
         if InvestorID:
             self.InvestorID = InvestorID.encode("GBK")
-        if InstrumentID:
-            self.InstrumentID = InstrumentID.encode("GBK")
+        if reserve1:
+            self.reserve1 = reserve1.encode("GBK")
         if OrderRef:
             self.OrderRef = OrderRef.encode("GBK")
         if UserID:
@@ -9510,8 +10152,8 @@ class ErrorConditionalOrder(Struct):
             self.ParticipantID = ParticipantID.encode("GBK")
         if ClientID:
             self.ClientID = ClientID.encode("GBK")
-        if ExchangeInstID:
-            self.ExchangeInstID = ExchangeInstID.encode("GBK")
+        if reserve2:
+            self.reserve2 = reserve2.encode("GBK")
         if TraderID:
             self.TraderID = TraderID.encode("GBK")
         if InstallID:
@@ -9586,10 +10228,16 @@ class ErrorConditionalOrder(Struct):
             self.AccountID = AccountID.encode("GBK")
         if CurrencyID:
             self.CurrencyID = CurrencyID.encode("GBK")
-        if IPAddress:
-            self.IPAddress = IPAddress.encode("GBK")
+        if reserve3:
+            self.reserve3 = reserve3.encode("GBK")
         if MacAddress:
             self.MacAddress = MacAddress.encode("GBK")
+        if InstrumentID:
+            self.InstrumentID = InstrumentID.encode("GBK")
+        if ExchangeInstID:
+            self.ExchangeInstID = ExchangeInstID.encode("GBK")
+        if IPAddress:
+            self.IPAddress = IPAddress.encode("GBK")
 
 
 class QryErrOrderAction(Struct):
@@ -9632,16 +10280,18 @@ class ErrOrderAction(Struct):
         ("OrderActionStatus", c_char),
         ("UserID", c_char_Array_16),
         ("StatusMsg", c_char_Array_81),
-        ("InstrumentID", c_char_Array_31),
+        ("reserve1", c_char_Array_31),
         ("BranchID", c_char_Array_9),
         ("InvestUnitID", c_char_Array_17),
-        ("IPAddress", c_char_Array_16),
+        ("reserve2", c_char_Array_16),
         ("MacAddress", c_char_Array_21),
         ("ErrorID", c_int),
         ("ErrorMsg", c_char_Array_81),
+        ("InstrumentID", c_char_Array_81),
+        ("IPAddress", c_char_Array_33),
     ]
 
-    def __init__(self, BrokerID=None, InvestorID=None, OrderActionRef=None, OrderRef=None, RequestID=None, FrontID=None, SessionID=None, ExchangeID=None, OrderSysID=None, ActionFlag=None, LimitPrice=None, VolumeChange=None, ActionDate=None, ActionTime=None, TraderID=None, InstallID=None, OrderLocalID=None, ActionLocalID=None, ParticipantID=None, ClientID=None, BusinessUnit=None, OrderActionStatus=None, UserID=None, StatusMsg=None, InstrumentID=None, BranchID=None, InvestUnitID=None, IPAddress=None, MacAddress=None, ErrorID=None, ErrorMsg=None):
+    def __init__(self, BrokerID=None, InvestorID=None, OrderActionRef=None, OrderRef=None, RequestID=None, FrontID=None, SessionID=None, ExchangeID=None, OrderSysID=None, ActionFlag=None, LimitPrice=None, VolumeChange=None, ActionDate=None, ActionTime=None, TraderID=None, InstallID=None, OrderLocalID=None, ActionLocalID=None, ParticipantID=None, ClientID=None, BusinessUnit=None, OrderActionStatus=None, UserID=None, StatusMsg=None, reserve1=None, BranchID=None, InvestUnitID=None, reserve2=None, MacAddress=None, ErrorID=None, ErrorMsg=None, InstrumentID=None, IPAddress=None):
         super().__init__()
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
@@ -9691,20 +10341,24 @@ class ErrOrderAction(Struct):
             self.UserID = UserID.encode("GBK")
         if StatusMsg:
             self.StatusMsg = StatusMsg.encode("GBK")
-        if InstrumentID:
-            self.InstrumentID = InstrumentID.encode("GBK")
+        if reserve1:
+            self.reserve1 = reserve1.encode("GBK")
         if BranchID:
             self.BranchID = BranchID.encode("GBK")
         if InvestUnitID:
             self.InvestUnitID = InvestUnitID.encode("GBK")
-        if IPAddress:
-            self.IPAddress = IPAddress.encode("GBK")
+        if reserve2:
+            self.reserve2 = reserve2.encode("GBK")
         if MacAddress:
             self.MacAddress = MacAddress.encode("GBK")
         if ErrorID:
             self.ErrorID = ErrorID
         if ErrorMsg:
             self.ErrorMsg = ErrorMsg.encode("GBK")
+        if InstrumentID:
+            self.InstrumentID = InstrumentID.encode("GBK")
+        if IPAddress:
+            self.IPAddress = IPAddress.encode("GBK")
 
 
 class QryExchangeSequence(Struct):
@@ -9735,11 +10389,11 @@ class ExchangeSequence(Struct):
             self.MarketStatus = MarketStatus.encode("GBK")
 
 
-class QueryMaxOrderVolumeWithPrice(Struct):
+class QryMaxOrderVolumeWithPrice(Struct):
     _fields_ = [
         ("BrokerID", c_char_Array_11),
         ("InvestorID", c_char_Array_13),
-        ("InstrumentID", c_char_Array_31),
+        ("reserve1", c_char_Array_31),
         ("Direction", c_char),
         ("OffsetFlag", c_char),
         ("HedgeFlag", c_char),
@@ -9747,16 +10401,17 @@ class QueryMaxOrderVolumeWithPrice(Struct):
         ("Price", c_double),
         ("ExchangeID", c_char_Array_9),
         ("InvestUnitID", c_char_Array_17),
+        ("InstrumentID", c_char_Array_81),
     ]
 
-    def __init__(self, BrokerID=None, InvestorID=None, InstrumentID=None, Direction=None, OffsetFlag=None, HedgeFlag=None, MaxVolume=None, Price=None, ExchangeID=None, InvestUnitID=None):
+    def __init__(self, BrokerID=None, InvestorID=None, reserve1=None, Direction=None, OffsetFlag=None, HedgeFlag=None, MaxVolume=None, Price=None, ExchangeID=None, InvestUnitID=None, InstrumentID=None):
         super().__init__()
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
         if InvestorID:
             self.InvestorID = InvestorID.encode("GBK")
-        if InstrumentID:
-            self.InstrumentID = InstrumentID.encode("GBK")
+        if reserve1:
+            self.reserve1 = reserve1.encode("GBK")
         if Direction:
             self.Direction = Direction.encode("GBK")
         if OffsetFlag:
@@ -9771,6 +10426,8 @@ class QueryMaxOrderVolumeWithPrice(Struct):
             self.ExchangeID = ExchangeID.encode("GBK")
         if InvestUnitID:
             self.InvestUnitID = InvestUnitID.encode("GBK")
+        if InstrumentID:
+            self.InstrumentID = InstrumentID.encode("GBK")
 
 
 class QryBrokerTradingParams(Struct):
@@ -9829,15 +10486,18 @@ class QryBrokerTradingAlgos(Struct):
     _fields_ = [
         ("BrokerID", c_char_Array_11),
         ("ExchangeID", c_char_Array_9),
-        ("InstrumentID", c_char_Array_31),
+        ("reserve1", c_char_Array_31),
+        ("InstrumentID", c_char_Array_81),
     ]
 
-    def __init__(self, BrokerID=None, ExchangeID=None, InstrumentID=None):
+    def __init__(self, BrokerID=None, ExchangeID=None, reserve1=None, InstrumentID=None):
         super().__init__()
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
         if ExchangeID:
             self.ExchangeID = ExchangeID.encode("GBK")
+        if reserve1:
+            self.reserve1 = reserve1.encode("GBK")
         if InstrumentID:
             self.InstrumentID = InstrumentID.encode("GBK")
 
@@ -9846,26 +10506,29 @@ class BrokerTradingAlgos(Struct):
     _fields_ = [
         ("BrokerID", c_char_Array_11),
         ("ExchangeID", c_char_Array_9),
-        ("InstrumentID", c_char_Array_31),
+        ("reserve1", c_char_Array_31),
         ("HandlePositionAlgoID", c_char),
         ("FindMarginRateAlgoID", c_char),
         ("HandleTradingAccountAlgoID", c_char),
+        ("InstrumentID", c_char_Array_81),
     ]
 
-    def __init__(self, BrokerID=None, ExchangeID=None, InstrumentID=None, HandlePositionAlgoID=None, FindMarginRateAlgoID=None, HandleTradingAccountAlgoID=None):
+    def __init__(self, BrokerID=None, ExchangeID=None, reserve1=None, HandlePositionAlgoID=None, FindMarginRateAlgoID=None, HandleTradingAccountAlgoID=None, InstrumentID=None):
         super().__init__()
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
         if ExchangeID:
             self.ExchangeID = ExchangeID.encode("GBK")
-        if InstrumentID:
-            self.InstrumentID = InstrumentID.encode("GBK")
+        if reserve1:
+            self.reserve1 = reserve1.encode("GBK")
         if HandlePositionAlgoID:
             self.HandlePositionAlgoID = HandlePositionAlgoID.encode("GBK")
         if FindMarginRateAlgoID:
             self.FindMarginRateAlgoID = FindMarginRateAlgoID.encode("GBK")
         if HandleTradingAccountAlgoID:
             self.HandleTradingAccountAlgoID = HandleTradingAccountAlgoID.encode("GBK")
+        if InstrumentID:
+            self.InstrumentID = InstrumentID.encode("GBK")
 
 
 class QueryBrokerDeposit(Struct):
@@ -10129,14 +10792,15 @@ class EWarrantOffset(Struct):
         ("BrokerID", c_char_Array_11),
         ("InvestorID", c_char_Array_13),
         ("ExchangeID", c_char_Array_9),
-        ("InstrumentID", c_char_Array_31),
+        ("reserve1", c_char_Array_31),
         ("Direction", c_char),
         ("HedgeFlag", c_char),
         ("Volume", c_int),
         ("InvestUnitID", c_char_Array_17),
+        ("InstrumentID", c_char_Array_81),
     ]
 
-    def __init__(self, TradingDay=None, BrokerID=None, InvestorID=None, ExchangeID=None, InstrumentID=None, Direction=None, HedgeFlag=None, Volume=None, InvestUnitID=None):
+    def __init__(self, TradingDay=None, BrokerID=None, InvestorID=None, ExchangeID=None, reserve1=None, Direction=None, HedgeFlag=None, Volume=None, InvestUnitID=None, InstrumentID=None):
         super().__init__()
         if TradingDay:
             self.TradingDay = TradingDay.encode("GBK")
@@ -10146,8 +10810,8 @@ class EWarrantOffset(Struct):
             self.InvestorID = InvestorID.encode("GBK")
         if ExchangeID:
             self.ExchangeID = ExchangeID.encode("GBK")
-        if InstrumentID:
-            self.InstrumentID = InstrumentID.encode("GBK")
+        if reserve1:
+            self.reserve1 = reserve1.encode("GBK")
         if Direction:
             self.Direction = Direction.encode("GBK")
         if HedgeFlag:
@@ -10156,6 +10820,8 @@ class EWarrantOffset(Struct):
             self.Volume = Volume
         if InvestUnitID:
             self.InvestUnitID = InvestUnitID.encode("GBK")
+        if InstrumentID:
+            self.InstrumentID = InstrumentID.encode("GBK")
 
 
 class QryEWarrantOffset(Struct):
@@ -10163,11 +10829,12 @@ class QryEWarrantOffset(Struct):
         ("BrokerID", c_char_Array_11),
         ("InvestorID", c_char_Array_13),
         ("ExchangeID", c_char_Array_9),
-        ("InstrumentID", c_char_Array_31),
+        ("reserve1", c_char_Array_31),
         ("InvestUnitID", c_char_Array_17),
+        ("InstrumentID", c_char_Array_81),
     ]
 
-    def __init__(self, BrokerID=None, InvestorID=None, ExchangeID=None, InstrumentID=None, InvestUnitID=None):
+    def __init__(self, BrokerID=None, InvestorID=None, ExchangeID=None, reserve1=None, InvestUnitID=None, InstrumentID=None):
         super().__init__()
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
@@ -10175,41 +10842,46 @@ class QryEWarrantOffset(Struct):
             self.InvestorID = InvestorID.encode("GBK")
         if ExchangeID:
             self.ExchangeID = ExchangeID.encode("GBK")
-        if InstrumentID:
-            self.InstrumentID = InstrumentID.encode("GBK")
+        if reserve1:
+            self.reserve1 = reserve1.encode("GBK")
         if InvestUnitID:
             self.InvestUnitID = InvestUnitID.encode("GBK")
+        if InstrumentID:
+            self.InstrumentID = InstrumentID.encode("GBK")
 
 
 class QryInvestorProductGroupMargin(Struct):
     _fields_ = [
         ("BrokerID", c_char_Array_11),
         ("InvestorID", c_char_Array_13),
-        ("ProductGroupID", c_char_Array_31),
+        ("reserve1", c_char_Array_31),
         ("HedgeFlag", c_char),
         ("ExchangeID", c_char_Array_9),
         ("InvestUnitID", c_char_Array_17),
+        ("ProductGroupID", c_char_Array_81),
     ]
 
-    def __init__(self, BrokerID=None, InvestorID=None, ProductGroupID=None, HedgeFlag=None, ExchangeID=None, InvestUnitID=None):
+    def __init__(self, BrokerID=None, InvestorID=None, reserve1=None, HedgeFlag=None, ExchangeID=None, InvestUnitID=None, ProductGroupID=None):
         super().__init__()
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
         if InvestorID:
             self.InvestorID = InvestorID.encode("GBK")
-        if ProductGroupID:
-            self.ProductGroupID = ProductGroupID.encode("GBK")
+        if reserve1:
+            self.reserve1 = reserve1.encode("GBK")
         if HedgeFlag:
             self.HedgeFlag = HedgeFlag.encode("GBK")
         if ExchangeID:
             self.ExchangeID = ExchangeID.encode("GBK")
         if InvestUnitID:
             self.InvestUnitID = InvestUnitID.encode("GBK")
+        if ProductGroupID:
+            self.ProductGroupID = ProductGroupID.encode("GBK")
 
 
 class InvestorProductGroupMargin(Struct):
     _fields_ = [
-        ("ProductGroupID", c_char_Array_31),
+        ("reserve1", c_char_Array_31),
         ("BrokerID", c_char_Array_11),
         ("InvestorID", c_char_Array_13),
         ("TradingDay", c_char_Array_9),
@@ -10238,12 +10910,13 @@ class InvestorProductGroupMargin(Struct):
         ("HedgeFlag", c_char),
         ("ExchangeID", c_char_Array_9),
         ("InvestUnitID", c_char_Array_17),
+        ("ProductGroupID", c_char_Array_81),
     ]
 
-    def __init__(self, ProductGroupID=None, BrokerID=None, InvestorID=None, TradingDay=None, SettlementID=None, FrozenMargin=None, LongFrozenMargin=None, ShortFrozenMargin=None, UseMargin=None, LongUseMargin=None, ShortUseMargin=None, ExchMargin=None, LongExchMargin=None, ShortExchMargin=None, CloseProfit=None, FrozenCommission=None, Commission=None, FrozenCash=None, CashIn=None, PositionProfit=None, OffsetAmount=None, LongOffsetAmount=None, ShortOffsetAmount=None, ExchOffsetAmount=None, LongExchOffsetAmount=None, ShortExchOffsetAmount=None, HedgeFlag=None, ExchangeID=None, InvestUnitID=None):
+    def __init__(self, reserve1=None, BrokerID=None, InvestorID=None, TradingDay=None, SettlementID=None, FrozenMargin=None, LongFrozenMargin=None, ShortFrozenMargin=None, UseMargin=None, LongUseMargin=None, ShortUseMargin=None, ExchMargin=None, LongExchMargin=None, ShortExchMargin=None, CloseProfit=None, FrozenCommission=None, Commission=None, FrozenCash=None, CashIn=None, PositionProfit=None, OffsetAmount=None, LongOffsetAmount=None, ShortOffsetAmount=None, ExchOffsetAmount=None, LongExchOffsetAmount=None, ShortExchOffsetAmount=None, HedgeFlag=None, ExchangeID=None, InvestUnitID=None, ProductGroupID=None):
         super().__init__()
-        if ProductGroupID:
-            self.ProductGroupID = ProductGroupID.encode("GBK")
+        if reserve1:
+            self.reserve1 = reserve1.encode("GBK")
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
         if InvestorID:
@@ -10300,6 +10973,8 @@ class InvestorProductGroupMargin(Struct):
             self.ExchangeID = ExchangeID.encode("GBK")
         if InvestUnitID:
             self.InvestUnitID = InvestUnitID.encode("GBK")
+        if ProductGroupID:
+            self.ProductGroupID = ProductGroupID.encode("GBK")
 
 
 class QueryCFMMCTradingAccountToken(Struct):
@@ -10344,31 +11019,40 @@ class CFMMCTradingAccountToken(Struct):
 
 class QryProductGroup(Struct):
     _fields_ = [
-        ("ProductID", c_char_Array_31),
+        ("reserve1", c_char_Array_31),
         ("ExchangeID", c_char_Array_9),
+        ("ProductID", c_char_Array_81),
     ]
 
-    def __init__(self, ProductID=None, ExchangeID=None):
+    def __init__(self, reserve1=None, ExchangeID=None, ProductID=None):
         super().__init__()
-        if ProductID:
-            self.ProductID = ProductID.encode("GBK")
+        if reserve1:
+            self.reserve1 = reserve1.encode("GBK")
         if ExchangeID:
             self.ExchangeID = ExchangeID.encode("GBK")
+        if ProductID:
+            self.ProductID = ProductID.encode("GBK")
 
 
 class ProductGroup(Struct):
     _fields_ = [
-        ("ProductID", c_char_Array_31),
+        ("reserve1", c_char_Array_31),
         ("ExchangeID", c_char_Array_9),
-        ("ProductGroupID", c_char_Array_31),
+        ("reserve2", c_char_Array_31),
+        ("ProductID", c_char_Array_81),
+        ("ProductGroupID", c_char_Array_81),
     ]
 
-    def __init__(self, ProductID=None, ExchangeID=None, ProductGroupID=None):
+    def __init__(self, reserve1=None, ExchangeID=None, reserve2=None, ProductID=None, ProductGroupID=None):
         super().__init__()
-        if ProductID:
-            self.ProductID = ProductID.encode("GBK")
+        if reserve1:
+            self.reserve1 = reserve1.encode("GBK")
         if ExchangeID:
             self.ExchangeID = ExchangeID.encode("GBK")
+        if reserve2:
+            self.reserve2 = reserve2.encode("GBK")
+        if ProductID:
+            self.ProductID = ProductID.encode("GBK")
         if ProductGroupID:
             self.ProductGroupID = ProductGroupID.encode("GBK")
 
@@ -10438,6 +11122,69 @@ class QryBulletin(Struct):
             self.NewsType = NewsType.encode("GBK")
         if NewsUrgency:
             self.NewsUrgency = NewsUrgency.encode("GBK")
+
+
+class MulticastInstrument(Struct):
+    _fields_ = [
+        ("TopicID", c_int),
+        ("reserve1", c_char_Array_31),
+        ("InstrumentNo", c_int),
+        ("CodePrice", c_double),
+        ("VolumeMultiple", c_int),
+        ("PriceTick", c_double),
+        ("InstrumentID", c_char_Array_81),
+    ]
+
+    def __init__(self, TopicID=None, reserve1=None, InstrumentNo=None, CodePrice=None, VolumeMultiple=None, PriceTick=None, InstrumentID=None):
+        super().__init__()
+        if TopicID:
+            self.TopicID = TopicID
+        if reserve1:
+            self.reserve1 = reserve1.encode("GBK")
+        if InstrumentNo:
+            self.InstrumentNo = InstrumentNo
+        if CodePrice:
+            self.CodePrice = CodePrice
+        if VolumeMultiple:
+            self.VolumeMultiple = VolumeMultiple
+        if PriceTick:
+            self.PriceTick = PriceTick
+        if InstrumentID:
+            self.InstrumentID = InstrumentID.encode("GBK")
+
+
+class QryMulticastInstrument(Struct):
+    _fields_ = [
+        ("TopicID", c_int),
+        ("reserve1", c_char_Array_31),
+        ("InstrumentID", c_char_Array_81),
+    ]
+
+    def __init__(self, TopicID=None, reserve1=None, InstrumentID=None):
+        super().__init__()
+        if TopicID:
+            self.TopicID = TopicID
+        if reserve1:
+            self.reserve1 = reserve1.encode("GBK")
+        if InstrumentID:
+            self.InstrumentID = InstrumentID.encode("GBK")
+
+
+class AppIDAuthAssign(Struct):
+    _fields_ = [
+        ("BrokerID", c_char_Array_11),
+        ("AppID", c_char_Array_33),
+        ("DRIdentityID", c_int),
+    ]
+
+    def __init__(self, BrokerID=None, AppID=None, DRIdentityID=None):
+        super().__init__()
+        if BrokerID:
+            self.BrokerID = BrokerID.encode("GBK")
+        if AppID:
+            self.AppID = AppID.encode("GBK")
+        if DRIdentityID:
+            self.DRIdentityID = DRIdentityID
 
 
 class ReqOpenAccount(Struct):
@@ -13673,15 +14420,18 @@ class LoginForbiddenUser(Struct):
     _fields_ = [
         ("BrokerID", c_char_Array_11),
         ("UserID", c_char_Array_16),
-        ("IPAddress", c_char_Array_16),
+        ("reserve1", c_char_Array_16),
+        ("IPAddress", c_char_Array_33),
     ]
 
-    def __init__(self, BrokerID=None, UserID=None, IPAddress=None):
+    def __init__(self, BrokerID=None, UserID=None, reserve1=None, IPAddress=None):
         super().__init__()
         if BrokerID:
             self.BrokerID = BrokerID.encode("GBK")
         if UserID:
             self.UserID = UserID.encode("GBK")
+        if reserve1:
+            self.reserve1 = reserve1.encode("GBK")
         if IPAddress:
             self.IPAddress = IPAddress.encode("GBK")
 
@@ -13698,23 +14448,6 @@ class QryLoginForbiddenUser(Struct):
             self.BrokerID = BrokerID.encode("GBK")
         if UserID:
             self.UserID = UserID.encode("GBK")
-
-
-class MulticastGroupInfo(Struct):
-    _fields_ = [
-        ("GroupIP", c_char_Array_16),
-        ("GroupPort", c_int),
-        ("SourceIP", c_char_Array_16),
-    ]
-
-    def __init__(self, GroupIP=None, GroupPort=None, SourceIP=None):
-        super().__init__()
-        if GroupIP:
-            self.GroupIP = GroupIP.encode("GBK")
-        if GroupPort:
-            self.GroupPort = GroupPort
-        if SourceIP:
-            self.SourceIP = SourceIP.encode("GBK")
 
 
 class TradingAccountReserve(Struct):
@@ -13739,22 +14472,28 @@ class TradingAccountReserve(Struct):
 
 class QryLoginForbiddenIP(Struct):
     _fields_ = [
-        ("IPAddress", c_char_Array_16),
+        ("reserve1", c_char_Array_16),
+        ("IPAddress", c_char_Array_33),
     ]
 
-    def __init__(self, IPAddress=None):
+    def __init__(self, reserve1=None, IPAddress=None):
         super().__init__()
+        if reserve1:
+            self.reserve1 = reserve1.encode("GBK")
         if IPAddress:
             self.IPAddress = IPAddress.encode("GBK")
 
 
 class QryIPList(Struct):
     _fields_ = [
-        ("IPAddress", c_char_Array_16),
+        ("reserve1", c_char_Array_16),
+        ("IPAddress", c_char_Array_33),
     ]
 
-    def __init__(self, IPAddress=None):
+    def __init__(self, reserve1=None, IPAddress=None):
         super().__init__()
+        if reserve1:
+            self.reserve1 = reserve1.encode("GBK")
         if IPAddress:
             self.IPAddress = IPAddress.encode("GBK")
 
@@ -14123,38 +14862,6 @@ class QrySecAgentTradeInfo(Struct):
             self.BrokerSecAgentID = BrokerSecAgentID.encode("GBK")
 
 
-class UserSystemInfo(Struct):
-    _fields_ = [
-        ("BrokerID", c_char_Array_11),
-        ("UserID", c_char_Array_16),
-        ("ClientSystemInfoLen", c_int),
-        ("ClientSystemInfo", c_char_Array_273),
-        ("ClientPublicIP", c_char_Array_16),
-        ("ClientIPPort", c_int),
-        ("ClientLoginTime", c_char_Array_9),
-        ("ClientAppID", c_char_Array_33),
-    ]
-
-    def __init__(self, BrokerID=None, UserID=None, ClientSystemInfoLen=None, ClientSystemInfo=None, ClientPublicIP=None, ClientIPPort=None, ClientLoginTime=None, ClientAppID=None):
-        super().__init__()
-        if BrokerID:
-            self.BrokerID = BrokerID.encode("GBK")
-        if UserID:
-            self.UserID = UserID.encode("GBK")
-        if ClientSystemInfoLen:
-            self.ClientSystemInfoLen = ClientSystemInfoLen
-        if ClientSystemInfo:
-            self.ClientSystemInfo = ClientSystemInfo.encode("GBK")
-        if ClientPublicIP:
-            self.ClientPublicIP = ClientPublicIP.encode("GBK")
-        if ClientIPPort:
-            self.ClientIPPort = ClientIPPort
-        if ClientLoginTime:
-            self.ClientLoginTime = ClientLoginTime.encode("GBK")
-        if ClientAppID:
-            self.ClientAppID = ClientAppID.encode("GBK")
-
-
 class ReqUserAuthMethod(Struct):
     _fields_ = [
         ("TradingDay", c_char_Array_9),
@@ -14258,13 +14965,14 @@ class ReqUserLoginWithCaptcha(Struct):
         ("InterfaceProductInfo", c_char_Array_11),
         ("ProtocolInfo", c_char_Array_11),
         ("MacAddress", c_char_Array_21),
-        ("ClientIPAddress", c_char_Array_16),
+        ("reserve1", c_char_Array_16),
         ("LoginRemark", c_char_Array_36),
         ("Captcha", c_char_Array_41),
         ("ClientIPPort", c_int),
+        ("ClientIPAddress", c_char_Array_33),
     ]
 
-    def __init__(self, TradingDay=None, BrokerID=None, UserID=None, Password=None, UserProductInfo=None, InterfaceProductInfo=None, ProtocolInfo=None, MacAddress=None, ClientIPAddress=None, LoginRemark=None, Captcha=None, ClientIPPort=None):
+    def __init__(self, TradingDay=None, BrokerID=None, UserID=None, Password=None, UserProductInfo=None, InterfaceProductInfo=None, ProtocolInfo=None, MacAddress=None, reserve1=None, LoginRemark=None, Captcha=None, ClientIPPort=None, ClientIPAddress=None):
         super().__init__()
         if TradingDay:
             self.TradingDay = TradingDay.encode("GBK")
@@ -14282,14 +14990,16 @@ class ReqUserLoginWithCaptcha(Struct):
             self.ProtocolInfo = ProtocolInfo.encode("GBK")
         if MacAddress:
             self.MacAddress = MacAddress.encode("GBK")
-        if ClientIPAddress:
-            self.ClientIPAddress = ClientIPAddress.encode("GBK")
+        if reserve1:
+            self.reserve1 = reserve1.encode("GBK")
         if LoginRemark:
             self.LoginRemark = LoginRemark.encode("GBK")
         if Captcha:
             self.Captcha = Captcha.encode("GBK")
         if ClientIPPort:
             self.ClientIPPort = ClientIPPort
+        if ClientIPAddress:
+            self.ClientIPAddress = ClientIPAddress.encode("GBK")
 
 
 class ReqUserLoginWithText(Struct):
@@ -14302,13 +15012,14 @@ class ReqUserLoginWithText(Struct):
         ("InterfaceProductInfo", c_char_Array_11),
         ("ProtocolInfo", c_char_Array_11),
         ("MacAddress", c_char_Array_21),
-        ("ClientIPAddress", c_char_Array_16),
+        ("reserve1", c_char_Array_16),
         ("LoginRemark", c_char_Array_36),
         ("Text", c_char_Array_41),
         ("ClientIPPort", c_int),
+        ("ClientIPAddress", c_char_Array_33),
     ]
 
-    def __init__(self, TradingDay=None, BrokerID=None, UserID=None, Password=None, UserProductInfo=None, InterfaceProductInfo=None, ProtocolInfo=None, MacAddress=None, ClientIPAddress=None, LoginRemark=None, Text=None, ClientIPPort=None):
+    def __init__(self, TradingDay=None, BrokerID=None, UserID=None, Password=None, UserProductInfo=None, InterfaceProductInfo=None, ProtocolInfo=None, MacAddress=None, reserve1=None, LoginRemark=None, Text=None, ClientIPPort=None, ClientIPAddress=None):
         super().__init__()
         if TradingDay:
             self.TradingDay = TradingDay.encode("GBK")
@@ -14326,14 +15037,16 @@ class ReqUserLoginWithText(Struct):
             self.ProtocolInfo = ProtocolInfo.encode("GBK")
         if MacAddress:
             self.MacAddress = MacAddress.encode("GBK")
-        if ClientIPAddress:
-            self.ClientIPAddress = ClientIPAddress.encode("GBK")
+        if reserve1:
+            self.reserve1 = reserve1.encode("GBK")
         if LoginRemark:
             self.LoginRemark = LoginRemark.encode("GBK")
         if Text:
             self.Text = Text.encode("GBK")
         if ClientIPPort:
             self.ClientIPPort = ClientIPPort
+        if ClientIPAddress:
+            self.ClientIPAddress = ClientIPAddress.encode("GBK")
 
 
 class ReqUserLoginWithOTP(Struct):
@@ -14346,13 +15059,14 @@ class ReqUserLoginWithOTP(Struct):
         ("InterfaceProductInfo", c_char_Array_11),
         ("ProtocolInfo", c_char_Array_11),
         ("MacAddress", c_char_Array_21),
-        ("ClientIPAddress", c_char_Array_16),
+        ("reserve1", c_char_Array_16),
         ("LoginRemark", c_char_Array_36),
         ("OTPPassword", c_char_Array_41),
         ("ClientIPPort", c_int),
+        ("ClientIPAddress", c_char_Array_33),
     ]
 
-    def __init__(self, TradingDay=None, BrokerID=None, UserID=None, Password=None, UserProductInfo=None, InterfaceProductInfo=None, ProtocolInfo=None, MacAddress=None, ClientIPAddress=None, LoginRemark=None, OTPPassword=None, ClientIPPort=None):
+    def __init__(self, TradingDay=None, BrokerID=None, UserID=None, Password=None, UserProductInfo=None, InterfaceProductInfo=None, ProtocolInfo=None, MacAddress=None, reserve1=None, LoginRemark=None, OTPPassword=None, ClientIPPort=None, ClientIPAddress=None):
         super().__init__()
         if TradingDay:
             self.TradingDay = TradingDay.encode("GBK")
@@ -14370,14 +15084,16 @@ class ReqUserLoginWithOTP(Struct):
             self.ProtocolInfo = ProtocolInfo.encode("GBK")
         if MacAddress:
             self.MacAddress = MacAddress.encode("GBK")
-        if ClientIPAddress:
-            self.ClientIPAddress = ClientIPAddress.encode("GBK")
+        if reserve1:
+            self.reserve1 = reserve1.encode("GBK")
         if LoginRemark:
             self.LoginRemark = LoginRemark.encode("GBK")
         if OTPPassword:
             self.OTPPassword = OTPPassword.encode("GBK")
         if ClientIPPort:
             self.ClientIPPort = ClientIPPort
+        if ClientIPAddress:
+            self.ClientIPAddress = ClientIPAddress.encode("GBK")
 
 
 class ReqApiHandshake(Struct):
@@ -14451,3 +15167,1867 @@ class QueryFreq(Struct):
         super().__init__()
         if QueryFreq:
             self.QueryFreq = QueryFreq
+
+
+class AuthForbiddenIP(Struct):
+    _fields_ = [
+        ("IPAddress", c_char_Array_33),
+    ]
+
+    def __init__(self, IPAddress=None):
+        super().__init__()
+        if IPAddress:
+            self.IPAddress = IPAddress.encode("GBK")
+
+
+class QryAuthForbiddenIP(Struct):
+    _fields_ = [
+        ("IPAddress", c_char_Array_33),
+    ]
+
+    def __init__(self, IPAddress=None):
+        super().__init__()
+        if IPAddress:
+            self.IPAddress = IPAddress.encode("GBK")
+
+
+class SyncDelaySwapFrozen(Struct):
+    _fields_ = [
+        ("DelaySwapSeqNo", c_char_Array_15),
+        ("BrokerID", c_char_Array_11),
+        ("InvestorID", c_char_Array_13),
+        ("FromCurrencyID", c_char_Array_4),
+        ("FromRemainSwap", c_double),
+        ("IsManualSwap", c_int),
+    ]
+
+    def __init__(self, DelaySwapSeqNo=None, BrokerID=None, InvestorID=None, FromCurrencyID=None, FromRemainSwap=None, IsManualSwap=None):
+        super().__init__()
+        if DelaySwapSeqNo:
+            self.DelaySwapSeqNo = DelaySwapSeqNo.encode("GBK")
+        if BrokerID:
+            self.BrokerID = BrokerID.encode("GBK")
+        if InvestorID:
+            self.InvestorID = InvestorID.encode("GBK")
+        if FromCurrencyID:
+            self.FromCurrencyID = FromCurrencyID.encode("GBK")
+        if FromRemainSwap:
+            self.FromRemainSwap = FromRemainSwap
+        if IsManualSwap:
+            self.IsManualSwap = IsManualSwap
+
+
+class UserSystemInfo(Struct):
+    _fields_ = [
+        ("BrokerID", c_char_Array_11),
+        ("UserID", c_char_Array_16),
+        ("ClientSystemInfoLen", c_int),
+        ("ClientSystemInfo", c_char_Array_273),
+        ("reserve1", c_char_Array_16),
+        ("ClientIPPort", c_int),
+        ("ClientLoginTime", c_char_Array_9),
+        ("ClientAppID", c_char_Array_33),
+        ("ClientPublicIP", c_char_Array_33),
+        ("ClientLoginRemark", c_char_Array_151),
+    ]
+
+    def __init__(self, BrokerID=None, UserID=None, ClientSystemInfoLen=None, ClientSystemInfo=None, reserve1=None, ClientIPPort=None, ClientLoginTime=None, ClientAppID=None, ClientPublicIP=None, ClientLoginRemark=None):
+        super().__init__()
+        if BrokerID:
+            self.BrokerID = BrokerID.encode("GBK")
+        if UserID:
+            self.UserID = UserID.encode("GBK")
+        if ClientSystemInfoLen:
+            self.ClientSystemInfoLen = ClientSystemInfoLen
+        if ClientSystemInfo:
+            self.ClientSystemInfo = ClientSystemInfo.encode("GBK")
+        if reserve1:
+            self.reserve1 = reserve1.encode("GBK")
+        if ClientIPPort:
+            self.ClientIPPort = ClientIPPort
+        if ClientLoginTime:
+            self.ClientLoginTime = ClientLoginTime.encode("GBK")
+        if ClientAppID:
+            self.ClientAppID = ClientAppID.encode("GBK")
+        if ClientPublicIP:
+            self.ClientPublicIP = ClientPublicIP.encode("GBK")
+        if ClientLoginRemark:
+            self.ClientLoginRemark = ClientLoginRemark.encode("GBK")
+
+
+class AuthUserID(Struct):
+    _fields_ = [
+        ("BrokerID", c_char_Array_11),
+        ("AppID", c_char_Array_33),
+        ("UserID", c_char_Array_16),
+        ("AuthType", c_char),
+    ]
+
+    def __init__(self, BrokerID=None, AppID=None, UserID=None, AuthType=None):
+        super().__init__()
+        if BrokerID:
+            self.BrokerID = BrokerID.encode("GBK")
+        if AppID:
+            self.AppID = AppID.encode("GBK")
+        if UserID:
+            self.UserID = UserID.encode("GBK")
+        if AuthType:
+            self.AuthType = AuthType.encode("GBK")
+
+
+class AuthIP(Struct):
+    _fields_ = [
+        ("BrokerID", c_char_Array_11),
+        ("AppID", c_char_Array_33),
+        ("IPAddress", c_char_Array_33),
+    ]
+
+    def __init__(self, BrokerID=None, AppID=None, IPAddress=None):
+        super().__init__()
+        if BrokerID:
+            self.BrokerID = BrokerID.encode("GBK")
+        if AppID:
+            self.AppID = AppID.encode("GBK")
+        if IPAddress:
+            self.IPAddress = IPAddress.encode("GBK")
+
+
+class QryClassifiedInstrument(Struct):
+    _fields_ = [
+        ("InstrumentID", c_char_Array_81),
+        ("ExchangeID", c_char_Array_9),
+        ("ExchangeInstID", c_char_Array_81),
+        ("ProductID", c_char_Array_81),
+        ("TradingType", c_char),
+        ("ClassType", c_char),
+    ]
+
+    def __init__(self, InstrumentID=None, ExchangeID=None, ExchangeInstID=None, ProductID=None, TradingType=None, ClassType=None):
+        super().__init__()
+        if InstrumentID:
+            self.InstrumentID = InstrumentID.encode("GBK")
+        if ExchangeID:
+            self.ExchangeID = ExchangeID.encode("GBK")
+        if ExchangeInstID:
+            self.ExchangeInstID = ExchangeInstID.encode("GBK")
+        if ProductID:
+            self.ProductID = ProductID.encode("GBK")
+        if TradingType:
+            self.TradingType = TradingType.encode("GBK")
+        if ClassType:
+            self.ClassType = ClassType.encode("GBK")
+
+
+class QryCombPromotionParam(Struct):
+    _fields_ = [
+        ("ExchangeID", c_char_Array_9),
+        ("InstrumentID", c_char_Array_81),
+    ]
+
+    def __init__(self, ExchangeID=None, InstrumentID=None):
+        super().__init__()
+        if ExchangeID:
+            self.ExchangeID = ExchangeID.encode("GBK")
+        if InstrumentID:
+            self.InstrumentID = InstrumentID.encode("GBK")
+
+
+class CombPromotionParam(Struct):
+    _fields_ = [
+        ("ExchangeID", c_char_Array_9),
+        ("InstrumentID", c_char_Array_81),
+        ("CombHedgeFlag", c_char_Array_5),
+        ("Xparameter", c_double),
+    ]
+
+    def __init__(self, ExchangeID=None, InstrumentID=None, CombHedgeFlag=None, Xparameter=None):
+        super().__init__()
+        if ExchangeID:
+            self.ExchangeID = ExchangeID.encode("GBK")
+        if InstrumentID:
+            self.InstrumentID = InstrumentID.encode("GBK")
+        if CombHedgeFlag:
+            self.CombHedgeFlag = CombHedgeFlag.encode("GBK")
+        if Xparameter:
+            self.Xparameter = Xparameter
+
+
+class ReqUserLoginSC(Struct):
+    _fields_ = [
+        ("TradingDay", c_char_Array_9),
+        ("BrokerID", c_char_Array_11),
+        ("UserID", c_char_Array_16),
+        ("Password", c_char_Array_41),
+        ("UserProductInfo", c_char_Array_11),
+        ("InterfaceProductInfo", c_char_Array_11),
+        ("ProtocolInfo", c_char_Array_11),
+        ("MacAddress", c_char_Array_21),
+        ("OneTimePassword", c_char_Array_41),
+        ("ClientIPAddress", c_char_Array_33),
+        ("LoginRemark", c_char_Array_36),
+        ("ClientIPPort", c_int),
+        ("AuthCode", c_char_Array_17),
+        ("AppID", c_char_Array_33),
+    ]
+
+    def __init__(self, TradingDay=None, BrokerID=None, UserID=None, Password=None, UserProductInfo=None, InterfaceProductInfo=None, ProtocolInfo=None, MacAddress=None, OneTimePassword=None, ClientIPAddress=None, LoginRemark=None, ClientIPPort=None, AuthCode=None, AppID=None):
+        super().__init__()
+        if TradingDay:
+            self.TradingDay = TradingDay.encode("GBK")
+        if BrokerID:
+            self.BrokerID = BrokerID.encode("GBK")
+        if UserID:
+            self.UserID = UserID.encode("GBK")
+        if Password:
+            self.Password = Password.encode("GBK")
+        if UserProductInfo:
+            self.UserProductInfo = UserProductInfo.encode("GBK")
+        if InterfaceProductInfo:
+            self.InterfaceProductInfo = InterfaceProductInfo.encode("GBK")
+        if ProtocolInfo:
+            self.ProtocolInfo = ProtocolInfo.encode("GBK")
+        if MacAddress:
+            self.MacAddress = MacAddress.encode("GBK")
+        if OneTimePassword:
+            self.OneTimePassword = OneTimePassword.encode("GBK")
+        if ClientIPAddress:
+            self.ClientIPAddress = ClientIPAddress.encode("GBK")
+        if LoginRemark:
+            self.LoginRemark = LoginRemark.encode("GBK")
+        if ClientIPPort:
+            self.ClientIPPort = ClientIPPort
+        if AuthCode:
+            self.AuthCode = AuthCode.encode("GBK")
+        if AppID:
+            self.AppID = AppID.encode("GBK")
+
+
+class QryRiskSettleInvstPosition(Struct):
+    _fields_ = [
+        ("BrokerID", c_char_Array_11),
+        ("InvestorID", c_char_Array_13),
+        ("InstrumentID", c_char_Array_81),
+    ]
+
+    def __init__(self, BrokerID=None, InvestorID=None, InstrumentID=None):
+        super().__init__()
+        if BrokerID:
+            self.BrokerID = BrokerID.encode("GBK")
+        if InvestorID:
+            self.InvestorID = InvestorID.encode("GBK")
+        if InstrumentID:
+            self.InstrumentID = InstrumentID.encode("GBK")
+
+
+class QryRiskSettleProductStatus(Struct):
+    _fields_ = [
+        ("ProductID", c_char_Array_81),
+    ]
+
+    def __init__(self, ProductID=None):
+        super().__init__()
+        if ProductID:
+            self.ProductID = ProductID.encode("GBK")
+
+
+class RiskSettleInvstPosition(Struct):
+    _fields_ = [
+        ("InstrumentID", c_char_Array_81),
+        ("BrokerID", c_char_Array_11),
+        ("InvestorID", c_char_Array_13),
+        ("PosiDirection", c_char),
+        ("HedgeFlag", c_char),
+        ("PositionDate", c_char),
+        ("YdPosition", c_int),
+        ("Position", c_int),
+        ("LongFrozen", c_int),
+        ("ShortFrozen", c_int),
+        ("LongFrozenAmount", c_double),
+        ("ShortFrozenAmount", c_double),
+        ("OpenVolume", c_int),
+        ("CloseVolume", c_int),
+        ("OpenAmount", c_double),
+        ("CloseAmount", c_double),
+        ("PositionCost", c_double),
+        ("PreMargin", c_double),
+        ("UseMargin", c_double),
+        ("FrozenMargin", c_double),
+        ("FrozenCash", c_double),
+        ("FrozenCommission", c_double),
+        ("CashIn", c_double),
+        ("Commission", c_double),
+        ("CloseProfit", c_double),
+        ("PositionProfit", c_double),
+        ("PreSettlementPrice", c_double),
+        ("SettlementPrice", c_double),
+        ("TradingDay", c_char_Array_9),
+        ("SettlementID", c_int),
+        ("OpenCost", c_double),
+        ("ExchangeMargin", c_double),
+        ("CombPosition", c_int),
+        ("CombLongFrozen", c_int),
+        ("CombShortFrozen", c_int),
+        ("CloseProfitByDate", c_double),
+        ("CloseProfitByTrade", c_double),
+        ("TodayPosition", c_int),
+        ("MarginRateByMoney", c_double),
+        ("MarginRateByVolume", c_double),
+        ("StrikeFrozen", c_int),
+        ("StrikeFrozenAmount", c_double),
+        ("AbandonFrozen", c_int),
+        ("ExchangeID", c_char_Array_9),
+        ("YdStrikeFrozen", c_int),
+        ("InvestUnitID", c_char_Array_17),
+        ("PositionCostOffset", c_double),
+        ("TasPosition", c_int),
+        ("TasPositionCost", c_double),
+    ]
+
+    def __init__(self, InstrumentID=None, BrokerID=None, InvestorID=None, PosiDirection=None, HedgeFlag=None, PositionDate=None, YdPosition=None, Position=None, LongFrozen=None, ShortFrozen=None, LongFrozenAmount=None, ShortFrozenAmount=None, OpenVolume=None, CloseVolume=None, OpenAmount=None, CloseAmount=None, PositionCost=None, PreMargin=None, UseMargin=None, FrozenMargin=None, FrozenCash=None, FrozenCommission=None, CashIn=None, Commission=None, CloseProfit=None, PositionProfit=None, PreSettlementPrice=None, SettlementPrice=None, TradingDay=None, SettlementID=None, OpenCost=None, ExchangeMargin=None, CombPosition=None, CombLongFrozen=None, CombShortFrozen=None, CloseProfitByDate=None, CloseProfitByTrade=None, TodayPosition=None, MarginRateByMoney=None, MarginRateByVolume=None, StrikeFrozen=None, StrikeFrozenAmount=None, AbandonFrozen=None, ExchangeID=None, YdStrikeFrozen=None, InvestUnitID=None, PositionCostOffset=None, TasPosition=None, TasPositionCost=None):
+        super().__init__()
+        if InstrumentID:
+            self.InstrumentID = InstrumentID.encode("GBK")
+        if BrokerID:
+            self.BrokerID = BrokerID.encode("GBK")
+        if InvestorID:
+            self.InvestorID = InvestorID.encode("GBK")
+        if PosiDirection:
+            self.PosiDirection = PosiDirection.encode("GBK")
+        if HedgeFlag:
+            self.HedgeFlag = HedgeFlag.encode("GBK")
+        if PositionDate:
+            self.PositionDate = PositionDate.encode("GBK")
+        if YdPosition:
+            self.YdPosition = YdPosition
+        if Position:
+            self.Position = Position
+        if LongFrozen:
+            self.LongFrozen = LongFrozen
+        if ShortFrozen:
+            self.ShortFrozen = ShortFrozen
+        if LongFrozenAmount:
+            self.LongFrozenAmount = LongFrozenAmount
+        if ShortFrozenAmount:
+            self.ShortFrozenAmount = ShortFrozenAmount
+        if OpenVolume:
+            self.OpenVolume = OpenVolume
+        if CloseVolume:
+            self.CloseVolume = CloseVolume
+        if OpenAmount:
+            self.OpenAmount = OpenAmount
+        if CloseAmount:
+            self.CloseAmount = CloseAmount
+        if PositionCost:
+            self.PositionCost = PositionCost
+        if PreMargin:
+            self.PreMargin = PreMargin
+        if UseMargin:
+            self.UseMargin = UseMargin
+        if FrozenMargin:
+            self.FrozenMargin = FrozenMargin
+        if FrozenCash:
+            self.FrozenCash = FrozenCash
+        if FrozenCommission:
+            self.FrozenCommission = FrozenCommission
+        if CashIn:
+            self.CashIn = CashIn
+        if Commission:
+            self.Commission = Commission
+        if CloseProfit:
+            self.CloseProfit = CloseProfit
+        if PositionProfit:
+            self.PositionProfit = PositionProfit
+        if PreSettlementPrice:
+            self.PreSettlementPrice = PreSettlementPrice
+        if SettlementPrice:
+            self.SettlementPrice = SettlementPrice
+        if TradingDay:
+            self.TradingDay = TradingDay.encode("GBK")
+        if SettlementID:
+            self.SettlementID = SettlementID
+        if OpenCost:
+            self.OpenCost = OpenCost
+        if ExchangeMargin:
+            self.ExchangeMargin = ExchangeMargin
+        if CombPosition:
+            self.CombPosition = CombPosition
+        if CombLongFrozen:
+            self.CombLongFrozen = CombLongFrozen
+        if CombShortFrozen:
+            self.CombShortFrozen = CombShortFrozen
+        if CloseProfitByDate:
+            self.CloseProfitByDate = CloseProfitByDate
+        if CloseProfitByTrade:
+            self.CloseProfitByTrade = CloseProfitByTrade
+        if TodayPosition:
+            self.TodayPosition = TodayPosition
+        if MarginRateByMoney:
+            self.MarginRateByMoney = MarginRateByMoney
+        if MarginRateByVolume:
+            self.MarginRateByVolume = MarginRateByVolume
+        if StrikeFrozen:
+            self.StrikeFrozen = StrikeFrozen
+        if StrikeFrozenAmount:
+            self.StrikeFrozenAmount = StrikeFrozenAmount
+        if AbandonFrozen:
+            self.AbandonFrozen = AbandonFrozen
+        if ExchangeID:
+            self.ExchangeID = ExchangeID.encode("GBK")
+        if YdStrikeFrozen:
+            self.YdStrikeFrozen = YdStrikeFrozen
+        if InvestUnitID:
+            self.InvestUnitID = InvestUnitID.encode("GBK")
+        if PositionCostOffset:
+            self.PositionCostOffset = PositionCostOffset
+        if TasPosition:
+            self.TasPosition = TasPosition
+        if TasPositionCost:
+            self.TasPositionCost = TasPositionCost
+
+
+class RiskSettleProductStatus(Struct):
+    _fields_ = [
+        ("ExchangeID", c_char_Array_9),
+        ("ProductID", c_char_Array_81),
+        ("ProductStatus", c_char),
+    ]
+
+    def __init__(self, ExchangeID=None, ProductID=None, ProductStatus=None):
+        super().__init__()
+        if ExchangeID:
+            self.ExchangeID = ExchangeID.encode("GBK")
+        if ProductID:
+            self.ProductID = ProductID.encode("GBK")
+        if ProductStatus:
+            self.ProductStatus = ProductStatus.encode("GBK")
+
+
+class SyncDeltaInfo(Struct):
+    _fields_ = [
+        ("SyncDeltaSequenceNo", c_int),
+        ("SyncDeltaStatus", c_char),
+        ("SyncDescription", c_char_Array_257),
+        ("IsOnlyTrdDelta", c_int),
+    ]
+
+    def __init__(self, SyncDeltaSequenceNo=None, SyncDeltaStatus=None, SyncDescription=None, IsOnlyTrdDelta=None):
+        super().__init__()
+        if SyncDeltaSequenceNo:
+            self.SyncDeltaSequenceNo = SyncDeltaSequenceNo
+        if SyncDeltaStatus:
+            self.SyncDeltaStatus = SyncDeltaStatus.encode("GBK")
+        if SyncDescription:
+            self.SyncDescription = SyncDescription.encode("GBK")
+        if IsOnlyTrdDelta:
+            self.IsOnlyTrdDelta = IsOnlyTrdDelta
+
+
+class SyncDeltaProductStatus(Struct):
+    _fields_ = [
+        ("SyncDeltaSequenceNo", c_int),
+        ("ExchangeID", c_char_Array_9),
+        ("ProductID", c_char_Array_81),
+        ("ProductStatus", c_char),
+    ]
+
+    def __init__(self, SyncDeltaSequenceNo=None, ExchangeID=None, ProductID=None, ProductStatus=None):
+        super().__init__()
+        if SyncDeltaSequenceNo:
+            self.SyncDeltaSequenceNo = SyncDeltaSequenceNo
+        if ExchangeID:
+            self.ExchangeID = ExchangeID.encode("GBK")
+        if ProductID:
+            self.ProductID = ProductID.encode("GBK")
+        if ProductStatus:
+            self.ProductStatus = ProductStatus.encode("GBK")
+
+
+class SyncDeltaInvstPosDtl(Struct):
+    _fields_ = [
+        ("InstrumentID", c_char_Array_81),
+        ("BrokerID", c_char_Array_11),
+        ("InvestorID", c_char_Array_13),
+        ("HedgeFlag", c_char),
+        ("Direction", c_char),
+        ("OpenDate", c_char_Array_9),
+        ("TradeID", c_char_Array_21),
+        ("Volume", c_int),
+        ("OpenPrice", c_double),
+        ("TradingDay", c_char_Array_9),
+        ("SettlementID", c_int),
+        ("TradeType", c_char),
+        ("CombInstrumentID", c_char_Array_81),
+        ("ExchangeID", c_char_Array_9),
+        ("CloseProfitByDate", c_double),
+        ("CloseProfitByTrade", c_double),
+        ("PositionProfitByDate", c_double),
+        ("PositionProfitByTrade", c_double),
+        ("Margin", c_double),
+        ("ExchMargin", c_double),
+        ("MarginRateByMoney", c_double),
+        ("MarginRateByVolume", c_double),
+        ("LastSettlementPrice", c_double),
+        ("SettlementPrice", c_double),
+        ("CloseVolume", c_int),
+        ("CloseAmount", c_double),
+        ("TimeFirstVolume", c_int),
+        ("SpecPosiType", c_char),
+        ("ActionDirection", c_char),
+        ("SyncDeltaSequenceNo", c_int),
+    ]
+
+    def __init__(self, InstrumentID=None, BrokerID=None, InvestorID=None, HedgeFlag=None, Direction=None, OpenDate=None, TradeID=None, Volume=None, OpenPrice=None, TradingDay=None, SettlementID=None, TradeType=None, CombInstrumentID=None, ExchangeID=None, CloseProfitByDate=None, CloseProfitByTrade=None, PositionProfitByDate=None, PositionProfitByTrade=None, Margin=None, ExchMargin=None, MarginRateByMoney=None, MarginRateByVolume=None, LastSettlementPrice=None, SettlementPrice=None, CloseVolume=None, CloseAmount=None, TimeFirstVolume=None, SpecPosiType=None, ActionDirection=None, SyncDeltaSequenceNo=None):
+        super().__init__()
+        if InstrumentID:
+            self.InstrumentID = InstrumentID.encode("GBK")
+        if BrokerID:
+            self.BrokerID = BrokerID.encode("GBK")
+        if InvestorID:
+            self.InvestorID = InvestorID.encode("GBK")
+        if HedgeFlag:
+            self.HedgeFlag = HedgeFlag.encode("GBK")
+        if Direction:
+            self.Direction = Direction.encode("GBK")
+        if OpenDate:
+            self.OpenDate = OpenDate.encode("GBK")
+        if TradeID:
+            self.TradeID = TradeID.encode("GBK")
+        if Volume:
+            self.Volume = Volume
+        if OpenPrice:
+            self.OpenPrice = OpenPrice
+        if TradingDay:
+            self.TradingDay = TradingDay.encode("GBK")
+        if SettlementID:
+            self.SettlementID = SettlementID
+        if TradeType:
+            self.TradeType = TradeType.encode("GBK")
+        if CombInstrumentID:
+            self.CombInstrumentID = CombInstrumentID.encode("GBK")
+        if ExchangeID:
+            self.ExchangeID = ExchangeID.encode("GBK")
+        if CloseProfitByDate:
+            self.CloseProfitByDate = CloseProfitByDate
+        if CloseProfitByTrade:
+            self.CloseProfitByTrade = CloseProfitByTrade
+        if PositionProfitByDate:
+            self.PositionProfitByDate = PositionProfitByDate
+        if PositionProfitByTrade:
+            self.PositionProfitByTrade = PositionProfitByTrade
+        if Margin:
+            self.Margin = Margin
+        if ExchMargin:
+            self.ExchMargin = ExchMargin
+        if MarginRateByMoney:
+            self.MarginRateByMoney = MarginRateByMoney
+        if MarginRateByVolume:
+            self.MarginRateByVolume = MarginRateByVolume
+        if LastSettlementPrice:
+            self.LastSettlementPrice = LastSettlementPrice
+        if SettlementPrice:
+            self.SettlementPrice = SettlementPrice
+        if CloseVolume:
+            self.CloseVolume = CloseVolume
+        if CloseAmount:
+            self.CloseAmount = CloseAmount
+        if TimeFirstVolume:
+            self.TimeFirstVolume = TimeFirstVolume
+        if SpecPosiType:
+            self.SpecPosiType = SpecPosiType.encode("GBK")
+        if ActionDirection:
+            self.ActionDirection = ActionDirection.encode("GBK")
+        if SyncDeltaSequenceNo:
+            self.SyncDeltaSequenceNo = SyncDeltaSequenceNo
+
+
+class SyncDeltaInvstPosCombDtl(Struct):
+    _fields_ = [
+        ("TradingDay", c_char_Array_9),
+        ("OpenDate", c_char_Array_9),
+        ("ExchangeID", c_char_Array_9),
+        ("SettlementID", c_int),
+        ("BrokerID", c_char_Array_11),
+        ("InvestorID", c_char_Array_13),
+        ("ComTradeID", c_char_Array_21),
+        ("TradeID", c_char_Array_21),
+        ("InstrumentID", c_char_Array_81),
+        ("HedgeFlag", c_char),
+        ("Direction", c_char),
+        ("TotalAmt", c_int),
+        ("Margin", c_double),
+        ("ExchMargin", c_double),
+        ("MarginRateByMoney", c_double),
+        ("MarginRateByVolume", c_double),
+        ("LegID", c_int),
+        ("LegMultiple", c_int),
+        ("TradeGroupID", c_int),
+        ("ActionDirection", c_char),
+        ("SyncDeltaSequenceNo", c_int),
+    ]
+
+    def __init__(self, TradingDay=None, OpenDate=None, ExchangeID=None, SettlementID=None, BrokerID=None, InvestorID=None, ComTradeID=None, TradeID=None, InstrumentID=None, HedgeFlag=None, Direction=None, TotalAmt=None, Margin=None, ExchMargin=None, MarginRateByMoney=None, MarginRateByVolume=None, LegID=None, LegMultiple=None, TradeGroupID=None, ActionDirection=None, SyncDeltaSequenceNo=None):
+        super().__init__()
+        if TradingDay:
+            self.TradingDay = TradingDay.encode("GBK")
+        if OpenDate:
+            self.OpenDate = OpenDate.encode("GBK")
+        if ExchangeID:
+            self.ExchangeID = ExchangeID.encode("GBK")
+        if SettlementID:
+            self.SettlementID = SettlementID
+        if BrokerID:
+            self.BrokerID = BrokerID.encode("GBK")
+        if InvestorID:
+            self.InvestorID = InvestorID.encode("GBK")
+        if ComTradeID:
+            self.ComTradeID = ComTradeID.encode("GBK")
+        if TradeID:
+            self.TradeID = TradeID.encode("GBK")
+        if InstrumentID:
+            self.InstrumentID = InstrumentID.encode("GBK")
+        if HedgeFlag:
+            self.HedgeFlag = HedgeFlag.encode("GBK")
+        if Direction:
+            self.Direction = Direction.encode("GBK")
+        if TotalAmt:
+            self.TotalAmt = TotalAmt
+        if Margin:
+            self.Margin = Margin
+        if ExchMargin:
+            self.ExchMargin = ExchMargin
+        if MarginRateByMoney:
+            self.MarginRateByMoney = MarginRateByMoney
+        if MarginRateByVolume:
+            self.MarginRateByVolume = MarginRateByVolume
+        if LegID:
+            self.LegID = LegID
+        if LegMultiple:
+            self.LegMultiple = LegMultiple
+        if TradeGroupID:
+            self.TradeGroupID = TradeGroupID
+        if ActionDirection:
+            self.ActionDirection = ActionDirection.encode("GBK")
+        if SyncDeltaSequenceNo:
+            self.SyncDeltaSequenceNo = SyncDeltaSequenceNo
+
+
+class SyncDeltaTradingAccount(Struct):
+    _fields_ = [
+        ("BrokerID", c_char_Array_11),
+        ("AccountID", c_char_Array_13),
+        ("PreMortgage", c_double),
+        ("PreCredit", c_double),
+        ("PreDeposit", c_double),
+        ("PreBalance", c_double),
+        ("PreMargin", c_double),
+        ("InterestBase", c_double),
+        ("Interest", c_double),
+        ("Deposit", c_double),
+        ("Withdraw", c_double),
+        ("FrozenMargin", c_double),
+        ("FrozenCash", c_double),
+        ("FrozenCommission", c_double),
+        ("CurrMargin", c_double),
+        ("CashIn", c_double),
+        ("Commission", c_double),
+        ("CloseProfit", c_double),
+        ("PositionProfit", c_double),
+        ("Balance", c_double),
+        ("Available", c_double),
+        ("WithdrawQuota", c_double),
+        ("Reserve", c_double),
+        ("TradingDay", c_char_Array_9),
+        ("SettlementID", c_int),
+        ("Credit", c_double),
+        ("Mortgage", c_double),
+        ("ExchangeMargin", c_double),
+        ("DeliveryMargin", c_double),
+        ("ExchangeDeliveryMargin", c_double),
+        ("ReserveBalance", c_double),
+        ("CurrencyID", c_char_Array_4),
+        ("PreFundMortgageIn", c_double),
+        ("PreFundMortgageOut", c_double),
+        ("FundMortgageIn", c_double),
+        ("FundMortgageOut", c_double),
+        ("FundMortgageAvailable", c_double),
+        ("MortgageableFund", c_double),
+        ("SpecProductMargin", c_double),
+        ("SpecProductFrozenMargin", c_double),
+        ("SpecProductCommission", c_double),
+        ("SpecProductFrozenCommission", c_double),
+        ("SpecProductPositionProfit", c_double),
+        ("SpecProductCloseProfit", c_double),
+        ("SpecProductPositionProfitByAlg", c_double),
+        ("SpecProductExchangeMargin", c_double),
+        ("FrozenSwap", c_double),
+        ("RemainSwap", c_double),
+        ("SyncDeltaSequenceNo", c_int),
+    ]
+
+    def __init__(self, BrokerID=None, AccountID=None, PreMortgage=None, PreCredit=None, PreDeposit=None, PreBalance=None, PreMargin=None, InterestBase=None, Interest=None, Deposit=None, Withdraw=None, FrozenMargin=None, FrozenCash=None, FrozenCommission=None, CurrMargin=None, CashIn=None, Commission=None, CloseProfit=None, PositionProfit=None, Balance=None, Available=None, WithdrawQuota=None, Reserve=None, TradingDay=None, SettlementID=None, Credit=None, Mortgage=None, ExchangeMargin=None, DeliveryMargin=None, ExchangeDeliveryMargin=None, ReserveBalance=None, CurrencyID=None, PreFundMortgageIn=None, PreFundMortgageOut=None, FundMortgageIn=None, FundMortgageOut=None, FundMortgageAvailable=None, MortgageableFund=None, SpecProductMargin=None, SpecProductFrozenMargin=None, SpecProductCommission=None, SpecProductFrozenCommission=None, SpecProductPositionProfit=None, SpecProductCloseProfit=None, SpecProductPositionProfitByAlg=None, SpecProductExchangeMargin=None, FrozenSwap=None, RemainSwap=None, SyncDeltaSequenceNo=None):
+        super().__init__()
+        if BrokerID:
+            self.BrokerID = BrokerID.encode("GBK")
+        if AccountID:
+            self.AccountID = AccountID.encode("GBK")
+        if PreMortgage:
+            self.PreMortgage = PreMortgage
+        if PreCredit:
+            self.PreCredit = PreCredit
+        if PreDeposit:
+            self.PreDeposit = PreDeposit
+        if PreBalance:
+            self.PreBalance = PreBalance
+        if PreMargin:
+            self.PreMargin = PreMargin
+        if InterestBase:
+            self.InterestBase = InterestBase
+        if Interest:
+            self.Interest = Interest
+        if Deposit:
+            self.Deposit = Deposit
+        if Withdraw:
+            self.Withdraw = Withdraw
+        if FrozenMargin:
+            self.FrozenMargin = FrozenMargin
+        if FrozenCash:
+            self.FrozenCash = FrozenCash
+        if FrozenCommission:
+            self.FrozenCommission = FrozenCommission
+        if CurrMargin:
+            self.CurrMargin = CurrMargin
+        if CashIn:
+            self.CashIn = CashIn
+        if Commission:
+            self.Commission = Commission
+        if CloseProfit:
+            self.CloseProfit = CloseProfit
+        if PositionProfit:
+            self.PositionProfit = PositionProfit
+        if Balance:
+            self.Balance = Balance
+        if Available:
+            self.Available = Available
+        if WithdrawQuota:
+            self.WithdrawQuota = WithdrawQuota
+        if Reserve:
+            self.Reserve = Reserve
+        if TradingDay:
+            self.TradingDay = TradingDay.encode("GBK")
+        if SettlementID:
+            self.SettlementID = SettlementID
+        if Credit:
+            self.Credit = Credit
+        if Mortgage:
+            self.Mortgage = Mortgage
+        if ExchangeMargin:
+            self.ExchangeMargin = ExchangeMargin
+        if DeliveryMargin:
+            self.DeliveryMargin = DeliveryMargin
+        if ExchangeDeliveryMargin:
+            self.ExchangeDeliveryMargin = ExchangeDeliveryMargin
+        if ReserveBalance:
+            self.ReserveBalance = ReserveBalance
+        if CurrencyID:
+            self.CurrencyID = CurrencyID.encode("GBK")
+        if PreFundMortgageIn:
+            self.PreFundMortgageIn = PreFundMortgageIn
+        if PreFundMortgageOut:
+            self.PreFundMortgageOut = PreFundMortgageOut
+        if FundMortgageIn:
+            self.FundMortgageIn = FundMortgageIn
+        if FundMortgageOut:
+            self.FundMortgageOut = FundMortgageOut
+        if FundMortgageAvailable:
+            self.FundMortgageAvailable = FundMortgageAvailable
+        if MortgageableFund:
+            self.MortgageableFund = MortgageableFund
+        if SpecProductMargin:
+            self.SpecProductMargin = SpecProductMargin
+        if SpecProductFrozenMargin:
+            self.SpecProductFrozenMargin = SpecProductFrozenMargin
+        if SpecProductCommission:
+            self.SpecProductCommission = SpecProductCommission
+        if SpecProductFrozenCommission:
+            self.SpecProductFrozenCommission = SpecProductFrozenCommission
+        if SpecProductPositionProfit:
+            self.SpecProductPositionProfit = SpecProductPositionProfit
+        if SpecProductCloseProfit:
+            self.SpecProductCloseProfit = SpecProductCloseProfit
+        if SpecProductPositionProfitByAlg:
+            self.SpecProductPositionProfitByAlg = SpecProductPositionProfitByAlg
+        if SpecProductExchangeMargin:
+            self.SpecProductExchangeMargin = SpecProductExchangeMargin
+        if FrozenSwap:
+            self.FrozenSwap = FrozenSwap
+        if RemainSwap:
+            self.RemainSwap = RemainSwap
+        if SyncDeltaSequenceNo:
+            self.SyncDeltaSequenceNo = SyncDeltaSequenceNo
+
+
+class SyncDeltaInitInvstMargin(Struct):
+    _fields_ = [
+        ("BrokerID", c_char_Array_11),
+        ("InvestorID", c_char_Array_13),
+        ("LastRiskTotalInvstMargin", c_double),
+        ("LastRiskTotalExchMargin", c_double),
+        ("ThisSyncInvstMargin", c_double),
+        ("ThisSyncExchMargin", c_double),
+        ("RemainRiskInvstMargin", c_double),
+        ("RemainRiskExchMargin", c_double),
+        ("LastRiskSpecTotalInvstMargin", c_double),
+        ("LastRiskSpecTotalExchMargin", c_double),
+        ("ThisSyncSpecInvstMargin", c_double),
+        ("ThisSyncSpecExchMargin", c_double),
+        ("RemainRiskSpecInvstMargin", c_double),
+        ("RemainRiskSpecExchMargin", c_double),
+        ("SyncDeltaSequenceNo", c_int),
+    ]
+
+    def __init__(self, BrokerID=None, InvestorID=None, LastRiskTotalInvstMargin=None, LastRiskTotalExchMargin=None, ThisSyncInvstMargin=None, ThisSyncExchMargin=None, RemainRiskInvstMargin=None, RemainRiskExchMargin=None, LastRiskSpecTotalInvstMargin=None, LastRiskSpecTotalExchMargin=None, ThisSyncSpecInvstMargin=None, ThisSyncSpecExchMargin=None, RemainRiskSpecInvstMargin=None, RemainRiskSpecExchMargin=None, SyncDeltaSequenceNo=None):
+        super().__init__()
+        if BrokerID:
+            self.BrokerID = BrokerID.encode("GBK")
+        if InvestorID:
+            self.InvestorID = InvestorID.encode("GBK")
+        if LastRiskTotalInvstMargin:
+            self.LastRiskTotalInvstMargin = LastRiskTotalInvstMargin
+        if LastRiskTotalExchMargin:
+            self.LastRiskTotalExchMargin = LastRiskTotalExchMargin
+        if ThisSyncInvstMargin:
+            self.ThisSyncInvstMargin = ThisSyncInvstMargin
+        if ThisSyncExchMargin:
+            self.ThisSyncExchMargin = ThisSyncExchMargin
+        if RemainRiskInvstMargin:
+            self.RemainRiskInvstMargin = RemainRiskInvstMargin
+        if RemainRiskExchMargin:
+            self.RemainRiskExchMargin = RemainRiskExchMargin
+        if LastRiskSpecTotalInvstMargin:
+            self.LastRiskSpecTotalInvstMargin = LastRiskSpecTotalInvstMargin
+        if LastRiskSpecTotalExchMargin:
+            self.LastRiskSpecTotalExchMargin = LastRiskSpecTotalExchMargin
+        if ThisSyncSpecInvstMargin:
+            self.ThisSyncSpecInvstMargin = ThisSyncSpecInvstMargin
+        if ThisSyncSpecExchMargin:
+            self.ThisSyncSpecExchMargin = ThisSyncSpecExchMargin
+        if RemainRiskSpecInvstMargin:
+            self.RemainRiskSpecInvstMargin = RemainRiskSpecInvstMargin
+        if RemainRiskSpecExchMargin:
+            self.RemainRiskSpecExchMargin = RemainRiskSpecExchMargin
+        if SyncDeltaSequenceNo:
+            self.SyncDeltaSequenceNo = SyncDeltaSequenceNo
+
+
+class SyncDeltaDceCombInstrument(Struct):
+    _fields_ = [
+        ("CombInstrumentID", c_char_Array_81),
+        ("ExchangeID", c_char_Array_9),
+        ("ExchangeInstID", c_char_Array_81),
+        ("TradeGroupID", c_int),
+        ("CombHedgeFlag", c_char),
+        ("CombinationType", c_char),
+        ("Direction", c_char),
+        ("ProductID", c_char_Array_81),
+        ("Xparameter", c_double),
+        ("ActionDirection", c_char),
+        ("SyncDeltaSequenceNo", c_int),
+    ]
+
+    def __init__(self, CombInstrumentID=None, ExchangeID=None, ExchangeInstID=None, TradeGroupID=None, CombHedgeFlag=None, CombinationType=None, Direction=None, ProductID=None, Xparameter=None, ActionDirection=None, SyncDeltaSequenceNo=None):
+        super().__init__()
+        if CombInstrumentID:
+            self.CombInstrumentID = CombInstrumentID.encode("GBK")
+        if ExchangeID:
+            self.ExchangeID = ExchangeID.encode("GBK")
+        if ExchangeInstID:
+            self.ExchangeInstID = ExchangeInstID.encode("GBK")
+        if TradeGroupID:
+            self.TradeGroupID = TradeGroupID
+        if CombHedgeFlag:
+            self.CombHedgeFlag = CombHedgeFlag.encode("GBK")
+        if CombinationType:
+            self.CombinationType = CombinationType.encode("GBK")
+        if Direction:
+            self.Direction = Direction.encode("GBK")
+        if ProductID:
+            self.ProductID = ProductID.encode("GBK")
+        if Xparameter:
+            self.Xparameter = Xparameter
+        if ActionDirection:
+            self.ActionDirection = ActionDirection.encode("GBK")
+        if SyncDeltaSequenceNo:
+            self.SyncDeltaSequenceNo = SyncDeltaSequenceNo
+
+
+class SyncDeltaInvstMarginRate(Struct):
+    _fields_ = [
+        ("InstrumentID", c_char_Array_81),
+        ("InvestorRange", c_char),
+        ("BrokerID", c_char_Array_11),
+        ("InvestorID", c_char_Array_13),
+        ("HedgeFlag", c_char),
+        ("LongMarginRatioByMoney", c_double),
+        ("LongMarginRatioByVolume", c_double),
+        ("ShortMarginRatioByMoney", c_double),
+        ("ShortMarginRatioByVolume", c_double),
+        ("IsRelative", c_int),
+        ("ActionDirection", c_char),
+        ("SyncDeltaSequenceNo", c_int),
+    ]
+
+    def __init__(self, InstrumentID=None, InvestorRange=None, BrokerID=None, InvestorID=None, HedgeFlag=None, LongMarginRatioByMoney=None, LongMarginRatioByVolume=None, ShortMarginRatioByMoney=None, ShortMarginRatioByVolume=None, IsRelative=None, ActionDirection=None, SyncDeltaSequenceNo=None):
+        super().__init__()
+        if InstrumentID:
+            self.InstrumentID = InstrumentID.encode("GBK")
+        if InvestorRange:
+            self.InvestorRange = InvestorRange.encode("GBK")
+        if BrokerID:
+            self.BrokerID = BrokerID.encode("GBK")
+        if InvestorID:
+            self.InvestorID = InvestorID.encode("GBK")
+        if HedgeFlag:
+            self.HedgeFlag = HedgeFlag.encode("GBK")
+        if LongMarginRatioByMoney:
+            self.LongMarginRatioByMoney = LongMarginRatioByMoney
+        if LongMarginRatioByVolume:
+            self.LongMarginRatioByVolume = LongMarginRatioByVolume
+        if ShortMarginRatioByMoney:
+            self.ShortMarginRatioByMoney = ShortMarginRatioByMoney
+        if ShortMarginRatioByVolume:
+            self.ShortMarginRatioByVolume = ShortMarginRatioByVolume
+        if IsRelative:
+            self.IsRelative = IsRelative
+        if ActionDirection:
+            self.ActionDirection = ActionDirection.encode("GBK")
+        if SyncDeltaSequenceNo:
+            self.SyncDeltaSequenceNo = SyncDeltaSequenceNo
+
+
+class SyncDeltaExchMarginRate(Struct):
+    _fields_ = [
+        ("BrokerID", c_char_Array_11),
+        ("InstrumentID", c_char_Array_81),
+        ("HedgeFlag", c_char),
+        ("LongMarginRatioByMoney", c_double),
+        ("LongMarginRatioByVolume", c_double),
+        ("ShortMarginRatioByMoney", c_double),
+        ("ShortMarginRatioByVolume", c_double),
+        ("ActionDirection", c_char),
+        ("SyncDeltaSequenceNo", c_int),
+    ]
+
+    def __init__(self, BrokerID=None, InstrumentID=None, HedgeFlag=None, LongMarginRatioByMoney=None, LongMarginRatioByVolume=None, ShortMarginRatioByMoney=None, ShortMarginRatioByVolume=None, ActionDirection=None, SyncDeltaSequenceNo=None):
+        super().__init__()
+        if BrokerID:
+            self.BrokerID = BrokerID.encode("GBK")
+        if InstrumentID:
+            self.InstrumentID = InstrumentID.encode("GBK")
+        if HedgeFlag:
+            self.HedgeFlag = HedgeFlag.encode("GBK")
+        if LongMarginRatioByMoney:
+            self.LongMarginRatioByMoney = LongMarginRatioByMoney
+        if LongMarginRatioByVolume:
+            self.LongMarginRatioByVolume = LongMarginRatioByVolume
+        if ShortMarginRatioByMoney:
+            self.ShortMarginRatioByMoney = ShortMarginRatioByMoney
+        if ShortMarginRatioByVolume:
+            self.ShortMarginRatioByVolume = ShortMarginRatioByVolume
+        if ActionDirection:
+            self.ActionDirection = ActionDirection.encode("GBK")
+        if SyncDeltaSequenceNo:
+            self.SyncDeltaSequenceNo = SyncDeltaSequenceNo
+
+
+class SyncDeltaOptExchMargin(Struct):
+    _fields_ = [
+        ("BrokerID", c_char_Array_11),
+        ("InstrumentID", c_char_Array_81),
+        ("SShortMarginRatioByMoney", c_double),
+        ("SShortMarginRatioByVolume", c_double),
+        ("HShortMarginRatioByMoney", c_double),
+        ("HShortMarginRatioByVolume", c_double),
+        ("AShortMarginRatioByMoney", c_double),
+        ("AShortMarginRatioByVolume", c_double),
+        ("MShortMarginRatioByMoney", c_double),
+        ("MShortMarginRatioByVolume", c_double),
+        ("ActionDirection", c_char),
+        ("SyncDeltaSequenceNo", c_int),
+    ]
+
+    def __init__(self, BrokerID=None, InstrumentID=None, SShortMarginRatioByMoney=None, SShortMarginRatioByVolume=None, HShortMarginRatioByMoney=None, HShortMarginRatioByVolume=None, AShortMarginRatioByMoney=None, AShortMarginRatioByVolume=None, MShortMarginRatioByMoney=None, MShortMarginRatioByVolume=None, ActionDirection=None, SyncDeltaSequenceNo=None):
+        super().__init__()
+        if BrokerID:
+            self.BrokerID = BrokerID.encode("GBK")
+        if InstrumentID:
+            self.InstrumentID = InstrumentID.encode("GBK")
+        if SShortMarginRatioByMoney:
+            self.SShortMarginRatioByMoney = SShortMarginRatioByMoney
+        if SShortMarginRatioByVolume:
+            self.SShortMarginRatioByVolume = SShortMarginRatioByVolume
+        if HShortMarginRatioByMoney:
+            self.HShortMarginRatioByMoney = HShortMarginRatioByMoney
+        if HShortMarginRatioByVolume:
+            self.HShortMarginRatioByVolume = HShortMarginRatioByVolume
+        if AShortMarginRatioByMoney:
+            self.AShortMarginRatioByMoney = AShortMarginRatioByMoney
+        if AShortMarginRatioByVolume:
+            self.AShortMarginRatioByVolume = AShortMarginRatioByVolume
+        if MShortMarginRatioByMoney:
+            self.MShortMarginRatioByMoney = MShortMarginRatioByMoney
+        if MShortMarginRatioByVolume:
+            self.MShortMarginRatioByVolume = MShortMarginRatioByVolume
+        if ActionDirection:
+            self.ActionDirection = ActionDirection.encode("GBK")
+        if SyncDeltaSequenceNo:
+            self.SyncDeltaSequenceNo = SyncDeltaSequenceNo
+
+
+class SyncDeltaOptInvstMargin(Struct):
+    _fields_ = [
+        ("InstrumentID", c_char_Array_81),
+        ("InvestorRange", c_char),
+        ("BrokerID", c_char_Array_11),
+        ("InvestorID", c_char_Array_13),
+        ("SShortMarginRatioByMoney", c_double),
+        ("SShortMarginRatioByVolume", c_double),
+        ("HShortMarginRatioByMoney", c_double),
+        ("HShortMarginRatioByVolume", c_double),
+        ("AShortMarginRatioByMoney", c_double),
+        ("AShortMarginRatioByVolume", c_double),
+        ("IsRelative", c_int),
+        ("MShortMarginRatioByMoney", c_double),
+        ("MShortMarginRatioByVolume", c_double),
+        ("ActionDirection", c_char),
+        ("SyncDeltaSequenceNo", c_int),
+    ]
+
+    def __init__(self, InstrumentID=None, InvestorRange=None, BrokerID=None, InvestorID=None, SShortMarginRatioByMoney=None, SShortMarginRatioByVolume=None, HShortMarginRatioByMoney=None, HShortMarginRatioByVolume=None, AShortMarginRatioByMoney=None, AShortMarginRatioByVolume=None, IsRelative=None, MShortMarginRatioByMoney=None, MShortMarginRatioByVolume=None, ActionDirection=None, SyncDeltaSequenceNo=None):
+        super().__init__()
+        if InstrumentID:
+            self.InstrumentID = InstrumentID.encode("GBK")
+        if InvestorRange:
+            self.InvestorRange = InvestorRange.encode("GBK")
+        if BrokerID:
+            self.BrokerID = BrokerID.encode("GBK")
+        if InvestorID:
+            self.InvestorID = InvestorID.encode("GBK")
+        if SShortMarginRatioByMoney:
+            self.SShortMarginRatioByMoney = SShortMarginRatioByMoney
+        if SShortMarginRatioByVolume:
+            self.SShortMarginRatioByVolume = SShortMarginRatioByVolume
+        if HShortMarginRatioByMoney:
+            self.HShortMarginRatioByMoney = HShortMarginRatioByMoney
+        if HShortMarginRatioByVolume:
+            self.HShortMarginRatioByVolume = HShortMarginRatioByVolume
+        if AShortMarginRatioByMoney:
+            self.AShortMarginRatioByMoney = AShortMarginRatioByMoney
+        if AShortMarginRatioByVolume:
+            self.AShortMarginRatioByVolume = AShortMarginRatioByVolume
+        if IsRelative:
+            self.IsRelative = IsRelative
+        if MShortMarginRatioByMoney:
+            self.MShortMarginRatioByMoney = MShortMarginRatioByMoney
+        if MShortMarginRatioByVolume:
+            self.MShortMarginRatioByVolume = MShortMarginRatioByVolume
+        if ActionDirection:
+            self.ActionDirection = ActionDirection.encode("GBK")
+        if SyncDeltaSequenceNo:
+            self.SyncDeltaSequenceNo = SyncDeltaSequenceNo
+
+
+class SyncDeltaInvstMarginRateUL(Struct):
+    _fields_ = [
+        ("InstrumentID", c_char_Array_81),
+        ("InvestorRange", c_char),
+        ("BrokerID", c_char_Array_11),
+        ("InvestorID", c_char_Array_13),
+        ("HedgeFlag", c_char),
+        ("LongMarginRatioByMoney", c_double),
+        ("LongMarginRatioByVolume", c_double),
+        ("ShortMarginRatioByMoney", c_double),
+        ("ShortMarginRatioByVolume", c_double),
+        ("ActionDirection", c_char),
+        ("SyncDeltaSequenceNo", c_int),
+    ]
+
+    def __init__(self, InstrumentID=None, InvestorRange=None, BrokerID=None, InvestorID=None, HedgeFlag=None, LongMarginRatioByMoney=None, LongMarginRatioByVolume=None, ShortMarginRatioByMoney=None, ShortMarginRatioByVolume=None, ActionDirection=None, SyncDeltaSequenceNo=None):
+        super().__init__()
+        if InstrumentID:
+            self.InstrumentID = InstrumentID.encode("GBK")
+        if InvestorRange:
+            self.InvestorRange = InvestorRange.encode("GBK")
+        if BrokerID:
+            self.BrokerID = BrokerID.encode("GBK")
+        if InvestorID:
+            self.InvestorID = InvestorID.encode("GBK")
+        if HedgeFlag:
+            self.HedgeFlag = HedgeFlag.encode("GBK")
+        if LongMarginRatioByMoney:
+            self.LongMarginRatioByMoney = LongMarginRatioByMoney
+        if LongMarginRatioByVolume:
+            self.LongMarginRatioByVolume = LongMarginRatioByVolume
+        if ShortMarginRatioByMoney:
+            self.ShortMarginRatioByMoney = ShortMarginRatioByMoney
+        if ShortMarginRatioByVolume:
+            self.ShortMarginRatioByVolume = ShortMarginRatioByVolume
+        if ActionDirection:
+            self.ActionDirection = ActionDirection.encode("GBK")
+        if SyncDeltaSequenceNo:
+            self.SyncDeltaSequenceNo = SyncDeltaSequenceNo
+
+
+class SyncDeltaOptInvstCommRate(Struct):
+    _fields_ = [
+        ("InstrumentID", c_char_Array_81),
+        ("InvestorRange", c_char),
+        ("BrokerID", c_char_Array_11),
+        ("InvestorID", c_char_Array_13),
+        ("OpenRatioByMoney", c_double),
+        ("OpenRatioByVolume", c_double),
+        ("CloseRatioByMoney", c_double),
+        ("CloseRatioByVolume", c_double),
+        ("CloseTodayRatioByMoney", c_double),
+        ("CloseTodayRatioByVolume", c_double),
+        ("StrikeRatioByMoney", c_double),
+        ("StrikeRatioByVolume", c_double),
+        ("ActionDirection", c_char),
+        ("SyncDeltaSequenceNo", c_int),
+    ]
+
+    def __init__(self, InstrumentID=None, InvestorRange=None, BrokerID=None, InvestorID=None, OpenRatioByMoney=None, OpenRatioByVolume=None, CloseRatioByMoney=None, CloseRatioByVolume=None, CloseTodayRatioByMoney=None, CloseTodayRatioByVolume=None, StrikeRatioByMoney=None, StrikeRatioByVolume=None, ActionDirection=None, SyncDeltaSequenceNo=None):
+        super().__init__()
+        if InstrumentID:
+            self.InstrumentID = InstrumentID.encode("GBK")
+        if InvestorRange:
+            self.InvestorRange = InvestorRange.encode("GBK")
+        if BrokerID:
+            self.BrokerID = BrokerID.encode("GBK")
+        if InvestorID:
+            self.InvestorID = InvestorID.encode("GBK")
+        if OpenRatioByMoney:
+            self.OpenRatioByMoney = OpenRatioByMoney
+        if OpenRatioByVolume:
+            self.OpenRatioByVolume = OpenRatioByVolume
+        if CloseRatioByMoney:
+            self.CloseRatioByMoney = CloseRatioByMoney
+        if CloseRatioByVolume:
+            self.CloseRatioByVolume = CloseRatioByVolume
+        if CloseTodayRatioByMoney:
+            self.CloseTodayRatioByMoney = CloseTodayRatioByMoney
+        if CloseTodayRatioByVolume:
+            self.CloseTodayRatioByVolume = CloseTodayRatioByVolume
+        if StrikeRatioByMoney:
+            self.StrikeRatioByMoney = StrikeRatioByMoney
+        if StrikeRatioByVolume:
+            self.StrikeRatioByVolume = StrikeRatioByVolume
+        if ActionDirection:
+            self.ActionDirection = ActionDirection.encode("GBK")
+        if SyncDeltaSequenceNo:
+            self.SyncDeltaSequenceNo = SyncDeltaSequenceNo
+
+
+class SyncDeltaInvstCommRate(Struct):
+    _fields_ = [
+        ("InstrumentID", c_char_Array_81),
+        ("InvestorRange", c_char),
+        ("BrokerID", c_char_Array_11),
+        ("InvestorID", c_char_Array_13),
+        ("OpenRatioByMoney", c_double),
+        ("OpenRatioByVolume", c_double),
+        ("CloseRatioByMoney", c_double),
+        ("CloseRatioByVolume", c_double),
+        ("CloseTodayRatioByMoney", c_double),
+        ("CloseTodayRatioByVolume", c_double),
+        ("ActionDirection", c_char),
+        ("SyncDeltaSequenceNo", c_int),
+    ]
+
+    def __init__(self, InstrumentID=None, InvestorRange=None, BrokerID=None, InvestorID=None, OpenRatioByMoney=None, OpenRatioByVolume=None, CloseRatioByMoney=None, CloseRatioByVolume=None, CloseTodayRatioByMoney=None, CloseTodayRatioByVolume=None, ActionDirection=None, SyncDeltaSequenceNo=None):
+        super().__init__()
+        if InstrumentID:
+            self.InstrumentID = InstrumentID.encode("GBK")
+        if InvestorRange:
+            self.InvestorRange = InvestorRange.encode("GBK")
+        if BrokerID:
+            self.BrokerID = BrokerID.encode("GBK")
+        if InvestorID:
+            self.InvestorID = InvestorID.encode("GBK")
+        if OpenRatioByMoney:
+            self.OpenRatioByMoney = OpenRatioByMoney
+        if OpenRatioByVolume:
+            self.OpenRatioByVolume = OpenRatioByVolume
+        if CloseRatioByMoney:
+            self.CloseRatioByMoney = CloseRatioByMoney
+        if CloseRatioByVolume:
+            self.CloseRatioByVolume = CloseRatioByVolume
+        if CloseTodayRatioByMoney:
+            self.CloseTodayRatioByMoney = CloseTodayRatioByMoney
+        if CloseTodayRatioByVolume:
+            self.CloseTodayRatioByVolume = CloseTodayRatioByVolume
+        if ActionDirection:
+            self.ActionDirection = ActionDirection.encode("GBK")
+        if SyncDeltaSequenceNo:
+            self.SyncDeltaSequenceNo = SyncDeltaSequenceNo
+
+
+class SyncDeltaProductExchRate(Struct):
+    _fields_ = [
+        ("ProductID", c_char_Array_81),
+        ("QuoteCurrencyID", c_char_Array_4),
+        ("ExchangeRate", c_double),
+        ("ActionDirection", c_char),
+        ("SyncDeltaSequenceNo", c_int),
+    ]
+
+    def __init__(self, ProductID=None, QuoteCurrencyID=None, ExchangeRate=None, ActionDirection=None, SyncDeltaSequenceNo=None):
+        super().__init__()
+        if ProductID:
+            self.ProductID = ProductID.encode("GBK")
+        if QuoteCurrencyID:
+            self.QuoteCurrencyID = QuoteCurrencyID.encode("GBK")
+        if ExchangeRate:
+            self.ExchangeRate = ExchangeRate
+        if ActionDirection:
+            self.ActionDirection = ActionDirection.encode("GBK")
+        if SyncDeltaSequenceNo:
+            self.SyncDeltaSequenceNo = SyncDeltaSequenceNo
+
+
+class SyncDeltaDepthMarketData(Struct):
+    _fields_ = [
+        ("TradingDay", c_char_Array_9),
+        ("InstrumentID", c_char_Array_81),
+        ("ExchangeID", c_char_Array_9),
+        ("ExchangeInstID", c_char_Array_81),
+        ("LastPrice", c_double),
+        ("PreSettlementPrice", c_double),
+        ("PreClosePrice", c_double),
+        ("PreOpenInterest", c_double),
+        ("OpenPrice", c_double),
+        ("HighestPrice", c_double),
+        ("LowestPrice", c_double),
+        ("Volume", c_int),
+        ("Turnover", c_double),
+        ("OpenInterest", c_double),
+        ("ClosePrice", c_double),
+        ("SettlementPrice", c_double),
+        ("UpperLimitPrice", c_double),
+        ("LowerLimitPrice", c_double),
+        ("PreDelta", c_double),
+        ("CurrDelta", c_double),
+        ("UpdateTime", c_char_Array_9),
+        ("UpdateMillisec", c_int),
+        ("BidPrice1", c_double),
+        ("BidVolume1", c_int),
+        ("AskPrice1", c_double),
+        ("AskVolume1", c_int),
+        ("BidPrice2", c_double),
+        ("BidVolume2", c_int),
+        ("AskPrice2", c_double),
+        ("AskVolume2", c_int),
+        ("BidPrice3", c_double),
+        ("BidVolume3", c_int),
+        ("AskPrice3", c_double),
+        ("AskVolume3", c_int),
+        ("BidPrice4", c_double),
+        ("BidVolume4", c_int),
+        ("AskPrice4", c_double),
+        ("AskVolume4", c_int),
+        ("BidPrice5", c_double),
+        ("BidVolume5", c_int),
+        ("AskPrice5", c_double),
+        ("AskVolume5", c_int),
+        ("AveragePrice", c_double),
+        ("ActionDay", c_char_Array_9),
+        ("BandingUpperPrice", c_double),
+        ("BandingLowerPrice", c_double),
+        ("ActionDirection", c_char),
+        ("SyncDeltaSequenceNo", c_int),
+    ]
+
+    def __init__(self, TradingDay=None, InstrumentID=None, ExchangeID=None, ExchangeInstID=None, LastPrice=None, PreSettlementPrice=None, PreClosePrice=None, PreOpenInterest=None, OpenPrice=None, HighestPrice=None, LowestPrice=None, Volume=None, Turnover=None, OpenInterest=None, ClosePrice=None, SettlementPrice=None, UpperLimitPrice=None, LowerLimitPrice=None, PreDelta=None, CurrDelta=None, UpdateTime=None, UpdateMillisec=None, BidPrice1=None, BidVolume1=None, AskPrice1=None, AskVolume1=None, BidPrice2=None, BidVolume2=None, AskPrice2=None, AskVolume2=None, BidPrice3=None, BidVolume3=None, AskPrice3=None, AskVolume3=None, BidPrice4=None, BidVolume4=None, AskPrice4=None, AskVolume4=None, BidPrice5=None, BidVolume5=None, AskPrice5=None, AskVolume5=None, AveragePrice=None, ActionDay=None, BandingUpperPrice=None, BandingLowerPrice=None, ActionDirection=None, SyncDeltaSequenceNo=None):
+        super().__init__()
+        if TradingDay:
+            self.TradingDay = TradingDay.encode("GBK")
+        if InstrumentID:
+            self.InstrumentID = InstrumentID.encode("GBK")
+        if ExchangeID:
+            self.ExchangeID = ExchangeID.encode("GBK")
+        if ExchangeInstID:
+            self.ExchangeInstID = ExchangeInstID.encode("GBK")
+        if LastPrice:
+            self.LastPrice = LastPrice
+        if PreSettlementPrice:
+            self.PreSettlementPrice = PreSettlementPrice
+        if PreClosePrice:
+            self.PreClosePrice = PreClosePrice
+        if PreOpenInterest:
+            self.PreOpenInterest = PreOpenInterest
+        if OpenPrice:
+            self.OpenPrice = OpenPrice
+        if HighestPrice:
+            self.HighestPrice = HighestPrice
+        if LowestPrice:
+            self.LowestPrice = LowestPrice
+        if Volume:
+            self.Volume = Volume
+        if Turnover:
+            self.Turnover = Turnover
+        if OpenInterest:
+            self.OpenInterest = OpenInterest
+        if ClosePrice:
+            self.ClosePrice = ClosePrice
+        if SettlementPrice:
+            self.SettlementPrice = SettlementPrice
+        if UpperLimitPrice:
+            self.UpperLimitPrice = UpperLimitPrice
+        if LowerLimitPrice:
+            self.LowerLimitPrice = LowerLimitPrice
+        if PreDelta:
+            self.PreDelta = PreDelta
+        if CurrDelta:
+            self.CurrDelta = CurrDelta
+        if UpdateTime:
+            self.UpdateTime = UpdateTime.encode("GBK")
+        if UpdateMillisec:
+            self.UpdateMillisec = UpdateMillisec
+        if BidPrice1:
+            self.BidPrice1 = BidPrice1
+        if BidVolume1:
+            self.BidVolume1 = BidVolume1
+        if AskPrice1:
+            self.AskPrice1 = AskPrice1
+        if AskVolume1:
+            self.AskVolume1 = AskVolume1
+        if BidPrice2:
+            self.BidPrice2 = BidPrice2
+        if BidVolume2:
+            self.BidVolume2 = BidVolume2
+        if AskPrice2:
+            self.AskPrice2 = AskPrice2
+        if AskVolume2:
+            self.AskVolume2 = AskVolume2
+        if BidPrice3:
+            self.BidPrice3 = BidPrice3
+        if BidVolume3:
+            self.BidVolume3 = BidVolume3
+        if AskPrice3:
+            self.AskPrice3 = AskPrice3
+        if AskVolume3:
+            self.AskVolume3 = AskVolume3
+        if BidPrice4:
+            self.BidPrice4 = BidPrice4
+        if BidVolume4:
+            self.BidVolume4 = BidVolume4
+        if AskPrice4:
+            self.AskPrice4 = AskPrice4
+        if AskVolume4:
+            self.AskVolume4 = AskVolume4
+        if BidPrice5:
+            self.BidPrice5 = BidPrice5
+        if BidVolume5:
+            self.BidVolume5 = BidVolume5
+        if AskPrice5:
+            self.AskPrice5 = AskPrice5
+        if AskVolume5:
+            self.AskVolume5 = AskVolume5
+        if AveragePrice:
+            self.AveragePrice = AveragePrice
+        if ActionDay:
+            self.ActionDay = ActionDay.encode("GBK")
+        if BandingUpperPrice:
+            self.BandingUpperPrice = BandingUpperPrice
+        if BandingLowerPrice:
+            self.BandingLowerPrice = BandingLowerPrice
+        if ActionDirection:
+            self.ActionDirection = ActionDirection.encode("GBK")
+        if SyncDeltaSequenceNo:
+            self.SyncDeltaSequenceNo = SyncDeltaSequenceNo
+
+
+class SyncDeltaIndexPrice(Struct):
+    _fields_ = [
+        ("BrokerID", c_char_Array_11),
+        ("InstrumentID", c_char_Array_81),
+        ("ClosePrice", c_double),
+        ("ActionDirection", c_char),
+        ("SyncDeltaSequenceNo", c_int),
+    ]
+
+    def __init__(self, BrokerID=None, InstrumentID=None, ClosePrice=None, ActionDirection=None, SyncDeltaSequenceNo=None):
+        super().__init__()
+        if BrokerID:
+            self.BrokerID = BrokerID.encode("GBK")
+        if InstrumentID:
+            self.InstrumentID = InstrumentID.encode("GBK")
+        if ClosePrice:
+            self.ClosePrice = ClosePrice
+        if ActionDirection:
+            self.ActionDirection = ActionDirection.encode("GBK")
+        if SyncDeltaSequenceNo:
+            self.SyncDeltaSequenceNo = SyncDeltaSequenceNo
+
+
+class SyncDeltaEWarrantOffset(Struct):
+    _fields_ = [
+        ("TradingDay", c_char_Array_9),
+        ("BrokerID", c_char_Array_11),
+        ("InvestorID", c_char_Array_13),
+        ("ExchangeID", c_char_Array_9),
+        ("InstrumentID", c_char_Array_81),
+        ("Direction", c_char),
+        ("HedgeFlag", c_char),
+        ("Volume", c_int),
+        ("ActionDirection", c_char),
+        ("SyncDeltaSequenceNo", c_int),
+    ]
+
+    def __init__(self, TradingDay=None, BrokerID=None, InvestorID=None, ExchangeID=None, InstrumentID=None, Direction=None, HedgeFlag=None, Volume=None, ActionDirection=None, SyncDeltaSequenceNo=None):
+        super().__init__()
+        if TradingDay:
+            self.TradingDay = TradingDay.encode("GBK")
+        if BrokerID:
+            self.BrokerID = BrokerID.encode("GBK")
+        if InvestorID:
+            self.InvestorID = InvestorID.encode("GBK")
+        if ExchangeID:
+            self.ExchangeID = ExchangeID.encode("GBK")
+        if InstrumentID:
+            self.InstrumentID = InstrumentID.encode("GBK")
+        if Direction:
+            self.Direction = Direction.encode("GBK")
+        if HedgeFlag:
+            self.HedgeFlag = HedgeFlag.encode("GBK")
+        if Volume:
+            self.Volume = Volume
+        if ActionDirection:
+            self.ActionDirection = ActionDirection.encode("GBK")
+        if SyncDeltaSequenceNo:
+            self.SyncDeltaSequenceNo = SyncDeltaSequenceNo
+
+
+class SPBMFutureParameter(Struct):
+    _fields_ = [
+        ("TradingDay", c_char_Array_9),
+        ("ExchangeID", c_char_Array_9),
+        ("InstrumentID", c_char_Array_81),
+        ("ProdFamilyCode", c_char_Array_81),
+        ("Cvf", c_int),
+        ("TimeRange", c_char),
+        ("MarginRate", c_double),
+        ("LockRateX", c_double),
+        ("AddOnRate", c_double),
+        ("PreSettlementPrice", c_double),
+    ]
+
+    def __init__(self, TradingDay=None, ExchangeID=None, InstrumentID=None, ProdFamilyCode=None, Cvf=None, TimeRange=None, MarginRate=None, LockRateX=None, AddOnRate=None, PreSettlementPrice=None):
+        super().__init__()
+        if TradingDay:
+            self.TradingDay = TradingDay.encode("GBK")
+        if ExchangeID:
+            self.ExchangeID = ExchangeID.encode("GBK")
+        if InstrumentID:
+            self.InstrumentID = InstrumentID.encode("GBK")
+        if ProdFamilyCode:
+            self.ProdFamilyCode = ProdFamilyCode.encode("GBK")
+        if Cvf:
+            self.Cvf = Cvf
+        if TimeRange:
+            self.TimeRange = TimeRange.encode("GBK")
+        if MarginRate:
+            self.MarginRate = MarginRate
+        if LockRateX:
+            self.LockRateX = LockRateX
+        if AddOnRate:
+            self.AddOnRate = AddOnRate
+        if PreSettlementPrice:
+            self.PreSettlementPrice = PreSettlementPrice
+
+
+class SPBMOptionParameter(Struct):
+    _fields_ = [
+        ("TradingDay", c_char_Array_9),
+        ("ExchangeID", c_char_Array_9),
+        ("InstrumentID", c_char_Array_81),
+        ("ProdFamilyCode", c_char_Array_81),
+        ("Cvf", c_int),
+        ("DownPrice", c_double),
+        ("Delta", c_double),
+        ("SlimiDelta", c_double),
+        ("PreSettlementPrice", c_double),
+    ]
+
+    def __init__(self, TradingDay=None, ExchangeID=None, InstrumentID=None, ProdFamilyCode=None, Cvf=None, DownPrice=None, Delta=None, SlimiDelta=None, PreSettlementPrice=None):
+        super().__init__()
+        if TradingDay:
+            self.TradingDay = TradingDay.encode("GBK")
+        if ExchangeID:
+            self.ExchangeID = ExchangeID.encode("GBK")
+        if InstrumentID:
+            self.InstrumentID = InstrumentID.encode("GBK")
+        if ProdFamilyCode:
+            self.ProdFamilyCode = ProdFamilyCode.encode("GBK")
+        if Cvf:
+            self.Cvf = Cvf
+        if DownPrice:
+            self.DownPrice = DownPrice
+        if Delta:
+            self.Delta = Delta
+        if SlimiDelta:
+            self.SlimiDelta = SlimiDelta
+        if PreSettlementPrice:
+            self.PreSettlementPrice = PreSettlementPrice
+
+
+class SPBMIntraParameter(Struct):
+    _fields_ = [
+        ("TradingDay", c_char_Array_9),
+        ("ExchangeID", c_char_Array_9),
+        ("ProdFamilyCode", c_char_Array_81),
+        ("IntraRateY", c_double),
+    ]
+
+    def __init__(self, TradingDay=None, ExchangeID=None, ProdFamilyCode=None, IntraRateY=None):
+        super().__init__()
+        if TradingDay:
+            self.TradingDay = TradingDay.encode("GBK")
+        if ExchangeID:
+            self.ExchangeID = ExchangeID.encode("GBK")
+        if ProdFamilyCode:
+            self.ProdFamilyCode = ProdFamilyCode.encode("GBK")
+        if IntraRateY:
+            self.IntraRateY = IntraRateY
+
+
+class SPBMInterParameter(Struct):
+    _fields_ = [
+        ("TradingDay", c_char_Array_9),
+        ("ExchangeID", c_char_Array_9),
+        ("SpreadId", c_int),
+        ("InterRateZ", c_double),
+        ("Leg1ProdFamilyCode", c_char_Array_81),
+        ("Leg2ProdFamilyCode", c_char_Array_81),
+    ]
+
+    def __init__(self, TradingDay=None, ExchangeID=None, SpreadId=None, InterRateZ=None, Leg1ProdFamilyCode=None, Leg2ProdFamilyCode=None):
+        super().__init__()
+        if TradingDay:
+            self.TradingDay = TradingDay.encode("GBK")
+        if ExchangeID:
+            self.ExchangeID = ExchangeID.encode("GBK")
+        if SpreadId:
+            self.SpreadId = SpreadId
+        if InterRateZ:
+            self.InterRateZ = InterRateZ
+        if Leg1ProdFamilyCode:
+            self.Leg1ProdFamilyCode = Leg1ProdFamilyCode.encode("GBK")
+        if Leg2ProdFamilyCode:
+            self.Leg2ProdFamilyCode = Leg2ProdFamilyCode.encode("GBK")
+
+
+class SyncSPBMParameterEnd(Struct):
+    _fields_ = [
+        ("TradingDay", c_char_Array_9),
+    ]
+
+    def __init__(self, TradingDay=None):
+        super().__init__()
+        if TradingDay:
+            self.TradingDay = TradingDay.encode("GBK")
+
+
+class QrySPBMFutureParameter(Struct):
+    _fields_ = [
+        ("ExchangeID", c_char_Array_9),
+        ("InstrumentID", c_char_Array_81),
+        ("ProdFamilyCode", c_char_Array_81),
+    ]
+
+    def __init__(self, ExchangeID=None, InstrumentID=None, ProdFamilyCode=None):
+        super().__init__()
+        if ExchangeID:
+            self.ExchangeID = ExchangeID.encode("GBK")
+        if InstrumentID:
+            self.InstrumentID = InstrumentID.encode("GBK")
+        if ProdFamilyCode:
+            self.ProdFamilyCode = ProdFamilyCode.encode("GBK")
+
+
+class QrySPBMOptionParameter(Struct):
+    _fields_ = [
+        ("ExchangeID", c_char_Array_9),
+        ("InstrumentID", c_char_Array_81),
+        ("ProdFamilyCode", c_char_Array_81),
+    ]
+
+    def __init__(self, ExchangeID=None, InstrumentID=None, ProdFamilyCode=None):
+        super().__init__()
+        if ExchangeID:
+            self.ExchangeID = ExchangeID.encode("GBK")
+        if InstrumentID:
+            self.InstrumentID = InstrumentID.encode("GBK")
+        if ProdFamilyCode:
+            self.ProdFamilyCode = ProdFamilyCode.encode("GBK")
+
+
+class QrySPBMIntraParameter(Struct):
+    _fields_ = [
+        ("ExchangeID", c_char_Array_9),
+        ("ProdFamilyCode", c_char_Array_81),
+    ]
+
+    def __init__(self, ExchangeID=None, ProdFamilyCode=None):
+        super().__init__()
+        if ExchangeID:
+            self.ExchangeID = ExchangeID.encode("GBK")
+        if ProdFamilyCode:
+            self.ProdFamilyCode = ProdFamilyCode.encode("GBK")
+
+
+class QrySPBMInterParameter(Struct):
+    _fields_ = [
+        ("ExchangeID", c_char_Array_9),
+        ("Leg1ProdFamilyCode", c_char_Array_81),
+        ("Leg2ProdFamilyCode", c_char_Array_81),
+    ]
+
+    def __init__(self, ExchangeID=None, Leg1ProdFamilyCode=None, Leg2ProdFamilyCode=None):
+        super().__init__()
+        if ExchangeID:
+            self.ExchangeID = ExchangeID.encode("GBK")
+        if Leg1ProdFamilyCode:
+            self.Leg1ProdFamilyCode = Leg1ProdFamilyCode.encode("GBK")
+        if Leg2ProdFamilyCode:
+            self.Leg2ProdFamilyCode = Leg2ProdFamilyCode.encode("GBK")
+
+
+class SPBMPortfDefinition(Struct):
+    _fields_ = [
+        ("ExchangeID", c_char_Array_9),
+        ("PortfolioDefID", c_int),
+        ("ProdFamilyCode", c_char_Array_81),
+        ("IsSPBM", c_int),
+    ]
+
+    def __init__(self, ExchangeID=None, PortfolioDefID=None, ProdFamilyCode=None, IsSPBM=None):
+        super().__init__()
+        if ExchangeID:
+            self.ExchangeID = ExchangeID.encode("GBK")
+        if PortfolioDefID:
+            self.PortfolioDefID = PortfolioDefID
+        if ProdFamilyCode:
+            self.ProdFamilyCode = ProdFamilyCode.encode("GBK")
+        if IsSPBM:
+            self.IsSPBM = IsSPBM
+
+
+class SPBMInvestorPortfDef(Struct):
+    _fields_ = [
+        ("ExchangeID", c_char_Array_9),
+        ("BrokerID", c_char_Array_11),
+        ("InvestorID", c_char_Array_13),
+        ("PortfolioDefID", c_int),
+    ]
+
+    def __init__(self, ExchangeID=None, BrokerID=None, InvestorID=None, PortfolioDefID=None):
+        super().__init__()
+        if ExchangeID:
+            self.ExchangeID = ExchangeID.encode("GBK")
+        if BrokerID:
+            self.BrokerID = BrokerID.encode("GBK")
+        if InvestorID:
+            self.InvestorID = InvestorID.encode("GBK")
+        if PortfolioDefID:
+            self.PortfolioDefID = PortfolioDefID
+
+
+class InvestorPortfMarginRatio(Struct):
+    _fields_ = [
+        ("InvestorRange", c_char),
+        ("BrokerID", c_char_Array_11),
+        ("InvestorID", c_char_Array_13),
+        ("ExchangeID", c_char_Array_9),
+        ("MarginRatio", c_double),
+    ]
+
+    def __init__(self, InvestorRange=None, BrokerID=None, InvestorID=None, ExchangeID=None, MarginRatio=None):
+        super().__init__()
+        if InvestorRange:
+            self.InvestorRange = InvestorRange.encode("GBK")
+        if BrokerID:
+            self.BrokerID = BrokerID.encode("GBK")
+        if InvestorID:
+            self.InvestorID = InvestorID.encode("GBK")
+        if ExchangeID:
+            self.ExchangeID = ExchangeID.encode("GBK")
+        if MarginRatio:
+            self.MarginRatio = MarginRatio
+
+
+class QrySPBMPortfDefinition(Struct):
+    _fields_ = [
+        ("ExchangeID", c_char_Array_9),
+        ("PortfolioDefID", c_int),
+        ("ProdFamilyCode", c_char_Array_81),
+    ]
+
+    def __init__(self, ExchangeID=None, PortfolioDefID=None, ProdFamilyCode=None):
+        super().__init__()
+        if ExchangeID:
+            self.ExchangeID = ExchangeID.encode("GBK")
+        if PortfolioDefID:
+            self.PortfolioDefID = PortfolioDefID
+        if ProdFamilyCode:
+            self.ProdFamilyCode = ProdFamilyCode.encode("GBK")
+
+
+class QrySPBMInvestorPortfDef(Struct):
+    _fields_ = [
+        ("ExchangeID", c_char_Array_9),
+        ("BrokerID", c_char_Array_11),
+        ("InvestorID", c_char_Array_13),
+    ]
+
+    def __init__(self, ExchangeID=None, BrokerID=None, InvestorID=None):
+        super().__init__()
+        if ExchangeID:
+            self.ExchangeID = ExchangeID.encode("GBK")
+        if BrokerID:
+            self.BrokerID = BrokerID.encode("GBK")
+        if InvestorID:
+            self.InvestorID = InvestorID.encode("GBK")
+
+
+class QryInvestorPortfMarginRatio(Struct):
+    _fields_ = [
+        ("BrokerID", c_char_Array_11),
+        ("InvestorID", c_char_Array_13),
+        ("ExchangeID", c_char_Array_9),
+    ]
+
+    def __init__(self, BrokerID=None, InvestorID=None, ExchangeID=None):
+        super().__init__()
+        if BrokerID:
+            self.BrokerID = BrokerID.encode("GBK")
+        if InvestorID:
+            self.InvestorID = InvestorID.encode("GBK")
+        if ExchangeID:
+            self.ExchangeID = ExchangeID.encode("GBK")
+
+
+class InvestorProdSPBMDetail(Struct):
+    _fields_ = [
+        ("ExchangeID", c_char_Array_9),
+        ("BrokerID", c_char_Array_11),
+        ("InvestorID", c_char_Array_13),
+        ("ProdFamilyCode", c_char_Array_81),
+        ("IntraInstrMargin", c_double),
+        ("BCollectingMargin", c_double),
+        ("SCollectingMargin", c_double),
+        ("IntraProdMargin", c_double),
+        ("NetMargin", c_double),
+        ("InterProdMargin", c_double),
+        ("SingleMargin", c_double),
+        ("AddOnMargin", c_double),
+        ("DeliveryMargin", c_double),
+        ("CallOptionMinRisk", c_double),
+        ("PutOptionMinRisk", c_double),
+        ("OptionMinRisk", c_double),
+        ("OptionValueOffset", c_double),
+        ("OptionRoyalty", c_double),
+        ("RealOptionValueOffset", c_double),
+        ("Margin", c_double),
+        ("ExchMargin", c_double),
+    ]
+
+    def __init__(self, ExchangeID=None, BrokerID=None, InvestorID=None, ProdFamilyCode=None, IntraInstrMargin=None, BCollectingMargin=None, SCollectingMargin=None, IntraProdMargin=None, NetMargin=None, InterProdMargin=None, SingleMargin=None, AddOnMargin=None, DeliveryMargin=None, CallOptionMinRisk=None, PutOptionMinRisk=None, OptionMinRisk=None, OptionValueOffset=None, OptionRoyalty=None, RealOptionValueOffset=None, Margin=None, ExchMargin=None):
+        super().__init__()
+        if ExchangeID:
+            self.ExchangeID = ExchangeID.encode("GBK")
+        if BrokerID:
+            self.BrokerID = BrokerID.encode("GBK")
+        if InvestorID:
+            self.InvestorID = InvestorID.encode("GBK")
+        if ProdFamilyCode:
+            self.ProdFamilyCode = ProdFamilyCode.encode("GBK")
+        if IntraInstrMargin:
+            self.IntraInstrMargin = IntraInstrMargin
+        if BCollectingMargin:
+            self.BCollectingMargin = BCollectingMargin
+        if SCollectingMargin:
+            self.SCollectingMargin = SCollectingMargin
+        if IntraProdMargin:
+            self.IntraProdMargin = IntraProdMargin
+        if NetMargin:
+            self.NetMargin = NetMargin
+        if InterProdMargin:
+            self.InterProdMargin = InterProdMargin
+        if SingleMargin:
+            self.SingleMargin = SingleMargin
+        if AddOnMargin:
+            self.AddOnMargin = AddOnMargin
+        if DeliveryMargin:
+            self.DeliveryMargin = DeliveryMargin
+        if CallOptionMinRisk:
+            self.CallOptionMinRisk = CallOptionMinRisk
+        if PutOptionMinRisk:
+            self.PutOptionMinRisk = PutOptionMinRisk
+        if OptionMinRisk:
+            self.OptionMinRisk = OptionMinRisk
+        if OptionValueOffset:
+            self.OptionValueOffset = OptionValueOffset
+        if OptionRoyalty:
+            self.OptionRoyalty = OptionRoyalty
+        if RealOptionValueOffset:
+            self.RealOptionValueOffset = RealOptionValueOffset
+        if Margin:
+            self.Margin = Margin
+        if ExchMargin:
+            self.ExchMargin = ExchMargin
+
+
+class QryInvestorProdSPBMDetail(Struct):
+    _fields_ = [
+        ("ExchangeID", c_char_Array_9),
+        ("BrokerID", c_char_Array_11),
+        ("InvestorID", c_char_Array_13),
+        ("ProdFamilyCode", c_char_Array_81),
+    ]
+
+    def __init__(self, ExchangeID=None, BrokerID=None, InvestorID=None, ProdFamilyCode=None):
+        super().__init__()
+        if ExchangeID:
+            self.ExchangeID = ExchangeID.encode("GBK")
+        if BrokerID:
+            self.BrokerID = BrokerID.encode("GBK")
+        if InvestorID:
+            self.InvestorID = InvestorID.encode("GBK")
+        if ProdFamilyCode:
+            self.ProdFamilyCode = ProdFamilyCode.encode("GBK")
+
+
+class PortfTradeParamSetting(Struct):
+    _fields_ = [
+        ("ExchangeID", c_char_Array_9),
+        ("BrokerID", c_char_Array_11),
+        ("InvestorID", c_char_Array_13),
+        ("Portfolio", c_char),
+        ("IsActionVerify", c_int),
+        ("IsCloseVerify", c_int),
+    ]
+
+    def __init__(self, ExchangeID=None, BrokerID=None, InvestorID=None, Portfolio=None, IsActionVerify=None, IsCloseVerify=None):
+        super().__init__()
+        if ExchangeID:
+            self.ExchangeID = ExchangeID.encode("GBK")
+        if BrokerID:
+            self.BrokerID = BrokerID.encode("GBK")
+        if InvestorID:
+            self.InvestorID = InvestorID.encode("GBK")
+        if Portfolio:
+            self.Portfolio = Portfolio.encode("GBK")
+        if IsActionVerify:
+            self.IsActionVerify = IsActionVerify
+        if IsCloseVerify:
+            self.IsCloseVerify = IsCloseVerify

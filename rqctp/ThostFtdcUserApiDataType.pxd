@@ -27,13 +27,15 @@ cdef extern from "ThostFtdcUserApiDataType.h":
     ctypedef char TThostFtdcBrokerIDType[11]  # 经纪公司代码
     ctypedef char TThostFtdcBrokerAbbrType[9]  # 经纪公司简称
     ctypedef char TThostFtdcBrokerNameType[81]  # 经纪公司名称
-    ctypedef char TThostFtdcExchangeInstIDType[31]  # 合约在交易所的代码
+    ctypedef char TThostFtdcOldExchangeInstIDType[31]  # 合约在交易所的代码
+    ctypedef char TThostFtdcExchangeInstIDType[81]  # 合约在交易所的代码
     ctypedef char TThostFtdcOrderRefType[13]  # 报单引用
     ctypedef char TThostFtdcParticipantIDType[11]  # 会员代码
     ctypedef char TThostFtdcUserIDType[16]  # 用户代码
     ctypedef char TThostFtdcPasswordType[41]  # 密码
     ctypedef char TThostFtdcClientIDType[11]  # 交易编码
-    ctypedef char TThostFtdcInstrumentIDType[31]  # 合约代码
+    ctypedef char TThostFtdcInstrumentIDType[81]  # 合约代码
+    ctypedef char TThostFtdcOldInstrumentIDType[31]  # 合约代码
     ctypedef char TThostFtdcInstrumentCodeType[31]  # 合约标识码
     ctypedef char TThostFtdcMarketIDType[31]  # 市场代码
     ctypedef char TThostFtdcProductNameType[21]  # 产品名称
@@ -43,6 +45,7 @@ cdef extern from "ThostFtdcUserApiDataType.h":
     ctypedef char TThostFtdcExchangeFlagType[2]  # 交易所标志
     ctypedef char TThostFtdcMacAddressType[21]  # Mac地址
     ctypedef char TThostFtdcSystemIDType[21]  # 系统编号
+    ctypedef char TThostFtdcClientLoginRemarkType[151]  # 客户登录备注2
     ctypedef char TThostFtdcExchangePropertyType  # 交易所属性
     ctypedef char TThostFtdcDateType[9]  # 日期
     ctypedef char TThostFtdcTimeType[9]  # 时间
@@ -52,7 +55,8 @@ cdef extern from "ThostFtdcUserApiDataType.h":
     ctypedef char TThostFtdcOrderSysIDType[21]  # 报单编号
     ctypedef char TThostFtdcTradeIDType[21]  # 成交编号
     ctypedef char TThostFtdcCommandTypeType[65]  # DB命令类型
-    ctypedef char TThostFtdcIPAddressType[16]  # IP地址
+    ctypedef char TThostFtdcOldIPAddressType[16]  # IP地址
+    ctypedef char TThostFtdcIPAddressType[33]  # IP地址
     ctypedef int TThostFtdcIPPortType  # IP端口
     ctypedef char TThostFtdcProductInfoType[11]  # 产品信息
     ctypedef char TThostFtdcProtocolInfoType[11]  # 协议信息
@@ -83,6 +87,7 @@ cdef extern from "ThostFtdcUserApiDataType.h":
     ctypedef char TThostFtdcPositionDateTypeType  # 持仓日期类型
     ctypedef char TThostFtdcTradingRoleType  # 交易角色
     ctypedef char TThostFtdcProductClassType  # 产品类型
+    ctypedef char TThostFtdcAPIProductClassType  # 产品类型
     ctypedef char TThostFtdcInstLifePhaseType  # 合约生命周期状态
     ctypedef char TThostFtdcDirectionType  # 买卖方向
     ctypedef char TThostFtdcPositionTypeType  # 持仓类型
@@ -103,6 +108,7 @@ cdef extern from "ThostFtdcUserApiDataType.h":
     ctypedef char TThostFtdcTradingRightType  # 交易权限
     ctypedef char TThostFtdcOrderSourceType  # 报单来源
     ctypedef char TThostFtdcTradeTypeType  # 成交类型
+    ctypedef char TThostFtdcSpecPosiTypeType  # 特殊持仓明细标识
     ctypedef char TThostFtdcPriceSourceType  # 成交价来源
     ctypedef char TThostFtdcInstrumentStatusType  # 合约交易状态
     ctypedef char TThostFtdcInstStatusEnterReasonType  # 品种进入交易状态原因
@@ -117,6 +123,7 @@ cdef extern from "ThostFtdcUserApiDataType.h":
     ctypedef int TThostFtdcSequenceNoType  # 序号
     ctypedef int TThostFtdcCommandNoType  # DB命令序号
     ctypedef int TThostFtdcMillisecType  # 时间（毫秒）
+    ctypedef int TThostFtdcSecType  # 时间（秒）
     ctypedef int TThostFtdcVolumeMultipleType  # 合约数量乘数
     ctypedef int TThostFtdcTradingSegmentSNType  # 交易阶段编号
     ctypedef int TThostFtdcRequestIDType  # 请求编号
@@ -801,3 +808,22 @@ cdef extern from "ThostFtdcUserApiDataType.h":
     ctypedef char TThostFtdcOTCTraderIDType[31]  # OTC交易员代码
     ctypedef double TThostFtdcRiskValueType  # 期货风险值
     ctypedef char TThostFtdcIDBNameType[100]  # 握手数据内容
+    ctypedef double TThostFtdcDiscountRatioType  # 折扣率
+    ctypedef char TThostFtdcAuthTypeType  # 用户终端认证方式
+    ctypedef char TThostFtdcClassTypeType  # 合约分类方式
+    ctypedef char TThostFtdcTradingTypeType  # 合约交易状态分类方式
+    ctypedef char TThostFtdcProductStatusType  # 产品状态
+    ctypedef char TThostFtdcSyncDeltaStatusType  # 追平状态
+    ctypedef char TThostFtdcActionDirectionType  # 操作标志
+    ctypedef char TThostFtdcOrderCancelAlgType  # 撤单时选择席位算法
+    ctypedef char TThostFtdcSyncDescriptionType[257]  # 追平描述
+    ctypedef int TThostFtdcCommonIntType  # 通用int类型
+    ctypedef char TThostFtdcSysVersionType[41]  # 系统版本
+    ctypedef char TThostFtdcOpenLimitControlLevelType  # 开仓量限制粒度
+    ctypedef char TThostFtdcOrderFreqControlLevelType  # 报单频率控制粒度
+    ctypedef char TThostFtdcEnumBoolType  # 枚举bool类型
+    ctypedef char TThostFtdcTimeRangeType  # 期货合约阶段标识
+    ctypedef double TThostFtdcDeltaType  # Delta类型
+    ctypedef int TThostFtdcSpreadIdType  # 抵扣组优先级
+    ctypedef char TThostFtdcPortfolioType  # 新型组保算法
+    ctypedef int TThostFtdcPortfolioDefIDType  # SPBM组合套餐ID
